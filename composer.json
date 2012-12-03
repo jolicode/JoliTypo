@@ -1,0 +1,18 @@
+{
+    "name": "joli/typo",
+    "require": {
+        "symfony/dom-crawler": "dev-master"
+    },
+    "stability": "dev",
+    "authors": [
+        {
+            "name": "Damien Alexandre",
+            "email": "dalexandre@jolicode.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Joli": "src/"
+        }
+    }
+}
