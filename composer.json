@@ -1,6 +1,8 @@
 {
-    "name": "joli/typo",
-    "require": {
+    "name": "jolicode/jolitypo",
+    "type": "library",
+    "license": "MIT",
+    "require-dev": {
         "symfony/dom-crawler": "dev-master"
     },
     "stability": "dev",
@@ -12,7 +14,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "Joli": "src/"
+            "JoliTypo": "src/"
         }
     }
 }
