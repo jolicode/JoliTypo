@@ -1,4 +1,4 @@
 <?php
 
 $loader = require_once __DIR__ . "/../vendor/autoload.php";
-$loader->add('JoliTypo\\', __DIR__);
+$loader->add('JoliTypo\Tests', __DIR__);
