@@ -1,9 +1,13 @@
 <?php
+namespace JoliTypo\Tests;
 
-class JoliTypoTest extends PHPUnit_Framework_TestCase
+class JoliTypoTest extends \PHPUnit_Framework_TestCase
 {
     public function testRegisterProvider()
     {
-        $this->assertInstanceOf('JoliTypo\Fixer', new \JoliTypo\Fixer());
+        $fixer = new \JoliTypo\Fixer();
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $this->assertEquals("Coucou&#8230;", $fixer->fix("Coucou..."));
     }
 }
