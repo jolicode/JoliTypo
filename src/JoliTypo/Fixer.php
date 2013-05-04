@@ -6,31 +6,50 @@ class Fixer
   const NO_BREAK_THIN_SPACE = "&#8239;";
   const NO_BREAK_SPACE = "&#160;";
 
-  protected $tags_to_backup = array('pre', 'code', 'script', 'style');
+  protected $protected_tags = array('pre', 'code', 'script', 'style');
+  protected $protected_tags_backups = array();
 
   public function fix($content)
   {
-    $content = $this->backup($content);
+    $content = $this->backupProtected($content);
 
-    foreach (array('Ellipsis') as $fixer_name) {
+    foreach (array('Ellipsis', 'FrenchQuotes') as $fixer_name) {
       $class = 'JoliTypo\\Fixer\\'.$fixer_name;
       $fixer = new $class();
 
       $content = $fixer->fix($content);
     }
 
-    $content = $this->unbackup($content);
+    $content = $this->restoreProtected($content);
 
     return $content;
   }
 
-  private function backup($content)
+  private function backupProtected($content)
   {
-    // @todo
+    $pattern = '@<pre([^</]+)</pre>@im';
+
+    // PHP 5.3 compatibility...
+    $backups = $this->protected_tags_backups;
+
+    $content = preg_replace_callback(
+        $pattern,
+        function($match) use (&$backups) {
+          $backup_name = "JOLITYPO_".(count($backups)+1);
+          $backups[$backup_name] = $match[0];
+
+          return $backup_name;
+        },
+        $content
+    );
+
+    $this->protected_tags_backups = $backups;
+
+    return $content;
   }
 
-  private function unbackup($content)
+  private function restoreProtected($content)
   {
-    // @todo
+    return str_replace(array_keys($this->protected_tags_backups), $this->protected_tags_backups, $content);
   }
 }
