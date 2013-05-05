@@ -3,8 +3,9 @@
 namespace JoliTypo\Fixer;
 
 use JoliTypo\Fixer;
+use JoliTypo\FixerInterface;
 
-class Ellipsis
+class Ellipsis implements FixerInterface
 {
     public function fix($content)
     {

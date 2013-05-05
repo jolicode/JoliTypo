@@ -1,18 +1,16 @@
-
-
-Rules to apply
-==============
+Todo / Rules to apply
+=====================
 
 
 fr-FR rules
 -----------
 
+- Numbers > 1000 must be separated by groups of 3 with a non breaking space (1000 => 1 000, 1013424 => 1 013 424)
 
 fr-CA rules
 -----------
 
 - Same as French but ignore space before `;!?`
-
 
 fr-CH
 -----
@@ -29,13 +27,6 @@ Compatibility & OS support restrictions
 
 BUT if you use a font (@font-face maybe) that contains all thoses glyph, there will be no issues.
 
-
-Bullet-proof mode
-=================
-
-Made to be less compliant but fully compatible with un-complete fonts or un-capable OS/Browsers.
-
- - replace Narrow No-Break Space by No-Break Space
 
 Glossary & References
 =====================

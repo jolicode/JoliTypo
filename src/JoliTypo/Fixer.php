@@ -5,8 +5,12 @@ use JoliTypo\Exception\InvalidMarkupException;
 
 class Fixer
 {
+    /**
+     * DOMDocument does not like all the HTML entities; sometimes they are double encoded.
+     * So the entities here are encoded and DOCDocument::saveHTML transform them to entity.
+     */
     const NO_BREAK_THIN_SPACE = " "; // &#8239;
-    const NO_BREAK_SPACE      = " "; // &#160;
+    const NO_BREAK_SPACE      = " "; // &#160;
     const ELLIPSIS            = "…";
     const LAQUO               = "«";
     const RAQUO               = "»";
@@ -19,11 +23,7 @@ class Fixer
 
         $this->processDOM($dom, $dom);
 
-        // Remove added body & doctype
-        $content = preg_replace(array("/^\<\!DOCTYPE.*?<html><body>/si",
-                                          "!</body></html>$!si"),
-                                    "", $dom->saveHTML());
-        $content = trim($content);
+        $content = $this->exportDOMDocument($dom);
 
         return $content;
     }
@@ -46,16 +46,32 @@ class Fixer
             }
 
             foreach ($nodes as $childNode) {
-                if ($childNode instanceof \DOMText) {
-
+                if ($childNode instanceof \DOMText && !$childNode->isWhitespaceInElementContent()) {
                     $this->doFix($childNode, $node, $dom);
-
                 }
                 else {
                     $this->processDOM($childNode, $dom);
                 }
             }
         }
+    }
+
+
+    private function doFix($childNode, $node, $dom)
+    {
+        $content = $childNode->wholeText;
+
+        foreach (array('Ellipsis', 'FrenchQuotes', 'FrenchNoBreakSpace') as $fixer_name) {
+            $class = 'JoliTypo\\Fixer\\'.$fixer_name;
+            $fixer = new $class();
+
+            $content = $fixer->fix($content);
+        }
+
+        //if ($childNode->wholeText !== $content) {
+          //  var_dump($content);
+            $node->replaceChild($dom->createTextNode($content), $childNode);
+        //}
     }
 
     /**
@@ -89,18 +105,12 @@ class Fixer
         return $dom;
     }
 
-    private function doFix($childNode, $node, $dom)
+    private function exportDOMDocument(\DOMDocument $dom)
     {
-        $content = $childNode->wholeText;
-
-        foreach (array('Ellipsis', 'FrenchQuotes') as $fixer_name) {
-            $class = 'JoliTypo\\Fixer\\'.$fixer_name;
-            $fixer = new $class();
-
-            $content = $fixer->fix($content);
-          }
-
-        // @todo test is the node has changed?
-       $node->replaceChild($dom->createTextNode($content), $childNode);
+        // Remove added body & doctype
+        $content = preg_replace(array("/^\<\!DOCTYPE.*?<html><body>/si",
+                                          "!</body></html>$!si"),
+                                    "", $dom->saveHTML());
+        return trim($content);
     }
 }
