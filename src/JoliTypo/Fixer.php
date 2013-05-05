@@ -15,8 +15,15 @@ class Fixer
     const LAQUO               = "«";
     const RAQUO               = "»";
 
+    /**
+     * @var array   HTML Tags to bypass
+     */
     protected $protected_tags = array('pre', 'code', 'script', 'style');
 
+    /**
+     * @param  string $content HTML content to fix
+     * @return string Content fixed
+     */
     public function fix($content)
     {
         $dom = $this->loadDOMDocument($content);
@@ -29,11 +36,14 @@ class Fixer
     }
 
     /**
+     * Loop over all the DOMNode recursively
+     *
      * @param \DOMNode     $node
      * @param \DOMDocument $dom
      */
-    private function processDOM(\DOMNode $node, \DOMDocument $dom) {
-        if($node->hasChildNodes()) {
+    private function processDOM(\DOMNode $node, \DOMDocument $dom)
+    {
+        if ($node->hasChildNodes()) {
             $nodes = array();
             foreach ($node->childNodes as $childNode) {
                 if ($childNode instanceof \DOMElement && $childNode->tagName) {
@@ -48,16 +58,21 @@ class Fixer
             foreach ($nodes as $childNode) {
                 if ($childNode instanceof \DOMText && !$childNode->isWhitespaceInElementContent()) {
                     $this->doFix($childNode, $node, $dom);
-                }
-                else {
+                } else {
                     $this->processDOM($childNode, $dom);
                 }
             }
         }
     }
 
-
-    private function doFix($childNode, $node, $dom)
+    /**
+     * Run the Fixers on a DOMText content
+     *
+     * @param \DOMText     $childNode The node to fix
+     * @param \DOMNode     $node      The parent node where to replace the current one
+     * @param \DOMDocument $dom       The Document
+     */
+    private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom)
     {
         $content = $childNode->wholeText;
 
@@ -104,12 +119,17 @@ class Fixer
         return $dom;
     }
 
+    /**
+     * @param  \DOMDocument $dom
+     * @return string
+     */
     private function exportDOMDocument(\DOMDocument $dom)
     {
         // Remove added body & doctype
         $content = preg_replace(array("/^\<\!DOCTYPE.*?<html><body>/si",
                                           "!</body></html>$!si"),
                                     "", $dom->saveHTML());
+
         return trim($content);
     }
 }
