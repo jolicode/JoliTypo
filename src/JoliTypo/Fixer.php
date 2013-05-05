@@ -68,10 +68,9 @@ class Fixer
             $content = $fixer->fix($content);
         }
 
-        //if ($childNode->wholeText !== $content) {
-          //  var_dump($content);
+        if ($childNode->wholeText !== $content) {
             $node->replaceChild($dom->createTextNode($content), $childNode);
-        //}
+        }
     }
 
     /**
