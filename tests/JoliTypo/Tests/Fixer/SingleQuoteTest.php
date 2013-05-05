@@ -20,5 +20,6 @@ class SingleQuoteTest extends \PHPUnit_Framework_TestCase
         $fixer = new \JoliTypo\Fixer\SingleQuote();
 
         $this->assertEquals('This is a time: 2"44\'.', $fixer->fix('This is a time: 2"44\'.'));
+        $this->assertEquals("Here is a crying smiley: :'(", $fixer->fix("Here is a crying smiley: :'("));
     }
 }
