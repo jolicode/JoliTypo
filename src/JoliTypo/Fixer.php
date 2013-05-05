@@ -9,12 +9,13 @@ class Fixer
   const LAQUO               = "«";
   const RAQUO               = "»";
 
-  protected $protected_tags = array('pre', 'code', 'script', 'style');
+  // @todo remove static
+  public static $protected_tags = array('pre', 'code', 'script', 'style');
   protected $protected_tags_backups = array();
 
   public function fix($content)
   {
-    $content = $this->backupProtected($content);
+    //$content = $this->backupProtected($content);
 
     foreach (array('Ellipsis', 'FrenchQuotes') as $fixer_name) {
       $class = 'JoliTypo\\Fixer\\'.$fixer_name;
@@ -23,7 +24,7 @@ class Fixer
       $content = $fixer->fix($content);
     }
 
-    $content = $this->restoreProtected($content);
+    //$content = $this->restoreProtected($content);
 
     return $content;
   }

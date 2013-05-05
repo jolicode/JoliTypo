@@ -32,21 +32,20 @@ class FrenchQuotes
 
       $this->process($dom, $replaceRules, $dom);
 
-      $file = tempnam('/tmp', 'lolz');
-      $dom->saveHTMLFile($file);
+//      $file = tempnam('/tmp', 'lolz');
+//      $dom->saveHTMLFile($file);
+//
+//      $content = file_get_contents($file);
 
-      $content = file_get_contents($file);
 
-
-//      $content = preg_replace(array("/^\<\!DOCTYPE.*?<html><body>/si",
-//                                        "!</body></html>$!si"),
-//                                  "",
-//                                  );
+      $content = preg_replace(array("/^\<\!DOCTYPE.*?<html><body>/si",
+                                        "!</body></html>$!si"),
+                                  "", $dom->saveHTML());
 
       //var_dump($content);
 
 
-$content = trim($content);
+      $content = trim($content);
 
 //$content = mb_convert_encoding($content, 'UTF-8', 'HTML-ENTITIES');
 
@@ -67,8 +66,15 @@ $content = trim($content);
       if($node->hasChildNodes()) {
           $nodes = array();
           foreach ($node->childNodes as $childNode) {
+              if ($childNode instanceof \DOMElement && $childNode->tagName) {
+                  if (in_array($childNode->tagName, Fixer::$protected_tags)) {
+                      continue;
+                  }
+              }
+
               $nodes[] = $childNode;
           }
+
           foreach ($nodes as $childNode) {
               if ($childNode instanceof \DOMText) {
                   $text = preg_replace(
