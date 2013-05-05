@@ -8,7 +8,12 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 
 <pre>Oh, du "code"!</pre>
 
-<p>Je suis "très content" de t'avoir invité !</p>
+<p>Je suis "très content" de t'avoir <a href="http://coucou">invité</a> !</p>
+
+<pre><code>
+  &lt;a href=&quot;&quot;&gt;
+  pre
+</code></pre>
 TOFIX;
 
     const FIXED = <<<FIXED
@@ -16,7 +21,12 @@ TOFIX;
 
 <pre>Oh, du "code"!</pre>
 
-<p>Je suis &#171;&#8239;très content&#8239;&#187; de t'avoir invité !</p>
+<p>Je suis &#171;&#8239;très content&#8239;&#187; de t'avoir <a href="http://coucou">invité</a> !</p>
+
+<pre><code>
+  &lt;a href=&quot;&quot;&gt;
+  pre
+</code></pre>
 FIXED;
 
     public function testRegisterProvider()

@@ -3,8 +3,11 @@ namespace JoliTypo;
 
 class Fixer
 {
-  const NO_BREAK_THIN_SPACE = "&#8239;";
-  const NO_BREAK_SPACE = "&#160;";
+  const NO_BREAK_THIN_SPACE = " "; // &#8239;
+  const NO_BREAK_SPACE      = " "; // &#160;
+  const ELLIPSIS            = "…";
+  const LAQUO               = "«";
+  const RAQUO               = "»";
 
   protected $protected_tags = array('pre', 'code', 'script', 'style');
   protected $protected_tags_backups = array();
