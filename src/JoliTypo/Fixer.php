@@ -1,59 +1,110 @@
 <?php
 namespace JoliTypo;
 
+use JoliTypo\Exception\InvalidMarkupException;
+
 class Fixer
 {
-  const NO_BREAK_THIN_SPACE = " "; // &#8239;
-  const NO_BREAK_SPACE      = " "; // &#160;
-  const ELLIPSIS            = "…";
-  const LAQUO               = "«";
-  const RAQUO               = "»";
+    const NO_BREAK_THIN_SPACE = " "; // &#8239;
+    const NO_BREAK_SPACE      = " "; // &#160;
+    const ELLIPSIS            = "…";
+    const LAQUO               = "«";
+    const RAQUO               = "»";
 
-  // @todo remove static
-  public static $protected_tags = array('pre', 'code', 'script', 'style');
-  protected $protected_tags_backups = array();
+    // @todo remove static
+    public static $protected_tags = array('pre', 'code', 'script', 'style');
+    protected $protected_tags_backups = array();
 
-  public function fix($content)
-  {
-    //$content = $this->backupProtected($content);
+    public function fix($content)
+    {
 
-    foreach (array('Ellipsis', 'FrenchQuotes') as $fixer_name) {
-      $class = 'JoliTypo\\Fixer\\'.$fixer_name;
-      $fixer = new $class();
+      $dom = $this->loadDOMDocument($content);
 
-      $content = $fixer->fix($content);
+        $this->processDOM($dom, $dom);
+
+
+        $content = preg_replace(array("/^\<\!DOCTYPE.*?<html><body>/si",
+                                          "!</body></html>$!si"),
+                                    "", $dom->saveHTML());
+        $content = trim($content);
+
+
+      return $content;
     }
 
-    //$content = $this->restoreProtected($content);
+    /**
+     * @param \DOMNode     $node
+     * @param \DOMDocument $dom
+     */
+    private function processDOM(\DOMNode $node, \DOMDocument $dom) {
+        if($node->hasChildNodes()) {
+            $nodes = array();
+            foreach ($node->childNodes as $childNode) {
+                if ($childNode instanceof \DOMElement && $childNode->tagName) {
+                    if (in_array($childNode->tagName, Fixer::$protected_tags)) {
+                        continue;
+                    }
+                }
 
-    return $content;
-  }
+                $nodes[] = $childNode;
+            }
 
-  private function backupProtected($content)
-  {
-    $pattern = '@<pre([^</]+)</pre>@im';
+            foreach ($nodes as $childNode) {
+                if ($childNode instanceof \DOMText) {
 
-    // PHP 5.3 compatibility...
-    $backups = $this->protected_tags_backups;
+                    $this->doFix($childNode, $node, $dom);
 
-    $content = preg_replace_callback(
-        $pattern,
-        function($match) use (&$backups) {
-          $backup_name = "JOLITYPO_".(count($backups)+1);
-          $backups[$backup_name] = $match[0];
+                }
+                else {
+                    $this->processDOM($childNode, $dom);
+                }
+            }
+        }
+    }
 
-          return $backup_name;
-        },
-        $content
-    );
+    /**
+     * @param $content
+     * @return \DOMDocument
+     * @throws Exception\InvalidMarkupException
+     */
+    private function loadDOMDocument($content)
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->encoding = "UTF-8";
 
-    $this->protected_tags_backups = $backups;
+        $dom->strictErrorChecking   = false;
+        $dom->substituteEntities    = false;
+        $dom->formatOutput          = false;
 
-    return $content;
-  }
+        // Little hack to force UTF-8
+        $loaded = $dom->loadHTML('<?xml encoding="UTF-8"><body>' . $content);
 
-  private function restoreProtected($content)
-  {
-    return str_replace(array_keys($this->protected_tags_backups), $this->protected_tags_backups, $content);
-  }
+        if (!$loaded) {
+            throw new InvalidMarkupException("Can't load the given HTML");
+        }
+
+        foreach ($dom->childNodes as $item) {
+          if ($item->nodeType === XML_PI_NODE) {
+            $dom->removeChild($item); // remove encoding hack
+            break;
+          }
+        }
+
+        return $dom;
+    }
+
+    private function doFix($childNode, $node, $dom)
+    {
+        $content = $childNode->wholeText;
+
+        foreach (array('Ellipsis', 'FrenchQuotes') as $fixer_name) {
+            $class = 'JoliTypo\\Fixer\\'.$fixer_name;
+            $fixer = new $class();
+
+            $content = $fixer->fix($content);
+          }
+
+        // @todo test is the node has changed?
+       $node->replaceChild($dom->createTextNode($content), $childNode);
+    }
 }

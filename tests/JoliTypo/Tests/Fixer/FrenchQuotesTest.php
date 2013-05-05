@@ -15,7 +15,7 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
   pre
 </code></pre>
 
-<p>Ceci me "CHOQUE"&nbsp;!</p>
+<p>Ceci &eacute;té un "CHOQUE"&nbsp;!</p>
 TOFIX;
 
     const FIXED = <<<FIXED
@@ -30,7 +30,7 @@ TOFIX;
   pre
 </code></pre>
 
-<p>Ceci me &laquo;&#8239;CHOQUE&#8239;&raquo;&nbsp;!</p>
+<p>Ceci &eacute;t&eacute; un &laquo;&#8239;CHOQUE&#8239;&raquo;&nbsp;!</p>
 FIXED;
 
     public function testRegisterProvider()
