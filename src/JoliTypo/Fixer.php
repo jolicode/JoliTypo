@@ -14,6 +14,7 @@ class Fixer
     const ELLIPSIS            = "…";
     const LAQUO               = "«";
     const RAQUO               = "»";
+    const RSQUO               = "’";
 
     /**
      * @var array   HTML Tags to bypass
@@ -76,7 +77,8 @@ class Fixer
     {
         $content = $childNode->wholeText;
 
-        foreach (array('Ellipsis', 'FrenchQuotes', 'FrenchNoBreakSpace') as $fixer_name) {
+        // @todo This list is what makes the lib multi-language ready. Need to be configurable.
+        foreach (array('Ellipsis', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote') as $fixer_name) {
             $class = 'JoliTypo\\Fixer\\'.$fixer_name;
             $fixer = new $class();
 

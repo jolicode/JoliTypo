@@ -29,7 +29,7 @@ TOFIX;
 <p>Le mec a fini sa course en 2'33" contre 2'44" pour le second&nbsp;!</p>
 
 <p>Je suis &laquo;&#8239;tr&egrave;s
-content&#8239;&raquo; de t'avoir <a href="http://coucou">invit&eacute;</a>&nbsp;!</p>
+content&#8239;&raquo; de t&rsquo;avoir <a href="http://coucou">invit&eacute;</a>&nbsp;!</p>
 
 <pre><code>
   &lt;a href=""&gt;
