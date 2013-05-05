@@ -3,47 +3,34 @@ namespace JoliTypo\Tests\Fixer;
 
 class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 {
-    const TOFIX = <<<TOFIX
-<p>Ceci est à remplacer par une fâble :p</p>
-
-<pre>Oh, du "code"!</pre>
-
-<p>Le mec a fini sa course en 2'33" contre 2'44" pour le second !</p>
-
-<p>Je suis "très
-content" de t'avoir <a href="http://coucou">invité</a> !</p>
-
-<pre><code>
-  &lt;a href=""&gt;
-  pre
-</code></pre>
-
-<p>Ceci &eacute;té un "CHOQUE"&nbsp;!</p>
-TOFIX;
-
-    const FIXED = <<<FIXED
-<p>Ceci est &agrave; remplacer par une f&acirc;ble&nbsp;:p</p>
-
-<pre>Oh, du "code"!</pre>
-
-<p>Le mec a fini sa course en 2'33" contre 2'44" pour le second&nbsp;!</p>
-
-<p>Je suis &laquo;&#8239;tr&egrave;s
-content&#8239;&raquo; de t'avoir <a href="http://coucou">invit&eacute;</a>&nbsp;!</p>
-
-<pre><code>
-  &lt;a href=""&gt;
-  pre
-</code></pre>
-
-<p>Ceci &eacute;t&eacute; un &laquo;&#8239;CHOQUE&#8239;&raquo;&nbsp;!</p>
-FIXED;
-
-    public function testRegisterProvider()
+    public function testSimpleString()
     {
-        $fixer = new \JoliTypo\Fixer();
-        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+        $fixer = new \JoliTypo\Fixer\FrenchQuotes();
+        $this->assertInstanceOf('JoliTypo\Fixer\FrenchQuotes', $fixer);
 
-        $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));
+        $this->assertEquals("« Good code is like a good joke. »", $fixer->fix('"Good code is like a good joke."'));
+        $this->assertEquals("« Good code is like a Bieber. » - said no ever, ever.", $fixer->fix('"Good code is like a Bieber." - said no ever, ever.'));
+
+        $this->assertEquals("Some people are like « Batman », others like « Superman ».", $fixer->fix('Some people are like "Batman", others like "Superman".'));
+        $this->assertEquals('Oh my god, this quote is alone: " !', $fixer->fix('Oh my god, this quote is alone: " !'));
+    }
+
+    public function testFalsePositives()
+    {
+        $fixer = new \JoliTypo\Fixer\FrenchQuotes();
+
+        $this->assertEquals('This is a time: 2"44\'.', $fixer->fix('This is a time: 2"44\'.'));
+    }
+
+    /**
+     * :-( :sadface:
+     */
+    public function testImpossibles()
+    {
+        $this->markTestSkipped("Those tests can't pass: they are edge case JoliTypo does not cover ATM. Feel free to fix!");
+
+        $fixer = new \JoliTypo\Fixer\FrenchQuotes();
+
+        $this->assertEquals("Am I an ellipsis…", $fixer->fix('Oh my god, this quote is alone: " ! But those are "ok".'));
     }
 }
