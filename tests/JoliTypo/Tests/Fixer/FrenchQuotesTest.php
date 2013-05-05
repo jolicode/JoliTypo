@@ -11,22 +11,26 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 <p>Je suis "très content" de t'avoir <a href="http://coucou">invité</a> !</p>
 
 <pre><code>
-  &lt;a href=&quot;&quot;&gt;
+  &lt;a href=""&gt;
   pre
 </code></pre>
+
+<p>Ceci me "CHOQUE"&nbsp;!</p>
 TOFIX;
 
     const FIXED = <<<FIXED
-<p>Ceci est à remplacer par une fâble :p</p>
+<p>Ceci est &agrave; remplacer par une f&acirc;ble :p</p>
 
 <pre>Oh, du "code"!</pre>
 
-<p>Je suis &#171;&#8239;très content&#8239;&#187; de t'avoir <a href="http://coucou">invité</a> !</p>
+<p>Je suis &laquo;&#8239;tr&egrave;s content&#8239;&raquo; de t'avoir <a href="http://coucou">invit&eacute;</a> !</p>
 
 <pre><code>
-  &lt;a href=&quot;&quot;&gt;
+  &lt;a href=""&gt;
   pre
 </code></pre>
+
+<p>Ceci me &laquo;&#8239;CHOQUE&#8239;&raquo;&nbsp;!</p>
 FIXED;
 
     public function testRegisterProvider()

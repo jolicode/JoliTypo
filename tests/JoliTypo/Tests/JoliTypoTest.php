@@ -9,6 +9,5 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals("Coucou&hellip;", $fixer->fix("Coucou..."));
-        $this->assertEquals("Coucou…", $fixer->fix("Coucou..."));
     }
 }
