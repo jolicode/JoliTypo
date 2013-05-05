@@ -8,6 +8,8 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 
 <pre>Oh, du "code"!</pre>
 
+<p>Le mec a fini sa course en 2'33" contre 2'44" pour le second !</p>
+
 <p>Je suis "très content" de t'avoir <a href="http://coucou">invité</a> !</p>
 
 <pre><code>
@@ -22,6 +24,8 @@ TOFIX;
 <p>Ceci est &agrave; remplacer par une f&acirc;ble :p</p>
 
 <pre>Oh, du "code"!</pre>
+
+<p>Le mec a fini sa course en 2'33" contre 2'44" pour le second !</p>
 
 <p>Je suis &laquo;&#8239;tr&egrave;s content&#8239;&raquo; de t'avoir <a href="http://coucou">invit&eacute;</a> !</p>
 

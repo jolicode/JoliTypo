@@ -11,25 +11,21 @@ class Fixer
     const LAQUO               = "«";
     const RAQUO               = "»";
 
-    // @todo remove static
-    public static $protected_tags = array('pre', 'code', 'script', 'style');
-    protected $protected_tags_backups = array();
+    protected $protected_tags = array('pre', 'code', 'script', 'style');
 
     public function fix($content)
     {
-
-      $dom = $this->loadDOMDocument($content);
+        $dom = $this->loadDOMDocument($content);
 
         $this->processDOM($dom, $dom);
 
-
+        // Remove added body & doctype
         $content = preg_replace(array("/^\<\!DOCTYPE.*?<html><body>/si",
                                           "!</body></html>$!si"),
                                     "", $dom->saveHTML());
         $content = trim($content);
 
-
-      return $content;
+        return $content;
     }
 
     /**
@@ -41,7 +37,7 @@ class Fixer
             $nodes = array();
             foreach ($node->childNodes as $childNode) {
                 if ($childNode instanceof \DOMElement && $childNode->tagName) {
-                    if (in_array($childNode->tagName, Fixer::$protected_tags)) {
+                    if (in_array($childNode->tagName, $this->protected_tags)) {
                         continue;
                     }
                 }
