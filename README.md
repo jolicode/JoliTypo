@@ -1,18 +1,45 @@
-Todo / Rules to apply
-=====================
+JoliTypo - Microtypography fixer for the web
+============================================
 
-fr-FR rules
------------
+JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content.
+
+    $fixer = new Fixer('en_GB');
+    $fixed_content = $fixer->fix('<p>Some user contributed HTML which does not use proper glyphs</p>");
+
+It's designed to be:
+
+- language agnostic (you can fix `fr_FR`, `fr_CA` and `en_US` there own ways)
+- fully tested
+- easy to integrate into modern PHP project (composer and autoload)
+- robust (make use of `\DOMDocument` instead of parsing HTML with dummy regexp)
+- fast
+- fully open and usable in any project (MIT Licence)
+
+Available Fixer
+===============
+
+// @todo
+
+How to use
+==========
+
+// @todo
+
+Todo / Rules to be developed
+============================
+
+fr-FR
+-----
 
 - Numbers > 1000 must be separated by groups of 3 with a non breaking space (1000 => 1 000, 1013424 => 1 013 424)
 - Quotes and double-quotes inside FrenchQuotes should be translated to english quotes:
 
-    Il nous raconta : « Hier, je me promenais sur les quais. Je demandai à un passant : “Quelle heure est-il ?”
-    Il répondit : “Désolé, je n’ai pas de montre, il doit être midi, mais c’est ‛sans garantie’.” Je le remerciai et partis. »
+    > Il nous raconta : « Hier, je me promenais sur les quais. Je demandai à un passant : “Quelle heure est-il ?”
+    > Il répondit : “Désolé, je n’ai pas de montre, il doit être midi, mais c’est ‛sans garantie’.” Je le remerciai et partis. »
 
 
-fr-CA rules
------------
+fr-CA
+-----
 
 - Same as French but ignore space before `;!?`
 
@@ -25,20 +52,32 @@ fr-CH
 Compatibility & OS support restrictions
 =======================================
 
-
 - Windows XP : Narrow No-Break Space can't be used, all other spaces are ignored but they do not look bad (normal space).
 - Mac OS Snow Leopard : no espaces fixes, demi-fixes, cadratin et demi-cadratin but does not look bad (normal space).
 
-BUT if you use a font (@font-face maybe) that contains all thoses glyph, there will be no issues.
-
+BUT if you use a font (`@font-face` maybe) that contains all thoses glyphs, there will be no issues.
 
 Glossary & References
 =====================
 
-- Narrow No-Break Space (espace fine insécable): `U+202F`, `&#8239;`
-
-
 Thanks to theses online resources for helping a developer understands typography:
 
-- http://typographisme.net/post/Les-espaces-typographiques-et-le-web
+- [FR] http://typographisme.net/post/Les-espaces-typographiques-et-le-web
 - http://daringfireball.net/projects/smartypants/
+- [FR] http://www.uzine.net/article1802.html
+- [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
+
+Alternatives and other implementations
+======================================
+
+There are already quite a bunch of tool like this one. But, some are only for one language,
+some are running regexp on the whole HTML code (which is bad), some are not tested, some are bundled inside a CMS
+or a Lib, some are not using proper autoloading... Have a look by yourself:
+
+- http://michelf.ca/projets/php-smartypants/
+- http://michelf.ca/projets/php-smartypants/typographer/
+- http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/
+- https://github.com/Cerdic/textwheel/blob/master/typographie/fr.php
+- https://github.com/spip/SPIP/blob/master/ecrire/typographie/fr.php
+- https://github.com/dg/texy/blob/master/Texy/modules/TexyTypographyModule.php
+- https://github.com/scoates/lexentity
