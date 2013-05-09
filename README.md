@@ -1,6 +1,8 @@
 JoliTypo - Microtypography fixer for the web
 ============================================
 
+> Finally a tool for typography nerds.
+
 JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content.
 
     $fixer = new Fixer('en_GB');
@@ -27,6 +29,11 @@ How to use
 
 Todo / Rules to be developed
 ============================
+
+Global
+------
+
+- Hyphenator?
 
 fr-FR
 -----
@@ -70,9 +77,9 @@ Thanks to theses online resources for helping a developer understands typography
 Alternatives and other implementations
 ======================================
 
-There are already quite a bunch of tool like this one. But, some are only for one language,
-some are running regexp on the whole HTML code (which is bad), some are not tested, some are bundled inside a CMS
-or a Lib, some are not using proper autoloading... Have a look by yourself:
+There are already quite a bunch of tool like this one. But some are only for one language,
+some are running regexp on the whole HTML code ([which is bad](http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454)), some
+are not tested, some are bundled inside a CMS or a Library, some are not using proper autoloading... Have a look by yourself:
 
 - http://michelf.ca/projets/php-smartypants/
 - http://michelf.ca/projets/php-smartypants/typographer/
