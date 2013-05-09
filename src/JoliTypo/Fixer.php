@@ -16,6 +16,7 @@ class Fixer
     const LAQUO               = "«";
     const RAQUO               = "»";
     const RSQUO               = "’";
+    const TIMES               = "×";
 
     /**
      * @var array   HTML Tags to bypass
@@ -28,8 +29,8 @@ class Fixer
      * @todo        Allow to set this in a YML file?
      */
     protected $rule_sets = array(
-        'fr_FR' => array('Ellipsis', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote'),
-        'fr_CA' => array('Ellipsis', 'FrenchQuotes', 'SingleQuote')
+        'fr_FR' => array('Ellipsis', 'Dimension', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote'),
+        'fr_CA' => array('Ellipsis', 'Dimension', 'FrenchQuotes', 'SingleQuote')
     );
 
     /**

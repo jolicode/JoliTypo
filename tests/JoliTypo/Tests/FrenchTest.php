@@ -1,6 +1,8 @@
 <?php
 namespace JoliTypo\Tests;
 
+use JoliTypo\Fixer;
+
 class FrenchTest extends \PHPUnit_Framework_TestCase
 {
     const TOFIX = <<<TOFIX
@@ -18,7 +20,7 @@ content" de t'avoir <a href="http://coucou">invité</a> !</p>
   pre
 </code></pre>
 
-<p>Ceci &eacute;té un "CHOQUE"&nbsp;!</p>
+<p>Ceci &eacute;té un "CHOQUE"&nbsp;! Son salon fait 4x4m, ce qui est plutôt petit.</p>
 TOFIX;
 
     const FIXED = <<<FIXED
@@ -36,12 +38,12 @@ content&#8239;&raquo; de t&rsquo;avoir <a href="http://coucou">invit&eacute;</a>
   pre
 </code></pre>
 
-<p>Ceci &eacute;t&eacute; un &laquo;&#8239;CHOQUE&#8239;&raquo;&nbsp;!</p>
+<p>Ceci &eacute;t&eacute; un &laquo;&#8239;CHOQUE&#8239;&raquo;&nbsp;! Son salon fait 4&times;4m, ce qui est plut&ocirc;t petit.</p>
 FIXED;
 
     public function testRegisterProvider()
     {
-        $fixer = new \JoliTypo\Fixer();
+        $fixer = new Fixer('fr_FR');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));
