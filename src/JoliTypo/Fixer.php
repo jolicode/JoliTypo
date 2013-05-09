@@ -1,6 +1,7 @@
 <?php
 namespace JoliTypo;
 
+use JoliTypo\Exception\BadRuleSetException;
 use JoliTypo\Exception\InvalidMarkupException;
 
 class Fixer
@@ -18,12 +19,32 @@ class Fixer
 
     /**
      * @var array   HTML Tags to bypass
+     * @todo        Allow to set this in a YML file?
      */
     protected $protected_tags = array('pre', 'code', 'script', 'style');
 
     /**
-     * @param  string $content HTML content to fix
-     * @return string Content fixed
+     * @var array   Default rules by culture code
+     * @todo        Allow to set this in a YML file?
+     */
+    protected $rule_sets = array(
+        'fr_FR' => array('Ellipsis', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote'),
+        'fr_CA' => array('Ellipsis', 'FrenchQuotes', 'SingleQuote')
+    );
+
+    /**
+     * @var The rules to apply on each DOMText
+     */
+    protected $_rules;
+
+    public function __construct($rule = 'fr_FR')
+    {
+        $this->setRules($rule);
+    }
+
+    /**
+     * @param  string       $content    HTML content to fix
+     * @return string                   Content fixed
      */
     public function fix($content)
     {
@@ -34,6 +55,21 @@ class Fixer
         $content = $this->exportDOMDocument($dom);
 
         return $content;
+    }
+
+    /**
+     * @param  string|array $rule       Can be the $rules key (culture code) or a set of rule class names
+     * @throws Exception\BadRuleSetException
+     */
+    public function setRules($rule)
+    {
+        if (is_array($rule) && !empty($rule)) {
+            $this->_rules = $rule;
+        } else if (is_string($rule) && isset($this->rule_sets[$rule])) {
+            $this->_rules = $this->rule_sets[$rule];
+        } else {
+            throw new BadRuleSetException();
+        }
     }
 
     /**
@@ -77,8 +113,7 @@ class Fixer
     {
         $content = $childNode->wholeText;
 
-        // @todo This list is what makes the lib multi-language ready. Need to be configurable.
-        foreach (array('Ellipsis', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote') as $fixer_name) {
+        foreach ($this->_rules as $fixer_name) {
             $class = 'JoliTypo\\Fixer\\'.$fixer_name;
             $fixer = new $class();
 
@@ -133,5 +168,18 @@ class Fixer
                                     "", $dom->saveHTML());
 
         return trim($content);
+    }
+
+    /**
+     * @param array $protected_tags
+     * @throws \InvalidArgumentException
+     */
+    public function setProtectedTags($protected_tags)
+    {
+        if (!is_array($protected_tags)) {
+            throw new \InvalidArgumentException("Protected tags must be an array (empty array for no protection).");
+        }
+
+        $this->protected_tags = $protected_tags;
     }
 }

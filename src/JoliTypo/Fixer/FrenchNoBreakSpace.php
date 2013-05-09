@@ -5,6 +5,11 @@ namespace JoliTypo\Fixer;
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 
+/**
+ * We use NO_BREAK_SPACE, but some recommends NO_BREAK_THIN_SPACE. Actually, both are correct.
+ *
+ * @package JoliTypo\Fixer
+ */
 class FrenchNoBreakSpace implements FixerInterface
 {
     public function fix($content)

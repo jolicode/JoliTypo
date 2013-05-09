@@ -1,11 +1,15 @@
 Todo / Rules to apply
 =====================
 
-
 fr-FR rules
 -----------
 
 - Numbers > 1000 must be separated by groups of 3 with a non breaking space (1000 => 1 000, 1013424 => 1 013 424)
+- Quotes and double-quotes inside FrenchQuotes should be translated to english quotes:
+
+    Il nous raconta : « Hier, je me promenais sur les quais. Je demandai à un passant : “Quelle heure est-il ?”
+    Il répondit : “Désolé, je n’ai pas de montre, il doit être midi, mais c’est ‛sans garantie’.” Je le remerciai et partis. »
+
 
 fr-CA rules
 -----------
@@ -37,5 +41,4 @@ Glossary & References
 Thanks to theses online resources for helping a developer understands typography:
 
 - http://typographisme.net/post/Les-espaces-typographiques-et-le-web
-
 - http://daringfireball.net/projects/smartypants/
