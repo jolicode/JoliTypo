@@ -1,6 +1,8 @@
 <?php
 namespace JoliTypo\Tests\Fixer;
 
+use JoliTypo\Fixer;
+
 class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleString()
@@ -8,10 +10,10 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
         $fixer = new \JoliTypo\Fixer\FrenchQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\FrenchQuotes', $fixer);
 
-        $this->assertEquals("« Good code is like a good joke. »", $fixer->fix('"Good code is like a good joke."'));
-        $this->assertEquals("« Good code is like a Bieber. » - said no ever, ever.", $fixer->fix('"Good code is like a Bieber." - said no ever, ever.'));
+        $this->assertEquals("«".Fixer::NO_BREAK_THIN_SPACE."Good code is like a good joke.".Fixer::NO_BREAK_THIN_SPACE."»", $fixer->fix('"Good code is like a good joke."'));
+        $this->assertEquals("«".Fixer::NO_BREAK_THIN_SPACE."Good code is like a Bieber.".Fixer::NO_BREAK_THIN_SPACE."» - said no ever, ever.", $fixer->fix('"Good code is like a Bieber." - said no ever, ever.'));
 
-        $this->assertEquals("Some people are like « Batman », others like « Superman ».", $fixer->fix('Some people are like "Batman", others like "Superman".'));
+        $this->assertEquals("Some people are like «".Fixer::NO_BREAK_THIN_SPACE."Batman".Fixer::NO_BREAK_THIN_SPACE."», others like «".Fixer::NO_BREAK_THIN_SPACE."Superman".Fixer::NO_BREAK_THIN_SPACE."».", $fixer->fix('Some people are like "Batman", others like "Superman".'));
         $this->assertEquals('Oh my god, this quote is alone: " !', $fixer->fix('Oh my god, this quote is alone: " !'));
     }
 
@@ -31,6 +33,6 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 
         $fixer = new \JoliTypo\Fixer\FrenchQuotes();
 
-        $this->assertEquals("Am I an ellipsis…", $fixer->fix('Oh my god, this quote is alone: " ! But those are "ok".'));
+        $this->assertEquals("Oh my god, this quote is alone: \" ! But those are «".Fixer::NO_BREAK_THIN_SPACE."ok".Fixer::NO_BREAK_THIN_SPACE."».", $fixer->fix('Oh my god, this quote is alone: " ! But those are "ok".'));
     }
 }

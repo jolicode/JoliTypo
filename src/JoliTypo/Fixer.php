@@ -9,8 +9,8 @@ class Fixer
      * DOMDocument does not like all the HTML entities; sometimes they are double encoded.
      * So the entities here are encoded and DOCDocument::saveHTML transform them to entity.
      */
-    const NO_BREAK_THIN_SPACE = " "; // &#8239;
-    const NO_BREAK_SPACE      = " "; // &#160;
+    const NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
+    const NO_BREAK_SPACE      = "\xC2\xA0"; // &#160;
     const ELLIPSIS            = "…";
     const LAQUO               = "«";
     const RAQUO               = "»";
