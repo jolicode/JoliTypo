@@ -73,13 +73,14 @@ Thanks to theses online resources for helping a developer understands typography
 - http://daringfireball.net/projects/smartypants/
 - [FR] http://www.uzine.net/article1802.html
 - [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
+- http://www.punctuationmatters.com/
 
 Alternatives and other implementations
 ======================================
 
-There are already quite a bunch of tool like this one. But some are only for one language,
+There are already quite a bunch of tool like this one (including good ones). But sadly, some are only for one language,
 some are running regexp on the whole HTML code ([which is bad](http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454)), some
-are not tested, some are bundled inside a CMS or a Library, some are not using proper autoloading... Have a look by yourself:
+are not tested, some are bundled inside a CMS or a Library, some are not using proper auto-loading, some do not have an open bug tracker... Have a look by yourself:
 
 - http://michelf.ca/projets/php-smartypants/
 - http://michelf.ca/projets/php-smartypants/typographer/

@@ -16,7 +16,9 @@ class Fixer
     const LAQUO               = "«";
     const RAQUO               = "»";
     const RSQUO               = "’";
-    const TIMES               = "×";
+    const TIMES               = "×"; // &times;
+    const NDASH               = "–"; // &ndash; or &#x2013;
+    const MDASH               = "—"; // &mdash; or &#x2014;
 
     /**
      * @var array   HTML Tags to bypass
@@ -29,8 +31,9 @@ class Fixer
      * @todo        Allow to set this in a YML file?
      */
     protected $rule_sets = array(
-        'fr_FR' => array('Ellipsis', 'Dimension', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote'),
-        'fr_CA' => array('Ellipsis', 'Dimension', 'FrenchQuotes', 'SingleQuote')
+        'fr_FR' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote'),
+        'fr_CA' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'SingleQuote'),
+        'en_GB' => array('Ellipsis', 'Dimension', 'Dash', 'SingleQuote')
     );
 
     /**
@@ -61,6 +64,8 @@ class Fixer
     /**
      * @param  string|array $rule       Can be the $rules key (culture code) or a set of rule class names
      * @throws Exception\BadRuleSetException
+     *
+     * @todo Allow to specify a simple lang code like "en" or "fr" instead of a full locale code.
      */
     public function setRules($rule)
     {
