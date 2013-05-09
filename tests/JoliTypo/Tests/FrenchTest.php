@@ -8,7 +8,7 @@ class FrenchTest extends \PHPUnit_Framework_TestCase
     const TOFIX = <<<TOFIX
 <p>Ceci est à remplacer par une fâble :p</p>
 
-<pre>Oh, du "code"!</pre>
+<pre>Oh, du "code" encodé, mais pas double encodé: &amp;!</pre>
 
 <p>Le mec a fini sa course en 2'33" contre 2'44" pour le second !</p>
 
@@ -26,7 +26,7 @@ TOFIX;
     const FIXED = <<<FIXED
 <p>Ceci est &agrave; remplacer par une f&acirc;ble&nbsp;:p</p>
 
-<pre>Oh, du "code"!</pre>
+<pre>Oh, du "code" encod&eacute;, mais pas double encod&eacute;: &amp;!</pre>
 
 <p>Le mec a fini sa course en 2'33" contre 2'44" pour le second&nbsp;!</p>
 
