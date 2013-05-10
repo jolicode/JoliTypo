@@ -6,6 +6,8 @@ JoliTypo - Microtypography fixer for the web
 JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content.
 
 ```php
+use JoliTypo\Fixer;
+
 $fixer = new Fixer('en_GB');
 $fixed_content = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs</p>");
 ```
@@ -21,6 +23,15 @@ It's designed to be:
 - fully open and usable in any project (MIT License)
 
 **This software is still in alpha, some Fixer are missing for a proper release.**
+
+Installation
+============
+
+**During the alpha phase, this will not work as the package is not on packagist yet.**
+
+```
+composer install jolicode/jolitypo
+```
 
 Available Fixer
 ===============
@@ -65,6 +76,7 @@ Global
 ------
 
 - Hyphenator using https://packagist.org/packages/org_heigl/hyphenator
+- Should we run the fixes on `title` attributes and image `alt`?
 
 fr-FR
 -----
@@ -74,7 +86,6 @@ fr-FR
 
     > Il nous raconta : « Hier, je me promenais sur les quais. Je demandai à un passant : “Quelle heure est-il ?”
     > Il répondit : “Désolé, je n’ai pas de montre, il doit être midi, mais c’est ‛sans garantie’.” Je le remerciai et partis. »
-
 
 fr-CA
 -----
