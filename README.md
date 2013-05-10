@@ -87,6 +87,16 @@ fr-CH
 - Same as French but Narrow No-Break Space before `:`
 
 
+Add your own Fixer / Contribute a Fixer
+=======================================
+
+// @todo
+
+- Write test
+- A Fixer is run on a piece of text, no HTML to deal with
+- Implement `JoliTypo\FixerInterface`
+
+
 Compatibility & OS support restrictions
 =======================================
 
