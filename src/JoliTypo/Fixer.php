@@ -47,8 +47,8 @@ class Fixer
     }
 
     /**
-     * @param  string       $content    HTML content to fix
-     * @return string                   Content fixed
+     * @param  string $content HTML content to fix
+     * @return string Content fixed
      */
     public function fix($content)
     {
@@ -62,7 +62,7 @@ class Fixer
     }
 
     /**
-     * @param  string|array $rule       Can be the $rules key (culture code) or a set of rule class names
+     * @param  string|array                  $rule Can be the $rules key (culture code) or a set of rule class names
      * @throws Exception\BadRuleSetException
      *
      * @todo Allow to specify a simple lang code like "en" or "fr" instead of a full locale code.
@@ -71,7 +71,7 @@ class Fixer
     {
         if (is_array($rule) && !empty($rule)) {
             $this->_rules = $rule;
-        } else if (is_string($rule) && isset($this->rule_sets[$rule])) {
+        } elseif (is_string($rule) && isset($this->rule_sets[$rule])) {
             $this->_rules = $this->rule_sets[$rule];
         } else {
             throw new BadRuleSetException();
@@ -177,7 +177,7 @@ class Fixer
     }
 
     /**
-     * @param array $protected_tags
+     * @param  array                     $protected_tags
      * @throws \InvalidArgumentException
      */
     public function setProtectedTags($protected_tags)

@@ -7,7 +7,7 @@ JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microt
 
 ```php
 $fixer = new Fixer('en_GB');
-$fixed_content = $fixer->fix('<p>Some user contributed HTML which does not use proper glyphs</p>");
+$fixed_content = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs</p>");
 ```
 
 It's designed to be:
@@ -35,10 +35,10 @@ Default usage
 
 ```php
 $fixer = new Fixer('en_GB');
-$fixed_content = $fixer->fix('<p>Some user contributed HTML which does not use proper glyphs.</p>");
+$fixed_content = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
 
 $fixer->setRules('fr_FR');
-$fixed_content = $fixer->fix('<p>Du contenu en français à corriger.</p>");
+$fixed_content = $fixer->fix("<p>Du contenu en français à corriger.</p>");
 ```
 
 Define your own Fixer list
@@ -46,7 +46,7 @@ Define your own Fixer list
 
 ```php
 $fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'SingleQuote'));
-$fixed_content = $fixer->fix('<p>Content fixed by the 4 fixers.</p>");
+$fixed_content = $fixer->fix("<p>Content fixed by the 4 fixers.</p>");
 ```
 
 Configure the protected tags
@@ -55,7 +55,7 @@ Configure the protected tags
 ```php
 $fixer = new Fixer('en_GB');
 $fixer->setProtectedTags(array('pre', 'a'));
-$fixed_content = $fixer->fix('<p>Fixed</p> <pre>Not fixed</pre> <p>Fixer <a>Not Fixed</a>.</p>");
+$fixed_content = $fixer->fix("<p>Fixed</p> <pre>Not fixed</pre> <p>Fixer <a>Not Fixed</a>.</p>");
 ```
 
 Todo / Rules to be developed
