@@ -22,5 +22,7 @@ class FrenchNoBreakSpaceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Superman: the movie", $fixer->fix("Superman: the movie"));
         $this->assertEquals("Superman".Fixer::NO_BREAK_SPACE."; the movie", $fixer->fix("Superman ; the movie"));
         $this->assertEquals("Superman".Fixer::NO_BREAK_SPACE."; the movie", $fixer->fix("Superman ; the movie"));
+
+        $this->assertEquals("Here is a  brand name: Yahoo!", $fixer->fix("Here is a  brand name: Yahoo!"));
     }
 }

@@ -5,8 +5,10 @@ JoliTypo - Microtypography fixer for the web
 
 JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content.
 
-    $fixer = new Fixer('en_GB');
-    $fixed_content = $fixer->fix('<p>Some user contributed HTML which does not use proper glyphs</p>");
+```php
+$fixer = new Fixer('en_GB');
+$fixed_content = $fixer->fix('<p>Some user contributed HTML which does not use proper glyphs</p>");
+```
 
 It's designed to be:
 
@@ -14,8 +16,11 @@ It's designed to be:
 - fully tested
 - easy to integrate into modern PHP project (composer and autoload)
 - robust (make use of `\DOMDocument` instead of parsing HTML with dummy regexp)
+- smart enough to avoid Javascript, Code, CSS processing (protected tags)
 - fast
-- fully open and usable in any project (MIT Licence)
+- fully open and usable in any project (MIT License)
+
+**This software is still in alpha, some Fixer are missing for a proper release.**
 
 Available Fixer
 ===============
@@ -25,7 +30,33 @@ Available Fixer
 How to use
 ==========
 
-// @todo
+Default usage
+-------------
+
+```php
+$fixer = new Fixer('en_GB');
+$fixed_content = $fixer->fix('<p>Some user contributed HTML which does not use proper glyphs.</p>");
+
+$fixer->setRules('fr_FR');
+$fixed_content = $fixer->fix('<p>Du contenu en français à corriger.</p>");
+```
+
+Define your own Fixer list
+--------------------------
+
+```php
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'SingleQuote'));
+$fixed_content = $fixer->fix('<p>Content fixed by the 4 fixers.</p>");
+```
+
+Configure the protected tags
+----------------------------
+
+```php
+$fixer = new Fixer('en_GB');
+$fixer->setProtectedTags(array('pre', 'a'));
+$fixed_content = $fixer->fix('<p>Fixed</p> <pre>Not fixed</pre> <p>Fixer <a>Not Fixed</a>.</p>");
+```
 
 Todo / Rules to be developed
 ============================
@@ -33,7 +64,7 @@ Todo / Rules to be developed
 Global
 ------
 
-- Hyphenator?
+- Hyphenator using https://packagist.org/packages/org_heigl/hyphenator
 
 fr-FR
 -----
@@ -64,16 +95,10 @@ Compatibility & OS support restrictions
 
 BUT if you use a font (`@font-face` maybe) that contains all thoses glyphs, there will be no issues.
 
-Glossary & References
-=====================
+License
+=======
 
-Thanks to theses online resources for helping a developer understands typography:
-
-- [FR] http://typographisme.net/post/Les-espaces-typographiques-et-le-web
-- http://daringfireball.net/projects/smartypants/
-- [FR] http://www.uzine.net/article1802.html
-- [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
-- http://www.punctuationmatters.com/
+This piece of code is under MIT License. See the LICENSE file.
 
 Alternatives and other implementations
 ======================================
@@ -89,3 +114,14 @@ are not tested, some are bundled inside a CMS or a Library, some are not using p
 - https://github.com/spip/SPIP/blob/master/ecrire/typographie/fr.php
 - https://github.com/dg/texy/blob/master/Texy/modules/TexyTypographyModule.php
 - https://github.com/scoates/lexentity
+
+Glossary & References
+=====================
+
+Thanks to theses online resources for helping a developer understands typography:
+
+- [FR] http://typographisme.net/post/Les-espaces-typographiques-et-le-web
+- http://daringfireball.net/projects/smartypants/
+- [FR] http://www.uzine.net/article1802.html
+- [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
+- http://www.punctuationmatters.com/
