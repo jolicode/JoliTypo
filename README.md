@@ -77,6 +77,7 @@ Global
 
 - Hyphenator using https://packagist.org/packages/org_heigl/hyphenator
 - Should we run the fixes on `title` attributes and image `alt`?
+- Add a HTML entities to UTF-8 converter?
 
 fr-FR
 -----

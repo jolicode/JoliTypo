@@ -26,7 +26,7 @@ class Fixer
      * @var array   HTML Tags to bypass
      * @todo        Allow to set this in a YML file?
      */
-    protected $protected_tags = array('pre', 'code', 'script', 'style');
+    protected $protected_tags = array('head', 'link', 'pre', 'code', 'script', 'style');
 
     /**
      * @var array   Default rules by culture code
@@ -149,7 +149,12 @@ class Fixer
         $dom->formatOutput          = false;
 
         // Little hack to force UTF-8
-        $loaded = $dom->loadHTML('<?xml encoding="UTF-8"><body>' . $content);
+        if (strpos($content, '<?xml encoding') === false) {
+            $hack = strpos($content, '<body') === false ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
+            $loaded = $dom->loadHTML($hack . $content);
+        } else {
+            $loaded = $dom->loadHTML($content);
+        }
 
         if (!$loaded) {
             throw new InvalidMarkupException("Can't load the given HTML");
@@ -172,9 +177,10 @@ class Fixer
     private function exportDOMDocument(\DOMDocument $dom)
     {
         // Remove added body & doctype
-        $content = preg_replace(array("/^\<\!DOCTYPE.*?<html><body>/si",
-                                          "!</body></html>$!si"),
-                                    "", $dom->saveHTML());
+        $content = preg_replace(array(
+                "/^\<\!DOCTYPE.*?<html><body>/si",
+                "!</body></html>$!si"),
+                "", $dom->saveHTML());
 
         return trim($content);
     }
