@@ -35,7 +35,7 @@ class Fixer
     protected $rule_sets = array(
         'fr_FR' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote'),
         'fr_CA' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'SingleQuote'),
-        'en_GB' => array('Ellipsis', 'Dimension', 'Dash', 'SingleQuote')
+        'en_GB' => array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote')
     );
 
     /**
