@@ -43,7 +43,7 @@ class Fixer
      */
     protected $_rules = array();
 
-    public function __construct($rule = 'fr_FR')
+    public function __construct($rule = 'en_GB')
     {
         $this->setRules($rule);
     }
