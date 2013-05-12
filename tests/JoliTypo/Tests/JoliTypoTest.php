@@ -1,6 +1,8 @@
 <?php
 namespace JoliTypo\Tests;
 
+use JoliTypo\FixerInterface;
+
 class JoliTypoTest extends \PHPUnit_Framework_TestCase
 {
     public function testRegisterProvider()
@@ -43,5 +45,30 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
     {
         $fixer = new \JoliTypo\Fixer();
         $fixer->setProtectedTags('YOLO');
+    }
+
+    /**
+     * @expectedException JoliTypo\Exception\BadRuleSetException
+     */
+    public function testInvalidCustomFixerInstance()
+    {
+        $fixer = new \JoliTypo\Fixer();
+        $fixer->setRules(array(new FakeFixer()));
+    }
+
+    public function testOkFixer()
+    {
+        $fixer = new \JoliTypo\Fixer();
+        $fixer->setRules(array(new OkFixer()));
+
+        $this->assertEquals("<p>Nope !</p>", $fixer->fix("<p>Nope !</p>"));
+    }
+}
+
+class FakeFixer {}
+
+class OkFixer implements FixerInterface {
+    public function fix($content) {
+        return $content;
     }
 }

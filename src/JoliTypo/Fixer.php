@@ -39,9 +39,9 @@ class Fixer
     );
 
     /**
-     * @var The rules to apply on each DOMText
+     * @var array The rules Fixer instances to apply on each DOMText
      */
-    protected $_rules;
+    protected $_rules = array();
 
     public function __construct($rule = 'fr_FR')
     {
@@ -72,10 +72,35 @@ class Fixer
     public function setRules($rule)
     {
         if (is_array($rule) && !empty($rule)) {
-            $this->_rules = $rule;
+            $rules = $rule;
         } elseif (is_string($rule) && isset($this->rule_sets[$rule])) {
-            $this->_rules = $this->rule_sets[$rule];
+            $rules = $this->rule_sets[$rule];
         } else {
+            throw new BadRuleSetException();
+        }
+
+        $this->_rules = array();
+        foreach ($rules as $rule)
+        {
+            if (is_object($rule)) {
+                $fixer = $rule;
+                $classname = get_class($rule);
+            } else {
+                $classname = class_exists($rule) ? $rule : (class_exists('JoliTypo\\Fixer\\'.$rule) ? 'JoliTypo\\Fixer\\'.$rule : false);
+                if (!$classname) {
+                    throw new BadRuleSetException();
+                }
+
+                $fixer = new $classname;
+            }
+
+            if (!$fixer instanceof FixerInterface) {
+                throw new BadRuleSetException();
+            }
+            $this->_rules[$classname] = $fixer;
+        }
+
+        if (empty($this->_rules)) {
             throw new BadRuleSetException();
         }
     }
@@ -121,11 +146,7 @@ class Fixer
     {
         $content = $childNode->wholeText;
 
-        // @todo Do not instantiate new Fixer, store them for later reuse.
-        foreach ($this->_rules as $fixer_name) {
-            $class = 'JoliTypo\\Fixer\\'.$fixer_name;
-            $fixer = new $class();
-
+        foreach ($this->_rules as $fixer) {
             $content = $fixer->fix($content);
         }
 

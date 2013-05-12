@@ -9,7 +9,7 @@ JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microt
 use JoliTypo\Fixer;
 
 $fixer = new Fixer('en_GB');
-$fixed_content = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs</p>");
+$fixed_content = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
 ```
 
 It's designed to be:
@@ -30,7 +30,7 @@ Installation
 **During the alpha phase, this will not work as the package is not on packagist yet.**
 
 ```
-composer install jolicode/jolitypo
+composer install jolicode/jolitypo dev-master
 ```
 
 Available Fixer
@@ -58,6 +58,16 @@ Define your own Fixer list
 ```php
 $fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'SingleQuote'));
 $fixed_content = $fixer->fix("<p>Content fixed by the 4 fixers.</p>");
+
+// or class name
+
+$fixer->setRules(array('Ellipsis', 'Acme\\YourOwn\\TypoFixer'));
+$fixed_content = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
+
+// or even instances (must implement JoliTypo\FixerInterface)
+
+$fixer->setRules(array('Ellipsis', new Acme\YourOwn\TypoFixer()));
+$fixed_content = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
 ```
 
 Configure the protected tags
@@ -108,7 +118,6 @@ Add your own Fixer / Contribute a Fixer
 - A Fixer is run on a piece of text, no HTML to deal with
 - Implement `JoliTypo\FixerInterface`
 
-
 Compatibility & OS support restrictions
 =======================================
 
@@ -147,3 +156,4 @@ Thanks to theses online resources for helping a developer understands typography
 - [FR] http://www.uzine.net/article1802.html
 - [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
 - http://www.punctuationmatters.com/
+- "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667
