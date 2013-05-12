@@ -121,6 +121,7 @@ class Fixer
     {
         $content = $childNode->wholeText;
 
+        // @todo Do not instantiate new Fixer, store them for later reuse.
         foreach ($this->_rules as $fixer_name) {
             $class = 'JoliTypo\\Fixer\\'.$fixer_name;
             $fixer = new $class();

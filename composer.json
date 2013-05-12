@@ -1,12 +1,15 @@
 {
     "name": "jolicode/jolitypo",
+    "description": "Microtypography fixer for the web.",
     "type": "library",
     "license": "MIT",
-    "stability": "dev",
+    "homepage": "https://github.com/jolicode/JoliTypo",
+    "keywords": ["typography", "ellipsis", "quote", "fixer"],
     "authors": [
         {
             "name": "Damien Alexandre",
-            "email": "dalexandre@jolicode.com"
+            "email": "dalexandre@jolicode.com",
+            "homepage": "http://damienalexandre.fr/"
         }
     ],
     "require": {
