@@ -13,13 +13,9 @@ class FrenchQuotes implements FixerInterface
 {
     public function fix($content)
     {
-        // @todo Not very clean but do the job
-        $pattern = ($content{0} === '"') ? '@"([^"]+)"@im' : '@\s"([^"]+)"@im';
-        $prefix  = ($content{0} === '"') ? '' : ' ';
-
         return preg_replace(
-            $pattern,
-            $prefix.Fixer::LAQUO.Fixer::NO_BREAK_SPACE."$1".Fixer::NO_BREAK_SPACE.Fixer::RAQUO,
+            '@(^|\s)"([^"]+)"@im',
+            "$1".Fixer::LAQUO.Fixer::NO_BREAK_SPACE."$2".Fixer::NO_BREAK_SPACE.Fixer::RAQUO,
             $content);
     }
 }
