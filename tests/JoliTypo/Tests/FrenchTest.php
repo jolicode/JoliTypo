@@ -41,9 +41,10 @@ content&nbsp;&raquo; de t&rsquo;avoir <a href="http://coucou">invit&eacute;</a>&
 <p>Ceci &eacute;t&eacute; un &laquo;&nbsp;CHOQUE&nbsp;&raquo;&#8239;! Son salon fait 4&times;4m, ce qui est plut&ocirc;t petit.</p>
 FIXED;
 
-    public function testRegisterProvider()
+    public function testFixFullText()
     {
         $fixer = new Fixer('fr_FR');
+        $fixer->setLocale('fr');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));

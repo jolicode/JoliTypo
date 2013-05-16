@@ -5,7 +5,7 @@ use JoliTypo\FixerInterface;
 
 class JoliTypoTest extends \PHPUnit_Framework_TestCase
 {
-    public function testRegisterProvider()
+    public function testSimpleInstance()
     {
         $fixer = new \JoliTypo\Fixer();
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);

@@ -33,19 +33,22 @@ class Fixer
      * @todo        Allow to set this in a YML file?
      */
     protected $rule_sets = array(
-        'fr_FR' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote'),
-        'fr_CA' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'SingleQuote'),
-        'en_GB' => array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote')
+        'fr_FR' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote', 'Hyphen'),
+        'fr_CA' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'SingleQuote', 'Hyphen'),
+        'en_GB' => array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote', 'Hyphen')
     );
+
+    protected $locale = null;
 
     /**
      * @var array The rules Fixer instances to apply on each DOMText
      */
     protected $_rules = array();
 
-    public function __construct($rule = 'en_GB')
+    public function __construct($rule_set = null, $locale = 'en_GB')
     {
-        $this->setRules($rule);
+        $this->setLocale($locale);
+        $this->setRules($rule_set);
     }
 
     /**
@@ -75,6 +78,8 @@ class Fixer
             $rules = $rule;
         } elseif (is_string($rule) && isset($this->rule_sets[$rule])) {
             $rules = $this->rule_sets[$rule];
+        } elseif (null === $rule && isset($this->rule_sets[$this->getLocale()])) {
+            $rules = $this->rule_sets[$this->locale];
         } else {
             throw new BadRuleSetException();
         }
@@ -91,7 +96,7 @@ class Fixer
                     throw new BadRuleSetException();
                 }
 
-                $fixer = new $classname;
+                $fixer = new $classname($this->getLocale());
             }
 
             if (!$fixer instanceof FixerInterface) {
@@ -217,5 +222,15 @@ class Fixer
         }
 
         $this->protected_tags = $protected_tags;
+    }
+
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }
