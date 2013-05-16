@@ -21,10 +21,12 @@ content" de t'avoir <a href="http://coucou">invité</a> !</p>
 </code></pre>
 
 <p>Ceci &eacute;té un "CHOQUE"&nbsp;! Son salon fait 4x4m, ce qui est plutôt petit.</p>
+
+<p>Les trés long mots sont tronqués, comme "renseignements" par exemple.</p>
 TOFIX;
 
     const FIXED = <<<FIXED
-<p>Ceci est &agrave; remplacer par une f&acirc;ble&nbsp;:p</p>
+<p>Ceci est &agrave; rempla&shy;cer par une f&acirc;ble&nbsp;:p</p>
 
 <pre>Oh, du "code" encod&eacute;, mais pas double encod&eacute;: &amp;!</pre>
 
@@ -39,6 +41,8 @@ content&nbsp;&raquo; de t&rsquo;avoir <a href="http://coucou">invit&eacute;</a>&
 </code></pre>
 
 <p>Ceci &eacute;t&eacute; un &laquo;&nbsp;CHOQUE&nbsp;&raquo;&#8239;! Son salon fait 4&times;4m, ce qui est plut&ocirc;t petit.</p>
+
+<p>Les tr&eacute;s long mots sont tron&shy;qu&eacute;s, comme &laquo;&nbsp;rensei&shy;gne&shy;ments&nbsp;&raquo; par exemple.</p>
 FIXED;
 
     public function testFixFullText()

@@ -17,6 +17,9 @@ class Hyphen implements FixerInterface
     function __construct($locale)
     {
         $this->hyphenator = Hyphenator::factory(null, $locale);
+        $this->hyphenator->getOptions()->setHyphen(Fixer::SHY);
+        $this->hyphenator->getOptions()->setLeftMin(4);
+        $this->hyphenator->getOptions()->setRightMin(2);
     }
 
     public function fix($content)

@@ -21,6 +21,7 @@ class Fixer
     const MDASH               = "—"; // &mdash; or &#x2014;
     const LDQUO               = "“"; // &ldquo; or &#8220;
     const RDQUO               = "”"; // &rdquo; or &#8221;
+    const SHY                 = "\xC2\xAD"; // &shy;
 
     /**
      * @var array   HTML Tags to bypass
