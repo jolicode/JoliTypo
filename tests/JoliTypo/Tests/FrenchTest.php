@@ -48,7 +48,6 @@ FIXED;
     public function testFixFullText()
     {
         $fixer = new Fixer('fr_FR');
-        $fixer->setLocale('fr');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));

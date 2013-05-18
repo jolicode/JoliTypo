@@ -48,7 +48,6 @@ Default usage
 $fixer = new Fixer(); // en_GB by default
 $fixed_content = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
 
-$fixer->setRules('fr_FR');
 $fixer->setLocale('fr_FR');
 $fixed_content = $fixer->fix("<p>Du contenu en français à corriger.</p>");
 ```
@@ -57,17 +56,22 @@ Define your own Fixer list
 --------------------------
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'SingleQuote'));
+$fixer = new Fixer();
+$fixer->setRules('MyCountryCode', array('Ellipsis', 'Dimension', 'Dash', 'SingleQuote'));
+
+$fixer->setLocale('MyCountryCode');
 $fixed_content = $fixer->fix("<p>Content fixed by the 4 fixers.</p>");
 
 // or class name
 
-$fixer->setRules(array('Ellipsis', 'Acme\\YourOwn\\TypoFixer'));
+$fixer->setRules('MyCountryCode', array('Ellipsis', 'Acme\\YourOwn\\TypoFixer'));
+$fixer->setLocale('MyCountryCode');
 $fixed_content = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
 
 // or even instances (must implement JoliTypo\FixerInterface)
 
-$fixer->setRules(array('Ellipsis', new Acme\YourOwn\TypoFixer()));
+$fixer->setRules('MyCountryCode', array('Ellipsis', new Acme\YourOwn\TypoFixer()));
+$fixer->setLocale('MyCountryCode');
 $fixed_content = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
 ```
 
@@ -80,34 +84,12 @@ $fixer->setProtectedTags(array('pre', 'a'));
 $fixed_content = $fixer->fix("<p>Fixed</p> <pre>Not fixed</pre> <p>Fixer <a>Not Fixed</a>.</p>");
 ```
 
-Configure the locale
---------------------
-
-We have some specific fixer like `FrenchQuote`, but we also have generic ones (`Hyphen`) which work
-with a given locale. The default one is `en_GB`.
-
-```php
-$fixer->setLocale('fr_FR');
-```
-
-This is not altering the rules you use! Do not forgot the `setRules` setter.
-
-```php
-$fixer->setRules('fr_FR');
-$fixer->setLocale('fr_FR');
-
-// or
-
-$fixer = new Fixer('fr_FR', 'fr_FR');
-```
-
 Todo / Rules to be developed
 ============================
 
 Global
 ------
 
-- Hyphenator using https://packagist.org/packages/org_heigl/hyphenator
 - Should we run the fixes on `title` attributes and image `alt`?
 - Add a HTML entities to UTF-8 converter?
 - Improve the way locale / rules and handled and configured

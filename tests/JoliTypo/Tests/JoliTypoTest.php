@@ -35,7 +35,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
     public function testBadRuleSetsAfterConstructor()
     {
         $fixer = new \JoliTypo\Fixer();
-        $fixer->setRules('YOLO');
+        $fixer->setRules('YOLO', array());
     }
 
     /**
@@ -53,13 +53,15 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
     public function testInvalidCustomFixerInstance()
     {
         $fixer = new \JoliTypo\Fixer();
-        $fixer->setRules(array(new FakeFixer()));
+        $fixer->setRules('fr', array(new FakeFixer()));
+        $fixer->setLocale('fr');
     }
 
     public function testOkFixer()
     {
         $fixer = new \JoliTypo\Fixer();
-        $fixer->setRules(array(new OkFixer()));
+        $fixer->setRules('coucou', array(new OkFixer()));
+        $fixer->setLocale('coucou');
 
         $this->assertEquals("<p>Nope !</p>", $fixer->fix("<p>Nope !</p>"));
     }

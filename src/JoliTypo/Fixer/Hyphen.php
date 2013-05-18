@@ -5,7 +5,6 @@ namespace JoliTypo\Fixer;
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 use Org\Heigl\Hyphenator\Hyphenator;
-use Org\Heigl\Hyphenator\Options;
 
 class Hyphen implements FixerInterface
 {
@@ -16,6 +15,7 @@ class Hyphen implements FixerInterface
 
     function __construct($locale)
     {
+        // @todo Fix the locale with the supported ones from Org.
         $this->hyphenator = Hyphenator::factory(null, $locale);
         $this->hyphenator->getOptions()->setHyphen(Fixer::SHY);
         $this->hyphenator->getOptions()->setLeftMin(4);

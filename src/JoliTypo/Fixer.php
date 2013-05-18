@@ -8,7 +8,7 @@ class Fixer
 {
     /**
      * DOMDocument does not like all the HTML entities; sometimes they are double encoded.
-     * So the entities here are encoded and DOCDocument::saveHTML transform them to entity.
+     * So the entities here are plain utf8 and DOCDocument::saveHTML transform them to entity.
      */
     const NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
     const NO_BREAK_SPACE      = "\xC2\xA0"; // &#160;
@@ -46,10 +46,9 @@ class Fixer
      */
     protected $_rules = array();
 
-    public function __construct($rule_set = null, $locale = 'en_GB')
+    public function __construct($locale = 'en_GB')
     {
         $this->setLocale($locale);
-        $this->setRules($rule_set);
     }
 
     /**
@@ -58,6 +57,11 @@ class Fixer
      */
     public function fix($content)
     {
+        // Force rule refresh if empty
+        if (empty($this->_rules)) {
+            $this->setLocale($this->locale);
+        }
+
         $dom = $this->loadDOMDocument($content);
 
         $this->processDOM($dom, $dom);
@@ -68,23 +72,31 @@ class Fixer
     }
 
     /**
-     * @param  string|array                  $rule Can be the $rules key (culture code) or a set of rule class names
+     * @param  string                        $locale
+     * @param                                $rules  Can be the $rules key (culture code) or a set of rule class names
      * @throws Exception\BadRuleSetException
+     * @return void
      *
      * @todo Allow to specify a simple lang code like "en" or "fr" instead of a full locale code.
      */
-    public function setRules($rule)
+    public function setRules($locale, $rules)
     {
-        if (is_array($rule) && !empty($rule)) {
-            $rules = $rule;
-        } elseif (is_string($rule) && isset($this->rule_sets[$rule])) {
-            $rules = $this->rule_sets[$rule];
-        } elseif (null === $rule && isset($this->rule_sets[$this->getLocale()])) {
-            $rules = $this->rule_sets[$this->locale];
-        } else {
+        if (!is_array($rules) || empty($rules)) {
             throw new BadRuleSetException();
         }
 
+        $this->rule_sets[$locale] = $rules;
+        $this->_rules             = array();
+    }
+
+    /**
+     * Build the _rules array of Fixer
+     *
+     * @param   $rules
+     * @throws  Exception\BadRuleSetException
+     */
+    private function compileRules($rules)
+    {
         $this->_rules = array();
         foreach ($rules as $rule)
         {
@@ -156,6 +168,7 @@ class Fixer
             $content = $fixer->fix($content);
         }
 
+        // update the DOM only if the node has changed
         if ($childNode->wholeText !== $content) {
             $node->replaceChild($dom->createTextNode($content), $childNode);
         }
@@ -232,6 +245,11 @@ class Fixer
 
     public function setLocale($locale)
     {
+        if (!is_string($locale) || !isset($this->rule_sets[$locale])) {
+            throw new BadRuleSetException();
+        }
+
         $this->locale = $locale;
+        $this->compileRules($this->rule_sets[$locale]);
     }
 }
