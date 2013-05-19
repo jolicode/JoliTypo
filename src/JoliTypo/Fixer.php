@@ -72,21 +72,33 @@ class Fixer
     }
 
     /**
+     * Add and use a list of rules for a given locale
+     *
      * @param  string                        $locale
-     * @param                                $rules  Can be the $rules key (culture code) or a set of rule class names
+     * @param  array                         $rules  Can be the $rules key (culture code) or a set of rule class names
      * @throws Exception\BadRuleSetException
      * @return void
-     *
-     * @todo Allow to specify a simple lang code like "en" or "fr" instead of a full locale code.
      */
     public function setRules($locale, $rules)
+    {
+        $this->addRules($locale, $rules);
+        $this->setLocale($locale);
+    }
+
+    /**
+     * Add a list of rules for a locale
+     *
+     * @param $locale
+     * @param $rules
+     * @throws Exception\BadRuleSetException
+     */
+    public function addRules($locale, $rules)
     {
         if (!is_array($rules) || empty($rules)) {
             throw new BadRuleSetException();
         }
 
         $this->rule_sets[$locale] = $rules;
-        $this->_rules             = array();
     }
 
     /**

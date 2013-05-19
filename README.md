@@ -82,7 +82,7 @@ SingleQuote
 
 Replace all the quotes (`'`) by a real rsquo (’).
 
-**It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules**
+**It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules.**
 
 How to use
 ==========
@@ -105,19 +105,16 @@ Define your own Fixer list
 $fixer = new Fixer();
 $fixer->setRules('MyCountryCode', array('Ellipsis', 'Dimension', 'Dash', 'SingleQuote'));
 
-$fixer->setLocale('MyCountryCode');
 $fixed_content = $fixer->fix("<p>Content fixed by the 4 fixers.</p>");
 
 // or class name
 
 $fixer->setRules('MyCountryCode', array('Ellipsis', 'Acme\\YourOwn\\TypoFixer'));
-$fixer->setLocale('MyCountryCode');
 $fixed_content = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
 
 // or even instances (must implement JoliTypo\FixerInterface)
 
 $fixer->setRules('MyCountryCode', array('Ellipsis', new Acme\YourOwn\TypoFixer()));
-$fixer->setLocale('MyCountryCode');
 $fixed_content = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
 ```
 
