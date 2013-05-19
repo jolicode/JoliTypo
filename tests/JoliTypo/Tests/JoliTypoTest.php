@@ -54,14 +54,12 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
     {
         $fixer = new \JoliTypo\Fixer();
         $fixer->setRules('fr', array(new FakeFixer()));
-        $fixer->setLocale('fr');
     }
 
     public function testOkFixer()
     {
         $fixer = new \JoliTypo\Fixer();
         $fixer->setRules('coucou', array(new OkFixer()));
-        $fixer->setLocale('coucou');
 
         $this->assertEquals("<p>Nope !</p>", $fixer->fix("<p>Nope !</p>"));
     }

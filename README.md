@@ -138,6 +138,9 @@ Global
 - Should we run the fixes on `title` attributes and image `alt`?
 - Add a HTML entities to UTF-8 converter?
 - Improve the way locale / rules and handled and configured (if I use `fr_FR`, I want the `fr` hyphenate)
+- Add TravisCI configuration file
+- Add EnglishTest
+- Add more pre-configured locale to `Fixer.php`, with the appropriate test
 
 fr-FR
 -----
