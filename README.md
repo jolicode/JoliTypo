@@ -142,6 +142,7 @@ Global
 - Add EnglishTest
 - Add more pre-configured locale to `Fixer.php`, with the appropriate test
 - Provide a Twig filter? (will be in a dedicated Bundle)
+- Add a http://cldr.unicode.org/ Fixer for number formatting (thx @g_marty for the tip!)
 
 fr-FR
 -----
