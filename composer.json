@@ -15,7 +15,7 @@
     "require": {
         "php": ">=5.3.0",
         "ext-mbstring": "*",
-        "org_heigl/hyphenator": "2.0.*"
+        "org_heigl/hyphenator": "dev-master"
     },
     "autoload": {
         "psr-0": {

@@ -141,6 +141,7 @@ Global
 - Add TravisCI configuration file
 - Add EnglishTest
 - Add more pre-configured locale to `Fixer.php`, with the appropriate test
+- Provide a Twig filter? (will be in a dedicated Bundle)
 
 fr-FR
 -----
