@@ -8,13 +8,15 @@ JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microt
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer('en_GB');
-$fixed_content = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
+$fixer = new Fixer('fr_FR');
+$fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
+// result: <p>Je suis &laquo;&nbsp;tr&egrave;s content&nbsp;&raquo; de t&rsquo;avoir invit&eacute; sur <a href="http://jolicode.com/">Jolicode.com</a>&#8239;!</p>
+// display: Je suis « très content » de t’avoir invité sur Jolicode.com !
 ```
 
 It's designed to be:
 
-- language agnostic (you can fix `fr_FR`, `fr_CA` and `en_US` there own ways)
+- language agnostic (you can fix `fr_FR`, `fr_CA` and `en_US` there own ways, new locale easy to configure)
 - fully tested
 - easy to integrate into modern PHP project (composer and autoload)
 - robust (make use of `\DOMDocument` instead of parsing HTML with dummy regexp)
@@ -33,10 +35,54 @@ Installation
 composer install jolicode/jolitypo dev-master
 ```
 
-Available Fixer
-===============
+Available Fixers
+================
 
-// @todo
+Dash
+----
+
+Replace the simple `-` by a ndash (–) between numbers (dates ranges...) and the double `--` by a mdash (—).
+
+Dimension
+---------
+
+Replace the letter x between numbers (`12 x 123`) by a times entity (×).
+
+Ellipsis
+--------
+
+Replace the three dot (`...`) by an ellipsis (…).
+
+EnglishQuotes
+-------------
+
+Convert dumb quotes (`" "`) to smart quotes (“ ”).
+
+FrenchNoBreakSpace
+------------------
+
+Replace some classic spaces by non breaking spaces following the French typographic code.
+No break space are placed before `:`, thin no break space before `;`, `!` and `?`.
+
+FrenchQuote
+-----------
+
+Convert dumb quotes (`" "`) to French quotes (« ») and use a no break space.
+
+Hyphen
+------
+
+Make use of `org_heigl/hyphenator`, a tool enabling word-hyphenation in PHP.
+This Hyphenator uses the pattern-files from OpenOffice which are based on the pattern-files created for TeX.
+
+There is only some locale available for this fixer: af_ZA, ca, da_DK, de_AT, de_CH, de_DE, en_GB, en_UK, et_EE, fr, hr_HR, hu_HU, it_IT, lt_LT, nb_NO, nn_NO, nl_NL, pl_PL, pt_BR, ro_RO, ru_RU, sk_SK, sl_SI, sr, zu_ZA.
+
+SingleQuote
+-----------
+
+Replace all the quotes (`'`) by a real rsquo (’).
+
+**It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules**
 
 How to use
 ==========
@@ -78,6 +124,8 @@ $fixed_content = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
 Configure the protected tags
 ----------------------------
 
+Protected tags is a list of HTML tag name the DOM parser must avoid. Nothing is those tags will be fixed.
+
 ```php
 $fixer = new Fixer();
 $fixer->setProtectedTags(array('pre', 'a'));
@@ -92,7 +140,7 @@ Global
 
 - Should we run the fixes on `title` attributes and image `alt`?
 - Add a HTML entities to UTF-8 converter?
-- Improve the way locale / rules and handled and configured
+- Improve the way locale / rules and handled and configured (if I use `fr_FR`, I want the `fr` hyphenate)
 
 fr-FR
 -----
@@ -117,16 +165,16 @@ fr-CH
 Add your own Fixer / Contribute a Fixer
 =======================================
 
-// @todo
-
 - Write test
 - A Fixer is run on a piece of text, no HTML to deal with
 - Implement `JoliTypo\FixerInterface`
+- Pull request
+- PROFIT!!!
 
 Compatibility & OS support restrictions
 =======================================
 
-- Windows XP : Narrow No-Break Space can't be used, all other spaces are ignored but they do not look bad (normal space).
+- Windows XP : Thin No-Break Space can't be used, all other spaces are ignored but they do not look bad (normal space).
 - Mac OS Snow Leopard : no espaces fixes, demi-fixes, cadratin et demi-cadratin but does not look bad (normal space).
 
 BUT if you use a font (`@font-face` maybe) that contains all thoses glyphs, there will be no issues.
