@@ -181,7 +181,7 @@ Compatibility & OS support restrictions
 - Windows XP : Thin No-Break Space can't be used, all other spaces are ignored but they do not look bad (normal space).
 - Mac OS Snow Leopard : no espaces fixes, demi-fixes, cadratin et demi-cadratin but does not look bad (normal space).
 
-BUT if you use a font (`@font-face` maybe) that contains all thoses glyphs, there will be no issues.
+BUT if you use a font (`@font-face` maybe) that contains all those glyphs, there will be no issues.
 
 License
 =======
