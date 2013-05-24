@@ -26,6 +26,8 @@ It's designed to be:
 
 **This software is still in alpha, some Fixer are missing for a proper release, and everything can change.**
 
+[![Build Status](https://travis-ci.org/jolicode/JoliTypo.png?branch=master)](https://travis-ci.org/jolicode/JoliTypo)
+
 Installation
 ============
 
