@@ -44,9 +44,9 @@ content&nbsp;&raquo; de t&rsquo;avoir <a href="http://coucou">invit&eacute;</a>&
 
 <p>Ceci &eacute;t&eacute; un &laquo;&nbsp;CHOQUE&nbsp;&raquo;&#8239;! Son salon fait 4&times;4m, ce qui est plut&ocirc;t petit.</p>
 
-<p>Les tr&eacute;s long mots sont tron&shy;qu&eacute;s, comme &laquo;&nbsp;rensei&shy;gne&shy;ments&nbsp;&raquo; par exemple.</p>
+<p>Les tr&eacute;s long mots sont tronqu&eacute;s, comme &laquo;&nbsp;rensei&shy;gne&shy;ments&nbsp;&raquo; par exemple.</p>
 
-<p>Du HTML dans une citation&nbsp;: &laquo;&nbsp;Je suis <strong>fan</strong> de JoliTypo&nbsp;&raquo; pose probl&egrave;me.</p>
+<p>Du HTML dans une cita&shy;tion&nbsp;: &laquo;&nbsp;Je suis <strong>fan</strong> de JoliTypo&nbsp;&raquo; pose probl&egrave;me.</p>
 FIXED;
 
     public function testFixFullText()
