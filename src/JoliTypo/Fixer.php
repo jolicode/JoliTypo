@@ -163,14 +163,14 @@ class Fixer
                 $nodes[] = $childNode;
             }
 
-            $depth = $this->state_bag->current_depth;
+            $depth = $this->state_bag->getCurrentDepth();
 
             foreach ($nodes as $childNode) {
                 if ($childNode instanceof \DOMText && !$childNode->isWhitespaceInElementContent()) {
-                    $this->state_bag->current_depth = $depth;
+                    $this->state_bag->setCurrentDepth($depth);
                     $this->doFix($childNode, $node, $dom);
                 } else {
-                    $this->state_bag->current_depth++;
+                    $this->state_bag->setCurrentDepth($this->state_bag->getCurrentDepth() + 1);
                     $this->processDOM($childNode, $dom);
                 }
             }
@@ -186,11 +186,12 @@ class Fixer
      */
     private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom)
     {
-        $content = $childNode->wholeText;
-        $current = new StateNode($childNode, $node, $dom);
+        $content        = $childNode->wholeText;
+        $current_node   = new StateNode($childNode, $node, $dom);
 
-        $this->state_bag->current_node = $current;
+        $this->state_bag->setCurrentNode($current_node);
 
+        // run the string on all the fixers
         foreach ($this->_rules as $fixer) {
             $content = $fixer->fix($content, $this->state_bag);
         }
@@ -199,7 +200,9 @@ class Fixer
         if ($childNode->wholeText !== $content) {
             $new_node = $dom->createTextNode($content);
             $node->replaceChild($new_node, $childNode);
-            $current->replaceNode($new_node);
+
+            // As the node is replaced, we also update it in the StateNode
+            $current_node->replaceNode($new_node);
         }
     }
 

@@ -32,34 +32,21 @@ class FrenchQuotes implements FixerInterface
     {
         $stored_sibling = $state_bag->getSiblingNode('FrenchQuotesOpenSolo');
 
-        if ($stored_sibling === false &&
-            preg_match('@(^|\s)"([^"]+)$@', $content)) {
-
+        // If no stored open quote node & open quote detected
+        if ($stored_sibling === false && preg_match('@(^|\s)"([^"]+)$@', $content)) {
+            // Store the current node
             $state_bag->storeSiblingNode('FrenchQuotesOpenSolo');
-            var_dump($state_bag->getSiblingNode('FrenchQuotesOpenSolo'), $state_bag->getSiblingNode('FrenchQuotesOpenSolo')->getNode()->wholeText);
-        } elseif ($stored_sibling instanceof StateNode &&
-            preg_match('@(^|[^"]+)"\s@im', $content)) {
 
-            $state_bag->destroySiblingNode('FrenchQuotesOpenSolo');
-
+        // If we have a open sibling and we detect a closing quote
+        } elseif ($stored_sibling instanceof StateNode && preg_match('@(^|[^"]+)"\s@im', $content)) {
             // Replace the closing tag
-            $content = preg_replace('@(^|[^"]+)"\s@im',
-                        "$1".Fixer::NO_BREAK_SPACE.Fixer::RAQUO.' ',
-                        $content);
+            $content = preg_replace('@(^|[^"]+)"\s@im', "$1".Fixer::NO_BREAK_SPACE.Fixer::RAQUO.' ', $content);
 
             // Replace the opening tag
+            $open_content = preg_replace('@(^|\s)"([^"]+)$@', "$1".Fixer::LAQUO.Fixer::NO_BREAK_SPACE.'$2', $stored_sibling->getNode()->wholeText);
 
-            $open_content = $stored_sibling->getNode()->wholeText;
-            $open_content = preg_replace('@(^|\s)"([^"]+)$@',
-                                    "$1".Fixer::LAQUO.Fixer::NO_BREAK_SPACE.'$2',
-                $open_content);
-
-            $stored_sibling->getParent()->replaceChild($stored_sibling->getDocument()->createTextNode($open_content), $stored_sibling->getNode());
-
-
+            $state_bag->fixSiblingNode('FrenchQuotesOpenSolo', $open_content);
         }
-
-        //var_dump($state_bag);
 
         return $content;
     }
