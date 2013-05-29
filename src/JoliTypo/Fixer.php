@@ -112,14 +112,13 @@ class Fixer
     /**
      * Build the _rules array of Fixer
      *
-     * @param   $rules
-     * @throws  Exception\BadRuleSetException
+     * @param                                $rules
+     * @throws Exception\BadRuleSetException
      */
     private function compileRules($rules)
     {
         $this->_rules = array();
-        foreach ($rules as $rule)
-        {
+        foreach ($rules as $rule) {
             if (is_object($rule)) {
                 $fixer = $rule;
                 $classname = get_class($rule);

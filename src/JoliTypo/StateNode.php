@@ -1,9 +1,6 @@
 <?php
 namespace JoliTypo;
 
-use JoliTypo\Exception\BadRuleSetException;
-use JoliTypo\Exception\InvalidMarkupException;
-
 class StateNode
 {
     /**
@@ -21,7 +18,7 @@ class StateNode
      */
     private $document;
 
-    function __construct(\DOMText $node, \DOMNode $parent, \DOMDocument $document)
+    public function __construct(\DOMText $node, \DOMNode $parent, \DOMDocument $document)
     {
         $this->node     = $node;
         $this->parent   = $parent;

@@ -21,7 +21,7 @@ class StateBag
     /**
      * Save the current StateNode, edit MAY be done to it later
      *
-     * @param string    $key
+     * @param string $key
      */
     public function storeSiblingNode($key)
     {
@@ -29,7 +29,7 @@ class StateBag
     }
 
     /**
-     * @param  string   $key
+     * @param  string         $key
      * @return bool|StateNode
      */
     public function getSiblingNode($key)
@@ -40,8 +40,8 @@ class StateBag
     /**
      * Replace and destroy the content of a stored Node
      *
-     * @param string    $key
-     * @param string    $new_content
+     * @param string $key
+     * @param string $new_content
      */
     public function fixSiblingNode($key, $new_content)
     {

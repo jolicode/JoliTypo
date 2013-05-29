@@ -21,7 +21,7 @@ class Hyphen implements FixerInterface
         "af_ZA", "ca", "da_DK", "de_AT", "de_CH", "de_DE", "en_GB", "en_UK", "et_EE", "fr", "hr_HR", "hu_HU", "it_IT", "lt_LT", "nb_NO", "nn_NO", "nl_NL", "pl_PL", "pt_BR", "ro_RO", "ru_RU", "sk_SK", "sl_SI", "sr", "zu_ZA"
     );
 
-    function __construct($locale)
+    public function __construct($locale)
     {
         // @todo Fix the locale with the supported ones from Org.
         $this->hyphenator = Hyphenator::factory(null, $this->fixLocale($locale));
