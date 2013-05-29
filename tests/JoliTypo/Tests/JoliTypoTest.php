@@ -1,7 +1,9 @@
 <?php
 namespace JoliTypo\Tests;
 
+use JoliTypo\Fixer\SingleQuote;
 use JoliTypo\FixerInterface;
+use JoliTypo\StateBag;
 
 class JoliTypoTest extends \PHPUnit_Framework_TestCase
 {
@@ -68,7 +70,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 class FakeFixer {}
 
 class OkFixer implements FixerInterface {
-    public function fix($content) {
+    public function fix($content, StateBag $state_bag = null) {
         return $content;
     }
 }

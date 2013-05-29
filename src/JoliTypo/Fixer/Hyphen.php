@@ -4,6 +4,7 @@ namespace JoliTypo\Fixer;
 
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
+use JoliTypo\StateBag;
 use Org\Heigl\Hyphenator\Hyphenator;
 
 class Hyphen implements FixerInterface
@@ -29,7 +30,7 @@ class Hyphen implements FixerInterface
         $this->hyphenator->getOptions()->setRightMin(3);
     }
 
-    public function fix($content)
+    public function fix($content, StateBag $state_bag = null)
     {
         return $this->hyphenator->hyphenate($content);
     }

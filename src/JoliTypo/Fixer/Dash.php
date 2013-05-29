@@ -4,10 +4,11 @@ namespace JoliTypo\Fixer;
 
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
+use JoliTypo\StateBag;
 
 class Dash implements FixerInterface
 {
-    public function fix($content)
+    public function fix($content, StateBag $state_bag = null)
     {
         $content = preg_replace('@(?<=[0-9 ]|^)-(?=[0-9 ]|$)@', Fixer::NDASH, $content);
 

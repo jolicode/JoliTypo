@@ -4,6 +4,7 @@ namespace JoliTypo\Fixer;
 
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
+use JoliTypo\StateBag;
 
 /**
  * NO_BREAK_SPACE before :
@@ -14,7 +15,7 @@ use JoliTypo\FixerInterface;
  */
 class FrenchNoBreakSpace implements FixerInterface
 {
-    public function fix($content)
+    public function fix($content, StateBag $state_bag = null)
     {
         $content = preg_replace('@[\s'.Fixer::NO_BREAK_SPACE.Fixer::NO_BREAK_THIN_SPACE.']+(:)@m', Fixer::NO_BREAK_SPACE.'$1', $content);
         $content = preg_replace('@[\s'.Fixer::NO_BREAK_SPACE.Fixer::NO_BREAK_THIN_SPACE.']+([;!\?])@m', Fixer::NO_BREAK_THIN_SPACE.'$1', $content);

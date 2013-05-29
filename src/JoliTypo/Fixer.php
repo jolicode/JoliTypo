@@ -46,6 +46,11 @@ class Fixer
      */
     protected $_rules = array();
 
+    /**
+     * @var StateBag
+     */
+    protected $state_bag;
+
     public function __construct($locale = 'en_GB')
     {
         $this->setLocale($locale);
@@ -61,6 +66,9 @@ class Fixer
         if (empty($this->_rules)) {
             $this->setLocale($this->locale);
         }
+
+        // Get a clean new StateBag
+        $this->state_bag = new StateBag();
 
         $dom = $this->loadDOMDocument($content);
 
@@ -155,10 +163,14 @@ class Fixer
                 $nodes[] = $childNode;
             }
 
+            $depth = $this->state_bag->current_depth;
+
             foreach ($nodes as $childNode) {
                 if ($childNode instanceof \DOMText && !$childNode->isWhitespaceInElementContent()) {
+                    $this->state_bag->current_depth = $depth;
                     $this->doFix($childNode, $node, $dom);
                 } else {
+                    $this->state_bag->current_depth++;
                     $this->processDOM($childNode, $dom);
                 }
             }
@@ -175,14 +187,19 @@ class Fixer
     private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom)
     {
         $content = $childNode->wholeText;
+        $current = new StateNode($childNode, $node, $dom);
+
+        $this->state_bag->current_node = $current;
 
         foreach ($this->_rules as $fixer) {
-            $content = $fixer->fix($content);
+            $content = $fixer->fix($content, $this->state_bag);
         }
 
         // update the DOM only if the node has changed
         if ($childNode->wholeText !== $content) {
-            $node->replaceChild($dom->createTextNode($content), $childNode);
+            $new_node = $dom->createTextNode($content);
+            $node->replaceChild($new_node, $childNode);
+            $current->replaceNode($new_node);
         }
     }
 

@@ -2,6 +2,7 @@
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
+use JoliTypo\StateBag;
 
 class DashTest extends \PHPUnit_Framework_TestCase
 {
