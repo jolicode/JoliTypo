@@ -36,7 +36,7 @@ Installation
 **During the alpha phase, this will not work as the package is not on packagist yet.**
 
 ```
-composer install jolicode/jolitypo dev-master
+composer require jolicode/jolitypo dev-master
 ```
 
 Available Fixers
