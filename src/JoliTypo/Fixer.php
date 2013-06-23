@@ -274,13 +274,51 @@ class Fixer
         return $this->locale;
     }
 
+    /**
+     * Change the locale of the Fixer
+     *
+     * @param   string  $locale     An available locale code or language only
+     * @throws  Exception\BadRuleSetException
+     */
     public function setLocale($locale)
     {
-        if (!is_string($locale) || !isset($this->rule_sets[$locale])) {
+        if (!is_string($locale)) {
             throw new BadRuleSetException();
         }
 
+        $rules = isset($this->rule_sets[$locale]) ? $this->rule_sets[$locale] : false;
+
+        if (!$rules) {
+            foreach($this->rule_sets as $locale_code => $set)
+            {
+                if (self::getLanguageFromLocale($locale_code) === $locale) {
+                    $rules = $set;
+                    break;
+                }
+            }
+        }
+
+        if (!$rules) {
+            throw new BadRuleSetException("Can't find any rule set for the provided locale.");
+        }
+
         $this->locale = $locale;
-        $this->compileRules($this->rule_sets[$locale]);
+        $this->compileRules($rules);
+    }
+
+    /**
+     * Get language part of a Locale string (fr_FR => fr)
+     *
+     * @param $locale
+     * @return string
+     */
+    public static function getLanguageFromLocale($locale)
+    {
+        if (strpos($locale, '_')) {
+            $parts = explode('_', $locale);
+            return strtolower($parts[0]);
+        }
+
+        return $locale;
     }
 }
