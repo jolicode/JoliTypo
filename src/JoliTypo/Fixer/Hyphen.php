@@ -47,10 +47,9 @@ class Hyphen implements FixerInterface
             return $locale;
         }
 
-        if (strpos($locale, '_')) {
-            $parts = explode('_', $locale);
-            if (in_array(strtolower($parts[0]), $this->supported_locales)) {
-                return $parts[0];
+        if (($short = Fixer::getLanguageFromLocale($locale)) !== $locale) {
+            if (in_array($short, $this->supported_locales)) {
+                return $short;
             }
         }
 
