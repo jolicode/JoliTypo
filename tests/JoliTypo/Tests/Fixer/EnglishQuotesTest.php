@@ -7,7 +7,7 @@ class EnglishQuotesTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleString()
     {
-        $fixer = new \JoliTypo\Fixer\EnglishQuotes();
+        $fixer = new Fixer\EnglishQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\EnglishQuotes', $fixer);
 
         $this->assertEquals("“I am smart”", $fixer->fix('"I am smart"'));
@@ -17,7 +17,7 @@ class EnglishQuotesTest extends \PHPUnit_Framework_TestCase
 
     public function testFalsePositives()
     {
-        $fixer = new \JoliTypo\Fixer\EnglishQuotes();
+        $fixer = new Fixer\EnglishQuotes();
 
         $this->assertEquals('This is a time: 2"44\'.', $fixer->fix('This is a time: 2"44\'.'));
         $this->assertEquals('2"44\'.', $fixer->fix('2"44\'.'));
