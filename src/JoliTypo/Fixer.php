@@ -219,6 +219,8 @@ class Fixer
         $dom->substituteEntities    = false;
         $dom->formatOutput          = false;
 
+        $libxml_current = libxml_use_internal_errors(true);
+
         // Little hack to force UTF-8
         if (strpos($content, '<?xml encoding') === false) {
             $hack = strpos($content, '<body') === false ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
@@ -226,6 +228,8 @@ class Fixer
         } else {
             $loaded = $dom->loadHTML($content);
         }
+
+        libxml_use_internal_errors($libxml_current);
 
         if (!$loaded) {
             throw new InvalidMarkupException("Can't load the given HTML");
