@@ -23,7 +23,6 @@ class Hyphen implements FixerInterface
 
     public function __construct($locale)
     {
-        // @todo Fix the locale with the supported ones from Org.
         $this->hyphenator = Hyphenator::factory(null, $this->fixLocale($locale));
         $this->hyphenator->getOptions()->setHyphen(Fixer::SHY);
         $this->hyphenator->getOptions()->setLeftMin(4);
