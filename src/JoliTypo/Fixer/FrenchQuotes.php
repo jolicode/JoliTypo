@@ -5,7 +5,6 @@ namespace JoliTypo\Fixer;
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 use JoliTypo\StateBag;
-use JoliTypo\StateNode;
 
 /**
  * Use NO_BREAK_SPACE between the « » and the text as

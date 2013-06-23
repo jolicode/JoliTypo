@@ -277,8 +277,8 @@ class Fixer
     /**
      * Change the locale of the Fixer
      *
-     * @param   string  $locale     An available locale code or language only
-     * @throws  Exception\BadRuleSetException
+     * @param  string                        $locale An available locale code or language only
+     * @throws Exception\BadRuleSetException
      */
     public function setLocale($locale)
     {
@@ -289,8 +289,7 @@ class Fixer
         $rules = isset($this->rule_sets[$locale]) ? $this->rule_sets[$locale] : false;
 
         if (!$rules) {
-            foreach($this->rule_sets as $locale_code => $set)
-            {
+            foreach ($this->rule_sets as $locale_code => $set) {
                 if (self::getLanguageFromLocale($locale_code) === $locale) {
                     $rules = $set;
                     break;
@@ -316,6 +315,7 @@ class Fixer
     {
         if (strpos($locale, '_')) {
             $parts = explode('_', $locale);
+
             return strtolower($parts[0]);
         }
 

@@ -69,8 +69,10 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 
 class FakeFixer {}
 
-class OkFixer implements FixerInterface {
-    public function fix($content, StateBag $state_bag = null) {
+class OkFixer implements FixerInterface
+{
+    public function fix($content, StateBag $state_bag = null)
+    {
         return $content;
     }
 }
