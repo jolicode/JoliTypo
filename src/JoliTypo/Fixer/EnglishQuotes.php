@@ -9,13 +9,22 @@ use JoliTypo\StateBag;
 /**
  * Convert dumb quotes (" ") to smart quotes (“ ”).
  */
-class EnglishQuotes implements FixerInterface
+class EnglishQuotes extends BaseOpenClosePair implements FixerInterface
 {
     public function fix($content, StateBag $state_bag = null)
     {
-        return preg_replace(
+        $content = preg_replace(
             '@(^|\s)"([^"]+)"@im',
             "$1".Fixer::LDQUO."$2".Fixer::RDQUO,
             $content);
+
+
+        // Fix complex siblings cases
+        if ($state_bag) {
+            $content = $this->fixViaState($content, $state_bag, 'EnglishQuotesOpenSolo',
+                '@(^|\s)"([^"]*)$@', '@(^|[^"]+)"(.+)@im', Fixer::LDQUO, Fixer::RDQUO);
+        }
+
+        return $content;
     }
 }
