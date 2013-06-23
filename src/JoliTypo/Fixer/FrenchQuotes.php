@@ -33,17 +33,17 @@ class FrenchQuotes implements FixerInterface
         $stored_sibling = $state_bag->getSiblingNode('FrenchQuotesOpenSolo');
 
         // If no stored open quote node & open quote detected
-        if ($stored_sibling === false && preg_match('@(^|\s)"([^"]+)$@', $content)) {
+        if ($stored_sibling === false && preg_match('@(^|\s)"([^"]*)$@im', $content)) {
             // Store the current node
             $state_bag->storeSiblingNode('FrenchQuotesOpenSolo');
 
         // If we have a open sibling and we detect a closing quote
-        } elseif ($stored_sibling instanceof StateNode && preg_match('@(^|[^"]+)"\s@im', $content)) {
+        } elseif ($stored_sibling instanceof StateNode && preg_match('@(^|[^"]+)"@im', $content)) {
             // Replace the closing tag
-            $content = preg_replace('@(^|[^"]+)"\s@im', "$1".Fixer::NO_BREAK_SPACE.Fixer::RAQUO.' ', $content);
+            $content = preg_replace('@(^|[^"]+)"(.+)@im', "$1".Fixer::NO_BREAK_SPACE.Fixer::RAQUO.'$2', $content);
 
             // Replace the opening tag
-            $open_content = preg_replace('@(^|\s)"([^"]+)$@', "$1".Fixer::LAQUO.Fixer::NO_BREAK_SPACE.'$2', $stored_sibling->getNode()->wholeText);
+            $open_content = preg_replace('@(^|\s)"([^"]*)$@', "$1".Fixer::LAQUO.Fixer::NO_BREAK_SPACE.'$2', $stored_sibling->getNode()->wholeText);
 
             $state_bag->fixSiblingNode('FrenchQuotesOpenSolo', $open_content);
         }

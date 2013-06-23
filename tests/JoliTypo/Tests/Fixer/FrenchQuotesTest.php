@@ -7,7 +7,7 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleString()
     {
-        $fixer = new \JoliTypo\Fixer\FrenchQuotes();
+        $fixer = new Fixer\FrenchQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\FrenchQuotes', $fixer);
 
         $this->assertEquals("«".Fixer::NO_BREAK_SPACE."Good code is like a good joke.".Fixer::NO_BREAK_SPACE."»", $fixer->fix('"Good code is like a good joke."'));
@@ -19,7 +19,7 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 
     public function testFalsePositives()
     {
-        $fixer = new \JoliTypo\Fixer\FrenchQuotes();
+        $fixer = new Fixer\FrenchQuotes();
 
         $this->assertEquals('This is a time: 2"44\'.', $fixer->fix('This is a time: 2"44\'.'));
     }
@@ -31,7 +31,7 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
     {
         $this->markTestSkipped("Those tests can't pass: they are edge case JoliTypo does not cover ATM. Feel free to fix!");
 
-        $fixer = new \JoliTypo\Fixer\FrenchQuotes();
+        $fixer = new Fixer\FrenchQuotes();
 
         $this->assertEquals("Oh my god, this quote is alone: \" ! But those are «".Fixer::NO_BREAK_SPACE."ok".Fixer::NO_BREAK_SPACE."».", $fixer->fix('Oh my god, this quote is alone: " ! But those are "ok".'));
     }
