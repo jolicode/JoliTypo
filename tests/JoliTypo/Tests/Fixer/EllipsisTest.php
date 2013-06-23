@@ -1,11 +1,13 @@
 <?php
 namespace JoliTypo\Tests\Fixer;
 
+use JoliTypo\Fixer;
+
 class EllipsisTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleString()
     {
-        $fixer = new \JoliTypo\Fixer\Ellipsis();
+        $fixer = new Fixer\Ellipsis();
         $this->assertInstanceOf('JoliTypo\Fixer\Ellipsis', $fixer);
 
         $this->assertEquals("Test", $fixer->fix("Test"));

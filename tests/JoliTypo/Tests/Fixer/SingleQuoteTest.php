@@ -1,11 +1,13 @@
 <?php
 namespace JoliTypo\Tests\Fixer;
 
+use JoliTypo\Fixer;
+
 class SingleQuoteTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleString()
     {
-        $fixer = new \JoliTypo\Fixer\SingleQuote();
+        $fixer = new Fixer\SingleQuote();
         $this->assertInstanceOf('JoliTypo\Fixer\SingleQuote', $fixer);
 
         $this->assertEquals("This text in which there is a quote: I’m SUPERMAN.", $fixer->fix("This text in which there is a quote: I'm SUPERMAN."));
@@ -17,7 +19,7 @@ class SingleQuoteTest extends \PHPUnit_Framework_TestCase
 
     public function testFalsePositives()
     {
-        $fixer = new \JoliTypo\Fixer\SingleQuote();
+        $fixer = new Fixer\SingleQuote();
 
         $this->assertEquals('This is a time: 2"44\'.', $fixer->fix('This is a time: 2"44\'.'));
         $this->assertEquals("Here is a crying smiley: :'(", $fixer->fix("Here is a crying smiley: :'("));

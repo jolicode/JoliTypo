@@ -10,7 +10,7 @@ class FrenchNoBreakSpaceTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleString()
     {
-        $fixer = new \JoliTypo\Fixer\FrenchNoBreakSpace();
+        $fixer = new Fixer\FrenchNoBreakSpace();
         $this->assertInstanceOf('JoliTypo\Fixer\FrenchNoBreakSpace', $fixer);
 
         $this->assertEquals("Superman".Fixer::NO_BREAK_THIN_SPACE."!", $fixer->fix("Superman !"));

@@ -18,7 +18,6 @@ class EnglishQuotes extends BaseOpenClosePair implements FixerInterface
             "$1".Fixer::LDQUO."$2".Fixer::RDQUO,
             $content);
 
-
         // Fix complex siblings cases
         if ($state_bag) {
             $content = $this->fixViaState($content, $state_bag, 'EnglishQuotesOpenSolo',

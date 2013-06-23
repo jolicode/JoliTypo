@@ -7,7 +7,7 @@ class DimensionTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleString()
     {
-        $fixer = new \JoliTypo\Fixer\Dimension();
+        $fixer = new Fixer\Dimension();
         $this->assertInstanceOf('JoliTypo\Fixer\Dimension', $fixer);
 
         $this->assertEquals("Test", $fixer->fix("Test"));

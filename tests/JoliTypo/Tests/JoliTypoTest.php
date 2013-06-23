@@ -1,15 +1,15 @@
 <?php
 namespace JoliTypo\Tests;
 
-use JoliTypo\Fixer\SingleQuote;
 use JoliTypo\FixerInterface;
 use JoliTypo\StateBag;
+use JoliTypo\Fixer;
 
 class JoliTypoTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleInstance()
     {
-        $fixer = new \JoliTypo\Fixer();
+        $fixer = new Fixer();
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals("Coucou&hellip;", $fixer->fix("Coucou..."));
@@ -20,7 +20,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadRuleSets()
     {
-        new \JoliTypo\Fixer('YOLO');
+        new Fixer('YOLO');
     }
 
     /**
@@ -28,7 +28,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadRuleSetsArray()
     {
-        new \JoliTypo\Fixer(array());
+        new Fixer(array());
     }
 
     /**
@@ -36,7 +36,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadRuleSetsAfterConstructor()
     {
-        $fixer = new \JoliTypo\Fixer();
+        $fixer = new Fixer();
         $fixer->setRules('YOLO', array());
     }
 
@@ -45,7 +45,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidProtectedTags()
     {
-        $fixer = new \JoliTypo\Fixer();
+        $fixer = new Fixer();
         $fixer->setProtectedTags('YOLO');
     }
 
@@ -54,13 +54,13 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidCustomFixerInstance()
     {
-        $fixer = new \JoliTypo\Fixer();
+        $fixer = new Fixer();
         $fixer->setRules('fr', array(new FakeFixer()));
     }
 
     public function testOkFixer()
     {
-        $fixer = new \JoliTypo\Fixer();
+        $fixer = new Fixer();
         $fixer->setRules('coucou', array(new OkFixer()));
 
         $this->assertEquals("<p>Nope !</p>", $fixer->fix("<p>Nope !</p>"));
