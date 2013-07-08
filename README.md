@@ -10,19 +10,20 @@ use JoliTypo\Fixer;
 
 $fixer = new Fixer('fr_FR');
 $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
-// result: <p>Je suis &laquo;&nbsp;tr&egrave;s content&nbsp;&raquo; de t&rsquo;avoir invit&eacute; sur <a href="http://jolicode.com/">Jolicode.com</a>&#8239;!</p>
-// display: Je suis « très content » de t’avoir invité sur Jolicode.com !
 ```
+```html
+<p>Je suis &laquo;&nbsp;tr&egrave;s content&nbsp;&raquo; de t&rsquo;avoir invit&eacute; sur <a href="http://jolicode.com/">Jolicode.com</a>&#8239;!</p>
+```
+> Je suis « très content » de t’avoir invité sur Jolicode.com !
 
 It's designed to be:
 
-- language agnostic (you can fix `fr_FR`, `fr_CA` and `en_US` there own ways, new locale easy to configure)
-- fully tested
-- easy to integrate into modern PHP project (composer and autoload)
-- robust (make use of `\DOMDocument` instead of parsing HTML with dummy regexp)
-- smart enough to avoid Javascript, Code, CSS processing (protected tags)
-- fast
-- fully open and usable in any project (MIT License)
+- language agnostic (you can fix `fr_FR`, `fr_CA` and `en_US`, new locale easy to configure);
+- fully tested;
+- easy to integrate into modern PHP project (composer and autoload);
+- robust (make use of `\DOMDocument` instead of parsing HTML with dummy regexp);
+- smart enough to avoid Javascript, Code, CSS processing... (protected tags list configurable);
+- fully open and usable in any project (MIT License).
 
 **This software is still in alpha, some Fixer are missing for a proper release, and everything can change.**
 
@@ -32,8 +33,6 @@ It's designed to be:
 
 Installation
 ============
-
-**During the alpha phase, this will not work as the package is not on packagist yet.**
 
 ```
 composer require jolicode/jolitypo dev-master
@@ -141,8 +140,7 @@ Global
 
 - Should we run the fixes on `title` attributes and image `alt`?
 - Add a HTML entities to UTF-8 converter?
-- Add TravisCI configuration file
-- Add EnglishTest
+- Improve the EnglishTest
 - Add more pre-configured locale to `Fixer.php`, with the appropriate test
 - Provide a Twig filter? (will be in a dedicated Bundle)
 - Add a http://cldr.unicode.org/ Fixer for number formatting (thx @g_marty for the tip!)
@@ -206,11 +204,12 @@ are not tested, some are bundled inside a CMS or a Library, some are not using p
 - https://github.com/dg/texy/blob/master/Texy/modules/TexyTypographyModule.php
 - https://github.com/scoates/lexentity
 - https://github.com/nofont/Typesetter.js
+- https://github.com/judbd/php-typography (fork of http://kingdesk.com/projects/php-typography/)
 
 Glossary & References
 =====================
 
-Thanks to theses online resources for helping a developer understands typography:
+Thanks to theses online resources for helping a developer understand typography:
 
 - [FR] http://typographisme.net/post/Les-espaces-typographiques-et-le-web
 - http://daringfireball.net/projects/smartypants/
