@@ -2,7 +2,6 @@
 
 namespace JoliTypo\Fixer;
 
-use JoliTypo\Fixer;
 use JoliTypo\StateBag;
 use JoliTypo\StateNode;
 
