@@ -7,7 +7,7 @@ class Html5Test extends \PHPUnit_Framework_TestCase
 {
     public function testHtml5Markup()
     {
-        $fixer = new Fixer('fr_FR');
+        $fixer = new Fixer(array(new Fixer\Ellipsis()));
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $html5 = <<<HTML

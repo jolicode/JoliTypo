@@ -9,14 +9,14 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleInstance()
     {
-        $fixer = new Fixer();
+        $fixer = new Fixer(array('Ellipsis'));
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals("Coucou&hellip;", $fixer->fix("Coucou..."));
     }
 
     /**
-     * @expectedException JoliTypo\Exception\BadRuleSetException
+     * @expectedException \JoliTypo\Exception\BadRuleSetException
      */
     public function testBadRuleSets()
     {
@@ -24,7 +24,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException JoliTypo\Exception\BadRuleSetException
+     * @expectedException \JoliTypo\Exception\BadRuleSetException
      */
     public function testBadRuleSetsArray()
     {
@@ -32,36 +32,34 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException JoliTypo\Exception\BadRuleSetException
+     * @expectedException \JoliTypo\Exception\BadRuleSetException
      */
     public function testBadRuleSetsAfterConstructor()
     {
-        $fixer = new Fixer();
-        $fixer->setRules('YOLO', array());
+        $fixer = new Fixer(array('Ellipsis'));
+        $fixer->setRules('YOLO');
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testInvalidProtectedTags()
     {
-        $fixer = new Fixer();
+        $fixer = new Fixer(array('Ellipsis'));
         $fixer->setProtectedTags('YOLO');
     }
 
     /**
-     * @expectedException JoliTypo\Exception\BadRuleSetException
+     * @expectedException \JoliTypo\Exception\BadRuleSetException
      */
     public function testInvalidCustomFixerInstance()
     {
-        $fixer = new Fixer();
-        $fixer->setRules('fr', array(new FakeFixer()));
+        new Fixer(array(new FakeFixer()));
     }
 
     public function testOkFixer()
     {
-        $fixer = new Fixer();
-        $fixer->setRules('coucou', array(new OkFixer()));
+        $fixer = new Fixer(array(new OkFixer()));
 
         $this->assertEquals("<p>Nope !</p>", $fixer->fix("<p>Nope !</p>"));
     }

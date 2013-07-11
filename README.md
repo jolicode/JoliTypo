@@ -101,6 +101,8 @@ You can read more about this fixer on [the official github repository](https://g
 
 **This Fixer require a Locale to be set on the Fixer with `$fixer->setLocale('fr_FR');`. Default to `en_GB`.**
 
+**Hyphenation is only a good idea if your texts are justified.**
+
 SingleQuote
 -----------
 

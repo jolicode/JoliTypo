@@ -5,6 +5,8 @@ use JoliTypo\Fixer;
 
 class EnglishTest extends \PHPUnit_Framework_TestCase
 {
+    private $en_fixers = array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote', 'Hyphen');
+
     const TOFIX = <<<TOFIX
 <!-- From https://en.wikipedia.org/wiki/Gif#Pronunciation -->
 <h3>Pronunciation</h3>
@@ -31,7 +33,7 @@ FIXED;
 
     public function testFixFullText()
     {
-        $fixer = new Fixer('en_GB');
+        $fixer = new Fixer($this->en_fixers);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));

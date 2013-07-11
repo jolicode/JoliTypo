@@ -5,6 +5,8 @@ use JoliTypo\Fixer;
 
 class FrenchTest extends \PHPUnit_Framework_TestCase
 {
+    private $fr_fixers = array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote', 'Hyphen');
+
     const TOFIX = <<<TOFIX
 <p>Ceci est à remplacer par une fâble :p</p>
 
@@ -55,7 +57,8 @@ FIXED;
 
     public function testFixFullText()
     {
-        $fixer = new Fixer('fr_FR');
+        $fixer = new Fixer($this->fr_fixers);
+        $fixer->setLocale('fr_FR');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));
@@ -63,7 +66,8 @@ FIXED;
 
     public function testFixFullTextShort()
     {
-        $fixer = new Fixer('fr');
+        $fixer = new Fixer($this->fr_fixers);
+        $fixer->setLocale('fr');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));

@@ -46,7 +46,7 @@ class Fixer
     /**
      * @param array $rules Array of Fixer
      */
-    public function __construct(array $rules)
+    public function __construct($rules)
     {
         $this->compileRules($rules);
     }
