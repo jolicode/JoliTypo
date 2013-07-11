@@ -5,6 +5,9 @@ namespace JoliTypo\Fixer;
 use JoliTypo\StateBag;
 use JoliTypo\StateNode;
 
+/**
+ * This class allow to fix two sibling Text node, even if they are separated by other nodes
+ */
 abstract class BaseOpenClosePair
 {
     protected function fixViaState($content, StateBag $state_bag, $state_name, $open_regexp, $close_regexp, $open_replacement, $close_replacement)

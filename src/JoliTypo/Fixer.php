@@ -25,21 +25,13 @@ class Fixer
 
     /**
      * @var array   HTML Tags to bypass
-     * @todo        Allow to set this in a YML file?
      */
     protected $protected_tags = array('head', 'link', 'pre', 'code', 'script', 'style');
 
     /**
-     * @var array   Default rules by culture code
-     * @todo        Allow to set this in a YML file?
+     * @var string  The default locale (used by some Fixer)
      */
-    protected $rule_sets = array(
-        'fr_FR' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote', 'Hyphen'),
-        'fr_CA' => array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'SingleQuote', 'Hyphen'),
-        'en_GB' => array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote', 'Hyphen')
-    );
-
-    protected $locale = null;
+    protected $locale = "en_GB";
 
     /**
      * @var array The rules Fixer instances to apply on each DOMText
@@ -51,22 +43,21 @@ class Fixer
      */
     protected $state_bag;
 
-    public function __construct($locale = 'en_GB')
+    /**
+     * @param array $rules Array of Fixer
+     */
+    public function __construct(array $rules)
     {
-        $this->setLocale($locale);
+        $this->compileRules($rules);
     }
 
     /**
-     * @param  string $content HTML content to fix
-     * @return string Content fixed
+     * @param  string $content  HTML content to fix
+     * @throws Exception\BadRuleSetException
+     * @return string           Fixed content
      */
     public function fix($content)
     {
-        // Force rule refresh if empty
-        if (empty($this->_rules)) {
-            $this->setLocale($this->locale);
-        }
-
         // Get a clean new StateBag
         $this->state_bag = new StateBag();
 
@@ -80,33 +71,15 @@ class Fixer
     }
 
     /**
-     * Add and use a list of rules for a given locale
+     * Change the list of rules for a given locale
      *
-     * @param  string                        $locale
-     * @param  array                         $rules  Can be the $rules key (culture code) or a set of rule class names
+     * @param  array                         $rules  Array of Fixer
      * @throws Exception\BadRuleSetException
      * @return void
      */
-    public function setRules($locale, $rules)
+    public function setRules($rules)
     {
-        $this->addRules($locale, $rules);
-        $this->setLocale($locale);
-    }
-
-    /**
-     * Add a list of rules for a locale
-     *
-     * @param $locale
-     * @param $rules
-     * @throws Exception\BadRuleSetException
-     */
-    public function addRules($locale, $rules)
-    {
-        if (!is_array($rules) || empty($rules)) {
-            throw new BadRuleSetException();
-        }
-
-        $this->rule_sets[$locale] = $rules;
+        $this->compileRules($rules);
     }
 
     /**
@@ -117,6 +90,10 @@ class Fixer
      */
     private function compileRules($rules)
     {
+        if (!is_array($rules) || empty($rules)) {
+            throw new BadRuleSetException("Rules must be an array of Fixer");
+        }
+
         $this->_rules = array();
         foreach ($rules as $rule) {
             if (is_object($rule)) {
@@ -132,13 +109,14 @@ class Fixer
             }
 
             if (!$fixer instanceof FixerInterface) {
-                throw new BadRuleSetException();
+                throw new BadRuleSetException(sprintf("%s must implement FixerInterface", $classname));
             }
+
             $this->_rules[$classname] = $fixer;
         }
 
         if (empty($this->_rules)) {
-            throw new BadRuleSetException();
+            throw new BadRuleSetException("No rules configured, can't fix the content!");
         }
     }
 
@@ -232,7 +210,7 @@ class Fixer
         libxml_use_internal_errors($libxml_current);
 
         if (!$loaded) {
-            throw new InvalidMarkupException("Can't load the given HTML");
+            throw new InvalidMarkupException("Can't load the given HTML via DomDocument");
         }
 
         foreach ($dom->childNodes as $item) {
@@ -246,7 +224,7 @@ class Fixer
     }
 
     /**
-     * @param  \DOMDocument $dom
+     * @param \DOMDocument  $dom
      * @return string
      */
     private function exportDOMDocument(\DOMDocument $dom)
@@ -261,6 +239,8 @@ class Fixer
     }
 
     /**
+     * Customize the list of protected tags
+     *
      * @param  array                     $protected_tags
      * @throws \InvalidArgumentException
      */
@@ -273,6 +253,11 @@ class Fixer
         $this->protected_tags = $protected_tags;
     }
 
+    /**
+     * Get the current Locale tag
+     *
+     * @return string
+     */
     public function getLocale()
     {
         return $this->locale;
@@ -281,32 +266,23 @@ class Fixer
     /**
      * Change the locale of the Fixer
      *
-     * @param  string                        $locale An available locale code or language only
-     * @throws Exception\BadRuleSetException
+     * @param  string   $locale     An IETF language tag
+     * @throws \InvalidArgumentException
      */
     public function setLocale($locale)
     {
-        if (!is_string($locale)) {
-            throw new BadRuleSetException();
+        if (!is_string($locale) || empty($locale)) {
+            throw new \InvalidArgumentException("Locale must be an IETF language tag.");
         }
 
-        $rules = isset($this->rule_sets[$locale]) ? $this->rule_sets[$locale] : false;
-
-        if (!$rules) {
-            foreach ($this->rule_sets as $locale_code => $set) {
-                if (self::getLanguageFromLocale($locale_code) === $locale) {
-                    $rules = $set;
-                    break;
-                }
+        // Set the Locale on Fixer that needs it
+        foreach ($this->_rules as $rule) {
+            if ($rule instanceof LocaleAwareFixerInterface) {
+                $rule->setLocale($locale);
             }
         }
 
-        if (!$rules) {
-            throw new BadRuleSetException("Can't find any rule set for the provided locale.");
-        }
-
         $this->locale = $locale;
-        $this->compileRules($rules);
     }
 
     /**
