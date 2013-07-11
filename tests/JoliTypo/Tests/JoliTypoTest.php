@@ -15,6 +15,18 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Coucou&hellip;", $fixer->fix("Coucou..."));
     }
 
+    public function testSimpleInstanceRulesChange()
+    {
+        $fixer = new Fixer(array('Ellipsis'));
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $this->assertEquals("Coucou&hellip;", $fixer->fix("Coucou..."));
+
+        $fixer->setRules(array('SingleQuote'));
+
+        $this->assertEquals("I&rsquo;m a pony.", $fixer->fix("I'm a pony."));
+    }
+
     /**
      * @expectedException \JoliTypo\Exception\BadRuleSetException
      */
@@ -62,6 +74,49 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
         $fixer = new Fixer(array(new OkFixer()));
 
         $this->assertEquals("<p>Nope !</p>", $fixer->fix("<p>Nope !</p>"));
+    }
+
+    public function testProtectedTags()
+    {
+        $fixer          = new Fixer(array('Ellipsis'));
+        $fixer->setProtectedTags(array('pre', 'a'));
+        $fixed_content  = $fixer->fix("<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed... <a>Not Fixed...</a>.</p>");
+
+        $this->assertEquals("<p>Fixed&hellip;</p> <pre>Not fixed...</pre> <p>Fixed&hellip; <a>Not Fixed...</a>.</p>", $fixed_content);
+    }
+
+    /**
+     * @expectedException \JoliTypo\Exception\BadRuleSetException
+     */
+    public function testBadClassName()
+    {
+        new Fixer(array('Ellipsis', 'Acme\\Demo\\Fixer'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testBadLocale()
+    {
+        $fixer = new Fixer(array('Ellipsis'));
+        $fixer->setLocale(false);
+    }
+
+    /**
+     * @expectedException \JoliTypo\Exception\BadRuleSetException
+     */
+    public function testEmptyRules()
+    {
+        new Fixer(array());
+    }
+
+    public function testXmlPrefixedContent()
+    {
+        $fixer = new Fixer(array('Ellipsis'));
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $this->assertEquals("<p>Hey &eacute;pic dude&hellip;</p>", $fixer->fix('<?xml encoding="UTF-8"><body><p>Hey épic dude...</p></body>'));
+        $this->assertEquals("<p>Hey &eacute;pic dude&hellip;</p>", $fixer->fix('<?xml encoding="ISO-8859-1"><body><p>Hey épic dude...</p></body>'));
     }
 }
 

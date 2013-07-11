@@ -187,7 +187,7 @@ Configure the protected tags
 Protected tags is a list of HTML tag name that the DOM parser must avoid. Nothing in those tags will be fixed.
 
 ```php
-$fixer          = new Fixer('Ellipsis');
+$fixer          = new Fixer(array('Ellipsis'));
 $fixer->setProtectedTags(array('pre', 'a'));
 $fixed_content  = $fixer->fix("<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed... <a>Not Fixed...</a>.</p>");
 ```
