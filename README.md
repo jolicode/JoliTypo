@@ -1,5 +1,5 @@
-JoliTypo - Microtypography fixer for the web
-============================================
+JoliTypo – Web Microtypography fixer
+====================================
 
 > Finally a tool for typography nerds.
 
@@ -8,7 +8,7 @@ JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microt
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer('fr_FR');
+$fixer = new Fixer("FrenchQuote", "FrenchNoBreakSpace", "SingleQuote");
 $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
 ```
 ```html
@@ -18,11 +18,11 @@ $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur
 
 It's designed to be:
 
-- language agnostic (you can fix `fr_FR`, `fr_CA` and `en_US`, new locale easy to configure);
+- language agnostic (you can fix `fr_FR`, `fr_CA`, `en_US`... You tell JoliTypo what to fix);
 - fully tested;
 - easy to integrate into modern PHP project (composer and autoload);
 - robust (make use of `\DOMDocument` instead of parsing HTML with dummy regexp);
-- smart enough to avoid Javascript, Code, CSS processing... (protected tags list configurable);
+- smart enough to avoid Javascript, Code, CSS processing... (configurable protected tags list);
 - fully open and usable in any project (MIT License).
 
 **This software is still in alpha, some Fixer are missing for a proper release, and everything can change.**
@@ -31,12 +31,29 @@ It's designed to be:
 [![Latest Stable Version](https://poser.pugx.org/jolicode/JoliTypo/version.png)](https://packagist.org/packages/jolicode/JoliTypo)
 [![Latest Unstable Version](https://poser.pugx.org/jolicode/JoliTypo/v/unstable.png)](https://packagist.org/packages/jolicode/JoliTypo)
 
+Quick usage
+===========
+
+Just tell the Fixer class [which Fixer](#available-fixers) you want to run on your HTML content and then, call `fix()`:
+
+```php
+use JoliTypo\Fixer;
+
+$fixer = new Fixer(array("FrenchQuote", "FrenchNoBreakSpace"));
+$fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
+```
+
+For your ease of use, you can find [ready to use list of Fixer for your language here](#todo).
+Micro-typography is nothing like a standard or a law, what really matter is consistency.
+
 Installation
 ============
 
 ```
 composer require jolicode/jolitypo dev-master
 ```
+
+*Usage outside composer is also possible, just add the `src/` directory to any PSR-0 compatible autoloader.*
 
 Available Fixers
 ================
@@ -80,56 +97,97 @@ This Hyphenator uses the pattern-files from OpenOffice which are based on the pa
 
 There is only some locale available for this fixer: af_ZA, ca, da_DK, de_AT, de_CH, de_DE, en_GB, en_UK, et_EE, fr, hr_HR, hu_HU, it_IT, lt_LT, nb_NO, nn_NO, nl_NL, pl_PL, pt_BR, ro_RO, ru_RU, sk_SK, sl_SI, sr, zu_ZA.
 
+You can read more about this fixer on [the official github repository](https://github.com/heiglandreas/Org_Heigl_Hyphenator).
+
+**This Fixer require a Locale to be set on the Fixer with `$fixer->setLocale('fr_FR');`. Default to `en_GB`.**
+
 SingleQuote
 -----------
 
 Replace all the quotes (`'`) by a real rsquo (’).
 
+
+
+
 **It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules.**
 
-How to use
-==========
+Fixer recommendations by locale
+===============================
+
+en_GB
+-----
+
+```php
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote', 'Hyphen'));
+$fixer->setLocale('en_GB'); // Needed by the Hyphen Fixer
+```
+
+fr_FR
+-----
+
+Those rules apply most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
+
+```php
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote', 'Hyphen'));
+$fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
+```
+
+fr_CA
+-----
+
+Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
+
+```php
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'SingleQuote', 'Hyphen'));
+$fixer->setLocale('fr_CA'); // Needed by the Hyphen Fixer
+```
+
+More to come (contributions welcome!).
+
+
+Documentation
+=============
 
 Default usage
 -------------
 
 ```php
-$fixer = new Fixer(); // en_GB by default
-$fixed_content = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
+$fixer          = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote', 'Hyphen'));
+$fixed_content  = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
 
-$fixer->setLocale('fr_FR');
-$fixed_content = $fixer->fix("<p>Du contenu en français à corriger.</p>");
+$fixer->setRules(array('SingleQuote'));
+$fixed_content = $fixer->fix("<p>I'm only replacing single quotes.</p>");
+
+$fixer->setRules(array('Hyphen'));
+$fixer->setLocale('en_GB'); // I tell which locale to use for Hyphenation
+$fixed_content = $fixer->fix("<p>Very long words like Antidisestablishmentarianism.</p>");
 ```
 
-Define your own Fixer list
---------------------------
+Define your own Fixer
+---------------------
+
+If you want to add your own Fixer to the list, you have to implement `JoliTypo\FixerInterface`.
+Then just give JoliTypo their fully qualified name, or even instance:
 
 ```php
-$fixer = new Fixer();
-$fixer->setRules('MyCountryCode', array('Ellipsis', 'Dimension', 'Dash', 'SingleQuote'));
+// by FQN
+$fixer          = new Fixer(array('Ellipsis', 'Acme\\YourOwn\\TypoFixer'));
+$fixed_content  = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
 
-$fixed_content = $fixer->fix("<p>Content fixed by the 4 fixers.</p>");
-
-// or class name
-
-$fixer->setRules('MyCountryCode', array('Ellipsis', 'Acme\\YourOwn\\TypoFixer'));
-$fixed_content = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
-
-// or even instances (must implement JoliTypo\FixerInterface)
-
-$fixer->setRules('MyCountryCode', array('Ellipsis', new Acme\YourOwn\TypoFixer()));
-$fixed_content = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
+// or instances, or both
+$fixer          = new Fixer(array('Ellipsis', 'Acme\\YourOwn\\TypoFixer', new Acme\\YourOwn\\PonyFixer("Some parameter")));
+$fixed_content  = $fixer->fix("<p>Content fixed by the 3 fixers.</p>");
 ```
 
 Configure the protected tags
 ----------------------------
 
-Protected tags is a list of HTML tag name the DOM parser must avoid. Nothing is those tags will be fixed.
+Protected tags is a list of HTML tag name that the DOM parser must avoid. Nothing in those tags will be fixed.
 
 ```php
-$fixer = new Fixer();
+$fixer          = new Fixer('Ellipsis');
 $fixer->setProtectedTags(array('pre', 'a'));
-$fixed_content = $fixer->fix("<p>Fixed</p> <pre>Not fixed</pre> <p>Fixer <a>Not Fixed</a>.</p>");
+$fixed_content  = $fixer->fix("<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed... <a>Not Fixed...</a>.</p>");
 ```
 
 Todo / Rules to be developed
@@ -138,6 +196,7 @@ Todo / Rules to be developed
 Global
 ------
 
+- Add results on ALL the documentation examples
 - Should we run the fixes on `title` attributes and image `alt`?
 - Add a HTML entities to UTF-8 converter?
 - Improve the EnglishTest
