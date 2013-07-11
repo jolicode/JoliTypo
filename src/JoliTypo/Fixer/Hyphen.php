@@ -4,10 +4,11 @@ namespace JoliTypo\Fixer;
 
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
+use JoliTypo\LocaleAwareFixerInterface;
 use JoliTypo\StateBag;
 use Org\Heigl\Hyphenator\Hyphenator;
 
-class Hyphen implements FixerInterface
+class Hyphen implements FixerInterface, LocaleAwareFixerInterface
 {
     /**
      * @var Hyphenator
@@ -24,6 +25,20 @@ class Hyphen implements FixerInterface
     public function __construct($locale)
     {
         $this->hyphenator = Hyphenator::factory(null, $this->fixLocale($locale));
+        $this->setOptions();
+    }
+
+    /**
+     * @param $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->hyphenator = Hyphenator::factory(null, $this->fixLocale($locale));
+        $this->setOptions();
+    }
+
+    protected function setOptions()
+    {
         $this->hyphenator->getOptions()->setHyphen(Fixer::SHY);
         $this->hyphenator->getOptions()->setLeftMin(4);
         $this->hyphenator->getOptions()->setRightMin(3);
