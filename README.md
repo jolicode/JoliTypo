@@ -43,8 +43,8 @@ $fixer = new Fixer(array("FrenchQuote", "FrenchNoBreakSpace"));
 $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
 ```
 
-For your ease of use, you can find [ready to use list of Fixer for your language here](#todo).
-Micro-typography is nothing like a standard or a law, what really matter is consistency.
+For your ease of use, you can find [ready to use list of Fixer for your language here](#fixer-recommendations-by-locale).
+Micro-typography is nothing like a standard or a law, what really matter is consistency, so feel free to use your own lists.
 
 Installation
 ============
