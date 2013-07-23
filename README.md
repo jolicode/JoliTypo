@@ -30,6 +30,8 @@ It's designed to be:
 [![Build Status](https://travis-ci.org/jolicode/JoliTypo.png?branch=master)](https://travis-ci.org/jolicode/JoliTypo)
 [![Latest Stable Version](https://poser.pugx.org/jolicode/JoliTypo/version.png)](https://packagist.org/packages/jolicode/JoliTypo)
 [![Latest Unstable Version](https://poser.pugx.org/jolicode/JoliTypo/v/unstable.png)](https://packagist.org/packages/jolicode/JoliTypo)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1e8d7acc-dfad-497b-a2aa-db1223bbf684/small.png)](https://insight.sensiolabs.com/projects/1e8d7acc-dfad-497b-a2aa-db1223bbf684)
+*I love badges ^^*
 
 Quick usage
 ===========
