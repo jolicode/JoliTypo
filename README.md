@@ -229,6 +229,11 @@ fr-CH
 
 - Same as French but Narrow No-Break Space before `:`
 
+en-GB
+-----
+
+- Make sure all the rules described [here](http://practicaltypography.com/summary-of-key-rules.html) are respected
+
 
 Add your own Fixer / Contribute a Fixer
 =======================================
@@ -279,4 +284,5 @@ Thanks to theses online resources for helping a developer understand typography:
 - [FR] http://www.uzine.net/article1802.html
 - [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
 - http://www.punctuationmatters.com/
+- http://practicaltypography.com/
 - "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667
