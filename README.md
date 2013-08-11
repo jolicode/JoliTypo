@@ -91,8 +91,8 @@ FrenchQuote
 
 Convert dumb quotes (`" "`) to French quotes (« ») and use a no break space.
 
-Hyphen
-------
+Hyphen (automatic hyphenation)
+------------------------------
 
 Make use of `org_heigl/hyphenator`, a tool enabling word-hyphenation in PHP.
 This Hyphenator uses the pattern-files from OpenOffice which are based on the pattern-files created for TeX.
@@ -103,7 +103,7 @@ You can read more about this fixer on [the official github repository](https://g
 
 **This Fixer require a Locale to be set on the Fixer with `$fixer->setLocale('fr_FR');`. Default to `en_GB`.**
 
-**Hyphenation is only a good idea if your texts are justified.**
+**Hyphenation is mandatory in justified text** and you should avoid word breaking in titles with this line of CSS: `hyphens:none;`.
 
 CurlyQuote (Smart Quote)
 -----------------------
