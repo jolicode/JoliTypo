@@ -68,7 +68,7 @@ Replace the simple `-` by a ndash (–) between numbers (dates ranges...) and th
 Dimension
 ---------
 
-Replace the letter x between numbers (`12 x 123`) by a times entity (×).
+Replace the letter x between numbers (`12 x 123`) by a times entity (`×`, the real math symbol).
 
 Ellipsis
 --------
