@@ -17,6 +17,11 @@ Global
 Locale to improve
 =================
 
+All
+---
+
+- Include a non breaking space in the middle of a foot-and-inch measurement (6' 10") to avoid awkwardness (new Fixer?);
+
 fr-FR
 -----
 
@@ -40,5 +45,3 @@ en-GB
 -----
 
 - Make sure all the rules described [here](http://practicaltypography.com/summary-of-key-rules.html) are respected
-
-

@@ -78,7 +78,7 @@ Replace the three dot (`...`) by an ellipsis (…).
 EnglishQuotes
 -------------
 
-Convert dumb quotes (`" "`) to smart quotes (“ ”).
+Convert dumb quotes (`" "`) to smart double quotes (“ ”).
 
 FrenchNoBreakSpace
 ------------------
@@ -105,13 +105,12 @@ You can read more about this fixer on [the official github repository](https://g
 
 **Hyphenation is only a good idea if your texts are justified.**
 
-CurlyQuote
------------
+CurlyQuote (Smart Quote)
+-----------------------
 
-Replace all the quotes (`'`) by a real rsquo (’).
-
-
-
+Replace straight quotes (`'`) by curly one's (’).
+There is on exception to consider: foot and inch marks (minutes and second marks). Purists use &prime;, this fixer use straight quote for compatibility.
+[Read more about Curly quotes](http://practicaltypography.com/straight-and-curly-quotes.html).
 
 **It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules.**
 
@@ -254,4 +253,5 @@ Thanks to theses online resources for helping a developer understand typography:
 - [FR] http://www.uzine.net/article1802.html
 - [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
 - http://www.punctuationmatters.com/ **is a must read**
-- "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667
+- [FR] "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667
+- https://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks
