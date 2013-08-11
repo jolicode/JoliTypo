@@ -8,7 +8,7 @@ use JoliTypo\StateBag;
 
 /**
  * Replace straight quotes by curly one's.
- * 
+ *
  * @see http://practicaltypography.com/straight-and-curly-quotes.html
  */
 class CurlyQuote implements FixerInterface
