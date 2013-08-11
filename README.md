@@ -8,13 +8,13 @@ JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microt
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer(array("FrenchQuote", "FrenchNoBreakSpace", "CurlyQuote"));
-$fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
+$fixer = new Fixer(array('Ellipsis', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen'));
+$fixed_content = $fixer->fix('<p>"Tell me Mr. Anderson... what good is a phone call... if you're unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>');
 ```
 ```html
-<p>Je suis &laquo;&nbsp;tr&egrave;s content&nbsp;&raquo; de t&rsquo;avoir invit&eacute; sur <a href="http://jolicode.com/">Jolicode.com</a>&#8239;!</p>
+<p>&ldquo;Tell me Mr. Ander&shy;son&hellip; what good is a phone call&hellip; if you&rsquo;re unable to speak?&rdquo;&mdash;Agent Smith, <em>Matrix</em>.</p>
 ```
-> Je suis « très content » de t’avoir invité sur Jolicode.com !
+> “Tell me Mr. Anderson… what good is a phone call… if you’re unable to speak?”—Agent Smith, Matrix.
 
 It's designed to be:
 
@@ -128,7 +128,7 @@ en_GB
 -----
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('en_GB'); // Needed by the Hyphen Fixer
 ```
 
@@ -138,7 +138,7 @@ fr_FR
 Those rules apply most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark));
 $fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
 ```
 
@@ -148,7 +148,7 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'CurlyQuote', 'Hyphen'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'CurlyQuote', 'Hyphen', 'Trademark));
 $fixer->setLocale('fr_CA'); // Needed by the Hyphen Fixer
 ```
 

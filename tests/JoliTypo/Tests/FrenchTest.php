@@ -5,7 +5,7 @@ use JoliTypo\Fixer;
 
 class FrenchTest extends \PHPUnit_Framework_TestCase
 {
-    private $fr_fixers = array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen');
+    private $fr_fixers = array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark');
 
     const TOFIX = <<<TOFIX
 <p>Ceci est à remplacer par une fâble :p</p>

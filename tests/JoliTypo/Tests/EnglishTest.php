@@ -5,7 +5,7 @@ use JoliTypo\Fixer;
 
 class EnglishTest extends \PHPUnit_Framework_TestCase
 {
-    private $en_fixers = array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen');
+    private $en_fixers = array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen', 'Trademark');
 
     const TOFIX = <<<TOFIX
 <!-- From https://en.wikipedia.org/wiki/Gif#Pronunciation -->
@@ -37,5 +37,23 @@ FIXED;
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));
+    }
+
+
+    public function testReadMeExemple()
+    {
+
+        $before = <<<TOFIX
+<p>"Tell me Mr. Anderson... what good is a phone call... if you're unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>
+TOFIX;
+
+        $after = <<<FIXED
+<p>&ldquo;Tell me Mr. Ander&shy;son&hellip; what good is a phone call&hellip; if you&rsquo;re unable to speak?&rdquo;&mdash;Agent Smith, <em>Matrix</em>.</p>
+FIXED;
+
+        $fixer = new Fixer($this->en_fixers);
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $this->assertEquals($after, $fixer->fix($before));
     }
 }
