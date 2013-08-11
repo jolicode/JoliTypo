@@ -22,6 +22,9 @@ class Fixer
     const LDQUO               = "“"; // &ldquo; or &#8220;
     const RDQUO               = "”"; // &rdquo; or &#8221;
     const SHY                 = "\xC2\xAD"; // &shy;
+    const TRADE               = "™"; // &trade;
+    const REG                 = "®"; // &reg;
+    const COPY                = "©"; // &copy;
 
     /**
      * @var array   HTML Tags to bypass

@@ -112,6 +112,13 @@ Replace straight quotes (`'`) by curly one's (’).
 There is on exception to consider: foot and inch marks (minutes and second marks). Purists use &prime;, this fixer use straight quote for compatibility.
 [Read more about Curly quotes](http://practicaltypography.com/straight-and-curly-quotes.html).
 
+Trademark
+---------
+
+Handle trade­mark symbol (`™`), a reg­is­tered trade­mark symbol (`®`), and a copy­right symbol (`©`). This fixer replace
+commonly used approximations: `(r)`, `(c)` and `(TM)`. A non-breaking space is put between numbers and copyright symbol too.
+
+
 **It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules.**
 
 Fixer recommendations by locale

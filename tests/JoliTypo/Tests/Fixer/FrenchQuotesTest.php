@@ -27,7 +27,7 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
     /**
      * :-( :sadface:
      */
-    public function testImpossibles()
+    public function testImpossible()
     {
         $this->markTestSkipped("Those tests can't pass: they are edge case JoliTypo does not cover ATM. Feel free to fix!");
 
