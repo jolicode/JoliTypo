@@ -22,7 +22,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals("Coucou&hellip;", $fixer->fix("Coucou..."));
 
-        $fixer->setRules(array('SingleQuote'));
+        $fixer->setRules(array('CurlyQuote'));
 
         $this->assertEquals("I&rsquo;m a pony.", $fixer->fix("I'm a pony."));
     }

@@ -13,9 +13,9 @@ class Fixer
     const NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
     const NO_BREAK_SPACE      = "\xC2\xA0"; // &#160;
     const ELLIPSIS            = "…";
-    const LAQUO               = "«";
-    const RAQUO               = "»";
-    const RSQUO               = "’";
+    const LAQUO               = "«"; // &laquo;
+    const RAQUO               = "»"; // &raquo;
+    const RSQUO               = "’"; // &rsquo;
     const TIMES               = "×"; // &times;
     const NDASH               = "–"; // &ndash; or &#x2013;
     const MDASH               = "—"; // &mdash; or &#x2014;

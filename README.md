@@ -8,7 +8,7 @@ JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microt
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer("FrenchQuote", "FrenchNoBreakSpace", "SingleQuote");
+$fixer = new Fixer(array("FrenchQuote", "FrenchNoBreakSpace", "CurlyQuote"));
 $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
 ```
 ```html
@@ -105,7 +105,7 @@ You can read more about this fixer on [the official github repository](https://g
 
 **Hyphenation is only a good idea if your texts are justified.**
 
-SingleQuote
+CurlyQuote
 -----------
 
 Replace all the quotes (`'`) by a real rsquo (’).
@@ -122,7 +122,7 @@ en_GB
 -----
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote', 'Hyphen'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen'));
 $fixer->setLocale('en_GB'); // Needed by the Hyphen Fixer
 ```
 
@@ -132,7 +132,7 @@ fr_FR
 Those rules apply most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'SingleQuote', 'Hyphen'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen'));
 $fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
 ```
 
@@ -142,7 +142,7 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'SingleQuote', 'Hyphen'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'CurlyQuote', 'Hyphen'));
 $fixer->setLocale('fr_CA'); // Needed by the Hyphen Fixer
 ```
 
@@ -156,10 +156,10 @@ Default usage
 -------------
 
 ```php
-$fixer          = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote', 'Hyphen'));
+$fixer          = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen'));
 $fixed_content  = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
 
-$fixer->setRules(array('SingleQuote'));
+$fixer->setRules(array('CurlyQuote'));
 $fixed_content = $fixer->fix("<p>I'm only replacing single quotes.</p>");
 
 $fixer->setRules(array('Hyphen'));
@@ -283,6 +283,5 @@ Thanks to theses online resources for helping a developer understand typography:
 - http://daringfireball.net/projects/smartypants/
 - [FR] http://www.uzine.net/article1802.html
 - [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
-- http://www.punctuationmatters.com/
-- http://practicaltypography.com/
+- http://www.punctuationmatters.com/ **is a must read**
 - "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667

@@ -6,7 +6,12 @@ use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 use JoliTypo\StateBag;
 
-class SingleQuote implements FixerInterface
+/**
+ * Replace straight quotes by curly one's.
+ * 
+ * @see http://practicaltypography.com/straight-and-curly-quotes.html
+ */
+class CurlyQuote implements FixerInterface
 {
     public function fix($content, StateBag $state_bag = null)
     {

@@ -5,7 +5,7 @@ use JoliTypo\Fixer;
 
 class EnglishTest extends \PHPUnit_Framework_TestCase
 {
-    private $en_fixers = array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'SingleQuote', 'Hyphen');
+    private $en_fixers = array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen');
 
     const TOFIX = <<<TOFIX
 <!-- From https://en.wikipedia.org/wiki/Gif#Pronunciation -->
