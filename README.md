@@ -9,7 +9,7 @@ JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microt
 use JoliTypo\Fixer;
 
 $fixer = new Fixer(array('Ellipsis', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen'));
-$fixed_content = $fixer->fix('<p>"Tell me Mr. Anderson... what good is a phone call... if you're unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>');
+$fixed_content = $fixer->fix('<p>"Tell me Mr. Anderson... what good is a phone call... if you\'re unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>');
 ```
 ```html
 <p>&ldquo;Tell me Mr. Ander&shy;son&hellip; what good is a phone call&hellip; if you&rsquo;re unable to speak?&rdquo;&mdash;Agent Smith, <em>Matrix</em>.</p>
@@ -89,7 +89,7 @@ No break space are placed before `:`, thin no break space before `;`, `!` and `?
 FrenchQuote
 -----------
 
-Convert dumb quotes (`" "`) to French quotes (« ») and use a no break space.
+Convert dumb quotes (`" "`) to French guillemets (`« »`) and use a no break space.
 
 Hyphen (automatic hyphenation)
 ------------------------------
@@ -108,7 +108,7 @@ You can read more about this fixer on [the official github repository](https://g
 CurlyQuote (Smart Quote)
 -----------------------
 
-Replace straight quotes (`'`) by curly one's (’).
+Replace straight quotes (`'`) by curly one's (`’`).
 There is on exception to consider: foot and inch marks (minutes and second marks). Purists use &prime;, this fixer use straight quote for compatibility.
 [Read more about Curly quotes](http://practicaltypography.com/straight-and-curly-quotes.html).
 
@@ -138,7 +138,7 @@ fr_FR
 Those rules apply most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
 ```
 
@@ -148,7 +148,7 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'CurlyQuote', 'Hyphen', 'Trademark));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('fr_CA'); // Needed by the Hyphen Fixer
 ```
 
