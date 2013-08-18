@@ -27,6 +27,15 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("I&rsquo;m a pony.", $fixer->fix("I'm a pony."));
     }
 
+    public function testHtmlComments()
+    {
+        $fixer = new Fixer(array('Ellipsis'));
+        $this->assertEquals("<p>Coucou&hellip;</p> <!-- Not Coucou... -->", $fixer->fix("<p>Coucou...</p> <!-- Not Coucou... -->"));
+
+        // This test can't be ok, DomDocument is encoding entities even in comments (╯°□°）╯︵ ┻━┻
+        //$this->assertEquals("<p>Coucou&hellip;</p> <!-- abusé -->", $fixer->fix("<p>Coucou...</p> <!-- abusé -->"));
+    }
+
     /**
      * @expectedException \JoliTypo\Exception\BadRuleSetException
      */

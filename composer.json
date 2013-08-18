@@ -4,7 +4,7 @@
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/jolicode/JoliTypo",
-    "keywords": ["typography", "ellipsis", "quote", "fixer"],
+    "keywords": ["typography", "ellipsis", "quote", "fixer", "smartquote"],
     "authors": [
         {
             "name": "Damien Alexandre",
