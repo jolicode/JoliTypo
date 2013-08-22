@@ -21,5 +21,10 @@
         "psr-0": {
             "JoliTypo": "src/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
     }
 }

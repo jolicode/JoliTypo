@@ -59,6 +59,8 @@ composer require jolicode/jolitypo dev-master
 
 *Usage outside composer is also possible, just add the `src/` directory to any PSR-0 compatible autoloader.*
 
+We also provide a [Symfony2 Bundle with a Twig extension](https://github.com/jolicode/JoliTypoBundle).
+
 Available Fixers
 ================
 
@@ -223,7 +225,6 @@ What can you do to help?
 ========================
 
 We need to be able to use this tool everywhere, you can help by providing:
-- Symfony2 Bundle
 - Wordpress plugin
 - Dotclear plugin
 ...
