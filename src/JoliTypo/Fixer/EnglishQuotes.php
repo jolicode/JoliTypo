@@ -13,16 +13,16 @@ class EnglishQuotes extends BaseOpenClosePair implements FixerInterface
 {
     public function fix($content, StateBag $state_bag = null)
     {
-        $content = preg_replace(
-            '@(^|\s)"([^"]+)"@im',
-            "$1".Fixer::LDQUO."$2".Fixer::RDQUO,
-            $content);
-
         // Fix complex siblings cases
         if ($state_bag) {
             $content = $this->fixViaState($content, $state_bag, 'EnglishQuotesOpenSolo',
                 '@(^|\s)"([^"]*)$@', '@(^|[^"]+)"(.+)@im', Fixer::LDQUO, Fixer::RDQUO);
         }
+
+        $content = preg_replace(
+                    '@(^|\s)"([^"]+)"@im',
+                    "$1".Fixer::LDQUO."$2".Fixer::RDQUO,
+                    $content);
 
         return $content;
     }

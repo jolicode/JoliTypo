@@ -39,21 +39,33 @@ FIXED;
         $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));
     }
 
-
     public function testReadMeExemple()
     {
-
-        $before = <<<TOFIX
+        $before = <<<HTML
 <p>"Tell me Mr. Anderson... what good is a phone call... if you're unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>
-TOFIX;
+HTML;
 
-        $after = <<<FIXED
+        $after = <<<HTML
 <p>&ldquo;Tell me Mr. Ander&shy;son&hellip; what good is a phone call&hellip; if you&rsquo;re unable to speak?&rdquo;&mdash;Agent Smith, <em>Matrix</em>.</p>
-FIXED;
+HTML;
 
         $fixer = new Fixer($this->en_fixers);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
-
         $this->assertEquals($after, $fixer->fix($before));
+    }
+
+    public function testDoubleQuoteMess()
+    {
+        $fixed = <<<HTML
+<p>I&rsquo;m learning &ldquo;<a href="http://composer.json.jolicode.com">composer.json</a>&rdquo; as it&rsquo;s better than a &ldquo;.docx&rdquo;</p>
+HTML;
+
+        $to_fix = <<<HTML
+<p>I'm learning "<a href="http://composer.json.jolicode.com">composer.json</a>" as it's better than a ".docx"</p>
+HTML;
+        $fixer = new Fixer($this->en_fixers);
+        $fixer->setLocale('en');
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+        $this->assertEquals($fixed, $fixer->fix($to_fix));
     }
 }

@@ -72,4 +72,21 @@ FIXED;
 
         $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));
     }
+
+    public function testDoubleQuoteMess()
+    {
+        $fixer = new Fixer($this->fr_fixers);
+        $fixer->setLocale('fr');
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $fixed = <<<HTML
+<p>A la sauce &laquo;&nbsp;<a href="http://composer.json.jolicode.com">compo&shy;ser.json</a>&nbsp;&raquo; atti&shy;rera forc&eacute;&shy;ment plus notre atten&shy;tion qu&rsquo;une lettre de moti&shy;va&shy;tion de 4 pages en &laquo;&nbsp;.docx&nbsp;&raquo;</p>
+HTML;
+
+        $to_fix = <<<HTML
+<p>A la sauce "<a href="http://composer.json.jolicode.com">composer.json</a>" attirera forcément plus notre attention qu’une lettre de motivation de 4 pages en ".docx"</p>
+HTML;
+
+        $this->assertEquals($fixed, $fixer->fix($to_fix));
+    }
 }
