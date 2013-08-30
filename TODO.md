@@ -27,6 +27,11 @@ fr-FR
     > Il nous raconta : « Hier, je me promenais sur les quais. Je demandai à un passant : “Quelle heure est-il ?”
     > Il répondit : “Désolé, je n’ai pas de montre, il doit être midi, mais c’est ‛sans garantie’.” Je le remerciai et partis. »
 
+es-ES
+-----
+
+- [ ] ¿¡_inverted_!? exclamation and question marks.
+
 fr-CA
 -----
 

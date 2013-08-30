@@ -68,4 +68,19 @@ HTML;
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
         $this->assertEquals($fixed, $fixer->fix($to_fix));
     }
+
+    public function testHtmlHeart()
+    {
+        $fixed = <<<HTML
+<p>We &lt;3 web.</p>
+HTML;
+
+        $to_fix = <<<HTML
+<p>We &lt;3 web.</p>
+HTML;
+        $fixer = new Fixer($this->en_fixers);
+        $fixer->setLocale('en');
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+        $this->assertEquals($fixed, $fixer->fix($to_fix));
+    }
 }

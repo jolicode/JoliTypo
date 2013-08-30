@@ -43,7 +43,7 @@ Just tell the Fixer class [which Fixer](#available-fixers) you want to run on yo
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer(array("FrenchQuote", "FrenchNoBreakSpace"));
+$fixer = new Fixer(array("FrenchQuotes", "FrenchNoBreakSpace"));
 $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
 ```
 
@@ -90,8 +90,8 @@ FrenchNoBreakSpace
 Replace some classic spaces by non breaking spaces following the French typographic code.
 No break space are placed before `:`, thin no break space before `;`, `!` and `?`.
 
-FrenchQuote
------------
+FrenchQuotes
+------------
 
 Convert dumb quotes (`" "`) to French guillemets (`« »`) and use a no break space.
 
