@@ -17,7 +17,7 @@ class FrenchQuotes extends BaseOpenClosePair implements FixerInterface
         // Fix complex siblings cases
         if ($state_bag) {
             $content = $this->fixViaState($content, $state_bag, 'FrenchQuotesOpenSolo',
-                '@(^|\s)"([^"]*)$@', '@(^|[^"]+)"(.+)@im', Fixer::LAQUO.Fixer::NO_BREAK_SPACE,
+                '@(^|\s)"([^"]*)$@im', '@(^|[^"]+)"@im', Fixer::LAQUO.Fixer::NO_BREAK_SPACE,
                     Fixer::NO_BREAK_SPACE.Fixer::RAQUO);
         }
 
