@@ -67,7 +67,7 @@ Available Fixers
 Dash
 ----
 
-Replace the simple `-` by a ndash (–) between numbers (dates ranges...) and the double `--` by a mdash (—).
+Replace the simple `-` by a ndash `–` between numbers (dates ranges...) and the double `--` by a mdash `—`.
 
 Dimension
 ---------
@@ -77,23 +77,29 @@ Replace the letter x between numbers (`12 x 123`) by a times entity (`×`, the r
 Ellipsis
 --------
 
-Replace the three dot (`...`) by an ellipsis (…).
+Replace the three dot `...` by an ellipsis `…`.
 
 EnglishQuotes
 -------------
 
-Convert dumb quotes (`" "`) to smart double quotes (“ ”).
+Convert dumb quotes `" "` to smart English style quotation marks `“ ”`.
+
+FrenchQuotes
+------------
+
+Convert dumb quotes `" "` to smart French style quotation marks `« »` and use a no break space.
+
+GermanQuotes
+------------
+
+Convert dumb quotes `" "` to smart German style quotation marks `„ “` (Anführungszeichen).
+Some fonts (Verdana) are typographically incompatible with German.
 
 FrenchNoBreakSpace
 ------------------
 
 Replace some classic spaces by non breaking spaces following the French typographic code.
 No break space are placed before `:`, thin no break space before `;`, `!` and `?`.
-
-FrenchQuotes
-------------
-
-Convert dumb quotes (`" "`) to French guillemets (`« »`) and use a no break space.
 
 Hyphen (automatic hyphenation)
 ------------------------------
@@ -112,16 +118,15 @@ You can read more about this fixer on [the official github repository](https://g
 CurlyQuote (Smart Quote)
 -----------------------
 
-Replace straight quotes (`'`) by curly one's (`’`).
-There is on exception to consider: foot and inch marks (minutes and second marks). Purists use &prime;, this fixer use straight quote for compatibility.
+Replace straight quotes `'` by curly one's `’`.
+There is on exception to consider: foot and inch marks (minutes and second marks). Purists use prime `′`, this fixer use straight quote for compatibility.
 [Read more about Curly quotes](http://practicaltypography.com/straight-and-curly-quotes.html).
 
 Trademark
 ---------
 
-Handle trade­mark symbol (`™`), a reg­is­tered trade­mark symbol (`®`), and a copy­right symbol (`©`). This fixer replace
+Handle trade­mark symbol `™`, a reg­is­tered trade­mark symbol `®`, and a copy­right symbol `©`. This fixer replace
 commonly used approximations: `(r)`, `(c)` and `(TM)`. A non-breaking space is put between numbers and copyright symbol too.
-
 
 **It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules.**
 
@@ -154,6 +159,16 @@ Mostly the same as fr_FR, but the space before punctuation points is not mandato
 ```php
 $fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('fr_CA'); // Needed by the Hyphen Fixer
+```
+
+de_DE
+-----
+
+Mostly the same as en_GB, according to [Typefacts](http://typefacts.com/) and [Wikipedia](http://de.wikipedia.org/wiki/Typografie_f%C3%BCr_digitale_Texte).
+
+```php
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'GermanQuotes', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer->setLocale('de_DE'); // Needed by the Hyphen Fixer
 ```
 
 More to come (contributions welcome!).
@@ -263,5 +278,6 @@ Thanks to theses online resources for helping a developer understand typography:
 - [FR] http://www.uzine.net/article1802.html
 - [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
 - http://www.punctuationmatters.com/ **is a must read**
+- http://practicaltypography.com/
 - [FR] "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667
 - https://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks

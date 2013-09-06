@@ -21,6 +21,7 @@ class Fixer
     const MDASH               = "—"; // &mdash; or &#x2014;
     const LDQUO               = "“"; // &ldquo; or &#8220;
     const RDQUO               = "”"; // &rdquo; or &#8221;
+    const BDQUO               = "„"; // &bdquo; or &#8222;
     const SHY                 = "\xC2\xAD"; // &shy;
     const TRADE               = "™"; // &trade;
     const REG                 = "®"; // &reg;
