@@ -242,7 +242,7 @@ What can you do to help?
 ========================
 
 We need to be able to use this tool everywhere, you can help by providing:
-- Wordpress plugin
+- Wordpress plugin (to replace or complete `wptexturize`)
 - Dotclear plugin
 ...
 
