@@ -17,12 +17,12 @@ class FrenchQuotes extends BaseOpenClosePair implements FixerInterface
         // Fix complex siblings cases
         if ($state_bag) {
             $content = $this->fixViaState($content, $state_bag, 'FrenchQuotesOpenSolo',
-                '@(^|\s)"([^"]*)$@im', '@(^|[^"]+)"@im', Fixer::LAQUO.Fixer::NO_BREAK_SPACE,
+                '@(^|\s|\()"([^"]*)$@im', '@(^|[^"]+)"@im', Fixer::LAQUO.Fixer::NO_BREAK_SPACE,
                     Fixer::NO_BREAK_SPACE.Fixer::RAQUO);
         }
 
         // Fix simple cases
-        $content = preg_replace('@(^|\s)"([^"]+)"@im',
+        $content = preg_replace('@(^|\s|\()"([^"]+)"@im',
             "$1".Fixer::LAQUO.Fixer::NO_BREAK_SPACE."$2".Fixer::NO_BREAK_SPACE.Fixer::RAQUO,
             $content);
 

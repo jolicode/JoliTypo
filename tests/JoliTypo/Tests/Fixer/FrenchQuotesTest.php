@@ -15,6 +15,9 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals("Some people are like «".Fixer::NO_BREAK_SPACE."Batman".Fixer::NO_BREAK_SPACE."», others like «".Fixer::NO_BREAK_SPACE."Superman".Fixer::NO_BREAK_SPACE."».", $fixer->fix('Some people are like "Batman", others like "Superman".'));
         $this->assertEquals('Oh my god, this quote is alone: " !', $fixer->fix('Oh my god, this quote is alone: " !'));
+
+        $this->assertEquals('Liste de «'.Fixer::NO_BREAK_SPACE.'mot'.Fixer::NO_BREAK_SPACE.'» entre «'.Fixer::NO_BREAK_SPACE.'guillemets'.Fixer::NO_BREAK_SPACE.'».', $fixer->fix('Liste de "mot" entre "guillemets".'));
+        $this->assertEquals('Liste de («'.Fixer::NO_BREAK_SPACE.'mot'.Fixer::NO_BREAK_SPACE.'» entre «'.Fixer::NO_BREAK_SPACE.'guillemets'.Fixer::NO_BREAK_SPACE.'»).', $fixer->fix('Liste de ("mot" entre "guillemets").'));
     }
 
     public function testFalsePositives()

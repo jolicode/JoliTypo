@@ -16,11 +16,11 @@ class GermanQuotes extends BaseOpenClosePair implements FixerInterface
         // Fix complex siblings cases
         if ($state_bag) {
             $content = $this->fixViaState($content, $state_bag, 'GermanQuotesOpenSolo',
-                '@(^|\s)"([^"]*)$@', '@(^|[^"]+)"@im', Fixer::BDQUO, Fixer::LDQUO);
+                '@(^|\s|\()"([^"]*)$@', '@(^|[^"]+)"@im', Fixer::BDQUO, Fixer::LDQUO);
         }
 
         $content = preg_replace(
-                    '@(^|\s)"([^"]+)"@im',
+                    '@(^|\s|\()"([^"]+)"@im',
                     "$1".Fixer::BDQUO."$2".Fixer::LDQUO,
                     $content);
 

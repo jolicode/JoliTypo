@@ -13,6 +13,7 @@ class EnglishQuotesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("“I am smart”", $fixer->fix('"I am smart"'));
         $this->assertEquals("Quote say: “I am smart”", $fixer->fix('Quote say: "I am smart"'));
         $this->assertEquals("I'm not a “QUOTE”. Or a “US QUOTE.”", $fixer->fix('I\'m not a "QUOTE". Or a "US QUOTE."'));
+        $this->assertEquals("I'm not a (“QUOTE”. Or a “US QUOTE.”)", $fixer->fix('I\'m not a ("QUOTE". Or a "US QUOTE.")'));
     }
 
     public function testFalsePositives()
