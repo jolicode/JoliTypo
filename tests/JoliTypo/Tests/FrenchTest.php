@@ -91,4 +91,21 @@ HTML;
 
         $this->assertEquals($fixed, $fixer->fix($to_fix));
     }
+
+    public function testEncodingMess()
+    {
+        $fixer = new Fixer($this->fr_fixers);
+        $fixer->setLocale('fr');
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $fixed = <<<HTML
+&Ccedil;a s&rsquo;ar&shy;r&ecirc;&shy;te l&agrave;&#8239!
+HTML;
+
+        $to_fix = <<<HTML
+Ça s'arrête là !
+HTML;
+
+        $this->assertEquals($fixed, $fixer->fix($to_fix));
+    }
 }
