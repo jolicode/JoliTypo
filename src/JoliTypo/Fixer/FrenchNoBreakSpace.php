@@ -17,8 +17,8 @@ class FrenchNoBreakSpace implements FixerInterface
 {
     public function fix($content, StateBag $state_bag = null)
     {
-        $content = preg_replace('@[\s'.Fixer::NO_BREAK_SPACE.Fixer::NO_BREAK_THIN_SPACE.']+(:)@m', Fixer::NO_BREAK_SPACE.'$1', $content);
-        $content = preg_replace('@[\s'.Fixer::NO_BREAK_SPACE.Fixer::NO_BREAK_THIN_SPACE.']+([;!\?])@m', Fixer::NO_BREAK_THIN_SPACE.'$1', $content);
+        $content = preg_replace('@[\s'.Fixer::NO_BREAK_SPACE.Fixer::NO_BREAK_THIN_SPACE.']+(:)@mu', Fixer::NO_BREAK_SPACE.'$1', $content);
+        $content = preg_replace('@[\s'.Fixer::NO_BREAK_SPACE.Fixer::NO_BREAK_THIN_SPACE.']+([;!\?])@mu', Fixer::NO_BREAK_THIN_SPACE.'$1', $content);
 
         return $content;
     }

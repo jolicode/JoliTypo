@@ -99,7 +99,7 @@ HTML;
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $fixed = <<<HTML
-&Ccedil;a s&rsquo;ar&shy;r&ecirc;&shy;te l&agrave;&#8239!
+&Ccedil;a s&rsquo;ar&shy;r&ecirc;te l&agrave;&#8239;!
 HTML;
 
         $to_fix = <<<HTML
