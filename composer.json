@@ -17,6 +17,9 @@
         "ext-mbstring": "*",
         "org_heigl/hyphenator": ">=2.0.3"
     },
+    "conflict": {
+        "ext-apc": "<3.1.11"
+    },
     "autoload": {
         "psr-0": {
             "JoliTypo": "src/"
