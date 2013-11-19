@@ -54,7 +54,7 @@ Installation
 ============
 
 ```
-composer require jolicode/jolitypo dev-master
+composer require jolicode/jolitypo 0.1.*
 ```
 
 *Usage outside composer is also possible, just add the `src/` directory to any PSR-0 compatible autoloader.*
