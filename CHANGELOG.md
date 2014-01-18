@@ -3,7 +3,14 @@ CHANGELOG
 
 ### 0.1... (????-??-??) ###
 
-### 0.1.2 (2013-09-??) ###
+### 0.1.3 (2013-11-15) ###
+
+* test on PHP 5.5 ok
+* better error messages
+* fix edge case when the opening quote in right after an `(`
+* regexp was capturing UTF8 sequence, some octets were eaten in some cases. Added the "u" modifier to disable this feature from the preg_replace function
+
+### 0.1.2 (2013-09-10) ###
 
 * Fix Org_Heigl_Hyphenator version to >= v2.0.3 (issue with spaces in the previous ones)
 
