@@ -127,6 +127,20 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("<p>Hey &eacute;pic dude&hellip;</p>", $fixer->fix('<?xml encoding="UTF-8"><body><p>Hey épic dude...</p></body>'));
         $this->assertEquals("<p>Hey &eacute;pic dude&hellip;</p>", $fixer->fix('<?xml encoding="ISO-8859-1"><body><p>Hey épic dude...</p></body>'));
     }
+
+    public function testBadEncoding()
+    {
+        $fixer = new Fixer(array('Trademark'));
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $this->assertEquals("Mentions L&eacute;gales", $fixer->fix(utf8_encode(utf8_decode("Mentions Légales"))));
+
+        // JoliTypo can't handle double encoded UTF-8 strings, nor ISO strings
+        $isoString = mb_convert_encoding("Mentions Légales", "ISO-8859-1", "UTF-8");
+        $this->assertEquals("Mentions L&eacute;gales", $fixer->fix(utf8_encode($isoString)));
+        $this->assertNotEquals("Mentions L&eacute;gales", $fixer->fix($isoString));
+        $this->assertEquals("Mentions L&Atilde;&copy;gales", $fixer->fix(utf8_encode(utf8_encode($isoString))));
+    }
 }
 
 class FakeFixer {}
