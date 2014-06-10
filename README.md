@@ -59,7 +59,12 @@ composer require jolicode/jolitypo 0.1.*
 
 *Usage outside composer is also possible, just add the `src/` directory to any PSR-0 compatible autoloader.*
 
-We also provide a [Symfony2 Bundle with a Twig extension](https://github.com/jolicode/JoliTypoBundle).
+Integration
+===========
+
+- (Official) [Symfony2 Bundle and twig extension](https://github.com/jolicode/JoliTypoBundle)
+- [Wordpress plugin](http://wordpress.org/plugins/typofr/)
+- [Drupal module](https://github.com/Anaethelion/JoliTypo-for-Drupal)
 
 Available Fixers
 ================
