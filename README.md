@@ -38,7 +38,7 @@ It's designed to be:
 Quick usage
 ===========
 
-Just tell the Fixer class [which Fixer](#available-fixers) you want to run on your HTML content and then, call `fix()`:
+Just tell the Fixer class [which Fixer](#available-fixers) you want to run on your **HTML contents** and then, call `fix()`:
 
 ```php
 use JoliTypo\Fixer;
@@ -50,8 +50,12 @@ $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur
 For your ease of use, you can find [ready to use list of Fixer for your language here](#fixer-recommendations-by-locale).
 Micro-typography is nothing like a standard or a law, what really matter is consistency, so feel free to use your own lists.
 
+Also, be advise that JoliTypo is intended to be used on HTML contents (not pages) and will remove potential `<head>`, `<html>` and `<body>` tags.
+
 Installation
 ============
+
+Requirements are handled by Composer (libxml and mbstring are required).
 
 ```
 composer require jolicode/jolitypo 0.1.*
