@@ -15,6 +15,7 @@
     "require": {
         "php": ">=5.3.0",
         "ext-mbstring": "*",
+        "lib-libxml": ">2.6.32",
         "org_heigl/hyphenator": ">=2.0.3"
     },
     "conflict": {
