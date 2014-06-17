@@ -16,7 +16,7 @@
         "php": ">=5.3.0",
         "ext-mbstring": "*",
         "lib-libxml": "*",
-        "org_heigl/hyphenator": ">=2.0.3"
+        "org_heigl/hyphenator": "~2.0.3"
     },
     "conflict": {
         "ext-apc": "3.1.11"

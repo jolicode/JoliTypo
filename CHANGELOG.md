@@ -11,6 +11,7 @@ CHANGELOG
 * do not process empty contents
 * apply `mb_convert_encoding($content, 'HTML-ENTITIES', $encoding)` on all contents to fix encoding
 * workaround for old (2.6.32) libxml versions (#7)
+* better Org_Heigl_Hyphenator version requirement
 
 ### 0.1.3 (2013-11-15) ###
 
