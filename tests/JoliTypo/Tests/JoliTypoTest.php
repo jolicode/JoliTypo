@@ -141,6 +141,16 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Mentions L&eacute;gales", $fixer->fix($isoString));
         $this->assertEquals("Mentions L&Atilde;&copy;gales", $fixer->fix(utf8_encode(utf8_encode($isoString))));
     }
+
+    public function testEmptyContent()
+    {
+        $fixer = new Fixer(array('Trademark'));
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $this->assertEquals("", $fixer->fix(""));
+        $this->assertEquals("\n ", $fixer->fix("\n "));
+        $this->assertEquals("some content", $fixer->fix("\n some content"));
+    }
 }
 
 class FakeFixer {}

@@ -62,10 +62,15 @@ class Fixer
      */
     public function fix($content)
     {
+        $trimmed = trim($content);
+        if (empty($trimmed)) {
+            return $content;
+        }
+
         // Get a clean new StateBag
         $this->state_bag = new StateBag();
 
-        $dom = $this->loadDOMDocument($content);
+        $dom = $this->loadDOMDocument($trimmed);
 
         $this->processDOM($dom, $dom);
 
