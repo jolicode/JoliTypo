@@ -17,4 +17,29 @@ HTML;
         // The test passes if there is no warning about this fix:
         $this->assertEquals($html5, $fixer->fix($html5));
     }
+
+    public function testFullPageMarkup()
+    {
+        $fixer = new Fixer(array(new Fixer\EnglishQuotes()));
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $html = <<<HTML
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Coucou</title>
+</head>
+<body>
+    "Who Let the Dogs Out?" is a song written and originally recorded by Anslem Douglas (titled "Doggie").
+</body>
+</html>
+HTML;
+
+        $fixed = <<<STRING
+&#8220;Who Let the Dogs Out?&#8221; is a song written and originally recorded by Anslem Douglas (titled &#8220;Doggie&#8221;).
+STRING;
+
+        $this->assertEquals($fixed, $fixer->fix($html));
+    }
 }

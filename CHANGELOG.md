@@ -1,7 +1,17 @@
 CHANGELOG
 =========
 
-### 0.1... (????-??-??) ###
+### ??? ###
+
+### 0.1.4 (2014-06-17) ###
+
+* add HHVM tests on travis
+* add libxml to composer requirements
+* set APC 3.1.11 as conflict (https://bugs.php.net/bug.php?id=62190)
+* do not process empty contents
+* apply `mb_convert_encoding($content, 'HTML-ENTITIES', $encoding)` on all contents to fix encoding
+* workaround for old (2.6.32) libxml versions (#7)
+* better Org_Heigl_Hyphenator version requirement
 
 ### 0.1.3 (2013-11-15) ###
 
