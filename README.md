@@ -25,15 +25,12 @@ It's designed to be:
 - smart enough to avoid Javascript, Code, CSS processing... (configurable protected tags list);
 - fully open and usable in any project (MIT License).
 
-**This software is still in alpha, some Fixer are missing for a proper release, and everything can change.**
-
 [![Build Status](https://travis-ci.org/jolicode/JoliTypo.png?branch=master)](https://travis-ci.org/jolicode/JoliTypo)
 [![Latest Stable Version](https://poser.pugx.org/jolicode/JoliTypo/version.png)](https://packagist.org/packages/jolicode/JoliTypo)
 [![Latest Unstable Version](https://poser.pugx.org/jolicode/JoliTypo/v/unstable.png)](https://packagist.org/packages/jolicode/JoliTypo)
 [![Code Coverage](https://scrutinizer-ci.com/g/jolicode/JoliTypo/badges/coverage.png?s=4158f94c2d7ee660eebf562baa1c6cf8f1152784)](https://scrutinizer-ci.com/g/jolicode/JoliTypo/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1e8d7acc-dfad-497b-a2aa-db1223bbf684/mini.png)](https://insight.sensiolabs.com/projects/1e8d7acc-dfad-497b-a2aa-db1223bbf684)
 [![Dependency Status](https://www.versioneye.com/php/jolicode:jolitypo/dev-master/badge.png)](https://www.versioneye.com/php/jolicode:jolitypo/dev-master)
-*I love badges ^^*
 
 Quick usage
 ===========
@@ -58,7 +55,7 @@ Installation
 Requirements are handled by Composer (libxml and mbstring are required).
 
 ```
-composer require jolicode/jolitypo 0.1.*
+composer require jolicode/jolitypo "~0.1.4"
 ```
 
 *Usage outside composer is also possible, just add the `src/` directory to any PSR-0 compatible autoloader.*
@@ -122,7 +119,7 @@ You can read more about this fixer on [the official github repository](https://g
 
 **This Fixer require a Locale to be set on the Fixer with `$fixer->setLocale('fr_FR');`. Default to `en_GB`.**
 
-**Hyphenation is mandatory in justified text** and you should avoid word breaking in titles with this line of CSS: `hyphens:none;`.
+**Proper hyphenation is mandatory in justified text** and you should avoid word breaking in titles with this line of CSS: `hyphens:none;`.
 
 CurlyQuote (Smart Quote)
 -----------------------
