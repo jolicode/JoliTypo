@@ -5,7 +5,7 @@ Global
 ------
 
 - [ ] Add results on ALL the documentation examples for teaching purpose;
-- [ ] Investigate if we hould run the fixers on `title` attributes and image `alt`;
+- [ ] Investigate if we should run the fixers on `title` attributes and image `alt`;
 - [x] Improve the EnglishTest;
 - [ ] Add more pre-configured locale in the README, with the appropriate tests;
 - [ ] Add a http://cldr.unicode.org/ Fixer for number formatting (thx @g_marty for the tip!);

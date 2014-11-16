@@ -242,7 +242,7 @@ Compatibility & OS support restrictions
 
 BUT if you use a font (`@font-face` maybe) that contains all those glyphs, there will be no issues.
 
-There is a known [issue](https://bugs.php.net/bug.php?id=62190) preventing JoliTypo to work corectly with APC versions older than 3.1.11.
+There is a known [issue](https://bugs.php.net/bug.php?id=62190) preventing JoliTypo to work correctly with APC versions older than 3.1.11.
 
 What can you do to help?
 ========================
