@@ -109,7 +109,7 @@ No break space are placed before `:`, thin no break space before `;`, `!` and `?
 
 NoSpaceBeforeComma
 ------------------
-Remove space before a `,` and add a non breaking spaces after.
+Remove space before a `,` and add a space after.
 
 Hyphen (automatic hyphenation)
 ------------------------------
@@ -147,7 +147,7 @@ en_GB
 -----
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'NoSpaceBeforeComma',  'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('en_GB'); // Needed by the Hyphen Fixer
 ```
 
@@ -157,7 +157,7 @@ fr_FR
 Those rules apply most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma',   'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
 ```
 
@@ -167,7 +167,7 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'NoSpaceBeforeComma',   'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('fr_CA'); // Needed by the Hyphen Fixer
 ```
 
@@ -177,7 +177,7 @@ de_DE
 Mostly the same as en_GB, according to [Typefacts](http://typefacts.com/) and [Wikipedia](http://de.wikipedia.org/wiki/Typografie_f%C3%BCr_digitale_Texte).
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'GermanQuotes', 'NoSpaceBeforeComma',   'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'GermanQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('de_DE'); // Needed by the Hyphen Fixer
 ```
 
