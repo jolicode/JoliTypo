@@ -4,6 +4,7 @@ CHANGELOG
 ### ??? ###
 
 * new NoSpaceBeforeComma fixer, cleaning badly placed spaces close to commas
+* add NoBreakSpace inside french quotes automatically
 
 ### 0.1.4 (2014-06-17) ###
 
