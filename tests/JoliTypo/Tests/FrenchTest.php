@@ -108,4 +108,31 @@ HTML;
 
         $this->assertEquals($fixed, $fixer->fix($to_fix));
     }
+
+    /**
+     * @see https://github.com/jolicode/JoliTypo/issues/16
+     */
+    public function testNoBreakingSpaceInsideGoodQuotes()
+    {
+        $fixer = new Fixer($this->fr_fixers);
+
+        $fixer->setLocale('fr');
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $fixed = <<<HTML
+&laquo;&nbsp;test&nbsp;&raquo; et &laquo;&nbsp;test&nbsp;&raquo; sont dans un bateau.
+HTML;
+
+        $to_fix = <<<HTML
+« test » et «test» sont dans un bateau.
+HTML;
+
+        $this->assertEquals($fixed, $fixer->fix($to_fix));
+
+        $to_fix = <<<HTML
+&laquo; test &raquo; et &laquo;test&raquo; sont dans un bateau.
+HTML;
+
+        $this->assertEquals($fixed, $fixer->fix($to_fix));
+    }
 }
