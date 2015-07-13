@@ -109,7 +109,8 @@ No break space are placed before `:`, thin no break space before `;`, `!` and `?
 
 NoSpaceBeforeComma
 ------------------
-Remove space before a `,` and add a space after.
+
+Remove space before `,` and make sure there is only one space after.
 
 Hyphen (automatic hyphenation)
 ------------------------------

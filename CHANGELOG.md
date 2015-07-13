@@ -3,6 +3,8 @@ CHANGELOG
 
 ### ??? ###
 
+* new NoSpaceBeforeComma fixer, cleaning badly placed spaces close to commas
+
 ### 0.1.4 (2014-06-17) ###
 
 * add HHVM tests on travis
