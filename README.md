@@ -55,7 +55,7 @@ Installation
 Requirements are handled by Composer (libxml and mbstring are required).
 
 ```
-composer require jolicode/jolitypo "~0.1.4"
+composer require jolicode/jolitypo "~0.2.0"
 ```
 
 *Usage outside composer is also possible, just add the `src/` directory to any PSR-0 compatible autoloader.*
