@@ -267,7 +267,7 @@ This piece of code is under MIT License. See the [LICENSE](LICENSE) file.
 Alternatives and other implementations
 ======================================
 
-There are already quite a bunch of tool like this one (including good ones). But sadly, some are only for one language,
+There are already quite a bunch of tool like this one (including good ones). Sadly, some are only for one language,
 some are running regexp on the whole HTML code ([which is bad](http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454)), some
 are not tested, some are bundled inside a CMS or a Library, some are not using proper auto-loading, some do not have an open bug tracker... Have a look by yourself:
 
@@ -281,6 +281,7 @@ are not tested, some are bundled inside a CMS or a Library, some are not using p
 - https://github.com/nofont/Typesetter.js
 - https://github.com/judbd/php-typography (fork of php-typography, you can test it here: http://www.roxane-company.com/typonerd/)
 - http://mdash.ru/
+- https://blot.im/typeset/ (Server side Javascript pre-processor)
 
 Glossary & References
 =====================
