@@ -19,10 +19,10 @@ $fixed_content = $fixer->fix('<p>"Tell me Mr. Anderson... what good is a phone c
 It's designed to be:
 
 - language agnostic (you can fix `fr_FR`, `fr_CA`, `en_US`... You tell JoliTypo what to fix);
-- fully tested;
 - easy to integrate into modern PHP project (composer and autoload);
 - robust (make use of `\DOMDocument` instead of parsing HTML with dummy regexp);
 - smart enough to avoid Javascript, Code, CSS processing... (configurable protected tags list);
+- fully tested;
 - fully open and usable in any project (MIT License).
 
 [![Build Status](https://travis-ci.org/jolicode/JoliTypo.png?branch=master)](https://travis-ci.org/jolicode/JoliTypo)
@@ -60,7 +60,7 @@ composer require jolicode/jolitypo "~0.2.0"
 
 *Usage outside composer is also possible, just add the `src/` directory to any PSR-0 compatible autoloader.*
 
-Integration
+Integrations
 ===========
 
 - (Official) [Symfony2 Bundle and twig extension](https://github.com/jolicode/JoliTypoBundle)
@@ -139,6 +139,11 @@ Trademark
 Handle trade­mark symbol `™`, a reg­is­tered trade­mark symbol `®`, and a copy­right symbol `©`. This fixer replace
 commonly used approximations: `(r)`, `(c)` and `(TM)`. A non-breaking space is put between numbers and copyright symbol too.
 
+Numeric
+---------
+
+Add a non-breaking space between a numeric and it's unit. Like this: `12_h`, `42_฿` or `88_%`.
+
 **It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules.**
 
 Fixer recommendations by locale
@@ -148,7 +153,7 @@ en_GB
 -----
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'EnglishQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('en_GB'); // Needed by the Hyphen Fixer
 ```
 
@@ -158,7 +163,7 @@ fr_FR
 Those rules apply most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
 ```
 
@@ -168,7 +173,7 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'FrenchQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('fr_CA'); // Needed by the Hyphen Fixer
 ```
 
@@ -178,7 +183,7 @@ de_DE
 Mostly the same as en_GB, according to [Typefacts](http://typefacts.com/) and [Wikipedia](http://de.wikipedia.org/wiki/Typografie_f%C3%BCr_digitale_Texte).
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'GermanQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'GermanQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('de_DE'); // Needed by the Hyphen Fixer
 ```
 
@@ -233,10 +238,10 @@ $fixed_content  = $fixer->fix("<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed.
 Add your own Fixer / Contribute a Fixer
 =======================================
 
-- Write test
-- A Fixer is run on a piece of text, no HTML to deal with
-- Implement `JoliTypo\FixerInterface`
-- Pull request
+- Write test;
+- A Fixer is run on a piece of text, no HTML to deal with;
+- Implement `JoliTypo\FixerInterface`;
+- Pull request;
 - PROFIT!!!
 
 Compatibility & OS support restrictions

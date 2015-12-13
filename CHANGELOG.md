@@ -3,6 +3,8 @@ CHANGELOG
 
 ### ??? ###
 
+* add Numeric fixer, adding NoBreakSpace between numeric and their units, fix #15
+
 ### 0.2.0 (2015-07-13) ###
 
 * new NoSpaceBeforeComma fixer, cleaning badly placed spaces close to commas

@@ -26,6 +26,7 @@ class Fixer
     const TRADE               = "™"; // &trade;
     const REG                 = "®"; // &reg;
     const COPY                = "©"; // &copy;
+    const ALL_SPACES          = '\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\s'; // All supported spaces, used in regexps. Better than \s
 
     /**
      * @var array   HTML Tags to bypass

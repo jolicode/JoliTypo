@@ -10,7 +10,7 @@ class Dimension implements FixerInterface
 {
     public function fix($content, StateBag $state_bag = null)
     {
-        $content = preg_replace('@(\d+["\']?)( ?)x\\2(?=\d)@', '$1$2'.Fixer::TIMES.'$2', $content);
+        $content = preg_replace('@(\d+["\']?)('.Fixer::ALL_SPACES.')?x('.Fixer::ALL_SPACES.')?(?=\d)@', '$1$2'.Fixer::TIMES.'$2', $content);
 
         return $content;
     }

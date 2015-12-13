@@ -5,7 +5,7 @@ use JoliTypo\Fixer;
 
 class EnglishTest extends \PHPUnit_Framework_TestCase
 {
-    private $en_fixers = array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen', 'Trademark');
+    private $en_fixers = array('Numeric', 'Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen', 'Trademark');
 
     const TOFIX = <<<TOFIX
 <!-- From https://en.wikipedia.org/wiki/Gif#Pronunciation -->
@@ -72,7 +72,7 @@ HTML;
     public function testHtmlHeart()
     {
         $fixed = <<<HTML
-<p>We &lt;3 web.</p>
+<p>We &lt;3&nbsp;web.</p>
 HTML;
 
         $to_fix = <<<HTML
