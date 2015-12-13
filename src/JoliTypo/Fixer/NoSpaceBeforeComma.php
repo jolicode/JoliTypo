@@ -9,6 +9,7 @@
 
 namespace JoliTypo\Fixer;
 
+use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 use JoliTypo\StateBag;
 
@@ -19,7 +20,7 @@ class NoSpaceBeforeComma implements FixerInterface
 {
     public function fix($content, StateBag $stateBag = null)
     {
-        $content = preg_replace('@(\w+) *(,) *@mu', '$1$2 ', $content);
+        $content = preg_replace('@(\w+)['.Fixer::ALL_SPACES.']*(,)['.Fixer::ALL_SPACES.']*@mu', '$1$2 ', $content);
 
         return $content;
     }
