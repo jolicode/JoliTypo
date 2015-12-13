@@ -35,7 +35,7 @@ It's designed to be:
 Quick usage
 ===========
 
-Just tell the Fixer class [which Fixer](#available-fixers) you want to run on your **HTML contents** and then, call `fix()`:
+Just tell the Fixer class [which Fixer](#available-fixers) you want to run on your content and then, call `fix()`:
 
 ```php
 use JoliTypo\Fixer;
@@ -47,7 +47,17 @@ $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur
 For your ease of use, you can find [ready to use list of Fixer for your language here](#fixer-recommendations-by-locale).
 Micro-typography is nothing like a standard or a law, what really matter is consistency, so feel free to use your own lists.
 
-Also, be advise that JoliTypo is intended to be used on HTML contents (not pages) and will remove potential `<head>`, `<html>` and `<body>` tags.
+Please be advise that JoliTypo work best on **HTML content**; it will also work on plain text, but will be less smart about
+ smart quotes. When fixing a complete HTML document, potential `<head>`, `<html>` and `<body>` tags may be removed.
+
+To fix non HTML content, use the `fixString()` method:
+
+```php
+use JoliTypo\Fixer;
+
+$fixer = new Fixer(array("Trademark", "EnglishQuotes"));
+$fixed_content = $fixer->fixString('Here is a "protip(c)"!'); // Here is a “protip©”!
+```
 
 Installation
 ============
@@ -55,7 +65,7 @@ Installation
 Requirements are handled by Composer (libxml and mbstring are required).
 
 ```
-composer require jolicode/jolitypo "~0.2.0"
+composer require jolicode/jolitypo
 ```
 
 *Usage outside composer is also possible, just add the `src/` directory to any PSR-0 compatible autoloader.*
