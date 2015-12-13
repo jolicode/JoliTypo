@@ -9,7 +9,7 @@ Global
 - [x] Improve the EnglishTest;
 - [ ] Add more pre-configured locale in the README, with the appropriate tests;
 - [ ] Add a http://cldr.unicode.org/ Fixer for number formatting (thx @g_marty for the tip!);
-- [ ] A website in with you copy some HTML and get a fixed HTML outputted;
+- [x] A website in with you copy some HTML and get a fixed HTML outputted;
 - [ ] Allow to apply thoses rules: http://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks#Hungarian and document them
 
 Locale to improve

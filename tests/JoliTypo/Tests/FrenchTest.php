@@ -5,7 +5,7 @@ use JoliTypo\Fixer;
 
 class FrenchTest extends \PHPUnit_Framework_TestCase
 {
-    private $fr_fixers = array('Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark');
+    private $fr_fixers = array('Numeric', 'Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark');
 
     const TOFIX = <<<TOFIX
 <p>Ceci est à remplacer par une fâble :p</p>
@@ -22,7 +22,7 @@ content" de t'avoir <a href="http://coucou">invité</a> !</p>
   pre
 </code></pre>
 
-<p>Ceci &eacute;té un "CHOQUE"&nbsp;! Son salon fait 4x4m, ce qui est plutôt petit.</p>
+<p>Ceci &eacute;té un "CHOQUE"&nbsp;! Son salon fait 4x4 m, ce qui est plutôt petit.</p>
 
 <p>Les trés long mots sont tronqués, comme "renseignements" par exemple.</p>
 
@@ -46,7 +46,7 @@ content&nbsp;&raquo; de t&rsquo;avoir <a href="http://coucou">invit&eacute;</a>&
   pre
 </code></pre>
 
-<p>Ceci &eacute;t&eacute; un &laquo;&nbsp;CHOQUE&nbsp;&raquo;&#8239;! Son salon fait 4&times;4m, ce qui est plut&ocirc;t petit.</p>
+<p>Ceci &eacute;t&eacute; un &laquo;&nbsp;CHOQUE&nbsp;&raquo;&#8239;! Son salon fait 4&times;4&nbsp;m, ce qui est plut&ocirc;t petit.</p>
 
 <p>Les tr&eacute;s long mots sont tronqu&eacute;s, comme &laquo;&nbsp;rensei&shy;gne&shy;ments&nbsp;&raquo; par exemple.</p>
 
@@ -81,7 +81,7 @@ FIXED;
 
         $fixed = <<<HTML
 <p>A la sauce &laquo;&nbsp;<a href="http://composer.json.jolicode.com">compo&shy;ser.json</a>&nbsp;&raquo;
- atti&shy;rera forc&eacute;&shy;ment plus notre atten&shy;tion qu&rsquo;une lettre de moti&shy;va&shy;tion de 4 pages en &laquo;&nbsp;.docx&nbsp;&raquo;</p>
+ atti&shy;rera forc&eacute;&shy;ment plus notre atten&shy;tion qu&rsquo;une lettre de moti&shy;va&shy;tion de 4&nbsp;pages en &laquo;&nbsp;.docx&nbsp;&raquo;</p>
 HTML;
 
         $to_fix = <<<HTML
@@ -131,6 +131,27 @@ HTML;
 
         $to_fix = <<<HTML
 &laquo; test &raquo; et &laquo;test&raquo; sont dans un bateau.
+HTML;
+
+        $this->assertEquals($fixed, $fixer->fix($to_fix));
+    }
+
+    /**
+     * @see https://github.com/jolicode/JoliTypo/issues/15
+     */
+    public function testNumericDoesNotBreakOtherFixers()
+    {
+        $fixer = new Fixer($this->fr_fixers);
+
+        $fixer->setLocale('fr');
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $fixed = <<<HTML
+2&nbsp;&times;&nbsp;5&nbsp;doit &ecirc;tre corrig&eacute;, et 2&nbsp;h aussi.
+HTML;
+
+        $to_fix = <<<HTML
+2 x 5 doit être corrigé, et 2 h aussi.
 HTML;
 
         $this->assertEquals($fixed, $fixer->fix($to_fix));
