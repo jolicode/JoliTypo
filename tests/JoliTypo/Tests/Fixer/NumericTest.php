@@ -23,5 +23,6 @@ class NumericTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("10e position", $fixer->fix("10e position")); // We can't fix this reliably
         $this->assertEquals("nº".Fixer::NO_BREAK_SPACE."11", $fixer->fix("nº 11"));
         $this->assertEquals("12".Fixer::NO_BREAK_SPACE."%", $fixer->fix("12 %"));
+        $this->assertEquals("13".Fixer::NO_BREAK_SPACE."Ω", $fixer->fix("13 Ω"));
     }
 }
