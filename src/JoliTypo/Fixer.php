@@ -47,7 +47,7 @@ class Fixer
     protected $locale = 'en_GB';
 
     /**
-     * @var array The rules Fixer instances to apply on each DOMText
+     * @var array<FixerInterface> The rules Fixer instances to apply on each DOMText
      */
     protected $_rules = array();
 
@@ -86,6 +86,20 @@ class Fixer
         $this->processDOM($dom, $dom);
 
         $content = $this->exportDOMDocument($dom);
+
+        return $content;
+    }
+
+    /**
+     * @param string $content Basic content to fix
+     *
+     * @return string
+     */
+    public function fixString($content)
+    {
+        foreach ($this->_rules as $fixer) {
+            $content = $fixer->fix($content, $this->stateBag);
+        }
 
         return $content;
     }

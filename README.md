@@ -50,6 +50,15 @@ Micro-typography is nothing like a standard or a law, what really matter is cons
 Please be advise that JoliTypo work best on **HTML content**; it will also work on plain text, but will be less smart about
  smart quotes. When fixing a complete HTML document, potential `<head>`, `<html>` and `<body>` tags may be removed.
 
+To fix non HTML content, use the `fixString()` method:
+
+```php
+use JoliTypo\Fixer;
+
+$fixer = new Fixer(array("Trademark", "EnglishQuotes"));
+$fixed_content = $fixer->fixString('Here is a "protip(c)"!'); // Here is a “protip©”!
+```
+
 Installation
 ============
 
