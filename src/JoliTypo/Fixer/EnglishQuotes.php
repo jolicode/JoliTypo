@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of JoliTypo - a project by JoliCode.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
 namespace JoliTypo\Fixer;
 
 use JoliTypo\Fixer;
@@ -21,7 +28,7 @@ class EnglishQuotes extends BaseOpenClosePair implements FixerInterface
 
         $content = preg_replace(
                     '@(^|\s|\()"([^"]+)"@im',
-                    "$1".Fixer::LDQUO."$2".Fixer::RDQUO,
+                    '$1'.Fixer::LDQUO.'$2'.Fixer::RDQUO,
                     $content);
 
         return $content;

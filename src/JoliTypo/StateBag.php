@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of JoliTypo - a project by JoliCode.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
 namespace JoliTypo;
 
 class StateBag
@@ -19,7 +27,7 @@ class StateBag
     protected $sibling_node = array();
 
     /**
-     * Save the current StateNode, edit MAY be done to it later
+     * Save the current StateNode, edit MAY be done to it later.
      *
      * @param string $key
      */
@@ -29,7 +37,8 @@ class StateBag
     }
 
     /**
-     * @param  string         $key
+     * @param string $key
+     *
      * @return bool|StateNode
      */
     public function getSiblingNode($key)
@@ -38,7 +47,7 @@ class StateBag
     }
 
     /**
-     * Replace and destroy the content of a stored Node
+     * Replace and destroy the content of a stored Node.
      *
      * @param string $key
      * @param string $new_content

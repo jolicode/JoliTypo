@@ -25,5 +25,8 @@
         "psr-0": {
             "JoliTypo": "src/"
         }
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "^1.11"
     }
 }

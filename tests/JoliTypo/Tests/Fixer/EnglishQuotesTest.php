@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of JoliTypo - a project by JoliCode.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
@@ -10,8 +18,8 @@ class EnglishQuotesTest extends \PHPUnit_Framework_TestCase
         $fixer = new Fixer\EnglishQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\EnglishQuotes', $fixer);
 
-        $this->assertEquals("“I am smart”", $fixer->fix('"I am smart"'));
-        $this->assertEquals("Quote say: “I am smart”", $fixer->fix('Quote say: "I am smart"'));
+        $this->assertEquals('“I am smart”', $fixer->fix('"I am smart"'));
+        $this->assertEquals('Quote say: “I am smart”', $fixer->fix('Quote say: "I am smart"'));
         $this->assertEquals("I'm not a “QUOTE”. Or a “US QUOTE.”", $fixer->fix('I\'m not a "QUOTE". Or a "US QUOTE."'));
         $this->assertEquals("I'm not a (“QUOTE”. Or a “US QUOTE.”)", $fixer->fix('I\'m not a ("QUOTE". Or a "US QUOTE.")'));
     }

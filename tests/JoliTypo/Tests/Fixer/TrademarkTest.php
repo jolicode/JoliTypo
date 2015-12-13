@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of JoliTypo - a project by JoliCode.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
@@ -10,18 +18,18 @@ class TrademarkTest extends \PHPUnit_Framework_TestCase
         $fixer = new Fixer\Trademark();
         $this->assertInstanceOf('JoliTypo\Fixer\Trademark', $fixer);
 
-        $this->assertEquals("Test", $fixer->fix("Test"));
-        $this->assertEquals("(c(", $fixer->fix("(c("));
-        $this->assertEquals("©", $fixer->fix("(c)"));
-        $this->assertEquals("Protip©", $fixer->fix("Protip(c)"));
-        $this->assertEquals("Protip ©.", $fixer->fix("Protip (c)."));
-        $this->assertEquals("©®™.", $fixer->fix("(c)(r)(tm)."));
-        $this->assertEquals("©®™.", $fixer->fix("(C)(R)(TM)."));
-        $this->assertEquals("©".Fixer::NO_BREAK_SPACE."2013 Acme Corp™", $fixer->fix("(C) 2013 Acme Corp(TM)"));
+        $this->assertEquals('Test', $fixer->fix('Test'));
+        $this->assertEquals('(c(', $fixer->fix('(c('));
+        $this->assertEquals('©', $fixer->fix('(c)'));
+        $this->assertEquals('Protip©', $fixer->fix('Protip(c)'));
+        $this->assertEquals('Protip ©.', $fixer->fix('Protip (c).'));
+        $this->assertEquals('©®™.', $fixer->fix('(c)(r)(tm).'));
+        $this->assertEquals('©®™.', $fixer->fix('(C)(R)(TM).'));
+        $this->assertEquals('©'.Fixer::NO_BREAK_SPACE.'2013 Acme Corp™', $fixer->fix('(C) 2013 Acme Corp(TM)'));
     }
 
     /**
-     * :-( :sadface:
+     * :-( :sadface:.
      */
     public function testImpossible()
     {
@@ -30,6 +38,6 @@ class TrademarkTest extends \PHPUnit_Framework_TestCase
         $fixer = new Fixer\Trademark();
 
         // Reference, section like this:
-        $this->assertEquals("Section 12(c)", $fixer->fix('Section 12(c)'));
+        $this->assertEquals('Section 12(c)', $fixer->fix('Section 12(c)'));
     }
 }

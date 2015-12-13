@@ -8,11 +8,13 @@ php:
   - hhvm
   - 7
 
+sudo: false
+
 matrix:
     allow_failures:
         - php: hhvm
 
 before_script:
-  - composer install
+  - composer install --no-dev
 
 script: phpunit --coverage-text

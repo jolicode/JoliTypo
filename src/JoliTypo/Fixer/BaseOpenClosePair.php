@@ -1,12 +1,19 @@
 <?php
 
+/*
+ * This file is part of JoliTypo - a project by JoliCode.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
 namespace JoliTypo\Fixer;
 
 use JoliTypo\StateBag;
 use JoliTypo\StateNode;
 
 /**
- * This class allow to fix two sibling Text node, even if they are separated by other nodes
+ * This class allow to fix two sibling Text node, even if they are separated by other nodes.
  */
 abstract class BaseOpenClosePair
 {
@@ -22,10 +29,10 @@ abstract class BaseOpenClosePair
         // If we have a open sibling and we detect a closing quote
         } elseif ($stored_sibling instanceof StateNode && preg_match($close_regexp, $content)) {
             // Replace the closing tag
-            $content = preg_replace($close_regexp, "$1".$close_replacement.'$2', $content, 1);
+            $content = preg_replace($close_regexp, '$1'.$close_replacement.'$2', $content, 1);
 
             // Replace the opening tag
-            $open_content = preg_replace($open_regexp, "$1".$open_replacement.'$2', $stored_sibling->getNode()->wholeText, 1);
+            $open_content = preg_replace($open_regexp, '$1'.$open_replacement.'$2', $stored_sibling->getNode()->wholeText, 1);
 
             $state_bag->fixSiblingNode($state_name, $open_content);
         }

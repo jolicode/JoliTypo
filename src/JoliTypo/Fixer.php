@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of JoliTypo - a project by JoliCode.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
 namespace JoliTypo;
 
 use JoliTypo\Exception\BadRuleSetException;
@@ -12,31 +20,31 @@ class Fixer
      */
     const NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
     const NO_BREAK_SPACE      = "\xC2\xA0"; // &#160;
-    const ELLIPSIS            = "…";
-    const LAQUO               = "«"; // &laquo;
-    const RAQUO               = "»"; // &raquo;
-    const RSQUO               = "’"; // &rsquo;
-    const TIMES               = "×"; // &times;
-    const NDASH               = "–"; // &ndash; or &#x2013;
-    const MDASH               = "—"; // &mdash; or &#x2014;
-    const LDQUO               = "“"; // &ldquo; or &#8220;
-    const RDQUO               = "”"; // &rdquo; or &#8221;
-    const BDQUO               = "„"; // &bdquo; or &#8222;
+    const ELLIPSIS            = '…';
+    const LAQUO               = '«'; // &laquo;
+    const RAQUO               = '»'; // &raquo;
+    const RSQUO               = '’'; // &rsquo;
+    const TIMES               = '×'; // &times;
+    const NDASH               = '–'; // &ndash; or &#x2013;
+    const MDASH               = '—'; // &mdash; or &#x2014;
+    const LDQUO               = '“'; // &ldquo; or &#8220;
+    const RDQUO               = '”'; // &rdquo; or &#8221;
+    const BDQUO               = '„'; // &bdquo; or &#8222;
     const SHY                 = "\xC2\xAD"; // &shy;
-    const TRADE               = "™"; // &trade;
-    const REG                 = "®"; // &reg;
-    const COPY                = "©"; // &copy;
-    const ALL_SPACES          = '\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\s'; // All supported spaces, used in regexps. Better than \s
+    const TRADE               = '™'; // &trade;
+    const REG                 = '®'; // &reg;
+    const COPY                = '©'; // &copy;
+    const ALL_SPACES          = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\s"; // All supported spaces, used in regexps. Better than \s
 
     /**
-     * @var array   HTML Tags to bypass
+     * @var array HTML Tags to bypass
      */
     protected $protected_tags = array('head', 'link', 'pre', 'code', 'script', 'style');
 
     /**
-     * @var string  The default locale (used by some Fixer)
+     * @var string The default locale (used by some Fixer)
      */
-    protected $locale = "en_GB";
+    protected $locale = 'en_GB';
 
     /**
      * @var array The rules Fixer instances to apply on each DOMText
@@ -57,9 +65,11 @@ class Fixer
     }
 
     /**
-     * @param  string $content  HTML content to fix
+     * @param string $content HTML content to fix
+     *
      * @throws Exception\BadRuleSetException
-     * @return string           Fixed content
+     *
+     * @return string Fixed content
      */
     public function fix($content)
     {
@@ -81,11 +91,11 @@ class Fixer
     }
 
     /**
-     * Change the list of rules for a given locale
+     * Change the list of rules for a given locale.
      *
-     * @param  array                         $rules  Array of Fixer
+     * @param array $rules Array of Fixer
+     *
      * @throws Exception\BadRuleSetException
-     * @return void
      */
     public function setRules($rules)
     {
@@ -93,15 +103,16 @@ class Fixer
     }
 
     /**
-     * Build the _rules array of Fixer
+     * Build the _rules array of Fixer.
      *
-     * @param                                $rules
+     * @param   $rules
+     *
      * @throws Exception\BadRuleSetException
      */
     private function compileRules($rules)
     {
         if (!is_array($rules) || empty($rules)) {
-            throw new BadRuleSetException("Rules must be an array of Fixer");
+            throw new BadRuleSetException('Rules must be an array of Fixer');
         }
 
         $this->_rules = array();
@@ -112,14 +123,14 @@ class Fixer
             } else {
                 $classname = class_exists($rule) ? $rule : (class_exists('JoliTypo\\Fixer\\'.$rule) ? 'JoliTypo\\Fixer\\'.$rule : false);
                 if (!$classname) {
-                    throw new BadRuleSetException(sprintf("Fixer %s not found", $rule));
+                    throw new BadRuleSetException(sprintf('Fixer %s not found', $rule));
                 }
 
                 $fixer = new $classname($this->getLocale());
             }
 
             if (!$fixer instanceof FixerInterface) {
-                throw new BadRuleSetException(sprintf("%s must implement FixerInterface", $classname));
+                throw new BadRuleSetException(sprintf('%s must implement FixerInterface', $classname));
             }
 
             $this->_rules[$classname] = $fixer;
@@ -131,7 +142,7 @@ class Fixer
     }
 
     /**
-     * Loop over all the DOMNode recursively
+     * Loop over all the DOMNode recursively.
      *
      * @param \DOMNode     $node
      * @param \DOMDocument $dom
@@ -165,7 +176,7 @@ class Fixer
     }
 
     /**
-     * Run the Fixers on a DOMText content
+     * Run the Fixers on a DOMText content.
      *
      * @param \DOMText     $childNode The node to fix
      * @param \DOMNode     $node      The parent node where to replace the current one
@@ -195,13 +206,15 @@ class Fixer
 
     /**
      * @param $content
+     *
      * @return \DOMDocument
+     *
      * @throws Exception\InvalidMarkupException
      */
     private function loadDOMDocument($content)
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->encoding = "UTF-8";
+        $dom->encoding = 'UTF-8';
 
         $dom->strictErrorChecking   = false;
         $dom->substituteEntities    = false;
@@ -210,7 +223,7 @@ class Fixer
         // Change mb and libxml config
         $libxml_current = libxml_use_internal_errors(true);
         $mb_detect_current = mb_detect_order();
-        mb_detect_order("ASCII,UTF-8,ISO-8859-1,windows-1252,iso-8859-15");
+        mb_detect_order('ASCII,UTF-8,ISO-8859-1,windows-1252,iso-8859-15');
 
         $loaded = $dom->loadHTML($this->fixContentEncoding($content));
 
@@ -226,13 +239,14 @@ class Fixer
     }
 
     /**
-     * Convert the content encoding properly and add Content-Type meta if HTML document
+     * Convert the content encoding properly and add Content-Type meta if HTML document.
      *
      * @see http://php.net/manual/en/domdocument.loadhtml.php#91513
      * @see https://github.com/jolicode/JoliTypo/issues/7
      *
      * @param   $content
-     * @return  string
+     *
+     * @return string
      */
     private function fixContentEncoding($content)
     {
@@ -240,7 +254,7 @@ class Fixer
             // Little hack to force UTF-8
             if (strpos($content, '<?xml encoding') === false) {
                 $hack    = strpos($content, '<body') === false ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
-                $content = $hack . $content;
+                $content = $hack.$content;
             }
 
             $encoding = mb_detect_encoding($content);
@@ -248,9 +262,9 @@ class Fixer
 
             // Add a meta to the <head> section
             if (false !== $headpos) {
-                $headpos +=6;
-                $content = mb_substr($content, 0, $headpos) .
-                        '<meta http-equiv="Content-Type" content="text/html; charset='.$encoding.'">' .
+                $headpos += 6;
+                $content = mb_substr($content, 0, $headpos).
+                        '<meta http-equiv="Content-Type" content="text/html; charset='.$encoding.'">'.
                         mb_substr($content, $headpos);
             }
 
@@ -261,7 +275,8 @@ class Fixer
     }
 
     /**
-     * @param \DOMDocument  $dom
+     * @param \DOMDocument $dom
+     *
      * @return string
      */
     private function exportDOMDocument(\DOMDocument $dom)
@@ -269,29 +284,30 @@ class Fixer
         // Remove added body & doctype
         $content = preg_replace(array(
                 "/^\<\!DOCTYPE.*?<html>.*?<body>/si",
-                "!</body></html>$!si"
-            ), "", $dom->saveHTML());
+                '!</body></html>$!si',
+            ), '', $dom->saveHTML());
 
         return trim($content);
     }
 
     /**
-     * Customize the list of protected tags
+     * Customize the list of protected tags.
      *
-     * @param  array                     $protected_tags
+     * @param array $protected_tags
+     *
      * @throws \InvalidArgumentException
      */
     public function setProtectedTags($protected_tags)
     {
         if (!is_array($protected_tags)) {
-            throw new \InvalidArgumentException("Protected tags must be an array (empty array for no protection).");
+            throw new \InvalidArgumentException('Protected tags must be an array (empty array for no protection).');
         }
 
         $this->protected_tags = $protected_tags;
     }
 
     /**
-     * Get the current Locale tag
+     * Get the current Locale tag.
      *
      * @return string
      */
@@ -301,15 +317,16 @@ class Fixer
     }
 
     /**
-     * Change the locale of the Fixer
+     * Change the locale of the Fixer.
      *
-     * @param  string   $locale     An IETF language tag
+     * @param string $locale An IETF language tag
+     *
      * @throws \InvalidArgumentException
      */
     public function setLocale($locale)
     {
         if (!is_string($locale) || empty($locale)) {
-            throw new \InvalidArgumentException("Locale must be an IETF language tag.");
+            throw new \InvalidArgumentException('Locale must be an IETF language tag.');
         }
 
         // Set the Locale on Fixer that needs it
@@ -323,9 +340,10 @@ class Fixer
     }
 
     /**
-     * Get language part of a Locale string (fr_FR => fr)
+     * Get language part of a Locale string (fr_FR => fr).
      *
      * @param $locale
+     *
      * @return string
      */
     public static function getLanguageFromLocale($locale)

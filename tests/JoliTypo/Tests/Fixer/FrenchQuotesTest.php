@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of JoliTypo - a project by JoliCode.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
@@ -10,10 +18,10 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
         $fixer = new Fixer\FrenchQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\FrenchQuotes', $fixer);
 
-        $this->assertEquals("«".Fixer::NO_BREAK_SPACE."Good code is like a good joke.".Fixer::NO_BREAK_SPACE."»", $fixer->fix('"Good code is like a good joke."'));
-        $this->assertEquals("«".Fixer::NO_BREAK_SPACE."Good code is like a Bieber.".Fixer::NO_BREAK_SPACE."» - said no ever, ever.", $fixer->fix('"Good code is like a Bieber." - said no ever, ever.'));
+        $this->assertEquals('«'.Fixer::NO_BREAK_SPACE.'Good code is like a good joke.'.Fixer::NO_BREAK_SPACE.'»', $fixer->fix('"Good code is like a good joke."'));
+        $this->assertEquals('«'.Fixer::NO_BREAK_SPACE.'Good code is like a Bieber.'.Fixer::NO_BREAK_SPACE.'» - said no ever, ever.', $fixer->fix('"Good code is like a Bieber." - said no ever, ever.'));
 
-        $this->assertEquals("Some people are like «".Fixer::NO_BREAK_SPACE."Batman".Fixer::NO_BREAK_SPACE."», others like «".Fixer::NO_BREAK_SPACE."Superman".Fixer::NO_BREAK_SPACE."».", $fixer->fix('Some people are like "Batman", others like "Superman".'));
+        $this->assertEquals('Some people are like «'.Fixer::NO_BREAK_SPACE.'Batman'.Fixer::NO_BREAK_SPACE.'», others like «'.Fixer::NO_BREAK_SPACE.'Superman'.Fixer::NO_BREAK_SPACE.'».', $fixer->fix('Some people are like "Batman", others like "Superman".'));
         $this->assertEquals('Oh my god, this quote is alone: " !', $fixer->fix('Oh my god, this quote is alone: " !'));
 
         $this->assertEquals('Liste de «'.Fixer::NO_BREAK_SPACE.'mot'.Fixer::NO_BREAK_SPACE.'» entre «'.Fixer::NO_BREAK_SPACE.'guillemets'.Fixer::NO_BREAK_SPACE.'».', $fixer->fix('Liste de "mot" entre "guillemets".'));
@@ -28,7 +36,7 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * :-( :sadface:
+     * :-( :sadface:.
      */
     public function testImpossible()
     {
@@ -36,6 +44,6 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
 
         $fixer = new Fixer\FrenchQuotes();
 
-        $this->assertEquals("Oh my god, this quote is alone: \" ! But those are «".Fixer::NO_BREAK_SPACE."ok".Fixer::NO_BREAK_SPACE."».", $fixer->fix('Oh my god, this quote is alone: " ! But those are "ok".'));
+        $this->assertEquals('Oh my god, this quote is alone: " ! But those are «'.Fixer::NO_BREAK_SPACE.'ok'.Fixer::NO_BREAK_SPACE.'».', $fixer->fix('Oh my god, this quote is alone: " ! But those are "ok".'));
     }
 }
