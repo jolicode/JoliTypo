@@ -8,7 +8,7 @@ JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microt
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer(array('Ellipsis', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen'));
+$fixer = new Fixer(array('Ellipsis', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen'));
 $fixed_content = $fixer->fix('<p>"Tell me Mr. Anderson... what good is a phone call... if you\'re unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>');
 ```
 ```html
@@ -40,7 +40,8 @@ Just tell the Fixer class [which Fixer](#available-fixers) you want to run on yo
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer(array("FrenchQuotes", "FrenchNoBreakSpace"));
+$fixer = new Fixer(array("SmartQuotes", "FrenchNoBreakSpace"));
+$fixer->setLocale('fr_FR');
 $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
 ```
 
@@ -55,7 +56,7 @@ To fix non HTML content, use the `fixString()` method:
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer(array("Trademark", "EnglishQuotes"));
+$fixer = new Fixer(array("Trademark", "SmartQuotes"));
 $fixed_content = $fixer->fixString('Here is a "protip(c)"!'); // Here is a “protip©”!
 ```
 
@@ -95,21 +96,16 @@ Ellipsis
 
 Replace the three dot `...` by an ellipsis `…`.
 
-EnglishQuotes
--------------
+SmartQuotes
+-----------
 
-Convert dumb quotes `" "` to smart English style quotation marks `“ ”`.
+Convert dumb quotes `" "` to all kind of smart style quotation marks (`“ ”`, `« »`, `„ “`...). Handle a good variety of locales,
+like English, Arabic, French, Italian, Spanish, Irish, German...
 
-FrenchQuotes
-------------
+See [the code](https://github.com/jolicode/JoliTypo/blob/master/src/JoliTypo/Fixer/SmartQuotes.php) for more details, 
+and do not forget to specify a locale on the Fixer instance.
 
-Convert dumb quotes `" "` to smart French style quotation marks `« »` and use a no break space.
-
-GermanQuotes
-------------
-
-Convert dumb quotes `" "` to smart German style quotation marks `„ “` (Anführungszeichen).
-Some fonts (Verdana) are typographically incompatible with German.
+This Fixer replace legacy `EnglishQuotes`, `FrenchQuotes` and `GermanQuotes`.
 
 FrenchNoBreakSpace
 ------------------
@@ -163,8 +159,8 @@ en_GB
 -----
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'EnglishQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
-$fixer->setLocale('en_GB'); // Needed by the Hyphen Fixer
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer->setLocale('en_GB');
 ```
 
 fr_FR
@@ -173,8 +169,8 @@ fr_FR
 Those rules apply most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
-$fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer->setLocale('fr_FR');
 ```
 
 fr_CA
@@ -183,8 +179,8 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'FrenchQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
-$fixer->setLocale('fr_CA'); // Needed by the Hyphen Fixer
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer->setLocale('fr_CA');
 ```
 
 de_DE
@@ -193,8 +189,8 @@ de_DE
 Mostly the same as en_GB, according to [Typefacts](http://typefacts.com/) and [Wikipedia](http://de.wikipedia.org/wiki/Typografie_f%C3%BCr_digitale_Texte).
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'GermanQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
-$fixer->setLocale('de_DE'); // Needed by the Hyphen Fixer
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer->setLocale('de_DE');
 ```
 
 More to come (contributions welcome!).
@@ -207,14 +203,14 @@ Default usage
 -------------
 
 ```php
-$fixer          = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'EnglishQuotes', 'CurlyQuote', 'Hyphen'));
+$fixer          = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen'));
 $fixed_content  = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
 
 $fixer->setRules(array('CurlyQuote'));
 $fixed_content = $fixer->fix("<p>I'm only replacing single quotes.</p>");
 
 $fixer->setRules(array('Hyphen'));
-$fixer->setLocale('en_GB'); // I tell which locale to use for Hyphenation
+$fixer->setLocale('en_GB'); // I tell which locale to use for Hyphenation and SmartQuotes
 $fixed_content = $fixer->fix("<p>Very long words like Antidisestablishmentarianism.</p>");
 ```
 

@@ -9,28 +9,13 @@
 
 namespace JoliTypo\Fixer;
 
-use JoliTypo\Fixer;
-use JoliTypo\FixerInterface;
-use JoliTypo\StateBag;
-
 /**
- * Convert dumb quotes (" ") to smart quotes (“ ”).
+ * @deprecated Use SmartQuotes, to be removed in 2.0
  */
-class EnglishQuotes extends BaseOpenClosePair implements FixerInterface
+class EnglishQuotes extends SmartQuotes
 {
-    public function fix($content, StateBag $stateBag = null)
+    public function __construct($locale = null)
     {
-        // Fix complex siblings cases
-        if ($stateBag) {
-            $content = $this->fixViaState($content, $stateBag, 'EnglishQuotesOpenSolo',
-                '@(^|\s|\()"([^"]*)$@', '@(^|[^"]+)"@im', Fixer::LDQUO, Fixer::RDQUO);
-        }
-
-        $content = preg_replace(
-                    '@(^|\s|\()"([^"]+)"@im',
-                    '$1'.Fixer::LDQUO.'$2'.Fixer::RDQUO,
-                    $content);
-
-        return $content;
+        parent::__construct('en');
     }
 }

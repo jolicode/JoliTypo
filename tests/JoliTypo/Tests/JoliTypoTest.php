@@ -162,7 +162,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 
     public function testNonHTMLContent()
     {
-        $fixer = new Fixer(array('Trademark', 'EnglishQuotes'));
+        $fixer = new Fixer(array('Trademark', 'SmartQuotes'));
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $toFix = <<<NOT_HTML
