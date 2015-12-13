@@ -177,7 +177,7 @@ I don't think &ldquo;FosUserBundle&rdquo; is a good idea for a complex applicati
 NOT_HTML;
 
         $this->assertEquals($fixed, $fixer->fix($toFix));
-        $this->assertEquals(html_entity_decode($fixed), $fixer->fixString($toFix));
+        $this->assertEquals(html_entity_decode($fixed, null, 'UTF-8'), $fixer->fixString($toFix));
         $this->assertEquals('Here is a “protip©”!', $fixer->fixString('Here is a "protip(c)"!'));
     }
 }
