@@ -6,6 +6,7 @@ CHANGELOG
 * add Numeric fixer, adding NoBreakSpace between numeric and their units, fix #15
 * PSR2 and Symfony coding standard applied everywhere
 * add `fixString` method to bypass the DomDocument parsing and directly run the fixers on a string
+* better handling of common spaces in texts to fix (do not use `\s` anymore)
 
 ### 0.2.0 (2015-07-13) ###
 
