@@ -157,7 +157,27 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('', $fixer->fix(''));
         $this->assertEquals("\n ", $fixer->fix("\n "));
-        $this->assertEquals('some content', $fixer->fix("\n some content"));
+        $this->assertEquals('some content &reg;', $fixer->fix("\n some content (r)"));
+    }
+
+    public function testNonHTMLContent()
+    {
+        $fixer = new Fixer(array('Trademark', 'EnglishQuotes'));
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $toFix = <<<NOT_HTML
+I don't think "FosUserBundle" is a good idea for a complex application.
+
+\tThat being said, it's an awesome way to get stuffs done(c) in a snap!
+NOT_HTML;
+        $fixed = <<<NOT_HTML
+I don't think &ldquo;FosUserBundle&rdquo; is a good idea for a complex application.
+
+\tThat being said, it's an awesome way to get stuffs done&copy; in a snap!
+NOT_HTML;
+
+
+        $this->assertEquals($fixed, $fixer->fix($toFix));
     }
 }
 
