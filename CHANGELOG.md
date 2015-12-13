@@ -7,6 +7,7 @@ CHANGELOG
 * PSR2 and Symfony coding standard applied everywhere
 * add `fixString` method to bypass the DomDocument parsing and directly run the fixers on a string
 * better handling of common spaces in texts to fix (do not use `\s` anymore)
+* :warning: replace `EnglishQuotes`, `FrenchQuotes`, `GermanQuotes` by the new `SmartQuotes`! A BC layer is provided.
 
 ### 0.2.0 (2015-07-13) ###
 

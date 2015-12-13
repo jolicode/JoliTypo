@@ -18,6 +18,18 @@ class EnglishQuotesTest extends \PHPUnit_Framework_TestCase
         $fixer = new Fixer\EnglishQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\EnglishQuotes', $fixer);
 
+        $this->basicStringsAsserts($fixer);
+    }
+
+    public function testSmartQuoteConfig()
+    {
+        $fixer = new Fixer\SmartQuotes('en');
+
+        $this->basicStringsAsserts($fixer);
+    }
+
+    protected function basicStringsAsserts($fixer)
+    {
         $this->assertEquals('“I am smart”', $fixer->fix('"I am smart"'));
         $this->assertEquals('Quote say: “I am smart”', $fixer->fix('Quote say: "I am smart"'));
         $this->assertEquals("I'm not a “QUOTE”. Or a “US QUOTE.”", $fixer->fix('I\'m not a "QUOTE". Or a "US QUOTE."'));

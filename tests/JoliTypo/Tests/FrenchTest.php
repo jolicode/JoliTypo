@@ -13,7 +13,7 @@ use JoliTypo\Fixer;
 
 class FrenchTest extends \PHPUnit_Framework_TestCase
 {
-    private $fr_fixers = array('Numeric', 'Ellipsis', 'Dimension', 'Dash', 'FrenchQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark');
+    private $fr_fixers = array('Numeric', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark');
 
     const TOFIX = <<<TOFIX
 <p>Ceci est à remplacer par une fâble :p</p>

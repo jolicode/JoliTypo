@@ -18,6 +18,18 @@ class GermanQuotesTest extends \PHPUnit_Framework_TestCase
         $fixer = new Fixer\GermanQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\GermanQuotes', $fixer);
 
+        $this->basicStringsAsserts($fixer);
+    }
+
+    public function testSmartQuoteConfig()
+    {
+        $fixer = new Fixer\SmartQuotes('de');
+
+        $this->basicStringsAsserts($fixer);
+    }
+
+    protected function basicStringsAsserts($fixer)
+    {
         $this->assertEquals('„I am smart“', $fixer->fix('"I am smart"'));
         $this->assertEquals('(„I am smart“)', $fixer->fix('("I am smart")'));
         $this->assertEquals("Andreas fragte mich: „Hast du den Artikel 'EU-Erweiterung' gelesen?“", $fixer->fix('Andreas fragte mich: "Hast du den Artikel \'EU-Erweiterung\' gelesen?"'));

@@ -7,12 +7,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace JoliTypo;
+namespace JoliTypo\Exception;
 
-interface LocaleAwareFixerInterface
+class BadFixerConfigurationException extends \Exception
 {
-    /**
-     * @param string $locale
-     */
-    public function setLocale($locale);
+    protected $message = 'Fixer needs configuration.';
 }

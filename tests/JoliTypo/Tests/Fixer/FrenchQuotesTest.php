@@ -18,6 +18,17 @@ class FrenchQuotesTest extends \PHPUnit_Framework_TestCase
         $fixer = new Fixer\FrenchQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\FrenchQuotes', $fixer);
 
+        $this->basicStringsAsserts($fixer);
+    }
+
+    public function testSmartQuoteFrenchConfig()
+    {
+        $fixer = new Fixer\SmartQuotes('fr_FR');
+        $this->basicStringsAsserts($fixer);
+    }
+
+    protected function basicStringsAsserts($fixer)
+    {
         $this->assertEquals('«'.Fixer::NO_BREAK_SPACE.'Good code is like a good joke.'.Fixer::NO_BREAK_SPACE.'»', $fixer->fix('"Good code is like a good joke."'));
         $this->assertEquals('«'.Fixer::NO_BREAK_SPACE.'Good code is like a Bieber.'.Fixer::NO_BREAK_SPACE.'» - said no ever, ever.', $fixer->fix('"Good code is like a Bieber." - said no ever, ever.'));
 
