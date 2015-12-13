@@ -22,7 +22,7 @@ use JoliTypo\StateBag;
  */
 class FrenchNoBreakSpace implements FixerInterface
 {
-    public function fix($content, StateBag $state_bag = null)
+    public function fix($content, StateBag $stateBag = null)
     {
         $spaces = '\s'.Fixer::NO_BREAK_SPACE.Fixer::NO_BREAK_THIN_SPACE;
 

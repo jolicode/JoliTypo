@@ -15,7 +15,7 @@ use JoliTypo\StateBag;
 
 class Trademark implements FixerInterface
 {
-    public function fix($content, StateBag $state_bag = null)
+    public function fix($content, StateBag $stateBag = null)
     {
         $content = preg_replace('@\(tm\)@i', Fixer::TRADE, $content);
         $content = preg_replace('@\(c\) ([0-9]+)@i', Fixer::COPY.Fixer::NO_BREAK_SPACE.'$1', $content);

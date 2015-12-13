@@ -39,7 +39,7 @@ class Fixer
     /**
      * @var array HTML Tags to bypass
      */
-    protected $protected_tags = array('head', 'link', 'pre', 'code', 'script', 'style');
+    protected $protectedTags = array('head', 'link', 'pre', 'code', 'script', 'style');
 
     /**
      * @var string The default locale (used by some Fixer)
@@ -54,7 +54,7 @@ class Fixer
     /**
      * @var StateBag
      */
-    protected $state_bag;
+    protected $stateBag;
 
     /**
      * @param array $rules Array of Fixer
@@ -79,7 +79,7 @@ class Fixer
         }
 
         // Get a clean new StateBag
-        $this->state_bag = new StateBag();
+        $this->stateBag = new StateBag();
 
         $dom = $this->loadDOMDocument($trimmed);
 
@@ -119,21 +119,21 @@ class Fixer
         foreach ($rules as $rule) {
             if (is_object($rule)) {
                 $fixer = $rule;
-                $classname = get_class($rule);
+                $className = get_class($rule);
             } else {
-                $classname = class_exists($rule) ? $rule : (class_exists('JoliTypo\\Fixer\\'.$rule) ? 'JoliTypo\\Fixer\\'.$rule : false);
-                if (!$classname) {
+                $className = class_exists($rule) ? $rule : (class_exists('JoliTypo\\Fixer\\'.$rule) ? 'JoliTypo\\Fixer\\'.$rule : false);
+                if (!$className) {
                     throw new BadRuleSetException(sprintf('Fixer %s not found', $rule));
                 }
 
-                $fixer = new $classname($this->getLocale());
+                $fixer = new $className($this->getLocale());
             }
 
             if (!$fixer instanceof FixerInterface) {
-                throw new BadRuleSetException(sprintf('%s must implement FixerInterface', $classname));
+                throw new BadRuleSetException(sprintf('%s must implement FixerInterface', $className));
             }
 
-            $this->_rules[$classname] = $fixer;
+            $this->_rules[$className] = $fixer;
         }
 
         if (empty($this->_rules)) {
@@ -153,7 +153,7 @@ class Fixer
             $nodes = array();
             foreach ($node->childNodes as $childNode) {
                 if ($childNode instanceof \DOMElement && $childNode->tagName) {
-                    if (in_array($childNode->tagName, $this->protected_tags)) {
+                    if (in_array($childNode->tagName, $this->protectedTags)) {
                         continue;
                     }
                 }
@@ -161,14 +161,14 @@ class Fixer
                 $nodes[] = $childNode;
             }
 
-            $depth = $this->state_bag->getCurrentDepth();
+            $depth = $this->stateBag->getCurrentDepth();
 
             foreach ($nodes as $childNode) {
                 if ($childNode instanceof \DOMText && !$childNode->isWhitespaceInElementContent()) {
-                    $this->state_bag->setCurrentDepth($depth);
+                    $this->stateBag->setCurrentDepth($depth);
                     $this->doFix($childNode, $node, $dom);
                 } else {
-                    $this->state_bag->setCurrentDepth($this->state_bag->getCurrentDepth() + 1);
+                    $this->stateBag->setCurrentDepth($this->stateBag->getCurrentDepth() + 1);
                     $this->processDOM($childNode, $dom);
                 }
             }
@@ -187,11 +187,11 @@ class Fixer
         $content        = $childNode->wholeText;
         $current_node   = new StateNode($childNode, $node, $dom);
 
-        $this->state_bag->setCurrentNode($current_node);
+        $this->stateBag->setCurrentNode($current_node);
 
         // run the string on all the fixers
         foreach ($this->_rules as $fixer) {
-            $content = $fixer->fix($content, $this->state_bag);
+            $content = $fixer->fix($content, $this->stateBag);
         }
 
         // update the DOM only if the node has changed
@@ -221,15 +221,15 @@ class Fixer
         $dom->formatOutput          = false;
 
         // Change mb and libxml config
-        $libxml_current = libxml_use_internal_errors(true);
-        $mb_detect_current = mb_detect_order();
+        $libxmlCurrent = libxml_use_internal_errors(true);
+        $mbDetectCurrent = mb_detect_order();
         mb_detect_order('ASCII,UTF-8,ISO-8859-1,windows-1252,iso-8859-15');
 
         $loaded = $dom->loadHTML($this->fixContentEncoding($content));
 
         // Restore mb and libxml config
-        libxml_use_internal_errors($libxml_current);
-        mb_detect_order(implode(',', $mb_detect_current));
+        libxml_use_internal_errors($libxmlCurrent);
+        mb_detect_order(implode(',', $mbDetectCurrent));
 
         if (!$loaded) {
             throw new InvalidMarkupException("Can't load the given HTML via DomDocument");
@@ -258,14 +258,14 @@ class Fixer
             }
 
             $encoding = mb_detect_encoding($content);
-            $headpos  = mb_strpos($content, '<head>');
+            $headPos  = mb_strpos($content, '<head>');
 
             // Add a meta to the <head> section
-            if (false !== $headpos) {
-                $headpos += 6;
-                $content = mb_substr($content, 0, $headpos).
+            if (false !== $headPos) {
+                $headPos += 6;
+                $content = mb_substr($content, 0, $headPos).
                         '<meta http-equiv="Content-Type" content="text/html; charset='.$encoding.'">'.
-                        mb_substr($content, $headpos);
+                        mb_substr($content, $headPos);
             }
 
             $content = mb_convert_encoding($content, 'HTML-ENTITIES', $encoding);
@@ -293,17 +293,17 @@ class Fixer
     /**
      * Customize the list of protected tags.
      *
-     * @param array $protected_tags
+     * @param array $protectedTags
      *
      * @throws \InvalidArgumentException
      */
-    public function setProtectedTags($protected_tags)
+    public function setProtectedTags($protectedTags)
     {
-        if (!is_array($protected_tags)) {
+        if (!is_array($protectedTags)) {
             throw new \InvalidArgumentException('Protected tags must be an array (empty array for no protection).');
         }
 
-        $this->protected_tags = $protected_tags;
+        $this->protectedTags = $protectedTags;
     }
 
     /**

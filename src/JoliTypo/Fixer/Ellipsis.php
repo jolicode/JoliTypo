@@ -15,7 +15,7 @@ use JoliTypo\StateBag;
 
 class Ellipsis implements FixerInterface
 {
-    public function fix($content, StateBag $state_bag = null)
+    public function fix($content, StateBag $stateBag = null)
     {
         $content = preg_replace('@\.{3,}@', Fixer::ELLIPSIS, $content);
 

@@ -13,9 +13,9 @@ interface FixerInterface
 {
     /**
      * @param string   $content   A string to fix
-     * @param StateBag $state_bag A bag of useful informations
+     * @param StateBag $stateBag  A bag of useful information
      *
      * @return string
      */
-    public function fix($content, StateBag $state_bag = null);
+    public function fix($content, StateBag $stateBag = null);
 }

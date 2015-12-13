@@ -17,24 +17,24 @@ use JoliTypo\StateNode;
  */
 abstract class BaseOpenClosePair
 {
-    protected function fixViaState($content, StateBag $state_bag, $state_name, $open_regexp, $close_regexp, $open_replacement, $close_replacement)
+    protected function fixViaState($content, StateBag $stateBag, $stateName, $openRegexp, $closeRegexp, $openReplacement, $closeReplacement)
     {
-        $stored_sibling = $state_bag->getSiblingNode($state_name);
+        $storedSibling = $stateBag->getSiblingNode($stateName);
 
         // If no stored open quote node & open quote detected
-        if ($stored_sibling === false && preg_match($open_regexp, $content)) {
+        if ($storedSibling === false && preg_match($openRegexp, $content)) {
             // Store the current node
-            $state_bag->storeSiblingNode($state_name);
+            $stateBag->storeSiblingNode($stateName);
 
         // If we have a open sibling and we detect a closing quote
-        } elseif ($stored_sibling instanceof StateNode && preg_match($close_regexp, $content)) {
+        } elseif ($storedSibling instanceof StateNode && preg_match($closeRegexp, $content)) {
             // Replace the closing tag
-            $content = preg_replace($close_regexp, '$1'.$close_replacement.'$2', $content, 1);
+            $content = preg_replace($closeRegexp, '$1'.$closeReplacement.'$2', $content, 1);
 
             // Replace the opening tag
-            $open_content = preg_replace($open_regexp, '$1'.$open_replacement.'$2', $stored_sibling->getNode()->wholeText, 1);
+            $open_content = preg_replace($openRegexp, '$1'.$openReplacement.'$2', $storedSibling->getNode()->wholeText, 1);
 
-            $state_bag->fixSiblingNode($state_name, $open_content);
+            $stateBag->fixSiblingNode($stateName, $open_content);
         }
 
         return $content;

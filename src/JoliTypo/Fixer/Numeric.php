@@ -18,7 +18,7 @@ use JoliTypo\StateBag;
  */
 class Numeric implements FixerInterface
 {
-    public function fix($content, StateBag $state_bag = null)
+    public function fix($content, StateBag $stateBag = null)
     {
         // Support a wide range of currencies
         $content = preg_replace('@([\dº])( +)([º°%Ω฿₵¢₡$₫֏€ƒ₲₴₭£₤₺₦₨₱៛₹$₪৳₸₮₩¥\w]{1})@', '$1'.Fixer::NO_BREAK_SPACE.'$3', $content);

@@ -19,11 +19,11 @@ use JoliTypo\StateBag;
  */
 class FrenchQuotes extends BaseOpenClosePair implements FixerInterface
 {
-    public function fix($content, StateBag $state_bag = null)
+    public function fix($content, StateBag $stateBag = null)
     {
         // Fix complex siblings cases
-        if ($state_bag) {
-            $content = $this->fixViaState($content, $state_bag, 'FrenchQuotesOpenSolo',
+        if ($stateBag) {
+            $content = $this->fixViaState($content, $stateBag, 'FrenchQuotesOpenSolo',
                 '@(^|\s|\()"([^"]*)$@im', '@(^|[^"]+)"@im', Fixer::LAQUO.Fixer::NO_BREAK_SPACE,
                     Fixer::NO_BREAK_SPACE.Fixer::RAQUO);
         }

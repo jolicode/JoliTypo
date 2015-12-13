@@ -15,7 +15,7 @@ use JoliTypo\StateBag;
 
 class Dimension implements FixerInterface
 {
-    public function fix($content, StateBag $state_bag = null)
+    public function fix($content, StateBag $stateBag = null)
     {
         $content = preg_replace('@(\d+["\']?)('.Fixer::ALL_SPACES.')?x('.Fixer::ALL_SPACES.')?(?=\d)@', '$1$2'.Fixer::TIMES.'$2', $content);
 
