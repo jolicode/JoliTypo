@@ -4,6 +4,7 @@ CHANGELOG
 ### ??? ###
 
 * add Numeric fixer, adding NoBreakSpace between numeric and their units, fix #15
+* PSR2 and Symfony coding standard applied everywhere 
 
 ### 0.2.0 (2015-07-13) ###
 
