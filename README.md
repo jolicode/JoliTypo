@@ -254,7 +254,7 @@ Add your own Fixer / Contribute a Fixer
 
 - You MUST write code in english;
 - you MUST follow PSR2 and Symfony coding standard (run `./vendor/bin/php-cs-fixer -vvv fix` on your branch);
-- you MUST run the tests (run `phpunit`);
+- you MUST run the tests (run `./vendor/bin/phpunit`);
 - you MUST comply to the MIT license;
 - you SHOULD write documentation.
 

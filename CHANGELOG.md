@@ -1,7 +1,11 @@
 CHANGELOG
 =========
 
-### ??? ###
+### Unreleased ###
+
+### 1.0.1 (2015-12-13) ###
+
+* fix #28, NoSpaceBeforeComma should not change spaces inside digits
 
 ### 1.0 (2015-12-13) ###
 
