@@ -20,7 +20,7 @@ class NoSpaceBeforeComma implements FixerInterface
 {
     public function fix($content, StateBag $stateBag = null)
     {
-        $content = preg_replace('@(\w+)['.Fixer::ALL_SPACES.']*(,)['.Fixer::ALL_SPACES.']*@mu', '$1$2 ', $content);
+        $content = preg_replace('@([^\d\s]+)['.Fixer::ALL_SPACES.']*(,)['.Fixer::ALL_SPACES.']*@mu', '$1$2 ', $content);
 
         return $content;
     }
