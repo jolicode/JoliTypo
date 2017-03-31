@@ -132,7 +132,7 @@ class Fixer
         $this->_rules = array();
         foreach ($rules as $rule) {
             if (is_object($rule)) {
-                $fixer = $rule;
+                $fixer     = $rule;
                 $className = get_class($rule);
             } else {
                 $className = class_exists($rule) ? $rule : (class_exists('JoliTypo\\Fixer\\'.$rule) ? 'JoliTypo\\Fixer\\'.$rule : false);
@@ -198,8 +198,8 @@ class Fixer
      */
     private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom)
     {
-        $content        = $childNode->wholeText;
-        $current_node   = new StateNode($childNode, $node, $dom);
+        $content      = $childNode->wholeText;
+        $current_node = new StateNode($childNode, $node, $dom);
 
         $this->stateBag->setCurrentNode($current_node);
 
@@ -227,15 +227,15 @@ class Fixer
      */
     private function loadDOMDocument($content)
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom           = new \DOMDocument('1.0', 'UTF-8');
         $dom->encoding = 'UTF-8';
 
-        $dom->strictErrorChecking   = false;
-        $dom->substituteEntities    = false;
-        $dom->formatOutput          = false;
+        $dom->strictErrorChecking = false;
+        $dom->substituteEntities  = false;
+        $dom->formatOutput        = false;
 
         // Change mb and libxml config
-        $libxmlCurrent = libxml_use_internal_errors(true);
+        $libxmlCurrent   = libxml_use_internal_errors(true);
         $mbDetectCurrent = mb_detect_order();
         mb_detect_order('ASCII,UTF-8,ISO-8859-1,windows-1252,iso-8859-15');
 

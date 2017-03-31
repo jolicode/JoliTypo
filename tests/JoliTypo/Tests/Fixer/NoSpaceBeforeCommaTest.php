@@ -11,8 +11,6 @@ namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
 
-/**
- */
 class NoSpaceBeforeCommaTest extends \PHPUnit_Framework_TestCase
 {
     public function testSimpleString()
@@ -23,7 +21,7 @@ class NoSpaceBeforeCommaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Superman, you're my hero", $fixer->fix("Superman,you're my hero"));
         $this->assertEquals("Superman, you're my hero", $fixer->fix("Superman ,you're my hero"));
         $this->assertEquals("Superman, you're my hero", $fixer->fix("Superman  ,  you're my hero"));
-        $this->assertEquals("F, bar", $fixer->fix("F,bar"));
-        $this->assertEquals("Seule 1,7 million de personnes", $fixer->fix("Seule 1,7 million de personnes"));
+        $this->assertEquals('F, bar', $fixer->fix('F,bar'));
+        $this->assertEquals('Seule 1,7 million de personnes', $fixer->fix('Seule 1,7 million de personnes'));
     }
 }

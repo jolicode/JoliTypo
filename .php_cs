@@ -7,22 +7,20 @@ This software consists of voluntary contributions made by many individuals
 and is licensed under the MIT license.
 EOF;
 
-Symfony\CS\Fixer\Contrib\HeaderCommentFixer::setHeader($header);
-
-$finder = Symfony\CS\Finder\DefaultFinder::create()
+$finder = PhpCsFixer\Finder::create()
     ->in(array(__DIR__.'/src', __DIR__.'/tests'))
 ;
 
-return Symfony\CS\Config\Config::create()
-    ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
-    ->fixers(array(
-        'header_comment',
-        '-unalign_double_arrow',
-        '-unalign_equals',
-        'align_double_arrow',
-        'newline_after_open_tag',
-        'ordered_use',
+return PhpCsFixer\Config::create()
+    ->setRules(array(
+        '@Symfony' => true,
+        'header_comment' => array('header' => $header),
+        'binary_operator_spaces' => array(
+            'align_double_arrow' => true,
+            'align_equals' => true,
+        ),
+        'array_syntax' => array('syntax' => 'long'),
+        'ordered_imports' => true
     ))
-    ->setUsingCache(true)
-    ->finder($finder)
+    ->setFinder($finder)
 ;

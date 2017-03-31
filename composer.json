@@ -9,7 +9,7 @@
         {
             "name": "Damien Alexandre",
             "email": "dalexandre@jolicode.com",
-            "homepage": "http://damienalexandre.fr/"
+            "homepage": "https://damienalexandre.fr/"
         }
     ],
     "require": {
@@ -27,7 +27,12 @@
         }
     },
     "require-dev": {
-        "fabpot/php-cs-fixer": "^1.11",
-        "phpunit/phpunit": "~5.7"
+        "friendsofphp/php-cs-fixer": "~2.2.0",
+        "phpunit/phpunit": "~4.5"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit -c phpunit.xml.dist",
+        "testci": "vendor/bin/phpunit -c phpunit.xml.dist --coverage-text",
+        "cs": "vendor/bin/php-cs-fixer fix"
     }
 }
