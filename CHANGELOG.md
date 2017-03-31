@@ -1,7 +1,10 @@
 CHANGELOG
 =========
 
-### Unreleased ###
+### 1.0.2 (2017-03-31) ###
+
+* fix PHP CS Fixer configuration and version
+* fix #30 deprecate the Numeric class in favor of Unit
 
 ### 1.0.1 (2015-12-13) ###
 

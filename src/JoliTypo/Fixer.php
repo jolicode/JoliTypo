@@ -135,6 +135,11 @@ class Fixer
                 $fixer     = $rule;
                 $className = get_class($rule);
             } else {
+                /* BC Layer: the Numeric class is deprecated */
+                if (mb_strtolower($rule) === 'numeric') {
+                    $rule = 'Unit';
+                }
+
                 $className = class_exists($rule) ? $rule : (class_exists('JoliTypo\\Fixer\\'.$rule) ? 'JoliTypo\\Fixer\\'.$rule : false);
                 if (!$className) {
                     throw new BadRuleSetException(sprintf('Fixer %s not found', $rule));

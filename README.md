@@ -145,10 +145,10 @@ Trademark
 Handle trade­mark symbol `™`, a reg­is­tered trade­mark symbol `®`, and a copy­right symbol `©`. This fixer replace
 commonly used approximations: `(r)`, `(c)` and `(TM)`. A non-breaking space is put between numbers and copyright symbol too.
 
-Numeric
+Unit (formerly Numeric)
 ---------
 
-Add a non-breaking space between a numeric and it's unit. Like this: `12_h`, `42_฿` or `88_%`.
+Add a non-breaking space between a numeric and it's unit. Like this: `12_h`, `42_฿` or `88_%`. It was named `Numeric` before release 1.0.2, but BC is kept for now.
 
 **It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules.**
 
@@ -159,7 +159,7 @@ en_GB
 -----
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('en_GB');
 ```
 
@@ -169,7 +169,7 @@ fr_FR
 Those rules apply most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('fr_FR');
 ```
 
@@ -179,7 +179,7 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('fr_CA');
 ```
 
@@ -189,7 +189,7 @@ de_DE
 Mostly the same as en_GB, according to [Typefacts](http://typefacts.com/) and [Wikipedia](http://de.wikipedia.org/wiki/Typografie_f%C3%BCr_digitale_Texte).
 
 ```php
-$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Numeric', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
+$fixer = new Fixer(array('Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'));
 $fixer->setLocale('de_DE');
 ```
 
