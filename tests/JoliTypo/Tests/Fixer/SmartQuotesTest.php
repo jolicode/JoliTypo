@@ -37,6 +37,6 @@ class SmartQuotesTest extends \PHPUnit_Framework_TestCase
     public function testBadConfig()
     {
         $fixer = new Fixer\SmartQuotes('unknown');
-        $fixer->fix("nope");
+        $fixer->fix('nope');
     }
 }

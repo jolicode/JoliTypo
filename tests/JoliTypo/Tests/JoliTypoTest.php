@@ -95,9 +95,9 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 
     public function testProtectedTags()
     {
-        $fixer          = new Fixer(array('Ellipsis'));
+        $fixer = new Fixer(array('Ellipsis'));
         $fixer->setProtectedTags(array('pre', 'a'));
-        $fixed_content  = $fixer->fix('<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed... <a>Not Fixed...</a>.</p>');
+        $fixed_content = $fixer->fix('<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed... <a>Not Fixed...</a>.</p>');
 
         $this->assertEquals('<p>Fixed&hellip;</p> <pre>Not fixed...</pre> <p>Fixed&hellip; <a>Not Fixed...</a>.</p>', $fixed_content);
     }
