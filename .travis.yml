@@ -15,6 +15,6 @@ matrix:
         - php: hhvm
 
 before_script:
-  - composer install --no-dev
+  - composer install
 
 script: vendor/bin/phpunit --coverage-text
