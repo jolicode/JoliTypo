@@ -9,8 +9,6 @@
 
 namespace JoliTypo\Fixer;
 
-use JoliTypo\Fixer;
-
 /**
  * {@inheritdoc}
  *
@@ -20,6 +18,6 @@ class Numeric extends Unit
 {
     public function __construct()
     {
-        trigger_error('Numeric fixer is deprecated, use Unit instead.', E_USER_NOTICE);
+        @trigger_error('Numeric fixer is deprecated, use Unit instead. To be removed in 2.0.', E_USER_DEPRECATED);
     }
 }
