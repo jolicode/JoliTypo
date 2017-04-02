@@ -11,12 +11,12 @@ namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
 
-class NumericTest extends \PHPUnit_Framework_TestCase
+class UnitTest extends \PHPUnit_Framework_TestCase
 {
     public function testNumericUnits()
     {
-        $fixer = new Fixer\Numeric();
-        $this->assertInstanceOf('JoliTypo\Fixer\Numeric', $fixer);
+        $fixer = new Fixer\Unit();
+        $this->assertInstanceOf('JoliTypo\Fixer\Unit', $fixer);
 
         $this->assertEquals('Test', $fixer->fix('Test'));
         $this->assertEquals('1'.Fixer::NO_BREAK_SPACE.'h', $fixer->fix('1 h'));

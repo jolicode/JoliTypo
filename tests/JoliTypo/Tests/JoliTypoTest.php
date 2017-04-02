@@ -180,6 +180,14 @@ NOT_HTML;
         $this->assertEquals(html_entity_decode($fixed, null, 'UTF-8'), $fixer->fixString($toFix));
         $this->assertEquals('Here is a “protip©”!', $fixer->fixString('Here is a "protip(c)"!'));
     }
+
+    public function testDeprecatedFixer()
+    {
+        $fixer = new Fixer(array('Numeric'));
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $this->assertEquals('3'.Fixer::NO_BREAK_SPACE.'€', $fixer->fixString('3 €'));
+    }
 }
 
 class FakeFixer

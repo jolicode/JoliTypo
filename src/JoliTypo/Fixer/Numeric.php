@@ -9,20 +9,15 @@
 
 namespace JoliTypo\Fixer;
 
-use JoliTypo\Fixer;
-use JoliTypo\FixerInterface;
-use JoliTypo\StateBag;
-
 /**
- * Add nbsp between numeric and units.
+ * {@inheritdoc}
+ *
+ * @deprecated Numeric should not be used (reserved keyword in PHP7)
  */
-class Numeric implements FixerInterface
+class Numeric extends Unit
 {
-    public function fix($content, StateBag $stateBag = null)
+    public function __construct()
     {
-        // Support a wide range of currencies
-        $content = preg_replace('@([\dº])('.Fixer::ALL_SPACES.')+([º°%Ω฿₵¢₡$₫֏€ƒ₲₴₭£₤₺₦₨₱៛₹$₪৳₸₮₩¥\w]{1})@', '$1'.Fixer::NO_BREAK_SPACE.'$3', $content);
-
-        return $content;
+        @trigger_error('Numeric fixer is deprecated, use Unit instead. To be removed in 2.0.', E_USER_DEPRECATED);
     }
 }
