@@ -164,4 +164,22 @@ HTML;
 
         $this->assertEquals($fixed, $fixer->fix($to_fix));
     }
+
+    /**
+     * @see https://github.com/jolicode/JoliTypo/issues/35
+     */
+    public function testWeirdHyphen()
+    {
+        $fixer = new Fixer($this->fr_fixers);
+
+        $fixer->setLocale('fr');
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $to_fix = <<<HTML
+<p><a href="http://foobar.dev/storage/image-1493026187479.gif" target="_self"><img src="http://foobar.dev/storage/image-1493026187479.gif" alt="file"></a></p>
+HTML;
+
+        $this->assertNotContains("&shy;", $fixer->fix($to_fix));
+        $this->assertNotContains(Fixer::SHY, $fixer->fix($to_fix));
+    }
 }
