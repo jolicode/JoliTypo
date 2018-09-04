@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 1.0.3 (2018-09-04) ###
+
+* add built-in support for Symfony and Twig
+
 ### 1.0.2 (2017-03-31) ###
 
 * fix PHP CS Fixer configuration and version
