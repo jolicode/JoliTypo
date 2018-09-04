@@ -47,3 +47,12 @@ en-GB
 -----
 
 - [x] Make sure all the rules described [here](http://practicaltypography.com/summary-of-key-rules.html) are respected;
+
+Bridge
+======
+
+Symfony
+-------
+
+- Allow to set service as Fixer via an `@`
+- Use Lazy services for all the presets

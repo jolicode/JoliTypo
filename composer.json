@@ -18,17 +18,17 @@
         "lib-libxml": "*",
         "org_heigl/hyphenator": "~2.0.3"
     },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "~2.2.0",
+        "phpunit/phpunit": "~4.5",
+        "symfony/framework-bundle": "^2.3|^3.0|^4.0"
+    },
     "conflict": {
         "ext-apc": "3.1.11"
     },
     "autoload": {
-        "psr-0": {
-            "JoliTypo": "src/"
-        }
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "~2.2.0",
-        "phpunit/phpunit": "~4.5"
+        "psr-0": { "JoliTypo": "src/" },
+        "psr-4": { "JoliTypo\\": "" }
     },
     "scripts": {
         "test": "vendor/bin/phpunit -c phpunit.xml.dist",
