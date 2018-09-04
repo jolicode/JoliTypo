@@ -74,7 +74,8 @@ composer require jolicode/jolitypo
 Integrations
 ===========
 
-- (Official) [Symfony2 Bundle and twig extension](https://github.com/jolicode/JoliTypoBundle)
+- (Built-in) [Symfony Bundle](src/JoliTypo/Bridge/Symfony)
+- (Built-in) [Twig extension](src/JoliTypo/Bridge/Twig)
 - [Wordpress plugin](http://wordpress.org/plugins/typofr/)
 - [Drupal module](https://github.com/Anaethelion/JoliTypo-for-Drupal)
 
