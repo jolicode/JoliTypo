@@ -78,6 +78,7 @@ Integrations
 - (Built-in) [Twig extension](src/JoliTypo/Bridge/Twig)
 - [Wordpress plugin](http://wordpress.org/plugins/typofr/)
 - [Drupal module](https://github.com/Anaethelion/JoliTypo-for-Drupal)
+- [Joomla plugin](https://github.com/YGomiero/typographe)
 
 Available Fixers
 ================
