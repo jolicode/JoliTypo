@@ -25,12 +25,7 @@ It's designed to be:
 - fully tested;
 - fully open and usable in any project (MIT License).
 
-[![Build Status](https://travis-ci.org/jolicode/JoliTypo.png?branch=master)](https://travis-ci.org/jolicode/JoliTypo)
 [![Latest Stable Version](https://poser.pugx.org/jolicode/JoliTypo/version.png)](https://packagist.org/packages/jolicode/JoliTypo)
-[![Latest Unstable Version](https://poser.pugx.org/jolicode/JoliTypo/v/unstable.png)](https://packagist.org/packages/jolicode/JoliTypo)
-[![Code Coverage](https://scrutinizer-ci.com/g/jolicode/JoliTypo/badges/coverage.png?s=4158f94c2d7ee660eebf562baa1c6cf8f1152784)](https://scrutinizer-ci.com/g/jolicode/JoliTypo/)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1e8d7acc-dfad-497b-a2aa-db1223bbf684/mini.png)](https://insight.sensiolabs.com/projects/1e8d7acc-dfad-497b-a2aa-db1223bbf684)
-[![Dependency Status](https://www.versioneye.com/php/jolicode:jolitypo/dev-master/badge.png)](https://www.versioneye.com/php/jolicode:jolitypo/dev-master)
 
 Quick usage
 ===========
@@ -105,7 +100,7 @@ SmartQuotes
 Convert dumb quotes `" "` to all kind of smart style quotation marks (`“ ”`, `« »`, `„ “`...). Handle a good variety of locales,
 like English, Arabic, French, Italian, Spanish, Irish, German...
 
-See [the code](https://github.com/jolicode/JoliTypo/blob/master/src/JoliTypo/Fixer/SmartQuotes.php) for more details, 
+See [the code](https://github.com/jolicode/JoliTypo/blob/master/src/JoliTypo/Fixer/SmartQuotes.php) for more details,
 and do not forget to specify a locale on the Fixer instance.
 
 This Fixer replace legacy `EnglishQuotes`, `FrenchQuotes` and `GermanQuotes`.
