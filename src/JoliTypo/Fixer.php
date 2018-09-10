@@ -119,7 +119,7 @@ class Fixer
     /**
      * Build the _rules array of Fixer.
      *
-     * @param   $rules
+     * @param $rules
      *
      * @throws Exception\BadRuleSetException
      */
@@ -260,7 +260,7 @@ class Fixer
      * @see http://php.net/manual/en/domdocument.loadhtml.php#91513
      * @see https://github.com/jolicode/JoliTypo/issues/7
      *
-     * @param   $content
+     * @param $content
      *
      * @return string
      */
@@ -268,11 +268,11 @@ class Fixer
     {
         if (!empty($content)) {
             // Little hack to force UTF-8
-            if (strpos($content, '<?xml encoding') === false) {
-                $hack = strpos(
+            if (false === strpos($content, '<?xml encoding')) {
+                $hack = false === strpos(
                     $content,
                     '<body'
-                ) === false ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
+                ) ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
                 $content = $hack.$content;
             }
 

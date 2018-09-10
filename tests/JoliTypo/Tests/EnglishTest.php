@@ -13,7 +13,7 @@ use JoliTypo\Fixer;
 
 class EnglishTest extends \PHPUnit_Framework_TestCase
 {
-    private $en_fixers = array('Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen', 'Trademark');
+    private $en_fixers = ['Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen', 'Trademark'];
 
     const TOFIX = <<<TOFIX
 <!-- From https://en.wikipedia.org/wiki/Gif#Pronunciation -->
