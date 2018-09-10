@@ -9,7 +9,7 @@ JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microt
 use JoliTypo\Fixer;
 
 $fixer = new Fixer(array('Ellipsis', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen'));
-$fixed_content = $fixer->fix('<p>"Tell me Mr. Anderson... what good is a phone call... if you\'re unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>');
+$fixedContent = $fixer->fix('<p>"Tell me Mr. Anderson... what good is a phone call... if you\'re unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>');
 ```
 ```html
 <p>&ldquo;Tell me Mr. Ander&shy;son&hellip; what good is a phone call&hellip; if you&rsquo;re unable to speak?&rdquo;&mdash;Agent Smith, <em>Matrix</em>.</p>
@@ -37,7 +37,7 @@ use JoliTypo\Fixer;
 
 $fixer = new Fixer(array("SmartQuotes", "FrenchNoBreakSpace"));
 $fixer->setLocale('fr_FR');
-$fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
+$fixedContent = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
 ```
 
 For your ease of use, you can find [ready to use list of Fixer for your language here](#fixer-recommendations-by-locale).
@@ -52,7 +52,7 @@ To fix non HTML content, use the `fixString()` method:
 use JoliTypo\Fixer;
 
 $fixer = new Fixer(array("Trademark", "SmartQuotes"));
-$fixed_content = $fixer->fixString('Here is a "protip(c)"!'); // Here is a “protip©”!
+$fixedContent = $fixer->fixString('Here is a "protip(c)"!'); // Here is a “protip©”!
 ```
 
 Installation
@@ -202,14 +202,14 @@ Default usage
 
 ```php
 $fixer          = new Fixer(array('Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen'));
-$fixed_content  = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
+$fixedContent  = $fixer->fix("<p>Some user contributed HTML which does not use proper glyphs.</p>");
 
 $fixer->setRules(array('CurlyQuote'));
-$fixed_content = $fixer->fix("<p>I'm only replacing single quotes.</p>");
+$fixedContent = $fixer->fix("<p>I'm only replacing single quotes.</p>");
 
 $fixer->setRules(array('Hyphen'));
 $fixer->setLocale('en_GB'); // I tell which locale to use for Hyphenation and SmartQuotes
-$fixed_content = $fixer->fix("<p>Very long words like Antidisestablishmentarianism.</p>");
+$fixedContent = $fixer->fix("<p>Very long words like Antidisestablishmentarianism.</p>");
 ```
 
 Define your own Fixer
@@ -221,11 +221,11 @@ Then just give JoliTypo their fully qualified name, or even instance:
 ```php
 // by FQN
 $fixer          = new Fixer(array('Ellipsis', 'Acme\\YourOwn\\TypoFixer'));
-$fixed_content  = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
+$fixedContent  = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
 
 // or instances, or both
 $fixer          = new Fixer(array('Ellipsis', 'Acme\\YourOwn\\TypoFixer', new Acme\\YourOwn\\PonyFixer("Some parameter")));
-$fixed_content  = $fixer->fix("<p>Content fixed by the 3 fixers.</p>");
+$fixedContent  = $fixer->fix("<p>Content fixed by the 3 fixers.</p>");
 ```
 
 Configure the protected tags
@@ -236,7 +236,7 @@ Protected tags is a list of HTML tag name that the DOM parser must avoid. Nothin
 ```php
 $fixer          = new Fixer(array('Ellipsis'));
 $fixer->setProtectedTags(array('pre', 'a'));
-$fixed_content  = $fixer->fix("<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed... <a>Not Fixed...</a>.</p>");
+$fixedContent  = $fixer->fix("<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed... <a>Not Fixed...</a>.</p>");
 ```
 
 Add your own Fixer / Contribute a Fixer
