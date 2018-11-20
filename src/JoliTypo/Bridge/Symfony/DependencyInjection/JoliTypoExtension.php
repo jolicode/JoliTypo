@@ -2,10 +2,12 @@
 
 namespace JoliTypo\Bridge\Symfony\DependencyInjection;
 
+use JoliTypo\Fixer;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use JoliTypo\Bridge\Twig\JoliTypoExtension as JoliTypoTwigExtension;
 
 class JoliTypoExtension extends Extension
 {
@@ -19,25 +21,25 @@ class JoliTypoExtension extends Extension
         $presets = $this->createPresetDefinition($container, $config);
 
         // Twig extension
-        $twig_extension = new Definition('JoliTypo\Bridge\Twig\JoliTypoExtension');
-        $twig_extension->addTag('twig.extension');
-        $twig_extension->setArguments(array($presets));
+        $twigExtension = new Definition(JoliTypoTwigExtension::class);
+        $twigExtension->addTag('twig.extension');
+        $twigExtension->setArguments([$presets]);
 
-        $container->setDefinition('joli_typo.twig_extension', $twig_extension);
+        $container->setDefinition('joli_typo.twig_extension', $twigExtension);
     }
 
     private function createPresetDefinition(ContainerBuilder $container, $config)
     {
-        $presets = array();
+        $presets = [];
 
         foreach ($config['presets'] as $name => $preset) {
-            $definition = new Definition('JoliTypo\Fixer');
+            $definition = new Definition(Fixer::class);
 
             if ($preset['locale']) {
-                $definition->addMethodCall('setLocale', array($preset['locale']));
+                $definition->addMethodCall('setLocale', [$preset['locale']]);
             }
 
-            $fixers = array();
+            $fixers = [];
             foreach ($preset['fixers'] as $fixer) {
                 // Allow to use services as fixer?
                 $fixers[] = $fixer;

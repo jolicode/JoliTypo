@@ -8,7 +8,7 @@ about fixers and how to combine them.
 Not using Symfony Flex? Register the bundle `Joli\TypoBundle\JoliTypoBundle` in your kernel:
 
 ```php
-  new Joli\TypoBundle\JoliTypoBundle(),
+  new  JoliTypo\Bridge\Symfony\JoliTypoBundle(),
 ```
 
 Define your Fixers preset as you want (in `config/packages/joli_typo.yaml` or `app/config/config.yml`):
