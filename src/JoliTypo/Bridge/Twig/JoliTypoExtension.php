@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of JoliTypo - a project by JoliCode.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
 namespace JoliTypo\Bridge\Twig;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -26,7 +34,7 @@ class JoliTypoExtension extends \Twig_Extension
         ];
     }
 
-    public function translate($text, $preset = "default")
+    public function translate($text, $preset = 'default')
     {
         if (!isset($this->presets[$preset])) {
             throw new InvalidConfigurationException(sprintf("There is no '%s' preset configured.", $preset));

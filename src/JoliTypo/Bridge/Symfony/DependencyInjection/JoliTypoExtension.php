@@ -1,18 +1,25 @@
 <?php
 
+/*
+ * This file is part of JoliTypo - a project by JoliCode.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
 namespace JoliTypo\Bridge\Symfony\DependencyInjection;
 
+use JoliTypo\Bridge\Twig\JoliTypoExtension as JoliTypoTwigExtension;
 use JoliTypo\Fixer;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use JoliTypo\Bridge\Twig\JoliTypoExtension as JoliTypoTwigExtension;
 
 class JoliTypoExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {

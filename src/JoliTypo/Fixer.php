@@ -160,7 +160,7 @@ class Fixer
     /**
      * Loop over all the DOMNode recursively.
      *
-     * @param \DOMNode $node
+     * @param \DOMNode     $node
      * @param \DOMDocument $dom
      */
     private function processDOM(\DOMNode $node, \DOMDocument $dom)
@@ -194,9 +194,9 @@ class Fixer
     /**
      * Run the Fixers on a DOMText content.
      *
-     * @param \DOMText $childNode The node to fix
-     * @param \DOMNode $node The parent node where to replace the current one
-     * @param \DOMDocument $dom The Document
+     * @param \DOMText     $childNode The node to fix
+     * @param \DOMNode     $node      The parent node where to replace the current one
+     * @param \DOMDocument $dom       The Document
      */
     private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom)
     {
