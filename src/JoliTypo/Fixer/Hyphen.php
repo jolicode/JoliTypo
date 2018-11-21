@@ -25,9 +25,33 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
     /**
      * @var array
      */
-    private $supportedLocales = array(
-        'af_ZA', 'ca', 'da_DK', 'de_AT', 'de_CH', 'de_DE', 'en_GB', 'en_UK', 'et_EE', 'fr', 'hr_HR', 'hu_HU', 'it_IT', 'lt_LT', 'nb_NO', 'nn_NO', 'nl_NL', 'pl_PL', 'pt_BR', 'ro_RO', 'ru_RU', 'sk_SK', 'sl_SI', 'sr', 'zu_ZA',
-    );
+    private $supportedLocales = [
+        'af_ZA',
+        'ca',
+        'da_DK',
+        'de_AT',
+        'de_CH',
+        'de_DE',
+        'en_GB',
+        'en_UK',
+        'et_EE',
+        'fr',
+        'hr_HR',
+        'hu_HU',
+        'it_IT',
+        'lt_LT',
+        'nb_NO',
+        'nn_NO',
+        'nl_NL',
+        'pl_PL',
+        'pt_BR',
+        'ro_RO',
+        'ru_RU',
+        'sk_SK',
+        'sl_SI',
+        'sr',
+        'zu_ZA',
+    ];
 
     public function __construct($locale)
     {

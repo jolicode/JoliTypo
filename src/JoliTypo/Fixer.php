@@ -19,27 +19,27 @@ class Fixer
      * So the entities here are plain utf8 and DOCDocument::saveHTML transform them to entity.
      */
     const NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
-    const NO_BREAK_SPACE      = "\xC2\xA0"; // &#160;
-    const ELLIPSIS            = '…';
-    const LAQUO               = '«'; // &laquo;
-    const RAQUO               = '»'; // &raquo;
-    const RSQUO               = '’'; // &rsquo;
-    const TIMES               = '×'; // &times;
-    const NDASH               = '–'; // &ndash; or &#x2013;
-    const MDASH               = '—'; // &mdash; or &#x2014;
-    const LDQUO               = '“'; // &ldquo; or &#8220;
-    const RDQUO               = '”'; // &rdquo; or &#8221;
-    const BDQUO               = '„'; // &bdquo; or &#8222;
-    const SHY                 = "\xC2\xAD"; // &shy;
-    const TRADE               = '™'; // &trade;
-    const REG                 = '®'; // &reg;
-    const COPY                = '©'; // &copy;
-    const ALL_SPACES          = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\s"; // All supported spaces, used in regexps. Better than \s
+    const NO_BREAK_SPACE = "\xC2\xA0"; // &#160;
+    const ELLIPSIS = '…';
+    const LAQUO = '«'; // &laquo;
+    const RAQUO = '»'; // &raquo;
+    const RSQUO = '’'; // &rsquo;
+    const TIMES = '×'; // &times;
+    const NDASH = '–'; // &ndash; or &#x2013;
+    const MDASH = '—'; // &mdash; or &#x2014;
+    const LDQUO = '“'; // &ldquo; or &#8220;
+    const RDQUO = '”'; // &rdquo; or &#8221;
+    const BDQUO = '„'; // &bdquo; or &#8222;
+    const SHY = "\xC2\xAD"; // &shy;
+    const TRADE = '™'; // &trade;
+    const REG = '®'; // &reg;
+    const COPY = '©'; // &copy;
+    const ALL_SPACES = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\s"; // All supported spaces, used in regexps. Better than \s
 
     /**
      * @var array HTML Tags to bypass
      */
-    protected $protectedTags = array('head', 'link', 'pre', 'code', 'script', 'style');
+    protected $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
 
     /**
      * @var string The default locale (used by some Fixer)
@@ -49,7 +49,7 @@ class Fixer
     /**
      * @var array<FixerInterface> The rules Fixer instances to apply on each DOMText
      */
-    protected $_rules = array();
+    protected $_rules = [];
 
     /**
      * @var StateBag
@@ -129,13 +129,15 @@ class Fixer
             throw new BadRuleSetException('Rules must be an array of Fixer');
         }
 
-        $this->_rules = array();
+        $this->_rules = [];
         foreach ($rules as $rule) {
             if (is_object($rule)) {
-                $fixer     = $rule;
+                $fixer = $rule;
                 $className = get_class($rule);
             } else {
-                $className = class_exists($rule) ? $rule : (class_exists('JoliTypo\\Fixer\\'.$rule) ? 'JoliTypo\\Fixer\\'.$rule : false);
+                $className = class_exists($rule) ? $rule : (class_exists(
+                    'JoliTypo\\Fixer\\'.$rule
+                ) ? 'JoliTypo\\Fixer\\'.$rule : false);
                 if (!$className) {
                     throw new BadRuleSetException(sprintf('Fixer %s not found', $rule));
                 }
@@ -164,7 +166,7 @@ class Fixer
     private function processDOM(\DOMNode $node, \DOMDocument $dom)
     {
         if ($node->hasChildNodes()) {
-            $nodes = array();
+            $nodes = [];
             foreach ($node->childNodes as $childNode) {
                 if ($childNode instanceof \DOMElement && $childNode->tagName) {
                     if (in_array($childNode->tagName, $this->protectedTags)) {
@@ -198,7 +200,7 @@ class Fixer
      */
     private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom)
     {
-        $content      = $childNode->wholeText;
+        $content = $childNode->wholeText;
         $current_node = new StateNode($childNode, $node, $dom);
 
         $this->stateBag->setCurrentNode($current_node);
@@ -227,15 +229,15 @@ class Fixer
      */
     private function loadDOMDocument($content)
     {
-        $dom           = new \DOMDocument('1.0', 'UTF-8');
+        $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->encoding = 'UTF-8';
 
         $dom->strictErrorChecking = false;
-        $dom->substituteEntities  = false;
-        $dom->formatOutput        = false;
+        $dom->substituteEntities = false;
+        $dom->formatOutput = false;
 
         // Change mb and libxml config
-        $libxmlCurrent   = libxml_use_internal_errors(true);
+        $libxmlCurrent = libxml_use_internal_errors(true);
         $mbDetectCurrent = mb_detect_order();
         mb_detect_order('ASCII,UTF-8,ISO-8859-1,windows-1252,iso-8859-15');
 
@@ -267,19 +269,22 @@ class Fixer
         if (!empty($content)) {
             // Little hack to force UTF-8
             if (strpos($content, '<?xml encoding') === false) {
-                $hack    = strpos($content, '<body') === false ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
+                $hack = strpos(
+                    $content,
+                    '<body'
+                ) === false ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
                 $content = $hack.$content;
             }
 
             $encoding = mb_detect_encoding($content);
-            $headPos  = mb_strpos($content, '<head>');
+            $headPos = mb_strpos($content, '<head>');
 
             // Add a meta to the <head> section
             if (false !== $headPos) {
                 $headPos += 6;
                 $content = mb_substr($content, 0, $headPos).
-                        '<meta http-equiv="Content-Type" content="text/html; charset='.$encoding.'">'.
-                        mb_substr($content, $headPos);
+                    '<meta http-equiv="Content-Type" content="text/html; charset='.$encoding.'">'.
+                    mb_substr($content, $headPos);
             }
 
             $content = mb_convert_encoding($content, 'HTML-ENTITIES', $encoding);
@@ -296,10 +301,14 @@ class Fixer
     private function exportDOMDocument(\DOMDocument $dom)
     {
         // Remove added body & doctype
-        $content = preg_replace(array(
+        $content = preg_replace(
+            [
                 "/^\<\!DOCTYPE.*?<html>.*?<body>/si",
                 '!</body></html>$!si',
-            ), '', $dom->saveHTML());
+            ],
+            '',
+            $dom->saveHTML()
+        );
 
         return trim($content);
     }

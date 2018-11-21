@@ -5,10 +5,10 @@ about fixers and how to combine them.
 
 **Note:** there is no cache involved with JoliTypo, take care of it if you want to save some CPU cycles :grimacing:
 
-Not using Symfony Flex? Register the bundle `Joli\TypoBundle\JoliTypoBundle` in your kernel:
+Not using Symfony Flex? Register the bundle `JoliTypo\Bridge\Symfony\JoliTypoBundle` in your kernel:
 
 ```php
-  new Joli\TypoBundle\JoliTypoBundle(),
+  new JoliTypo\Bridge\Symfony\JoliTypoBundle(),
 ```
 
 Define your Fixers preset as you want (in `config/packages/joli_typo.yaml` or `app/config/config.yml`):

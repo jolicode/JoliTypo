@@ -24,7 +24,7 @@ class StateBag
     /**
      * @var array<StateNode>
      */
-    protected $siblingNode = array();
+    protected $siblingNode = [];
 
     /**
      * Save the current StateNode, edit MAY be done to it later.

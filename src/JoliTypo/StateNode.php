@@ -28,8 +28,8 @@ class StateNode
 
     public function __construct(\DOMText $node, \DOMNode $parent, \DOMDocument $document)
     {
-        $this->node     = $node;
-        $this->parent   = $parent;
+        $this->node = $node;
+        $this->parent = $parent;
         $this->document = $document;
     }
 
