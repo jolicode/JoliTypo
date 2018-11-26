@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+### 1.0.4 (2018-11-26) ###
+
+* fix Bundle namespace
+* PHP minimum required version is now 5.6
+
 ### 1.0.3 (2018-09-04) ###
 
 * add built-in support for Symfony and Twig
