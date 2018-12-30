@@ -10,8 +10,9 @@
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class DashTest extends \PHPUnit_Framework_TestCase
+class DashTest extends TestCase
 {
     public function testSimpleString()
     {

@@ -10,8 +10,9 @@
 namespace JoliTypo\Tests;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class FrenchTest extends \PHPUnit_Framework_TestCase
+class FrenchTest extends TestCase
 {
     private $fr_fixers = ['Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark'];
 

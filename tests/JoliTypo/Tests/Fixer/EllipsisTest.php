@@ -10,8 +10,9 @@
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class EllipsisTest extends \PHPUnit_Framework_TestCase
+class EllipsisTest extends TestCase
 {
     public function testSimpleString()
     {

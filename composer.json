@@ -20,7 +20,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~2.2.0",
-        "phpunit/phpunit": "~4.5",
+        "symfony/phpunit-bridge": "^4",
         "symfony/framework-bundle": "^2.3|^3.0|^4.0"
     },
     "conflict": {
@@ -31,8 +31,8 @@
         "psr-4": { "JoliTypo\\": "" }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit -c phpunit.xml.dist",
-        "testci": "vendor/bin/phpunit -c phpunit.xml.dist --coverage-text",
+        "test": "vendor/bin/simple-phpunit -c phpunit.xml.dist",
+        "testci": "vendor/bin/simple-phpunit -c phpunit.xml.dist --coverage-text",
         "cs": "vendor/bin/php-cs-fixer fix"
     }
 }

@@ -10,8 +10,9 @@
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class TrademarkTest extends \PHPUnit_Framework_TestCase
+class TrademarkTest extends TestCase
 {
     public function testSimpleString()
     {

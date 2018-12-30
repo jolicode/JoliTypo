@@ -12,8 +12,9 @@ namespace JoliTypo\Tests;
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 use JoliTypo\StateBag;
+use PHPUnit\Framework\TestCase;
 
-class JoliTypoTest extends \PHPUnit_Framework_TestCase
+class JoliTypoTest extends TestCase
 {
     public function testSimpleInstance()
     {
@@ -181,6 +182,7 @@ NOT_HTML;
         $this->assertEquals('Here is a “protip©”!', $fixer->fixString('Here is a "protip(c)"!'));
     }
 
+    /** @group legacy */
     public function testDeprecatedFixer()
     {
         $fixer = new Fixer(['Numeric']);
