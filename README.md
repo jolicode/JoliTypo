@@ -79,6 +79,7 @@ Integrations
 - [Wordpress plugin](http://wordpress.org/plugins/typofr/)
 - [Drupal module](https://github.com/Anaethelion/JoliTypo-for-Drupal)
 - [Joomla plugin](https://github.com/YGomiero/typographe)
+- [MODX Extra](https://github.com/jenswittmann/JoliTypo)
 
 Available Fixers
 ================
