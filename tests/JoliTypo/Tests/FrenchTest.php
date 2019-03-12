@@ -10,10 +10,11 @@
 namespace JoliTypo\Tests;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class FrenchTest extends \PHPUnit_Framework_TestCase
+class FrenchTest extends TestCase
 {
-    private $fr_fixers = array('Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark');
+    private $fr_fixers = ['Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark'];
 
     const TOFIX = <<<TOFIX
 <p>Ceci est à remplacer par une fâble :p</p>
@@ -179,7 +180,7 @@ HTML;
 <p><a href="http://foobar.dev/storage/image-1493026187479.gif" target="_self"><img src="http://foobar.dev/storage/image-1493026187479.gif" alt="file"></a></p>
 HTML;
 
-        $this->assertNotContains("&shy;", $fixer->fix($to_fix));
+        $this->assertNotContains('&shy;', $fixer->fix($to_fix));
         $this->assertNotContains(Fixer::SHY, $fixer->fix($to_fix));
     }
 }

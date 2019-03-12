@@ -10,8 +10,9 @@
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class NoSpaceBeforeCommaTest extends \PHPUnit_Framework_TestCase
+class NoSpaceBeforeCommaTest extends TestCase
 {
     public function testSimpleString()
     {

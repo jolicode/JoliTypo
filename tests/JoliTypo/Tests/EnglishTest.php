@@ -10,10 +10,11 @@
 namespace JoliTypo\Tests;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class EnglishTest extends \PHPUnit_Framework_TestCase
+class EnglishTest extends TestCase
 {
-    private $en_fixers = array('Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen', 'Trademark');
+    private $en_fixers = ['Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen', 'Trademark'];
 
     const TOFIX = <<<TOFIX
 <!-- From https://en.wikipedia.org/wiki/Gif#Pronunciation -->

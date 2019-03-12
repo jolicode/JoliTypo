@@ -10,8 +10,9 @@
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class UnitTest extends \PHPUnit_Framework_TestCase
+class UnitTest extends TestCase
 {
     public function testNumericUnits()
     {

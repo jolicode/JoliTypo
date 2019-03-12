@@ -10,8 +10,9 @@
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class HyphenTest extends \PHPUnit_Framework_TestCase
+class HyphenTest extends TestCase
 {
     public function testSimpleString()
     {

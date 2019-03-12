@@ -10,8 +10,9 @@
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class FrenchNoBreakSpaceTest extends \PHPUnit_Framework_TestCase
+class FrenchNoBreakSpaceTest extends TestCase
 {
     public function testSimpleString()
     {

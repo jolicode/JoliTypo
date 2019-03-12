@@ -12,12 +12,13 @@ namespace JoliTypo\Tests;
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 use JoliTypo\StateBag;
+use PHPUnit\Framework\TestCase;
 
-class JoliTypoTest extends \PHPUnit_Framework_TestCase
+class JoliTypoTest extends TestCase
 {
     public function testSimpleInstance()
     {
-        $fixer = new Fixer(array('Ellipsis'));
+        $fixer = new Fixer(['Ellipsis']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals('Coucou&hellip;', $fixer->fix('Coucou...'));
@@ -25,19 +26,19 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 
     public function testSimpleInstanceRulesChange()
     {
-        $fixer = new Fixer(array('Ellipsis'));
+        $fixer = new Fixer(['Ellipsis']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals('Coucou&hellip;', $fixer->fix('Coucou...'));
 
-        $fixer->setRules(array('CurlyQuote'));
+        $fixer->setRules(['CurlyQuote']);
 
         $this->assertEquals('I&rsquo;m a pony.', $fixer->fix("I'm a pony."));
     }
 
     public function testHtmlComments()
     {
-        $fixer = new Fixer(array('Ellipsis'));
+        $fixer = new Fixer(['Ellipsis']);
         $this->assertEquals('<p>Coucou&hellip;</p> <!-- Not Coucou... -->', $fixer->fix('<p>Coucou...</p> <!-- Not Coucou... -->'));
 
         // This test can't be ok, DomDocument is encoding entities even in comments (╯°□°）╯︵ ┻━┻
@@ -57,7 +58,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadRuleSetsArray()
     {
-        new Fixer(array());
+        new Fixer([]);
     }
 
     /**
@@ -65,7 +66,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadRuleSetsAfterConstructor()
     {
-        $fixer = new Fixer(array('Ellipsis'));
+        $fixer = new Fixer(['Ellipsis']);
         $fixer->setRules('YOLO');
     }
 
@@ -74,7 +75,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidProtectedTags()
     {
-        $fixer = new Fixer(array('Ellipsis'));
+        $fixer = new Fixer(['Ellipsis']);
         $fixer->setProtectedTags('YOLO');
     }
 
@@ -83,20 +84,20 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidCustomFixerInstance()
     {
-        new Fixer(array(new FakeFixer()));
+        new Fixer([new FakeFixer()]);
     }
 
     public function testOkFixer()
     {
-        $fixer = new Fixer(array(new OkFixer()));
+        $fixer = new Fixer([new OkFixer()]);
 
         $this->assertEquals('<p>Nope !</p>', $fixer->fix('<p>Nope !</p>'));
     }
 
     public function testProtectedTags()
     {
-        $fixer = new Fixer(array('Ellipsis'));
-        $fixer->setProtectedTags(array('pre', 'a'));
+        $fixer = new Fixer(['Ellipsis']);
+        $fixer->setProtectedTags(['pre', 'a']);
         $fixed_content = $fixer->fix('<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed... <a>Not Fixed...</a>.</p>');
 
         $this->assertEquals('<p>Fixed&hellip;</p> <pre>Not fixed...</pre> <p>Fixed&hellip; <a>Not Fixed...</a>.</p>', $fixed_content);
@@ -107,7 +108,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadClassName()
     {
-        new Fixer(array('Ellipsis', 'Acme\\Demo\\Fixer'));
+        new Fixer(['Ellipsis', 'Acme\\Demo\\Fixer']);
     }
 
     /**
@@ -115,7 +116,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadLocale()
     {
-        $fixer = new Fixer(array('Ellipsis'));
+        $fixer = new Fixer(['Ellipsis']);
         $fixer->setLocale(false);
     }
 
@@ -124,12 +125,12 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyRules()
     {
-        new Fixer(array());
+        new Fixer([]);
     }
 
     public function testXmlPrefixedContent()
     {
-        $fixer = new Fixer(array('Ellipsis'));
+        $fixer = new Fixer(['Ellipsis']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals('<p>Hey &eacute;pic dude&hellip;</p>', $fixer->fix('<?xml encoding="UTF-8"><body><p>Hey épic dude...</p></body>'));
@@ -138,7 +139,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 
     public function testBadEncoding()
     {
-        $fixer = new Fixer(array('Trademark'));
+        $fixer = new Fixer(['Trademark']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals('Mentions L&eacute;gales', $fixer->fix(utf8_encode(utf8_decode('Mentions Légales'))));
@@ -152,7 +153,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 
     public function testEmptyContent()
     {
-        $fixer = new Fixer(array('Trademark'));
+        $fixer = new Fixer(['Trademark']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals('', $fixer->fix(''));
@@ -162,7 +163,7 @@ class JoliTypoTest extends \PHPUnit_Framework_TestCase
 
     public function testNonHTMLContent()
     {
-        $fixer = new Fixer(array('Trademark', 'SmartQuotes'));
+        $fixer = new Fixer(['Trademark', 'SmartQuotes']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $toFix = <<<NOT_HTML
@@ -181,9 +182,10 @@ NOT_HTML;
         $this->assertEquals('Here is a “protip©”!', $fixer->fixString('Here is a "protip(c)"!'));
     }
 
+    /** @group legacy */
     public function testDeprecatedFixer()
     {
-        $fixer = new Fixer(array('Numeric'));
+        $fixer = new Fixer(['Numeric']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $this->assertEquals('3'.Fixer::NO_BREAK_SPACE.'€', $fixer->fixString('3 €'));

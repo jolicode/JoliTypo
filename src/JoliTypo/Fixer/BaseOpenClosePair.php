@@ -22,7 +22,7 @@ abstract class BaseOpenClosePair
         $storedSibling = $stateBag->getSiblingNode($stateName);
 
         // If no stored open quote node & open quote detected
-        if ($storedSibling === false && preg_match($openRegexp, $content)) {
+        if (false === $storedSibling && preg_match($openRegexp, $content)) {
             // Store the current node
             $stateBag->storeSiblingNode($stateName);
 
