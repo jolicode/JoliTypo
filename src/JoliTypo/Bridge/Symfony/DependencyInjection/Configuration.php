@@ -19,8 +19,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('joli_typo');
+        $treeBuilder = new TreeBuilder('joli_typo');
+        $rootNode = $this->getRootNode($treeBuilder, 'joli_typo');
 
         $rootNode
             ->fixXmlConfig('preset')
@@ -41,5 +41,14 @@ class Configuration implements ConfigurationInterface
         ;
 
         return $treeBuilder;
+    }
+
+    private function getRootNode(TreeBuilder $treeBuilder, $name)
+    {
+        // BC layer for symfony/config 4.1 and older
+        if (! \method_exists($treeBuilder, 'getRootNode')) {
+            return $treeBuilder->root($name);
+        }
+        return $treeBuilder->getRootNode();
     }
 }
