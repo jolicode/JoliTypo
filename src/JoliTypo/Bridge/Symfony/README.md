@@ -38,6 +38,17 @@ to fix and the preset name.
 {{ '<p>Hi folk!</p>' | jolitypo('fr') }}
 ```
 
+To fix large HTML content, you can pass the markup directly into the filter tag:
+
+```twig
+{% filter jolitypo('fr') %}
+    <p>Je suis "très content" de t'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>
+    <p>12 x 6 = 72</p>
+    <p>(r), (c), (TM)</p>
+    <p>"Tell me Mr. Anderson... what good is a phone call... if you're unable to speak?" -- Agent Smith,<em>Matrix</em>.</p>
+{% endfilter %}
+```
+
 Another way to use it is by passing a whole block to it:
 
 ```twig
