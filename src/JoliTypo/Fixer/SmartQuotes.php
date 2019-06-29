@@ -65,6 +65,14 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
                 $this->closingPrefix = '';
 
                 return;
+            // «…»
+            case 'de-ch':
+                $this->opening = Fixer::LAQUO;
+                $this->openingSuffix = '';
+                $this->closing = Fixer::RAQUO;
+                $this->closingPrefix = '';
+
+                return;
         }
 
         // Handle from locale only
