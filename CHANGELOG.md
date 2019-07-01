@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+### 1.0.5 (2019-07-01) ###
+
+* add an exception for "de-ch" SmartQuote style
+* fix deprecation messages in Symfony 
+
 ### 1.0.4 (2018-11-26) ###
 
 * fix Bundle namespace
