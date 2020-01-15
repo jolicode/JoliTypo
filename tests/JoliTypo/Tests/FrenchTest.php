@@ -180,7 +180,7 @@ HTML;
 <p><a href="http://foobar.dev/storage/image-1493026187479.gif" target="_self"><img src="http://foobar.dev/storage/image-1493026187479.gif" alt="file"></a></p>
 HTML;
 
-        $this->assertNotContains('&shy;', $fixer->fix($to_fix));
-        $this->assertNotContains(Fixer::SHY, $fixer->fix($to_fix));
+        $this->assertStringNotContainsString('&shy;', $fixer->fix($to_fix));
+        $this->assertStringNotContainsString(Fixer::SHY, $fixer->fix($to_fix));
     }
 }

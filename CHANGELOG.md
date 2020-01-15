@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 1.1.0 (unreleased) ###
+
+* add Symfony 5 support for the Bundle + tests
+
 ### 1.0.5 (2019-07-01) ###
 
 * add an exception for "de-ch" SmartQuote style

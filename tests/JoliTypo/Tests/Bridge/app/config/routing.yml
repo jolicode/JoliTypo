@@ -1,0 +1,3 @@
+fix:
+    path:     /fix
+    defaults: { _controller: JoliTypo\Tests\Bridge\app\AppController::fixAction }

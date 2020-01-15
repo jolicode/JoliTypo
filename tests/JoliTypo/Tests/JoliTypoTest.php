@@ -9,6 +9,7 @@
 
 namespace JoliTypo\Tests;
 
+use JoliTypo\Exception\BadRuleSetException;
 use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 use JoliTypo\StateBag;
@@ -45,45 +46,40 @@ class JoliTypoTest extends TestCase
         //$this->assertEquals("<p>Coucou&hellip;</p> <!-- abusé -->", $fixer->fix("<p>Coucou...</p> <!-- abusé -->"));
     }
 
-    /**
-     * @expectedException \JoliTypo\Exception\BadRuleSetException
-     */
     public function testBadRuleSets()
     {
+        $this->expectException(BadRuleSetException::class);
+
         new Fixer('YOLO');
     }
 
-    /**
-     * @expectedException \JoliTypo\Exception\BadRuleSetException
-     */
     public function testBadRuleSetsArray()
     {
+        $this->expectException(BadRuleSetException::class);
+
         new Fixer([]);
     }
 
-    /**
-     * @expectedException \JoliTypo\Exception\BadRuleSetException
-     */
     public function testBadRuleSetsAfterConstructor()
     {
+        $this->expectException(BadRuleSetException::class);
+
         $fixer = new Fixer(['Ellipsis']);
         $fixer->setRules('YOLO');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidProtectedTags()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $fixer = new Fixer(['Ellipsis']);
         $fixer->setProtectedTags('YOLO');
     }
 
-    /**
-     * @expectedException \JoliTypo\Exception\BadRuleSetException
-     */
     public function testInvalidCustomFixerInstance()
     {
+        $this->expectException(BadRuleSetException::class);
+
         new Fixer([new FakeFixer()]);
     }
 
@@ -103,28 +99,25 @@ class JoliTypoTest extends TestCase
         $this->assertEquals('<p>Fixed&hellip;</p> <pre>Not fixed...</pre> <p>Fixed&hellip; <a>Not Fixed...</a>.</p>', $fixed_content);
     }
 
-    /**
-     * @expectedException \JoliTypo\Exception\BadRuleSetException
-     */
     public function testBadClassName()
     {
+        $this->expectException(BadRuleSetException::class);
+
         new Fixer(['Ellipsis', 'Acme\\Demo\\Fixer']);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testBadLocale()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $fixer = new Fixer(['Ellipsis']);
         $fixer->setLocale(false);
     }
 
-    /**
-     * @expectedException \JoliTypo\Exception\BadRuleSetException
-     */
     public function testEmptyRules()
     {
+        $this->expectException(BadRuleSetException::class);
+
         new Fixer([]);
     }
 

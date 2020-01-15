@@ -10,8 +10,9 @@
 namespace JoliTypo\Bridge\Twig;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Twig\Extension\AbstractExtension;
 
-class JoliTypoExtension extends \Twig_Extension
+class JoliTypoExtension extends AbstractExtension
 {
     private $presets = [];
 
@@ -23,14 +24,14 @@ class JoliTypoExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('jolitypo', [$this, 'translate']),
+            new \Twig\TwigFunction('jolitypo', [$this, 'translate']),
         ];
     }
 
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('jolitypo', [$this, 'translate'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+            new \Twig\TwigFilter('jolitypo', [$this, 'translate'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
         ];
     }
 
