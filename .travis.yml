@@ -13,6 +13,6 @@ env:
   - PREFER_LOWEST="--prefer-lowest"
 
 before_script:
-  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer install --prefer-dist --no-interaction $PREFER_LOWEST
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist --no-interaction $PREFER_LOWEST
 
 script: composer testci

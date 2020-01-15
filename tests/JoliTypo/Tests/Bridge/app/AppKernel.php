@@ -9,6 +9,8 @@
 
 namespace JoliTypo\Tests\Bridge\app;
 
+use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use JoliTypo\Bridge\Symfony\JoliTypoBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
@@ -31,6 +33,14 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config.yml');
+
+        if (trait_exists(MailerAssertionsTrait::class)) {
+            $loader->load(function (ContainerBuilder $container) {
+                $container->loadFromExtension('twig', [
+                    'exception_controller' => null,
+                ]);
+            });
+        }
     }
 
     public function getCacheDir()
