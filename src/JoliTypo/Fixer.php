@@ -159,9 +159,6 @@ class Fixer
 
     /**
      * Loop over all the DOMNode recursively.
-     *
-     * @param \DOMNode     $node
-     * @param \DOMDocument $dom
      */
     private function processDOM(\DOMNode $node, \DOMDocument $dom)
     {
@@ -294,8 +291,6 @@ class Fixer
     }
 
     /**
-     * @param \DOMDocument $dom
-     *
      * @return string
      */
     private function exportDOMDocument(\DOMDocument $dom)

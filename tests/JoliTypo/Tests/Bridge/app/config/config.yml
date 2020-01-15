@@ -1,0 +1,25 @@
+framework:
+    router:
+        resource: "%kernel.project_dir%/tests/JoliTypo/Tests/Bridge/app/config/routing.yml"
+        strict_requirements: ~
+    secret: "ThisTokenIsEnoughSecretForOurTests"
+twig:
+    strict_variables: '%kernel.debug%'
+
+joli_typo:
+    presets:
+        fr:
+            fixers: [ 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Trademark' ]
+            locale: fr_FR
+        fr_hyphen:
+            fixers: [ 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark' ]
+            locale: fr_FR
+        en:
+            fixers: [ 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Trademark' ]
+            locale: en_GB
+
+services:
+    JoliTypo\Tests\Bridge\app\AppController:
+        class: \JoliTypo\Tests\Bridge\app\AppController
+        public: true
+        arguments: ['@twig']

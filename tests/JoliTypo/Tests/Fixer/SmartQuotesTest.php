@@ -9,6 +9,7 @@
 
 namespace JoliTypo\Tests\Fixer;
 
+use JoliTypo\Exception\BadFixerConfigurationException;
 use JoliTypo\Fixer;
 use PHPUnit\Framework\TestCase;
 
@@ -32,11 +33,10 @@ class SmartQuotesTest extends TestCase
         $this->assertEquals('<I am smart>', $fixer->fix('"I am smart"'));
     }
 
-    /**
-     * @expectedException \JoliTypo\Exception\BadFixerConfigurationException
-     */
     public function testBadConfig()
     {
+        $this->expectException(BadFixerConfigurationException::class);
+
         $fixer = new Fixer\SmartQuotes('unknown');
         $fixer->fix('nope');
     }
