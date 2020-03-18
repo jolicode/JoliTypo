@@ -29,8 +29,10 @@
         "ext-apc": "3.1.11"
     },
     "autoload": {
-        "psr-0": { "JoliTypo\\Tests": "tests/", "JoliTypo": "src/" },
-        "psr-4": { "JoliTypo\\": "" }
+        "psr-4": { "JoliTypo\\": "src/JoliTypo" }
+    },
+    "autoload-dev": {
+        "psr-4": { "JoliTypo\\Tests\\": "tests/JoliTypo/Tests" }
     },
     "scripts": {
         "test": "vendor/bin/simple-phpunit -c phpunit.xml.dist",
