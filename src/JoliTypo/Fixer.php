@@ -299,7 +299,7 @@ class Fixer
         $content = preg_replace(
             [
                 "/^\<\!DOCTYPE.*?<html>.*?<body>/si",
-                '!</body></html>$!si',
+                '!</body>\n?</html>$!si',
             ],
             '',
             $dom->saveHTML()
