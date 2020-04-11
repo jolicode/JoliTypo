@@ -1,9 +1,12 @@
 CHANGELOG
 =========
 
-### 1.1.0 (unreleased) ###
+### 1.1.0 (2020-04-11) ###
 
-* add Symfony 5 support for the Bundle + tests
+* drop Symfony 2 support for the Bundle
+* add Symfony 5 support for the Bundle
+* better tests
+* fix a full DOM dump error occurring on Ubuntu PHP 7.3
 
 ### 1.0.5 (2019-07-01) ###
 
