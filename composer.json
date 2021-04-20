@@ -36,7 +36,6 @@
     },
     "scripts": {
         "test": "vendor/bin/simple-phpunit -c phpunit.xml.dist",
-        "testci": "vendor/bin/simple-phpunit -c phpunit.xml.dist --coverage-text",
         "cs": "vendor/bin/php-cs-fixer fix"
     }
 }
