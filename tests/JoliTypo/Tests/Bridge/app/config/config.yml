@@ -2,7 +2,6 @@ framework:
     router:
         resource: "%kernel.project_dir%/tests/JoliTypo/Tests/Bridge/app/config/routing.yml"
         strict_requirements: ~
-        utf8: true
     secret: "ThisTokenIsEnoughSecretForOurTests"
 twig:
     strict_variables: '%kernel.debug%'
