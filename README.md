@@ -245,7 +245,7 @@ Add your own Fixer / Contribute a Fixer
 - Write tests;
 - A Fixer is run on a piece of text, no HTML to deal with;
 - Implement `JoliTypo\FixerInterface`;
-- Pull request;
+- Send your Pull request.
 
 ### Contribution guidelines
 
