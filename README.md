@@ -261,7 +261,7 @@ Compatibility & OS support restrictions
 =======================================
 
 - Windows XP : Thin No-Break Space can't be used, all other spaces are ignored, but they do not look bad (normal space).
-- Mac OS Snow Leopard : no espaces fixes, demi-fixes, cadratin and half-cadratin but doesn't look bad (normal space).
+- Mac OS Snow Leopard : no no-break space, half no-break space, ems and en-dash but doesn't look bad (normal space).
 
 BUT if you use a font (`@font-face` maybe) that contains all those glyphs, there will be no issues.
 
