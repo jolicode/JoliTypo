@@ -13,10 +13,10 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.2.0",
         "ext-mbstring": "*",
         "lib-libxml": "*",
-        "org_heigl/hyphenator": "~2.0.3"
+        "org_heigl/hyphenator": "~2.6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2",

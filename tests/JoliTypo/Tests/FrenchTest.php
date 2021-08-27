@@ -59,7 +59,7 @@ content&nbsp;&raquo; de t&rsquo;avoir <a href="http://coucou">invit&eacute;</a>&
 
 <p>Les tr&eacute;s long mots sont tronqu&eacute;s, comme &laquo;&nbsp;rensei&shy;gne&shy;ments&nbsp;&raquo; par exemple.</p>
 
-<p>Du HTML dans une cita&shy;tion&nbsp;: &laquo;&nbsp;Je suis <strong>fan</strong> de JoliTypo&nbsp;&raquo; pose probl&egrave;me.</p>
+<p>Du HTML dans une cita&shy;tion&nbsp;: &laquo;&nbsp;Je suis <strong>fan</strong> de Joli&shy;Typo&nbsp;&raquo; pose probl&egrave;me.</p>
 
 <p>Une autre exemple&nbsp;: &laquo;&nbsp;<strong>Cita&shy;tion forte&#8239;!</strong>&nbsp;&raquo;.</p>
 FIXED;
