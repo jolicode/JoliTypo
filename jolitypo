@@ -1,193 +1,70 @@
 #!/usr/bin/env php
 <?php
+require __DIR__.'/vendor/autoload.php';
 
 use JoliTypo\Fixer;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\SingleCommandApplication;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Finder\Finder;
 
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-    $loader = require(__DIR__ . '/vendor/autoload.php');
-} elseif (file_exists(__DIR__ . '/../../../vendor/autoload.php')) {
-    $loader = require(__DIR__ . '/../../../vendor/autoload.php');
-} else {
-    throw new \RuntimeException('Unable to load autoloader.');
-}
+(new SingleCommandApplication())
+    ->setName('JoliTypo')
+    ->setDescription('Fix Microtypography glitches inside your HTML content.')
+    ->addArgument('path', InputArgument::REQUIRED, 'Path of file(s) to fix.')
+    ->addOption('locale', 'l', InputOption::VALUE_REQUIRED, 'Locale of the content to fix. Ex: "fr_FR"')
+    ->addOption('depth', 'd', InputOption::VALUE_OPTIONAL, 'Depth to find files if "path" is a directory.', 1)
+    ->addOption('rules', 'r', InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, 'Set of rules to apply.', [])
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+        $io = new SymfonyStyle($input, $output);
 
-final class Cli
-{
-    const DESCRIPTION = 'Fix Microtypography glitches inside your HTML content.';
-    const RECOMMENDED_RULES_BY_LOCALE = [
-        'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_FR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_CA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-    ];
-    const ARGUMENTS = [
-        'rules' => [
-            'name' => 'rules',
-            'info' => 'Rules used to fix the content, comma separated.',
-            'required' => false,
-            'example' => "Ellipsis,Dimension,Unit,Dash,SmartQuotes,NoSpaceBeforeComma,CurlyQuote,Hyphen,Trademark",
-        ],
-        'locale' => [
-            'name' => 'locale',
-            'info' => 'Locale of the content to fix.',
-            'required' => true,
-        ],
-        'file' => [
-            'name' => 'file',
-            'info' => 'File to fix.',
-            'required' => true,
-        ],
-        'quiet' => [
-            'name' => 'quiet',
-            'info' => 'Do not output anything.',
-            'required' => false,
-        ],
-        'help' => [
-            'name' => 'help',
-            'info' => 'Show this help.',
-            'required' => false,
-            'flag' => true,
-        ],
-    ];
+        $path = $input->getArgument('path');
+        $depth = $input->getOption('depth');
+        $locale = $input->getOption('locale');
+        $rules = $input->getOption('rules');
 
-    private $arguments = [];
-    private $command;
+        $recommendedRulesByLocale = [
+            'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+            'fr_FR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+            'fr_CA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+            'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        ];
 
-    public function __construct()
-    {
-        $this->command = $_SERVER['argv'][0];
-    }
+        if (!is_dir($path) && !file_exists($path)) {
+            $io->error(sprintf('The path "%s" does not exist.', $path));
+            exit(Command::FAILURE);
+        }
 
-    public function parse()
-    {
-        $options = '';
-        $longOptions = array_map(function ($rule) {
-            $flag = $rule['required'] ? ':' : '::';
+        if ($rules) {
+            $rules = explode(',', $rules);
+        } elseif (array_key_exists($locale, $recommendedRulesByLocale)) {
+            $rules = $recommendedRulesByLocale[$locale];
+        } else {
+            $io->error(sprintf('There is no recommended rules for "%s" locale. Please specify manually the rules to apply.', $locale));
+            exit(Command::FAILURE);
+        }
 
-            return $rule['name'] . $flag;
-        }, self::ARGUMENTS);
+        $fixer = new Fixer($rules);
+        $fixer->setLocale($locale);
 
-        $this->arguments = getopt($options, $longOptions) ?: [];
-    }
+        if (is_dir($path)) {
+            $finder = new Finder();
 
-    public function getOption(string $name)
-    {
-        return $this->arguments[$name] ?? false;
-    }
-
-    public function hasOption(string $name): bool
-    {
-        return isset($this->arguments[$name]);
-    }
-
-    public function validate(): bool
-    {
-        $valid = true;
-
-        foreach (self::ARGUMENTS as $arg) {
-            if ($arg['required'] && !$this->hasOption($arg['name'])) {
-                $this->log("Please specify fixer {$arg['name']} with the option --{$arg['name']}");
-                $valid = false;
+            foreach ($finder->path($path)->depth($depth)->files() as $file) {
+                $fixedContent = $fixer->fix(file_get_contents($file->getRealPath()));
+                file_put_contents($file->getRealPath(), $fixedContent);
             }
+
+            $io->success(sprintf('All files in "%s" has been fixed with success!', $path));
+        } elseif (is_file($path)) {
+            $fixedContent = $fixer->fix(file_get_contents($path));
+            file_put_contents($path, $fixedContent);
+
+            $io->success(sprintf('"%s" content has been fixed with success!', $path));
         }
-
-        return $valid;
-    }
-
-    public function showUsage()
-    {
-        $required = [];
-        $optional = [];
-        $usage = $this->command;
-
-        foreach (self::ARGUMENTS as $name => $arg) {
-            $prefix = $postfix = '';
-            if ($arg['required']) {
-                $required[$name] = $arg;
-            } else {
-                $optional[$name] = $arg;
-                $prefix = '[';
-                $postfix = ']';
-            }
-            $usage .= ' ' . $prefix . $this->formatUsage($name, $arg) . $postfix;
-        }
-
-        $this->log(self::DESCRIPTION);
-        $this->log(PHP_EOL . 'Usage: ' . trim($usage));
-
-        $this->log(PHP_EOL . 'Required Arguments:');
-        foreach ($required as $name => $info) {
-            $value = $this->formatUsage($name, $info);
-            $this->log("\t$value");
-            $this->log("\t\t{$info['info']}");
-        }
-
-        $this->log(PHP_EOL . 'Optional Arguments:');
-        foreach ($optional as $name => $info) {
-            $value = $this->formatUsage($name, $info);
-            $this->log("\t$value");
-            $this->log("\t\t{$info['info']}");
-        }
-    }
-
-    public function log(string $message)
-    {
-        if (!$this->hasOption('quiet')) {
-            echo $message . PHP_EOL;
-        }
-    }
-
-    private function formatUsage($name, $rule): string
-    {
-        $example = $rule['example'] ?? $name;
-        $value = $rule['required'] ? " $name" : "=\"$example\"";
-        $value = isset($rule['flag']) && $rule['flag'] ? '' : $value;
-
-        return '--' . $name . $value;
-    }
-}
-
-$cli = new Cli();
-
-try {
-    $cli->parse();
-} catch (Exception $e) {
-    $cli->log($e->getMessage());
-    exit(1);
-}
-
-if ($cli->hasOption('help')) {
-    $cli->showUsage();
-    exit(0);
-}
-
-if (!$cli->validate()) {
-    exit(1);
-}
-
-$locale = $cli->getOption('locale');
-$file = $cli->getOption('file');
-$rules = $cli->getOption('rules');
-
-if ($rules) {
-    $rules = explode(',', $rules);
-} elseif (array_key_exists($locale, Cli::RECOMMENDED_RULES_BY_LOCALE)) {
-    $rules = Cli::RECOMMENDED_RULES_BY_LOCALE[$locale];
-} else {
-    $cli->log(sprintf('There is no recommended rules for "%s" locale. Please specify manually the rules to apply.', $locale));
-    exit(1);
-}
-
-if (!file_exists($file)) {
-    $cli->log(sprintf('The file "%s" does not exist.', $file));
-    exit(1);
-}
-
-$fixer = new Fixer($rules);
-$fixer->setLocale($locale);
-
-$fixedContent = $fixer->fix(file_get_contents($file));
-file_put_contents($file, $fixedContent);
-
-$cli->log(sprintf('"%s" content has been fixed with success!', $file));
-
+    })
+    ->run();
