@@ -60,27 +60,7 @@ CLI usage
 
 You can run a standalone version of JoliTypo by downloading [the PHAR version](https://github.com/jolicode/JoliTypo/releases/latest)
 
-Run `jolitypo.phar --help` to know how to configure the Fixer.
-
-```
-Fix Microtypography glitches inside your HTML content.
-
-Usage: ./jolitypo.phar [--rules="Ellipsis,Dimension,Unit,Dash,SmartQuotes,NoSpaceBeforeComma,CurlyQuote,Hyphen,Trademark"] --locale locale --file file [--quiet] [--help]
-
-Required Arguments:
-	--locale locale
-		Locale of the content to fix.
-	--file file
-		File to fix.
-
-Optional Arguments:
-	--rules="Ellipsis,Dimension,Unit,Dash,SmartQuotes,NoSpaceBeforeComma,CurlyQuote,Hyphen,Trademark"
-		Rules used to fix the content, comma separated.
-	--quiet
-		Do not output anything.
-	--help
-		Show this help.
-```
+Run `jolitypo --help` to know how to configure the Fixer.
 
 Installation
 ============
@@ -274,13 +254,6 @@ Add your own Fixer / Contribute a Fixer
 - A Fixer is run on a piece of text, no HTML to deal with;
 - Implement `JoliTypo\FixerInterface`;
 - Send your Pull request.
-
-Build the PHAR version
-======================
-
-Install [Box](https://github.com/box-project/box) and its dependencies with `composer bin box require --dev humbug/box`
-
-Then, run `composer run compile`
 
 ### Contribution guidelines
 

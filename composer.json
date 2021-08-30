@@ -36,7 +36,6 @@
     },
     "scripts": {
         "test": "vendor/bin/simple-phpunit -c phpunit.xml.dist",
-        "cs": "vendor/bin/php-cs-fixer fix",
-        "compile": "bin/box.phar compile"
+        "cs": "vendor/bin/php-cs-fixer fix"
     }
 }

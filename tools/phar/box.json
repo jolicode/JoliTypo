@@ -1,0 +1,19 @@
+{
+  "base-path": "../../",
+  "finder": [
+    {
+      "in": ".",
+      "name": [
+        "*.php",
+        "*.txt",
+        "*.properties",
+        "*.ini",
+        "*.dic"
+      ],
+      "exclude": ["tests", "Tests", "phpunit"]
+    }
+  ],
+  "git-version": "package_version",
+  "main": "tools/phar/bin/jolitypo",
+  "output": "tools/phar/build/jolitypo.phar"
+}
