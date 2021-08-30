@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+### 1.2.0 (2021-08-30) ###
+
+* Switch from Travis to GitHub Action
+* Bump `org_heigl/hyphenator` to 2.6.1
+* Drop support for PHP <= 7.2
+
 ### 1.1.0 (2020-04-11) ###
 
 * drop Symfony 2 support for the Bundle
@@ -11,7 +17,7 @@ CHANGELOG
 ### 1.0.5 (2019-07-01) ###
 
 * add an exception for "de-ch" SmartQuote style
-* fix deprecation messages in Symfony 
+* fix deprecation messages in Symfony
 
 ### 1.0.4 (2018-11-26) ###
 
