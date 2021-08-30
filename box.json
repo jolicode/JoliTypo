@@ -1,0 +1,45 @@
+{
+  "chmod": "0755",
+  "directories": [
+    "src"
+  ],
+  "files": [
+    "LICENSE",
+    "vendor/autoload.php"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "in": "vendor/composer"
+    },
+    {
+      "name": "*.php",
+      "exclude": ["tests"],
+      "in": "vendor/org_heigl"
+    },
+    {
+      "name": "*.properties",
+      "exclude": ["tests"],
+      "in": "vendor/org_heigl"
+    },
+    {
+      "name": "*.ini",
+      "exclude": ["tests"],
+      "in": "vendor/org_heigl"
+    },
+    {
+      "name": "*.dic",
+      "exclude": ["tests"],
+      "in": "vendor/org_heigl"
+    },
+    {
+      "name": "*.txt",
+      "exclude": ["tests"],
+      "in": "vendor/org_heigl"
+    }
+  ],
+  "git-version": "package_version",
+  "main": "jolitypo",
+  "output": "build/jolitypo.phar",
+  "stub": true
+}

@@ -1,0 +1,193 @@
+#!/usr/bin/env php
+<?php
+
+use JoliTypo\Fixer;
+
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    $loader = require(__DIR__ . '/vendor/autoload.php');
+} elseif (file_exists(__DIR__ . '/../../../vendor/autoload.php')) {
+    $loader = require(__DIR__ . '/../../../vendor/autoload.php');
+} else {
+    throw new \RuntimeException('Unable to load autoloader.');
+}
+
+final class Cli
+{
+    const DESCRIPTION = 'Fix Microtypography glitches inside your HTML content.';
+    const RECOMMENDED_RULES_BY_LOCALE = [
+        'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_FR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_CA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+    ];
+    const ARGUMENTS = [
+        'rules' => [
+            'name' => 'rules',
+            'info' => 'Rules used to fix the content, comma separated.',
+            'required' => false,
+            'example' => "Ellipsis,Dimension,Unit,Dash,SmartQuotes,NoSpaceBeforeComma,CurlyQuote,Hyphen,Trademark",
+        ],
+        'locale' => [
+            'name' => 'locale',
+            'info' => 'Locale of the content to fix.',
+            'required' => true,
+        ],
+        'file' => [
+            'name' => 'file',
+            'info' => 'File to fix.',
+            'required' => true,
+        ],
+        'quiet' => [
+            'name' => 'quiet',
+            'info' => 'Do not output anything.',
+            'required' => false,
+        ],
+        'help' => [
+            'name' => 'help',
+            'info' => 'Show this help.',
+            'required' => false,
+            'flag' => true,
+        ],
+    ];
+
+    private $arguments = [];
+    private $command;
+
+    public function __construct()
+    {
+        $this->command = $_SERVER['argv'][0];
+    }
+
+    public function parse()
+    {
+        $options = '';
+        $longOptions = array_map(function ($rule) {
+            $flag = $rule['required'] ? ':' : '::';
+
+            return $rule['name'] . $flag;
+        }, self::ARGUMENTS);
+
+        $this->arguments = getopt($options, $longOptions) ?: [];
+    }
+
+    public function getOption(string $name)
+    {
+        return $this->arguments[$name] ?? false;
+    }
+
+    public function hasOption(string $name): bool
+    {
+        return isset($this->arguments[$name]);
+    }
+
+    public function validate(): bool
+    {
+        $valid = true;
+
+        foreach (self::ARGUMENTS as $arg) {
+            if ($arg['required'] && !$this->hasOption($arg['name'])) {
+                $this->log("Please specify fixer {$arg['name']} with the option --{$arg['name']}");
+                $valid = false;
+            }
+        }
+
+        return $valid;
+    }
+
+    public function showUsage()
+    {
+        $required = [];
+        $optional = [];
+        $usage = $this->command;
+
+        foreach (self::ARGUMENTS as $name => $arg) {
+            $prefix = $postfix = '';
+            if ($arg['required']) {
+                $required[$name] = $arg;
+            } else {
+                $optional[$name] = $arg;
+                $prefix = '[';
+                $postfix = ']';
+            }
+            $usage .= ' ' . $prefix . $this->formatUsage($name, $arg) . $postfix;
+        }
+
+        $this->log(self::DESCRIPTION);
+        $this->log(PHP_EOL . 'Usage: ' . trim($usage));
+
+        $this->log(PHP_EOL . 'Required Arguments:');
+        foreach ($required as $name => $info) {
+            $value = $this->formatUsage($name, $info);
+            $this->log("\t$value");
+            $this->log("\t\t{$info['info']}");
+        }
+
+        $this->log(PHP_EOL . 'Optional Arguments:');
+        foreach ($optional as $name => $info) {
+            $value = $this->formatUsage($name, $info);
+            $this->log("\t$value");
+            $this->log("\t\t{$info['info']}");
+        }
+    }
+
+    public function log(string $message)
+    {
+        if (!$this->hasOption('quiet')) {
+            echo $message . PHP_EOL;
+        }
+    }
+
+    private function formatUsage($name, $rule): string
+    {
+        $example = $rule['example'] ?? $name;
+        $value = $rule['required'] ? " $name" : "=\"$example\"";
+        $value = isset($rule['flag']) && $rule['flag'] ? '' : $value;
+
+        return '--' . $name . $value;
+    }
+}
+
+$cli = new Cli();
+
+try {
+    $cli->parse();
+} catch (Exception $e) {
+    $cli->log($e->getMessage());
+    exit(1);
+}
+
+if ($cli->hasOption('help')) {
+    $cli->showUsage();
+    exit(0);
+}
+
+if (!$cli->validate()) {
+    exit(1);
+}
+
+$locale = $cli->getOption('locale');
+$file = $cli->getOption('file');
+$rules = $cli->getOption('rules');
+
+if ($rules) {
+    $rules = explode(',', $rules);
+} elseif (array_key_exists($locale, Cli::RECOMMENDED_RULES_BY_LOCALE)) {
+    $rules = Cli::RECOMMENDED_RULES_BY_LOCALE[$locale];
+} else {
+    $cli->log(sprintf('There is no recommended rules for "%s" locale. Please specify manually the rules to apply.', $locale));
+    exit(1);
+}
+
+if (!file_exists($file)) {
+    $cli->log(sprintf('The file "%s" does not exist.', $file));
+    exit(1);
+}
+
+$fixer = new Fixer($rules);
+$fixer->setLocale($locale);
+
+$fixedContent = $fixer->fix(file_get_contents($file));
+file_put_contents($file, $fixedContent);
+
+$cli->log(sprintf('"%s" content has been fixed with success!', $file));
+
