@@ -1,5 +1,4 @@
-
-name: install project and run tests
+name: Install project and run tests
 
 on:
   push:
