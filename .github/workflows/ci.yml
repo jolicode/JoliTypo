@@ -1,8 +1,8 @@
-name: Install project and run tests
+name: Run tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
 
 jobs:
