@@ -1,0 +1,97 @@
+#!/usr/bin/env php
+<?php
+
+use JoliTypo\Fixer;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\SingleCommandApplication;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Finder\Finder;
+
+require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
+
+$help = <<<EOTXT
+
+JoliTypo is a tool fixing Microtypography glitches inside your HTML content.
+
+# Usages
+
+## Get the list of all available fixers:
+
+<comment>%command.name% --list-rules foo bar</>
+
+## Run the fixer on one file
+
+<comment>%command.name% fr_FR index.html</>
+
+## Run the fixer on one directory
+
+<comment>%command.name% fr_FR directory/</>
+
+## Specify some rules:
+
+<comment>%command.name% fr_FR index.html --rule=FrenchQuotes --rule=Dash</>
+
+EOTXT;
+
+(new SingleCommandApplication('JoliTypo'))
+    ->addArgument('locale', InputArgument::REQUIRED, 'Locale of the content to fix.')
+    ->addArgument('path', InputArgument::REQUIRED, 'Path of file(s) to fix.')
+    ->addOption('rule', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'Rules used to fix the content')
+    ->addOption('list-rules', null, InputOption::VALUE_NONE, 'List available rules')
+    ->setHelp($help)
+    ->setCode(function (InputInterface $input, OutputInterface $output): int {
+        $io = new SymfonyStyle($input, $output);
+
+        if ($input->getOption('list-rules')) {
+            $list = [];
+            foreach ((new Finder())->in(__DIR__ . '/../../../src/JoliTypo/Fixer')->sortByName()->files() as $file) {
+                $list[] = $file->getFilenameWithoutExtension();
+            }
+            $io->listing($list);
+
+            return 0;
+        }
+
+        $locale = $input->getArgument('locale');
+        $path = $input->getArgument('path');
+        $rules = $input->getOption('rule');
+
+        if (!$rules) {
+            if (!array_key_exists($locale, Fixer::RECOMMENDED_RULES_BY_LOCALE)) {
+                throw new \InvalidArgumentException(sprintf('There is no recommended rules for "%s" locale. Please specify manually the rules to apply.', $locale));
+            }
+
+            $rules = Fixer::RECOMMENDED_RULES_BY_LOCALE[$locale];
+        }
+
+
+        $fixer = new Fixer($rules);
+        $fixer->setLocale($locale);
+
+        if (is_dir($path)) {
+            foreach ((new Finder())->in($path)->files() as $file) {
+                if ($output->isVerbose()) {
+                    $io->comment(sprintf('Fixing <comment>%s</comment>', $file->getRealPath()));
+                }
+                $fixedContent = $fixer->fix(file_get_contents($file->getRealPath()));
+                file_put_contents($file->getRealPath(), $fixedContent);
+            }
+
+            $io->success(sprintf('All files in "%s" has been fixed with success!', $path));
+        } elseif (is_file($path)) {
+            $fixedContent = $fixer->fix(file_get_contents($path));
+            file_put_contents($path, $fixedContent);
+
+            $io->success(sprintf('"%s" content has been fixed with success!', $path));
+        } else {
+            throw new \InvalidArgumentException(sprintf('The path "%s" does not exist.', $path));
+        }
+
+        return 0;
+    })
+    ->run()
+;

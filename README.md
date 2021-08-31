@@ -55,6 +55,13 @@ $fixer = new Fixer(array("Trademark", "SmartQuotes"));
 $fixedContent = $fixer->fixString('Here is a "protip(c)"!'); // Here is a “protip©”!
 ```
 
+CLI usage
+=========
+
+You can run a standalone version of JoliTypo by downloading [the PHAR version](https://github.com/jolicode/JoliTypo/releases/latest)
+
+Run `jolitypo --help` to know how to configure the Fixer.
+
 Installation
 ============
 
@@ -71,6 +78,7 @@ Integrations
 
 - (Built-in) [Symfony Bundle](src/JoliTypo/Bridge/Symfony)
 - (Built-in) [Twig extension](src/JoliTypo/Bridge/Twig)
+- (Built-in) [CLI](https://github.com/jolicode/JoliTypo/releases/latest)
 - [Wordpress plugin](http://wordpress.org/plugins/typofr/)
 - [Drupal module](https://github.com/Anaethelion/JoliTypo-for-Drupal)
 - [Joomla plugin](https://github.com/YGomiero/typographe)

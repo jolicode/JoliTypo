@@ -1,0 +1,29 @@
+{
+    "name": "jolicode/jolitypo-phar",
+    "description": "Tooling for building JoliTypo PHAR",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Grégoire Pineau",
+            "email": "lyrixx@lyrixx.info"
+        },
+        {
+            "name": "Mathieu Santostefano",
+            "email": "msantostefano@pm.me"
+        }
+    ],
+    "require": {
+        "symfony/console": "^5.3",
+        "symfony/finder": "^5.3"
+    },
+    "require-dev": {
+        "humbug/box": "^3.13",
+        "humbug/php-scoper": "dev-master#d3c7b5cde60ce6e269a202d96ba0549ac7528319 as 0.14.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}
