@@ -9,7 +9,7 @@ CHANGELOG
 
 * Switch from Travis to GitHub Action
 * Bump `org_heigl/hyphenator` to 2.6.1
-* Drop support for PHP <= 7.2
+* Drop support for PHP < 7.2
 
 ### 1.1.0 (2020-04-11) ###
 
