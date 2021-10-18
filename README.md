@@ -140,6 +140,8 @@ You can read more about this fixer on [the official github repository](https://g
 
 **Proper hyphenation is mandatory in justified text** and you should avoid word breaking in titles with this line of CSS: `hyphens:none;`.
 
+⚠ Be aware that the current screen readers are unable to spell correctly the words containing `&shy;` tags. The Hyphen filter should therefore be used with caution or you might reduce your website's accessibility.
+
 CurlyQuote (Smart Quote)
 -----------------------
 
