@@ -25,7 +25,7 @@ It's designed to be:
 - fully tested;
 - fully open and usable in any project (MIT License).
 
-You can try it with the [online demo](jolitypo-demo.herokuapp.com)!
+You can try it with the [online demo](https://jolitypo-demo.herokuapp.com)!
 
 [![Latest Stable Version](https://poser.pugx.org/jolicode/JoliTypo/version.png)](https://packagist.org/packages/jolicode/JoliTypo)
 
