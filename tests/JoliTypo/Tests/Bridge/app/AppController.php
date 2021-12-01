@@ -24,22 +24,24 @@ class AppController
     public function fixAction()
     {
         if (1 === $this->twig::MAJOR_VERSION) {
-            $template = $this->twig->createTemplate(<<<TWIG
-<p>Raw content: People's.</p>
+            $template = $this->twig->createTemplate(
+                <<<'TWIG'
+                    <p>Raw content: People's.</p>
 
-<p>{{ "Fixed content: People's."|jolitypo('en') }}</p>
-TWIG
+                    <p>{{ "Fixed content: People's."|jolitypo('en') }}</p>
+                    TWIG
             );
 
             $content = $template->render([]);
         } else {
-            $template = $this->twig->createTemplate(<<<TWIG
-<p>Raw content: People's.</p>
+            $template = $this->twig->createTemplate(
+                <<<'TWIG'
+                    <p>Raw content: People's.</p>
 
-{% apply jolitypo('en') %}
-    <p>Fixed content: People's.</p>
-{% endapply %}
-TWIG
+                    {% apply jolitypo('en') %}
+                        <p>Fixed content: People's.</p>
+                    {% endapply %}
+                    TWIG
             );
 
             $content = $this->twig->render($template);

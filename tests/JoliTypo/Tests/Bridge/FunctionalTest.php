@@ -24,11 +24,11 @@ class FunctionalTest extends TestCase
         $response = $kernel->handle($request);
 
         self::assertSame(200, $response->getStatusCode());
-        $expected = <<<HTML
-<p>Raw content: People's.</p>
+        $expected = <<<'HTML'
+            <p>Raw content: People's.</p>
 
-<p>Fixed content: People&rsquo;s.</p>
-HTML;
+            <p>Fixed content: People&rsquo;s.</p>
+            HTML;
 
         self::assertSame($expected, $response->getContent());
     }

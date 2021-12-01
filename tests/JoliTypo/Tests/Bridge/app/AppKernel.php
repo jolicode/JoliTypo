@@ -21,25 +21,23 @@ class AppKernel extends Kernel
 {
     public function registerBundles(): iterable
     {
-        $bundles = [
+        return [
             new FrameworkBundle(),
             new TwigBundle(),
             new JoliTypoBundle(),
         ];
-
-        return $bundles;
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config.yml');
+        $loader->load(__DIR__ . '/config/config.yml');
 
         // Set framework.router.utf8 to avoid deprecated error on SF 5.1
         if (version_compare(self::VERSION, '5.0', 'gt')) {
             $loader->load(function (ContainerBuilder $container) {
                 $container->loadFromExtension('framework', [
                     'router' => [
-                            'utf8' => true,
+                        'utf8' => true,
                     ],
                 ]);
             });
@@ -56,11 +54,11 @@ class AppKernel extends Kernel
 
     public function getCacheDir(): string
     {
-        return '/tmp/jolitypo/cache/'.$this->environment;
+        return '/tmp/jolitypo/cache/' . $this->environment;
     }
 
     public function getLogDir(): string
     {
-        return '/tmp/jolitypo/logs/'.$this->environment;
+        return '/tmp/jolitypo/logs/' . $this->environment;
     }
 }

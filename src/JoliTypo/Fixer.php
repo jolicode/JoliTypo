@@ -18,31 +18,30 @@ class Fixer
      * DOMDocument does not like all the HTML entities; sometimes they are double encoded.
      * So the entities here are plain utf8 and DOCDocument::saveHTML transform them to entity.
      */
-    const NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
-    const NO_BREAK_SPACE = "\xC2\xA0"; // &#160;
-    const ELLIPSIS = '…';
-    const LAQUO = '«'; // &laquo;
-    const RAQUO = '»'; // &raquo;
-    const RSQUO = '’'; // &rsquo;
-    const TIMES = '×'; // &times;
-    const NDASH = '–'; // &ndash; or &#x2013;
-    const MDASH = '—'; // &mdash; or &#x2014;
-    const LDQUO = '“'; // &ldquo; or &#8220;
-    const RDQUO = '”'; // &rdquo; or &#8221;
-    const BDQUO = '„'; // &bdquo; or &#8222;
-    const SHY = "\xC2\xAD"; // &shy;
-    const TRADE = '™'; // &trade;
-    const REG = '®'; // &reg;
-    const COPY = '©'; // &copy;
-    const ALL_SPACES = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\s"; // All supported spaces, used in regexps. Better than \s
+    public const NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
+    public const NO_BREAK_SPACE = "\xC2\xA0"; // &#160;
+    public const ELLIPSIS = '…';
+    public const LAQUO = '«'; // &laquo;
+    public const RAQUO = '»'; // &raquo;
+    public const RSQUO = '’'; // &rsquo;
+    public const TIMES = '×'; // &times;
+    public const NDASH = '–'; // &ndash; or &#x2013;
+    public const MDASH = '—'; // &mdash; or &#x2014;
+    public const LDQUO = '“'; // &ldquo; or &#8220;
+    public const RDQUO = '”'; // &rdquo; or &#8221;
+    public const BDQUO = '„'; // &bdquo; or &#8222;
+    public const SHY = "\xC2\xAD"; // &shy;
+    public const TRADE = '™'; // &trade;
+    public const REG = '®'; // &reg;
+    public const COPY = '©'; // &copy;
+    public const ALL_SPACES = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\s"; // All supported spaces, used in regexps. Better than \s
 
-    const RECOMMENDED_RULES_BY_LOCALE = [
+    public const RECOMMENDED_RULES_BY_LOCALE = [
         'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
         'fr_FR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
         'fr_CA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
         'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
     ];
-
 
     /**
      * @var array HTML Tags to bypass
@@ -93,9 +92,7 @@ class Fixer
 
         $this->processDOM($dom, $dom);
 
-        $content = $this->exportDOMDocument($dom);
-
-        return $content;
+        return $this->exportDOMDocument($dom);
     }
 
     /**
@@ -125,6 +122,73 @@ class Fixer
     }
 
     /**
+     * Customize the list of protected tags.
+     *
+     * @param array $protectedTags
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setProtectedTags($protectedTags)
+    {
+        if (!\is_array($protectedTags)) {
+            throw new \InvalidArgumentException('Protected tags must be an array (empty array for no protection).');
+        }
+
+        $this->protectedTags = $protectedTags;
+    }
+
+    /**
+     * Get the current Locale tag.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Change the locale of the Fixer.
+     *
+     * @param string $locale An IETF language tag
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setLocale($locale)
+    {
+        if (!\is_string($locale) || empty($locale)) {
+            throw new \InvalidArgumentException('Locale must be an IETF language tag.');
+        }
+
+        // Set the Locale on Fixer that needs it
+        foreach ($this->_rules as $rule) {
+            if ($rule instanceof LocaleAwareFixerInterface) {
+                $rule->setLocale($locale);
+            }
+        }
+
+        $this->locale = $locale;
+    }
+
+    /**
+     * Get language part of a Locale string (fr_FR => fr).
+     *
+     * @param $locale
+     *
+     * @return string
+     */
+    public static function getLanguageFromLocale($locale)
+    {
+        if (strpos($locale, '_')) {
+            $parts = explode('_', $locale);
+
+            return strtolower($parts[0]);
+        }
+
+        return $locale;
+    }
+
+    /**
      * Build the _rules array of Fixer.
      *
      * @param $rules
@@ -133,19 +197,19 @@ class Fixer
      */
     private function compileRules($rules)
     {
-        if (!is_array($rules) || empty($rules)) {
+        if (!\is_array($rules) || empty($rules)) {
             throw new BadRuleSetException('Rules must be an array of Fixer');
         }
 
         $this->_rules = [];
         foreach ($rules as $rule) {
-            if (is_object($rule)) {
+            if (\is_object($rule)) {
                 $fixer = $rule;
-                $className = get_class($rule);
+                $className = \get_class($rule);
             } else {
                 $className = class_exists($rule) ? $rule : (class_exists(
-                    'JoliTypo\\Fixer\\'.$rule
-                ) ? 'JoliTypo\\Fixer\\'.$rule : false);
+                    'JoliTypo\\Fixer\\' . $rule
+                ) ? 'JoliTypo\\Fixer\\' . $rule : false);
                 if (!$className) {
                     throw new BadRuleSetException(sprintf('Fixer %s not found', $rule));
                 }
@@ -174,7 +238,7 @@ class Fixer
             $nodes = [];
             foreach ($node->childNodes as $childNode) {
                 if ($childNode instanceof \DOMElement && $childNode->tagName) {
-                    if (in_array($childNode->tagName, $this->protectedTags)) {
+                    if (\in_array($childNode->tagName, $this->protectedTags)) {
                         continue;
                     }
                 }
@@ -228,9 +292,9 @@ class Fixer
     /**
      * @param $content
      *
-     * @return \DOMDocument
-     *
      * @throws Exception\InvalidMarkupException
+     *
+     * @return \DOMDocument
      */
     private function loadDOMDocument($content)
     {
@@ -278,7 +342,7 @@ class Fixer
                     $content,
                     '<body'
                 ) ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
-                $content = $hack.$content;
+                $content = $hack . $content;
             }
 
             $encoding = mb_detect_encoding($content);
@@ -287,8 +351,8 @@ class Fixer
             // Add a meta to the <head> section
             if (false !== $headPos) {
                 $headPos += 6;
-                $content = mb_substr($content, 0, $headPos).
-                    '<meta http-equiv="Content-Type" content="text/html; charset='.$encoding.'">'.
+                $content = mb_substr($content, 0, $headPos) .
+                    '<meta http-equiv="Content-Type" content="text/html; charset=' . $encoding . '">' .
                     mb_substr($content, $headPos);
             }
 
@@ -306,7 +370,7 @@ class Fixer
         // Remove added body & doctype
         $content = preg_replace(
             [
-                "/^\<\!DOCTYPE.*?<html>.*?<body>/si",
+                '/^\\<\\!DOCTYPE.*?<html>.*?<body>/si',
                 '!</body>\n?</html>$!si',
             ],
             '',
@@ -314,72 +378,5 @@ class Fixer
         );
 
         return trim($content);
-    }
-
-    /**
-     * Customize the list of protected tags.
-     *
-     * @param array $protectedTags
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function setProtectedTags($protectedTags)
-    {
-        if (!is_array($protectedTags)) {
-            throw new \InvalidArgumentException('Protected tags must be an array (empty array for no protection).');
-        }
-
-        $this->protectedTags = $protectedTags;
-    }
-
-    /**
-     * Get the current Locale tag.
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Change the locale of the Fixer.
-     *
-     * @param string $locale An IETF language tag
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function setLocale($locale)
-    {
-        if (!is_string($locale) || empty($locale)) {
-            throw new \InvalidArgumentException('Locale must be an IETF language tag.');
-        }
-
-        // Set the Locale on Fixer that needs it
-        foreach ($this->_rules as $rule) {
-            if ($rule instanceof LocaleAwareFixerInterface) {
-                $rule->setLocale($locale);
-            }
-        }
-
-        $this->locale = $locale;
-    }
-
-    /**
-     * Get language part of a Locale string (fr_FR => fr).
-     *
-     * @param $locale
-     *
-     * @return string
-     */
-    public static function getLanguageFromLocale($locale)
-    {
-        if (strpos($locale, '_')) {
-            $parts = explode('_', $locale);
-
-            return strtolower($parts[0]);
-        }
-
-        return $locale;
     }
 }

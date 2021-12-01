@@ -29,10 +29,10 @@ abstract class BaseOpenClosePair
         // If we have a open sibling and we detect a closing quote
         } elseif ($storedSibling instanceof StateNode && preg_match($closeRegexp, $content)) {
             // Replace the closing tag
-            $content = preg_replace($closeRegexp, '$1'.$closeReplacement.'$2', $content, 1);
+            $content = preg_replace($closeRegexp, '$1' . $closeReplacement . '$2', $content, 1);
 
             // Replace the opening tag
-            $open_content = preg_replace($openRegexp, '$1'.$openReplacement.'$2', $storedSibling->getNode()->wholeText, 1);
+            $open_content = preg_replace($openRegexp, '$1' . $openReplacement . '$2', $storedSibling->getNode()->wholeText, 1);
 
             $stateBag->fixSiblingNode($stateName, $open_content);
         }

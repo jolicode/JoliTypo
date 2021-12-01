@@ -160,15 +160,15 @@ class JoliTypoTest extends TestCase
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $toFix = <<<NOT_HTML
-I don't think "FosUserBundle" is a good idea for a complex application.
+            I don't think "FosUserBundle" is a good idea for a complex application.
 
-\tThat being said, it's an awesome way to get stuffs done(c) in a snap!
-NOT_HTML;
+            \tThat being said, it's an awesome way to get stuffs done(c) in a snap!
+            NOT_HTML;
         $fixed = <<<NOT_HTML
-I don't think &ldquo;FosUserBundle&rdquo; is a good idea for a complex application.
+            I don't think &ldquo;FosUserBundle&rdquo; is a good idea for a complex application.
 
-\tThat being said, it's an awesome way to get stuffs done&copy; in a snap!
-NOT_HTML;
+            \tThat being said, it's an awesome way to get stuffs done&copy; in a snap!
+            NOT_HTML;
 
         $this->assertEquals($fixed, $fixer->fix($toFix));
         $this->assertEquals(html_entity_decode($fixed, \ENT_COMPAT, 'UTF-8'), $fixer->fixString($toFix));
@@ -181,7 +181,7 @@ NOT_HTML;
         $fixer = new Fixer(['Numeric']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals('3'.Fixer::NO_BREAK_SPACE.'€', $fixer->fixString('3 €'));
+        $this->assertEquals('3' . Fixer::NO_BREAK_SPACE . '€', $fixer->fixString('3 €'));
     }
 }
 
