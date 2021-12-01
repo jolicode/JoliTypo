@@ -24,12 +24,11 @@ class FrenchNoBreakSpace implements FixerInterface
 {
     public function fix($content, StateBag $stateBag = null)
     {
-        $content = preg_replace('@['.Fixer::ALL_SPACES.']+(:)@mu', Fixer::NO_BREAK_SPACE.'$1', $content);
-        $content = preg_replace('@['.Fixer::ALL_SPACES.']+([;!\?])@mu', Fixer::NO_BREAK_THIN_SPACE.'$1', $content);
+        $content = preg_replace('@[' . Fixer::ALL_SPACES . ']+(:)@mu', Fixer::NO_BREAK_SPACE . '$1', $content);
+        $content = preg_replace('@[' . Fixer::ALL_SPACES . ']+([;!\?])@mu', Fixer::NO_BREAK_THIN_SPACE . '$1', $content);
 
-        $content = preg_replace('@'.Fixer::LAQUO.'['.Fixer::ALL_SPACES.']?@mu', Fixer::LAQUO.Fixer::NO_BREAK_SPACE, $content);
-        $content = preg_replace('@['.Fixer::ALL_SPACES.']?'.Fixer::RAQUO.'@mu', Fixer::NO_BREAK_SPACE.Fixer::RAQUO, $content);
+        $content = preg_replace('@' . Fixer::LAQUO . '[' . Fixer::ALL_SPACES . ']?@mu', Fixer::LAQUO . Fixer::NO_BREAK_SPACE, $content);
 
-        return $content;
+        return preg_replace('@[' . Fixer::ALL_SPACES . ']?' . Fixer::RAQUO . '@mu', Fixer::NO_BREAK_SPACE . Fixer::RAQUO, $content);
     }
 }

@@ -67,16 +67,16 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         $this->setOptions();
     }
 
+    public function fix($content, StateBag $stateBag = null)
+    {
+        return $this->hyphenator->hyphenate($content);
+    }
+
     protected function setOptions()
     {
         $this->hyphenator->getOptions()->setHyphen(Fixer::SHY);
         $this->hyphenator->getOptions()->setLeftMin(4);
         $this->hyphenator->getOptions()->setRightMin(3);
-    }
-
-    public function fix($content, StateBag $stateBag = null)
-    {
-        return $this->hyphenator->hyphenate($content);
     }
 
     /**
@@ -88,12 +88,12 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
      */
     protected function fixLocale($locale)
     {
-        if (in_array($locale, $this->supportedLocales)) {
+        if (\in_array($locale, $this->supportedLocales)) {
             return $locale;
         }
 
         if (($short = Fixer::getLanguageFromLocale($locale)) !== $locale) {
-            if (in_array($short, $this->supportedLocales)) {
+            if (\in_array($short, $this->supportedLocales)) {
                 return $short;
             }
         }

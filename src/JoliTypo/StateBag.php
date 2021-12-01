@@ -43,7 +43,7 @@ class StateBag
      */
     public function getSiblingNode($key)
     {
-        return isset($this->siblingNode[$key][$this->currentDepth]) ? $this->siblingNode[$key][$this->currentDepth] : false;
+        return $this->siblingNode[$key][$this->currentDepth] ?? false;
     }
 
     /**

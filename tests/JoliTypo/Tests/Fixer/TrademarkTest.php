@@ -26,7 +26,7 @@ class TrademarkTest extends TestCase
         $this->assertEquals('Protip ©.', $fixer->fix('Protip (c).'));
         $this->assertEquals('©®™.', $fixer->fix('(c)(r)(tm).'));
         $this->assertEquals('©®™.', $fixer->fix('(C)(R)(TM).'));
-        $this->assertEquals('©'.Fixer::NO_BREAK_SPACE.'2013 Acme Corp™', $fixer->fix('(C) 2013 Acme Corp(TM)'));
+        $this->assertEquals('©' . Fixer::NO_BREAK_SPACE . '2013 Acme Corp™', $fixer->fix('(C) 2013 Acme Corp(TM)'));
     }
 
     /**
