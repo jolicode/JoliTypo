@@ -21,14 +21,14 @@ class JoliTypoExtension extends AbstractExtension
         $this->presets = $presets;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new \Twig\TwigFunction('jolitypo', [$this, 'translate']),
         ];
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig\TwigFilter('jolitypo', [$this, 'translate'], ['pre_escape' => 'html', 'is_safe' => ['html']]),

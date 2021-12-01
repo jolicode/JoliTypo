@@ -17,7 +17,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('joli_typo');
         $rootNode = $this->getRootNode($treeBuilder, 'joli_typo');
