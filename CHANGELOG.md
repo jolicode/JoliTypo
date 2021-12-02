@@ -4,6 +4,7 @@ CHANGELOG
 ### 1.3.0 (not released yet) ###
 
 * Add PHAR generation to use the library in CLI context
+* Drop support for PHP < 7.4
 
 ### 1.2.0 (2021-08-30) ###
 
