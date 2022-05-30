@@ -3,6 +3,9 @@ CHANGELOG
 
 ### 1.4.0 (not released yet) ###
 
+* Drop support for Symfony < 4.4
+* Add support for Symfony ^6.0
+
 ### 1.3.0 (2022-05-30) ###
 
 * Add PHAR generation to use the library in CLI context
