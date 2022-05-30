@@ -1,9 +1,13 @@
 CHANGELOG
 =========
 
-### 1.3.0 (not released yet) ###
+### 1.4.0 (not released yet) ###
+
+### 1.3.0 (2022-05-30) ###
 
 * Add PHAR generation to use the library in CLI context
+* Automatically generate a GitHub release when a new tag is pushed
+* Automatically add PHAR to GitHub release
 * Drop support for PHP < 7.4
 
 ### 1.2.0 (2021-08-30) ###
