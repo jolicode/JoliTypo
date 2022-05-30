@@ -5,6 +5,7 @@ CHANGELOG
 
 * Drop support for Symfony < 4.4
 * Add support for Symfony ^6.0
+* Run tests on PHP 8.1
 
 ### 1.3.0 (2022-05-30) ###
 
