@@ -35,7 +35,7 @@
         "psr-4": { "JoliTypo\\Tests\\": "tests/JoliTypo/Tests" }
     },
     "scripts": {
-        "test": "vendor/bin/simple-phpunit -c phpunit.xml.dist",
+        "test": "vendor/bin/simple-phpunit",
         "cs": "vendor/bin/php-cs-fixer fix"
     }
 }
