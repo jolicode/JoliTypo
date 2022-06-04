@@ -305,16 +305,13 @@ class Fixer
         $dom->substituteEntities = false;
         $dom->formatOutput = false;
 
-        // Change mb and libxml config
+        // Change libxml config
         $libxmlCurrent = libxml_use_internal_errors(true);
-        $mbDetectCurrent = mb_detect_order();
-        mb_detect_order('ASCII,UTF-8,ISO-8859-1,windows-1252,iso-8859-15');
 
         $loaded = $dom->loadHTML($this->fixContentEncoding($content));
 
-        // Restore mb and libxml config
+        // Restore libxml config
         libxml_use_internal_errors($libxmlCurrent);
-        mb_detect_order(implode(',', $mbDetectCurrent));
 
         if (!$loaded) {
             throw new InvalidMarkupException("Can't load the given HTML via DomDocument");
@@ -345,7 +342,15 @@ class Fixer
                 $content = $hack . $content;
             }
 
-            $encoding = mb_detect_encoding($content);
+            $encoding = '';
+
+            foreach (['UTF-8', 'ASCII', 'ISO-8859-1', 'windows-1252', 'iso-8859-15'] as $testedEncoding) {
+                if (mb_detect_encoding($content, $testedEncoding, true)) {
+                    $encoding = $testedEncoding;
+                    break;
+                }
+            }
+
             $headPos = mb_strpos($content, '<head>');
 
             // Add a meta to the <head> section
@@ -356,7 +361,9 @@ class Fixer
                     mb_substr($content, $headPos);
             }
 
-            $content = mb_convert_encoding($content, 'HTML-ENTITIES', $encoding);
+            if ('UTF-8' !== $encoding) {
+                $content = mb_convert_encoding($content, 'UTF-8', $encoding);
+            }
         }
 
         return $content;
