@@ -43,7 +43,7 @@ class JoliTypoTest extends TestCase
         $this->assertEquals('<p>Coucou&hellip;</p> <!-- Not Coucou... -->', $fixer->fix('<p>Coucou...</p> <!-- Not Coucou... -->'));
 
         // This test can't be ok, DomDocument is encoding entities even in comments (╯°□°）╯︵ ┻━┻
-        //$this->assertEquals("<p>Coucou&hellip;</p> <!-- abusé -->", $fixer->fix("<p>Coucou...</p> <!-- abusé -->"));
+        // $this->assertEquals("<p>Coucou&hellip;</p> <!-- abusé -->", $fixer->fix("<p>Coucou...</p> <!-- abusé -->"));
     }
 
     public function testBadRuleSets()

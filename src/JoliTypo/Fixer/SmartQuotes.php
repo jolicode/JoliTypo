@@ -71,7 +71,7 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
                 $this->closingPrefix = '';
 
                 return;
-            // «…»
+                // «…»
             case 'de-ch':
                 $this->opening = Fixer::LAQUO;
                 $this->openingSuffix = '';
@@ -93,7 +93,7 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
                 $this->closingPrefix = Fixer::NO_BREAK_SPACE;
 
                 break;
-            // «…»
+                // «…»
             case 'hy':
             case 'az':
             case 'hz':
@@ -115,7 +115,7 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
                 $this->closingPrefix = '';
 
                 break;
-            // „…“
+                // „…“
             case 'de':
             case 'ka':
             case 'cs':
@@ -133,7 +133,7 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
                 $this->closingPrefix = '';
 
                 break;
-            // “…”
+                // “…”
             case 'en':
             case 'us':
             case 'gb':
@@ -153,7 +153,7 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
                 $this->closingPrefix = '';
 
                 break;
-            // ”…”
+                // ”…”
             case 'fi':
             case 'sv':
             case 'bs':

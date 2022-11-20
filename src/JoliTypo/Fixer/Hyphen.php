@@ -58,9 +58,6 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         $this->setLocale($locale);
     }
 
-    /**
-     * @param $locale
-     */
     public function setLocale($locale)
     {
         $this->hyphenator = Hyphenator::factory(null, $this->fixLocale($locale));
@@ -81,8 +78,6 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
 
     /**
      * Transform fr_FR to fr to fit the list of supported locales.
-     *
-     * @param $locale
      *
      * @return mixed
      */

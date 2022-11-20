@@ -74,9 +74,9 @@ class Fixer
     /**
      * @param string $content HTML content to fix
      *
-     * @throws Exception\BadRuleSetException
-     *
      * @return string Fixed content
+     *
+     * @throws Exception\BadRuleSetException
      */
     public function fix($content)
     {
@@ -173,8 +173,6 @@ class Fixer
     /**
      * Get language part of a Locale string (fr_FR => fr).
      *
-     * @param $locale
-     *
      * @return string
      */
     public static function getLanguageFromLocale($locale)
@@ -190,8 +188,6 @@ class Fixer
 
     /**
      * Build the _rules array of Fixer.
-     *
-     * @param $rules
      *
      * @throws Exception\BadRuleSetException
      */
@@ -290,11 +286,9 @@ class Fixer
     }
 
     /**
-     * @param $content
+     * @return \DOMDocument
      *
      * @throws Exception\InvalidMarkupException
-     *
-     * @return \DOMDocument
      */
     private function loadDOMDocument($content)
     {
@@ -326,8 +320,6 @@ class Fixer
      * @see http://php.net/manual/en/domdocument.loadhtml.php#91513
      * @see https://github.com/jolicode/JoliTypo/issues/7
      *
-     * @param $content
-     *
      * @return string
      */
     private function fixContentEncoding($content)
@@ -342,11 +334,11 @@ class Fixer
                 $content = $hack . $content;
             }
 
-            $encoding = '';
-
+            $encoding = null;
             foreach (['UTF-8', 'ASCII', 'ISO-8859-1', 'windows-1252', 'iso-8859-15'] as $testedEncoding) {
                 if (mb_detect_encoding($content, $testedEncoding, true)) {
                     $encoding = $testedEncoding;
+
                     break;
                 }
             }
