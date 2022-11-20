@@ -16,14 +16,14 @@
         "php": ">=7.4",
         "ext-mbstring": "*",
         "lib-libxml": "*",
-        "org_heigl/hyphenator": "~2.6.0"
+        "org_heigl/hyphenator": "^2.6 || ^3.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.3.2",
-        "symfony/phpunit-bridge": "^5.0",
-        "symfony/framework-bundle": "^3.4.26|^4.1.12|^5.0",
-        "symfony/twig-bundle": "^3.4.26|^4.1.12|^5.0",
-        "symfony/yaml": "^3.4.26|^4.1.12|^5.0"
+        "symfony/phpunit-bridge": "^5.4.8 || ^6.0",
+        "symfony/framework-bundle": "^4.4 || ^5.0 || ^6.0",
+        "symfony/twig-bundle": "^4.4 || ^5.0 || ^6.0",
+        "symfony/yaml": "^4.4 || ^5.0 || ^6.0"
     },
     "conflict": {
         "ext-apc": "3.1.11"
@@ -35,7 +35,7 @@
         "psr-4": { "JoliTypo\\Tests\\": "tests/JoliTypo/Tests" }
     },
     "scripts": {
-        "test": "vendor/bin/simple-phpunit -c phpunit.xml.dist",
+        "test": "vendor/bin/simple-phpunit",
         "cs": "vendor/bin/php-cs-fixer fix"
     }
 }

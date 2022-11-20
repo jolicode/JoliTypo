@@ -46,7 +46,7 @@ class Html5Test extends TestCase
             HTML;
 
         $fixed = <<<'STRING'
-            &#8220;Who Let the Dogs Out?&#8221; is a song written and originally recorded by Anslem Douglas (titled &#8220;Doggie&#8221;).
+            “Who Let the Dogs Out?” is a song written and originally recorded by Anslem Douglas (titled “Doggie”).
             STRING;
 
         $this->assertEquals($fixed, $fixer->fix($html));
