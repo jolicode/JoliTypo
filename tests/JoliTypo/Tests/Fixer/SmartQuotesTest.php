@@ -20,17 +20,17 @@ class SmartQuotesTest extends TestCase
         $fixer = new Fixer\SmartQuotes('de');
         $this->assertInstanceOf('JoliTypo\Fixer\SmartQuotes', $fixer);
 
-        $this->assertEquals('„I am smart“', $fixer->fix('"I am smart"'));
+        $this->assertSame('„I am smart“', $fixer->fix('"I am smart"'));
 
         $fixer->setOpening('«');
         $fixer->setClosing('»');
 
-        $this->assertEquals('«I am smart»', $fixer->fix('"I am smart"'));
+        $this->assertSame('«I am smart»', $fixer->fix('"I am smart"'));
 
         $fixer->setOpening('<');
         $fixer->setClosing('>');
 
-        $this->assertEquals('<I am smart>', $fixer->fix('"I am smart"'));
+        $this->assertSame('<I am smart>', $fixer->fix('"I am smart"'));
     }
 
     public function testBadConfig()

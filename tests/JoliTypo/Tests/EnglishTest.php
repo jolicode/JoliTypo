@@ -44,7 +44,7 @@ class EnglishTest extends TestCase
         $fixer = new Fixer($this->en_fixers);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));
+        $this->assertSame(self::FIXED, $fixer->fix(self::TOFIX));
     }
 
     public function testReadMeExemple()
@@ -59,7 +59,7 @@ class EnglishTest extends TestCase
 
         $fixer = new Fixer($this->en_fixers);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
-        $this->assertEquals($after, $fixer->fix($before));
+        $this->assertSame($after, $fixer->fix($before));
     }
 
     public function testDoubleQuoteMess()
@@ -74,7 +74,7 @@ class EnglishTest extends TestCase
         $fixer = new Fixer($this->en_fixers);
         $fixer->setLocale('en');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
-        $this->assertEquals($fixed, $fixer->fix($to_fix));
+        $this->assertSame($fixed, $fixer->fix($to_fix));
     }
 
     public function testHtmlHeart()
@@ -89,6 +89,6 @@ class EnglishTest extends TestCase
         $fixer = new Fixer($this->en_fixers);
         $fixer->setLocale('en');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
-        $this->assertEquals($fixed, $fixer->fix($to_fix));
+        $this->assertSame($fixed, $fixer->fix($to_fix));
     }
 }

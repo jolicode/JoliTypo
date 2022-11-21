@@ -69,7 +69,7 @@ class FrenchTest extends TestCase
         $fixer->setLocale('fr_FR');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));
+        $this->assertSame(self::FIXED, $fixer->fix(self::TOFIX));
     }
 
     public function testFixFullTextShort()
@@ -78,7 +78,7 @@ class FrenchTest extends TestCase
         $fixer->setLocale('fr');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals(self::FIXED, $fixer->fix(self::TOFIX));
+        $this->assertSame(self::FIXED, $fixer->fix(self::TOFIX));
     }
 
     public function testDoubleQuoteMess()
@@ -97,7 +97,7 @@ class FrenchTest extends TestCase
              attirera forcément plus notre attention qu’une lettre de motivation de 4 pages en ".docx"</p>
             HTML;
 
-        $this->assertEquals($fixed, $fixer->fix($to_fix));
+        $this->assertSame($fixed, $fixer->fix($to_fix));
     }
 
     public function testEncodingMess()
@@ -114,7 +114,7 @@ class FrenchTest extends TestCase
             Ça s'arrête là !
             HTML;
 
-        $this->assertEquals($fixed, $fixer->fix($to_fix));
+        $this->assertSame($fixed, $fixer->fix($to_fix));
     }
 
     /**
@@ -135,13 +135,13 @@ class FrenchTest extends TestCase
             « test » et «test» sont dans un bateau.
             HTML;
 
-        $this->assertEquals($fixed, $fixer->fix($to_fix));
+        $this->assertSame($fixed, $fixer->fix($to_fix));
 
         $to_fix = <<<'HTML'
             &laquo; test &raquo; et &laquo;test&raquo; sont dans un bateau.
             HTML;
 
-        $this->assertEquals($fixed, $fixer->fix($to_fix));
+        $this->assertSame($fixed, $fixer->fix($to_fix));
     }
 
     /**
@@ -162,7 +162,7 @@ class FrenchTest extends TestCase
             2 x 5 doit être corrigé, et 2 h aussi.
             HTML;
 
-        $this->assertEquals($fixed, $fixer->fix($to_fix));
+        $this->assertSame($fixed, $fixer->fix($to_fix));
     }
 
     /**
