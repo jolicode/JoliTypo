@@ -19,12 +19,12 @@ class EllipsisTest extends TestCase
         $fixer = new Fixer\Ellipsis();
         $this->assertInstanceOf('JoliTypo\Fixer\Ellipsis', $fixer);
 
-        $this->assertEquals('Test', $fixer->fix('Test'));
-        $this->assertEquals('Test…', $fixer->fix('Test...'));
-        $this->assertEquals('Am I an ellipsis?', $fixer->fix('Am I an ellipsis?'));
-        $this->assertEquals('Am I an ellipsis..', $fixer->fix('Am I an ellipsis..'));
-        $this->assertEquals('Am I an ellipsis…', $fixer->fix('Am I an ellipsis....'));
-        $this->assertEquals('Am I an ellipsis…', $fixer->fix('Am I an ellipsis…'));
-        $this->assertEquals('Am I an ellipsis… With following text.', $fixer->fix('Am I an ellipsis... With following text.'));
+        $this->assertSame('Test', $fixer->fix('Test'));
+        $this->assertSame('Test…', $fixer->fix('Test...'));
+        $this->assertSame('Am I an ellipsis?', $fixer->fix('Am I an ellipsis?'));
+        $this->assertSame('Am I an ellipsis..', $fixer->fix('Am I an ellipsis..'));
+        $this->assertSame('Am I an ellipsis…', $fixer->fix('Am I an ellipsis....'));
+        $this->assertSame('Am I an ellipsis…', $fixer->fix('Am I an ellipsis…'));
+        $this->assertSame('Am I an ellipsis… With following text.', $fixer->fix('Am I an ellipsis... With following text.'));
     }
 }

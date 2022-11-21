@@ -19,14 +19,14 @@ class TrademarkTest extends TestCase
         $fixer = new Fixer\Trademark();
         $this->assertInstanceOf('JoliTypo\Fixer\Trademark', $fixer);
 
-        $this->assertEquals('Test', $fixer->fix('Test'));
-        $this->assertEquals('(c(', $fixer->fix('(c('));
-        $this->assertEquals('©', $fixer->fix('(c)'));
-        $this->assertEquals('Protip©', $fixer->fix('Protip(c)'));
-        $this->assertEquals('Protip ©.', $fixer->fix('Protip (c).'));
-        $this->assertEquals('©®™.', $fixer->fix('(c)(r)(tm).'));
-        $this->assertEquals('©®™.', $fixer->fix('(C)(R)(TM).'));
-        $this->assertEquals('©' . Fixer::NO_BREAK_SPACE . '2013 Acme Corp™', $fixer->fix('(C) 2013 Acme Corp(TM)'));
+        $this->assertSame('Test', $fixer->fix('Test'));
+        $this->assertSame('(c(', $fixer->fix('(c('));
+        $this->assertSame('©', $fixer->fix('(c)'));
+        $this->assertSame('Protip©', $fixer->fix('Protip(c)'));
+        $this->assertSame('Protip ©.', $fixer->fix('Protip (c).'));
+        $this->assertSame('©®™.', $fixer->fix('(c)(r)(tm).'));
+        $this->assertSame('©®™.', $fixer->fix('(C)(R)(TM).'));
+        $this->assertSame('©' . Fixer::NO_BREAK_SPACE . '2013 Acme Corp™', $fixer->fix('(C) 2013 Acme Corp(TM)'));
     }
 
     /**
@@ -39,6 +39,6 @@ class TrademarkTest extends TestCase
         $fixer = new Fixer\Trademark();
 
         // Reference, section like this:
-        $this->assertEquals('Section 12(c)', $fixer->fix('Section 12(c)'));
+        $this->assertSame('Section 12(c)', $fixer->fix('Section 12(c)'));
     }
 }

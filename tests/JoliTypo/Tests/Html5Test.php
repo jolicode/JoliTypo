@@ -24,7 +24,7 @@ class Html5Test extends TestCase
             HTML;
 
         // The test passes if there is no warning about this fix:
-        $this->assertEquals($html5, $fixer->fix($html5));
+        $this->assertSame($html5, $fixer->fix($html5));
     }
 
     public function testFullPageMarkup()
@@ -49,6 +49,6 @@ class Html5Test extends TestCase
             “Who Let the Dogs Out?” is a song written and originally recorded by Anslem Douglas (titled “Doggie”).
             STRING;
 
-        $this->assertEquals($fixed, $fixer->fix($html));
+        $this->assertSame($fixed, $fixer->fix($html));
     }
 }

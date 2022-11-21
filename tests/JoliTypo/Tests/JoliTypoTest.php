@@ -22,7 +22,7 @@ class JoliTypoTest extends TestCase
         $fixer = new Fixer(['Ellipsis']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals('Coucou&hellip;', $fixer->fix('Coucou...'));
+        $this->assertSame('Coucou&hellip;', $fixer->fix('Coucou...'));
     }
 
     public function testSimpleInstanceRulesChange()
@@ -30,20 +30,20 @@ class JoliTypoTest extends TestCase
         $fixer = new Fixer(['Ellipsis']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals('Coucou&hellip;', $fixer->fix('Coucou...'));
+        $this->assertSame('Coucou&hellip;', $fixer->fix('Coucou...'));
 
         $fixer->setRules(['CurlyQuote']);
 
-        $this->assertEquals('I&rsquo;m a pony.', $fixer->fix("I'm a pony."));
+        $this->assertSame('I&rsquo;m a pony.', $fixer->fix("I'm a pony."));
     }
 
     public function testHtmlComments()
     {
         $fixer = new Fixer(['Ellipsis']);
-        $this->assertEquals('<p>Coucou&hellip;</p> <!-- Not Coucou... -->', $fixer->fix('<p>Coucou...</p> <!-- Not Coucou... -->'));
+        $this->assertSame('<p>Coucou&hellip;</p> <!-- Not Coucou... -->', $fixer->fix('<p>Coucou...</p> <!-- Not Coucou... -->'));
 
         // This test can't be ok, DomDocument is encoding entities even in comments (╯°□°）╯︵ ┻━┻
-        // $this->assertEquals("<p>Coucou&hellip;</p> <!-- abusé -->", $fixer->fix("<p>Coucou...</p> <!-- abusé -->"));
+        // $this->assertSame("<p>Coucou&hellip;</p> <!-- abusé -->", $fixer->fix("<p>Coucou...</p> <!-- abusé -->"));
     }
 
     public function testBadRuleSets()
@@ -87,7 +87,7 @@ class JoliTypoTest extends TestCase
     {
         $fixer = new Fixer([new OkFixer()]);
 
-        $this->assertEquals('<p>Nope !</p>', $fixer->fix('<p>Nope !</p>'));
+        $this->assertSame('<p>Nope !</p>', $fixer->fix('<p>Nope !</p>'));
     }
 
     public function testProtectedTags()
@@ -96,7 +96,7 @@ class JoliTypoTest extends TestCase
         $fixer->setProtectedTags(['pre', 'a']);
         $fixed_content = $fixer->fix('<p>Fixed...</p> <pre>Not fixed...</pre> <p>Fixed... <a>Not Fixed...</a>.</p>');
 
-        $this->assertEquals('<p>Fixed&hellip;</p> <pre>Not fixed...</pre> <p>Fixed&hellip; <a>Not Fixed...</a>.</p>', $fixed_content);
+        $this->assertSame('<p>Fixed&hellip;</p> <pre>Not fixed...</pre> <p>Fixed&hellip; <a>Not Fixed...</a>.</p>', $fixed_content);
     }
 
     public function testBadClassName()
@@ -126,8 +126,8 @@ class JoliTypoTest extends TestCase
         $fixer = new Fixer(['Ellipsis']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals('<p>Hey &eacute;pic dude&hellip;</p>', $fixer->fix('<?xml encoding="UTF-8"><body><p>Hey épic dude...</p></body>'));
-        $this->assertEquals('<p>Hey &eacute;pic dude&hellip;</p>', $fixer->fix('<?xml encoding="ISO-8859-1"><body><p>Hey épic dude...</p></body>'));
+        $this->assertSame('<p>Hey &eacute;pic dude&hellip;</p>', $fixer->fix('<?xml encoding="UTF-8"><body><p>Hey épic dude...</p></body>'));
+        $this->assertSame('<p>Hey &eacute;pic dude&hellip;</p>', $fixer->fix('<?xml encoding="ISO-8859-1"><body><p>Hey épic dude...</p></body>'));
     }
 
     public function testBadEncoding()
@@ -135,13 +135,13 @@ class JoliTypoTest extends TestCase
         $fixer = new Fixer(['Trademark']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals('Mentions L&eacute;gales', $fixer->fix(utf8_encode(utf8_decode('Mentions Légales'))));
+        $this->assertSame('Mentions L&eacute;gales', $fixer->fix(utf8_encode(utf8_decode('Mentions Légales'))));
 
         // JoliTypo can handle double encoded UTF-8 strings, or ISO strings, but that's not a feature.
         $isoString = mb_convert_encoding('Mentions Légales', 'ISO-8859-1', 'UTF-8');
-        $this->assertEquals('Mentions L&eacute;gales', $fixer->fix(utf8_encode($isoString)));
-        $this->assertEquals('Mentions L&eacute;gales', $fixer->fix($isoString));
-        $this->assertEquals('Mentions L&Atilde;&copy;gales', $fixer->fix(utf8_encode(utf8_encode($isoString))));
+        $this->assertSame('Mentions L&eacute;gales', $fixer->fix(utf8_encode($isoString)));
+        $this->assertSame('Mentions L&eacute;gales', $fixer->fix($isoString));
+        $this->assertSame('Mentions L&Atilde;&copy;gales', $fixer->fix(utf8_encode(utf8_encode($isoString))));
     }
 
     public function testEmptyContent()
@@ -149,9 +149,9 @@ class JoliTypoTest extends TestCase
         $fixer = new Fixer(['Trademark']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals('', $fixer->fix(''));
-        $this->assertEquals("\n ", $fixer->fix("\n "));
-        $this->assertEquals('some content &reg;', $fixer->fix("\n some content (r)"));
+        $this->assertSame('', $fixer->fix(''));
+        $this->assertSame("\n ", $fixer->fix("\n "));
+        $this->assertSame('some content &reg;', $fixer->fix("\n some content (r)"));
     }
 
     public function testNonHTMLContent()
@@ -170,9 +170,9 @@ class JoliTypoTest extends TestCase
             \tThat being said, it's an awesome way to get stuffs done&copy; in a snap!
             NOT_HTML;
 
-        $this->assertEquals($fixed, $fixer->fix($toFix));
-        $this->assertEquals(html_entity_decode($fixed, \ENT_COMPAT, 'UTF-8'), $fixer->fixString($toFix));
-        $this->assertEquals('Here is a “protip©”!', $fixer->fixString('Here is a "protip(c)"!'));
+        $this->assertSame($fixed, $fixer->fix($toFix));
+        $this->assertSame(html_entity_decode($fixed, \ENT_COMPAT, 'UTF-8'), $fixer->fixString($toFix));
+        $this->assertSame('Here is a “protip©”!', $fixer->fixString('Here is a "protip(c)"!'));
     }
 
     /** @group legacy */
@@ -181,7 +181,7 @@ class JoliTypoTest extends TestCase
         $fixer = new Fixer(['Numeric']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertEquals('3' . Fixer::NO_BREAK_SPACE . '€', $fixer->fixString('3 €'));
+        $this->assertSame('3' . Fixer::NO_BREAK_SPACE . '€', $fixer->fixString('3 €'));
     }
 }
 
