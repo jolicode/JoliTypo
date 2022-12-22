@@ -14,9 +14,9 @@ use Twig\Extension\AbstractExtension;
 
 class JoliTypoExtension extends AbstractExtension
 {
-    private $presets = [];
+    private array $presets = [];
 
-    public function __construct($presets)
+    public function __construct(array $presets)
     {
         $this->presets = $presets;
     }
@@ -28,6 +28,7 @@ class JoliTypoExtension extends AbstractExtension
         ];
     }
 
+
     public function getFilters(): array
     {
         return [
@@ -35,7 +36,10 @@ class JoliTypoExtension extends AbstractExtension
         ];
     }
 
-    public function translate($text, $preset = 'default')
+    /**
+     * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
+    public function translate($text, $preset = 'default'): string
     {
         if (!isset($this->presets[$preset])) {
             throw new InvalidConfigurationException(sprintf("There is no '%s' preset configured.", $preset));
@@ -44,7 +48,7 @@ class JoliTypoExtension extends AbstractExtension
         return $this->presets[$preset]->fix($text);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'jolitypo';
     }
