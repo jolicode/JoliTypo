@@ -118,15 +118,9 @@ class Fixer
 
     /**
      * Customize the list of protected tags.
-     *
-     * @throws \InvalidArgumentException
      */
     public function setProtectedTags(array $protectedTags): void
     {
-        if (!\is_array($protectedTags)) {
-            throw new \InvalidArgumentException('Protected tags must be an array (empty array for no protection).');
-        }
-
         $this->protectedTags = $protectedTags;
     }
 
@@ -147,7 +141,7 @@ class Fixer
      */
     public function setLocale(string $locale): void
     {
-        if (!\is_string($locale) || empty($locale)) {
+        if (!$locale) {
             throw new \InvalidArgumentException('Locale must be an IETF language tag.');
         }
 
@@ -182,7 +176,7 @@ class Fixer
      */
     private function compileRules(array $rules): void
     {
-        if (!\is_array($rules) || empty($rules)) {
+        if (empty($rules)) {
             throw new BadRuleSetException('Rules must be an array of Fixer');
         }
 
