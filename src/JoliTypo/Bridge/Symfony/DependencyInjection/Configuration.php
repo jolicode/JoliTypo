@@ -43,7 +43,10 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function getRootNode(TreeBuilder $treeBuilder, $name)
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition|\Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function getRootNode(TreeBuilder $treeBuilder, string $name)
     {
         // BC layer for symfony/config 4.1 and older
         if (!\method_exists($treeBuilder, 'getRootNode')) {
