@@ -14,7 +14,7 @@ namespace JoliTypo\Fixer;
  */
 class GermanQuotes extends SmartQuotes
 {
-    public function __construct($locale = null)
+    public function __construct(?string $locale)
     {
         parent::__construct('de');
     }
