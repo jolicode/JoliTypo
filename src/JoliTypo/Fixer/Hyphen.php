@@ -58,7 +58,7 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         $this->setLocale($locale);
     }
 
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->hyphenator = Hyphenator::factory(null, $this->fixLocale($locale));
         $this->setOptions();

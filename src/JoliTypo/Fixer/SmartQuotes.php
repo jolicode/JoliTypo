@@ -56,10 +56,8 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
 
     /**
      * Default configuration for supported lang.
-     *
-     * @param string $locale
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         // Handle from locale + country
         switch (strtolower($locale)) {
