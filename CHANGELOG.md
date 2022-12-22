@@ -1,7 +1,9 @@
 CHANGELOG
 =========
 
-### 1.4.0 (not released yet) ###
+### 1.5.0 (not released yet) ###
+
+### 1.4.0 (2022-12-22) ###
 
 * Drop support for Symfony < 4.4
 * Add support for Symfony ^6.0
