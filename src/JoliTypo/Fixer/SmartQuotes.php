@@ -17,12 +17,12 @@ use JoliTypo\StateBag;
 
 class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwareFixerInterface
 {
-    protected $opening;
-    protected $openingSuffix = '';
-    protected $closing;
-    protected $closingPrefix = '';
+    protected string $opening;
+    protected string $openingSuffix = '';
+    protected string $closing;
+    protected string $closingPrefix = '';
 
-    public function __construct($locale)
+    public function __construct(string $locale)
     {
         $this->setLocale($locale);
     }
@@ -164,34 +164,22 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
         }
     }
 
-    /**
-     * @param string $opening
-     */
-    public function setOpening($opening)
+    public function setOpening(string $opening): void
     {
         $this->opening = $opening;
     }
 
-    /**
-     * @param string $openingSuffix
-     */
-    public function setOpeningSuffix($openingSuffix)
+    public function setOpeningSuffix(string $openingSuffix): void
     {
         $this->openingSuffix = $openingSuffix;
     }
 
-    /**
-     * @param string $closing
-     */
-    public function setClosing($closing)
+    public function setClosing(string $closing): void
     {
         $this->closing = $closing;
     }
 
-    /**
-     * @param string $closingPrefix
-     */
-    public function setClosingPrefix($closingPrefix)
+    public function setClosingPrefix(string $closingPrefix): void
     {
         $this->closingPrefix = $closingPrefix;
     }
