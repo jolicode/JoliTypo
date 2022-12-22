@@ -27,7 +27,7 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
         $this->setLocale($locale);
     }
 
-    public function fix(string $content, ?StateBag $stateBag): string
+    public function fix(string $content, ?StateBag $stateBag = null): string
     {
         if (!$this->opening || !$this->closing) {
             throw new BadFixerConfigurationException();

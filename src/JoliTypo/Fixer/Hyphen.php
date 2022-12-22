@@ -58,7 +58,7 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         $this->setOptions();
     }
 
-    public function fix(string $content, ?StateBag $stateBag): string
+    public function fix(string $content, ?StateBag $stateBag = null): string
     {
         return $this->hyphenator->hyphenate($content);
     }

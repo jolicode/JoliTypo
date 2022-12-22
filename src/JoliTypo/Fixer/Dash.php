@@ -15,7 +15,7 @@ use JoliTypo\StateBag;
 
 class Dash implements FixerInterface
 {
-    public function fix(string $content, ?StateBag $stateBag): string
+    public function fix(string $content, ?StateBag $stateBag = null): string
     {
         $content = preg_replace('@(?<=[0-9 ]|^)-(?=[0-9 ]|$)@', Fixer::NDASH, $content);
 

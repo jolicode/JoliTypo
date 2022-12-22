@@ -191,7 +191,7 @@ class FakeFixer
 
 class OkFixer implements FixerInterface
 {
-    public function fix(string $content, ?StateBag $stateBag): string
+    public function fix(string $content, ?StateBag $stateBag = null): string
     {
         return $content;
     }
