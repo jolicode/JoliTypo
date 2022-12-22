@@ -46,34 +46,19 @@ class JoliTypoTest extends TestCase
         // $this->assertSame("<p>Coucou&hellip;</p> <!-- abusé -->", $fixer->fix("<p>Coucou...</p> <!-- abusé -->"));
     }
 
-    public function testBadRuleSets()
-    {
-        $this->expectException(BadRuleSetException::class);
-
-        new Fixer('YOLO');
-    }
-
-    public function testBadRuleSetsArray()
+    public function testBadRuleSetsWithEmptyArray()
     {
         $this->expectException(BadRuleSetException::class);
 
         new Fixer([]);
     }
 
-    public function testBadRuleSetsAfterConstructor()
+    public function testBadRuleSetsWithEmptyArrayAfterConstructor()
     {
         $this->expectException(BadRuleSetException::class);
 
         $fixer = new Fixer(['Ellipsis']);
-        $fixer->setRules('YOLO');
-    }
-
-    public function testInvalidProtectedTags()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $fixer = new Fixer(['Ellipsis']);
-        $fixer->setProtectedTags('YOLO');
+        $fixer->setRules([]);
     }
 
     public function testInvalidCustomFixerInstance()
