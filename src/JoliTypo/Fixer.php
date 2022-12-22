@@ -46,27 +46,24 @@ class Fixer
     /**
      * @var array HTML Tags to bypass
      */
-    protected $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
+    protected array $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
 
     /**
      * @var string The default locale (used by some Fixer)
      */
-    protected $locale = 'en_GB';
+    protected string $locale = 'en_GB';
 
     /**
      * @var array<FixerInterface> The rules Fixer instances to apply on each DOMText
      */
-    protected $_rules = [];
+    protected array $_rules = [];
 
-    /**
-     * @var StateBag
-     */
-    protected $stateBag;
+    protected StateBag $stateBag;
 
     /**
      * @param array $rules Array of Fixer
      */
-    public function __construct($rules)
+    public function __construct(array $rules)
     {
         $this->compileRules($rules);
     }
@@ -78,7 +75,7 @@ class Fixer
      *
      * @throws Exception\BadRuleSetException
      */
-    public function fix($content)
+    public function fix(string $content): string
     {
         $trimmed = trim($content);
         if (empty($trimmed)) {
@@ -97,10 +94,8 @@ class Fixer
 
     /**
      * @param string $content Basic content to fix
-     *
-     * @return string
      */
-    public function fixString($content)
+    public function fixString(string $content): string
     {
         foreach ($this->_rules as $fixer) {
             $content = $fixer->fix($content, $this->stateBag);
@@ -116,7 +111,7 @@ class Fixer
      *
      * @throws Exception\BadRuleSetException
      */
-    public function setRules($rules)
+    public function setRules(array $rules): void
     {
         $this->compileRules($rules);
     }
@@ -124,11 +119,9 @@ class Fixer
     /**
      * Customize the list of protected tags.
      *
-     * @param array $protectedTags
-     *
      * @throws \InvalidArgumentException
      */
-    public function setProtectedTags($protectedTags)
+    public function setProtectedTags(array $protectedTags): void
     {
         if (!\is_array($protectedTags)) {
             throw new \InvalidArgumentException('Protected tags must be an array (empty array for no protection).');
@@ -139,10 +132,8 @@ class Fixer
 
     /**
      * Get the current Locale tag.
-     *
-     * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -154,7 +145,7 @@ class Fixer
      *
      * @throws \InvalidArgumentException
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         if (!\is_string($locale) || empty($locale)) {
             throw new \InvalidArgumentException('Locale must be an IETF language tag.');
@@ -172,10 +163,8 @@ class Fixer
 
     /**
      * Get language part of a Locale string (fr_FR => fr).
-     *
-     * @return string
      */
-    public static function getLanguageFromLocale($locale)
+    public static function getLanguageFromLocale($locale): string
     {
         if (strpos($locale, '_')) {
             $parts = explode('_', $locale);
@@ -191,7 +180,7 @@ class Fixer
      *
      * @throws Exception\BadRuleSetException
      */
-    private function compileRules($rules)
+    private function compileRules(array $rules): void
     {
         if (!\is_array($rules) || empty($rules)) {
             throw new BadRuleSetException('Rules must be an array of Fixer');
@@ -228,7 +217,7 @@ class Fixer
     /**
      * Loop over all the DOMNode recursively.
      */
-    private function processDOM(\DOMNode $node, \DOMDocument $dom)
+    private function processDOM(\DOMNode $node, \DOMDocument $dom): void
     {
         if ($node->hasChildNodes()) {
             $nodes = [];
@@ -263,7 +252,7 @@ class Fixer
      * @param \DOMNode     $node      The parent node where to replace the current one
      * @param \DOMDocument $dom       The Document
      */
-    private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom)
+    private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom): void
     {
         $content = $childNode->wholeText;
         $current_node = new StateNode($childNode, $node, $dom);
@@ -286,11 +275,9 @@ class Fixer
     }
 
     /**
-     * @return \DOMDocument
-     *
      * @throws Exception\InvalidMarkupException
      */
-    private function loadDOMDocument($content)
+    private function loadDOMDocument($content): \DOMDocument
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->encoding = 'UTF-8';
@@ -319,10 +306,8 @@ class Fixer
      *
      * @see http://php.net/manual/en/domdocument.loadhtml.php#91513
      * @see https://github.com/jolicode/JoliTypo/issues/7
-     *
-     * @return string
      */
-    private function fixContentEncoding($content)
+    private function fixContentEncoding($content): string
     {
         if (!empty($content)) {
             // Little hack to force UTF-8
@@ -361,10 +346,7 @@ class Fixer
         return $content;
     }
 
-    /**
-     * @return string
-     */
-    private function exportDOMDocument(\DOMDocument $dom)
+    private function exportDOMDocument(\DOMDocument $dom): string
     {
         // Remove added body & doctype
         $content = preg_replace(
