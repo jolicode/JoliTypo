@@ -14,14 +14,14 @@ use Twig\Environment;
 
 class AppController
 {
-    private $twig;
+    private Environment $twig;
 
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }
 
-    public function fixAction()
+    public function fixAction(): Response
     {
         if (1 === $this->twig::MAJOR_VERSION) {
             $template = $this->twig->createTemplate(

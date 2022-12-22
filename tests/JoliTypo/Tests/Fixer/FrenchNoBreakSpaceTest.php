@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class FrenchNoBreakSpaceTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\FrenchNoBreakSpace();
         $this->assertInstanceOf('JoliTypo\Fixer\FrenchNoBreakSpace', $fixer);

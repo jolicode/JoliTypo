@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class CurlyQuoteTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\CurlyQuote();
         $this->assertInstanceOf('JoliTypo\Fixer\CurlyQuote', $fixer);
@@ -26,7 +26,7 @@ class CurlyQuoteTest extends TestCase
         $this->assertSame('Qu’est ce que l’univers ?', $fixer->fix("Qu'est ce que l'univers ?"));
     }
 
-    public function testFalsePositives()
+    public function testFalsePositives(): void
     {
         $fixer = new Fixer\CurlyQuote();
 

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class DashTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\Dash();
         $this->assertInstanceOf('JoliTypo\Fixer\Dash', $fixer);

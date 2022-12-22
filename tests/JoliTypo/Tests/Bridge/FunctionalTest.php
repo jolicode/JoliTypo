@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FunctionalTest extends TestCase
 {
-    public function testRenderTwigViaFilter()
+    public function testRenderTwigViaFilter(): void
     {
         $kernel = new AppKernel('prod', false);
         $kernel->boot();

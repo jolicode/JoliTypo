@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class UnitTest extends TestCase
 {
-    public function testNumericUnits()
+    public function testNumericUnits(): void
     {
         $fixer = new Fixer\Unit();
         $this->assertInstanceOf('JoliTypo\Fixer\Unit', $fixer);

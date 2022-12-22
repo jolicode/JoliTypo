@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class NoSpaceBeforeCommaTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\NoSpaceBeforeComma();
         $this->assertInstanceOf('JoliTypo\Fixer\NoSpaceBeforeComma', $fixer);
