@@ -35,7 +35,7 @@ class JoliTypoExtension extends Extension
         $container->setDefinition('joli_typo.twig_extension', $twigExtension);
     }
 
-    private function createPresetDefinition(ContainerBuilder $container, $config)
+    private function createPresetDefinition(ContainerBuilder $container, array $config): array
     {
         $presets = [];
 
