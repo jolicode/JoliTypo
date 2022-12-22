@@ -17,15 +17,9 @@ use Org\Heigl\Hyphenator\Hyphenator;
 
 class Hyphen implements FixerInterface, LocaleAwareFixerInterface
 {
-    /**
-     * @var Hyphenator
-     */
-    private $hyphenator;
+    private Hyphenator $hyphenator;
 
-    /**
-     * @var array
-     */
-    private $supportedLocales = [
+    private array $supportedLocales = [
         'af_ZA',
         'ca',
         'da_DK',
@@ -53,7 +47,7 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         'zu_ZA',
     ];
 
-    public function __construct($locale)
+    public function __construct(string $locale)
     {
         $this->setLocale($locale);
     }
@@ -69,7 +63,7 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         return $this->hyphenator->hyphenate($content);
     }
 
-    protected function setOptions()
+    protected function setOptions(): void
     {
         $this->hyphenator->getOptions()->setHyphen(Fixer::SHY);
         $this->hyphenator->getOptions()->setLeftMin(4);
@@ -78,10 +72,8 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
 
     /**
      * Transform fr_FR to fr to fit the list of supported locales.
-     *
-     * @return mixed
      */
-    protected function fixLocale($locale)
+    protected function fixLocale(string $locale): string
     {
         if (\in_array($locale, $this->supportedLocales)) {
             return $locale;
