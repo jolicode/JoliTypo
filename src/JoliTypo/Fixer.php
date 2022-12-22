@@ -58,7 +58,7 @@ class Fixer
      */
     protected array $_rules = [];
 
-    protected StateBag $stateBag;
+    protected ?StateBag $stateBag = null;
 
     /**
      * @param array $rules Array of Fixer

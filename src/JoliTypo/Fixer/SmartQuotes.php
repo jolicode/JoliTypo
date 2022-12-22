@@ -17,9 +17,9 @@ use JoliTypo\StateBag;
 
 class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwareFixerInterface
 {
-    protected string $opening;
+    protected string $opening       = '';
     protected string $openingSuffix = '';
-    protected string $closing;
+    protected string $closing       = '';
     protected string $closingPrefix = '';
 
     public function __construct(string $locale)
