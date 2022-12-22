@@ -72,8 +72,6 @@ class Fixer
      * @param string $content HTML content to fix
      *
      * @return string Fixed content
-     *
-     * @throws Exception\BadRuleSetException
      */
     public function fix(string $content): string
     {
