@@ -15,7 +15,7 @@ use JoliTypo\StateBag;
 
 class CurlyQuote implements FixerInterface
 {
-    public function fix($content, StateBag $stateBag = null)
+    public function fix(string $content, ?StateBag $stateBag): string
     {
         return preg_replace('@([a-z])\'@im', '$1' . Fixer::RSQUO, $content);
     }

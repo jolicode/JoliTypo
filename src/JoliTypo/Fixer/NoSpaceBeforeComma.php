@@ -18,7 +18,7 @@ use JoliTypo\StateBag;
  */
 class NoSpaceBeforeComma implements FixerInterface
 {
-    public function fix($content, StateBag $stateBag = null)
+    public function fix(string $content, ?StateBag $stateBag): string
     {
         return preg_replace('@([^\d\s]+)[' . Fixer::ALL_SPACES . ']*(,)[' . Fixer::ALL_SPACES . ']*@mu', '$1$2 ', $content);
     }

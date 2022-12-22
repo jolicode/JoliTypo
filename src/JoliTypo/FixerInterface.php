@@ -12,10 +12,8 @@ namespace JoliTypo;
 interface FixerInterface
 {
     /**
-     * @param string   $content  A string to fix
-     * @param StateBag $stateBag A bag of useful information
-     *
-     * @return string
+     * @param string        $content  A string to fix
+     * @param StateBag|null $stateBag A bag of useful information
      */
-    public function fix($content, StateBag $stateBag = null);
+    public function fix(string $content, ?StateBag $stateBag): string;
 }
