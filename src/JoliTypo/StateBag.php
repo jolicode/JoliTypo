@@ -11,48 +11,32 @@ namespace JoliTypo;
 
 class StateBag
 {
-    /**
-     * @var int
-     */
-    protected $currentDepth = 0;
+    protected int $currentDepth = 0;
 
-    /**
-     * @var StateNode
-     */
-    protected $currentNode;
+    protected StateNode $currentNode;
 
     /**
      * @var array<StateNode>
      */
-    protected $siblingNode = [];
+    protected array $siblingNode = [];
 
     /**
      * Save the current StateNode, edit MAY be done to it later.
-     *
-     * @param string $key
      */
-    public function storeSiblingNode($key)
+    public function storeSiblingNode(string $key): void
     {
         $this->siblingNode[$key][$this->currentDepth] = $this->currentNode;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return bool|StateNode
-     */
-    public function getSiblingNode($key)
+    public function getSiblingNode(string $key): ?StateNode
     {
-        return $this->siblingNode[$key][$this->currentDepth] ?? false;
+        return $this->siblingNode[$key][$this->currentDepth] ?? null;
     }
 
     /**
      * Replace and destroy the content of a stored Node.
-     *
-     * @param string $key
-     * @param string $new_content
      */
-    public function fixSiblingNode($key, $new_content)
+    public function fixSiblingNode(string $key, string $new_content): void
     {
         $storedSibling = $this->getSiblingNode($key);
 
@@ -62,26 +46,17 @@ class StateBag
         }
     }
 
-    /**
-     * @param \JoliTypo\StateNode $currentNode
-     */
-    public function setCurrentNode(StateNode $currentNode)
+    public function setCurrentNode(StateNode $currentNode): void
     {
         $this->currentNode = $currentNode;
     }
 
-    /**
-     * @param int $currentDepth
-     */
-    public function setCurrentDepth($currentDepth)
+    public function setCurrentDepth(int $currentDepth): void
     {
         $this->currentDepth = $currentDepth;
     }
 
-    /**
-     * @return int
-     */
-    public function getCurrentDepth()
+    public function getCurrentDepth(): int
     {
         return $this->currentDepth;
     }
