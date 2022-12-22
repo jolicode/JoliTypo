@@ -9,7 +9,7 @@
 
 namespace JoliTypo\Exception;
 
-class BadRuleSetException extends \Exception
+class BadRuleSetException extends \InvalidArgumentException
 {
     protected $message = 'RuleSet must be an array of Fixer names or instances.';
 }

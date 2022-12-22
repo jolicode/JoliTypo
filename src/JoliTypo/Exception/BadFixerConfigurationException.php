@@ -9,7 +9,7 @@
 
 namespace JoliTypo\Exception;
 
-class BadFixerConfigurationException extends \Exception
+class BadFixerConfigurationException extends \InvalidArgumentException
 {
     protected $message = 'Fixer needs configuration.';
 }
