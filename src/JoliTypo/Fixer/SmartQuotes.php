@@ -17,17 +17,32 @@ use JoliTypo\StateBag;
 
 class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwareFixerInterface
 {
-    protected string $opening       = '';
-    protected string $openingSuffix = '';
-    protected string $closing       = '';
-    protected string $closingPrefix = '';
+    /**
+     * @var string
+     */
+    protected $opening = '';
+
+    /**
+     * @var string
+     */
+    protected $openingSuffix = '';
+
+    /**
+     * @var string
+     */
+    protected $closing = '';
+
+    /**
+     * @var string
+     */
+    protected $closingPrefix = '';
 
     public function __construct(string $locale)
     {
         $this->setLocale($locale);
     }
 
-    public function fix(string $content, ?StateBag $stateBag = null): string
+    public function fix(string $content, ?StateBag $stateBag = null)
     {
         if (!$this->opening || !$this->closing) {
             throw new BadFixerConfigurationException();
@@ -57,7 +72,7 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
     /**
      * Default configuration for supported lang.
      */
-    public function setLocale(string $locale): void
+    public function setLocale(string $locale)
     {
         // Handle from locale + country
         switch (strtolower($locale)) {
@@ -164,22 +179,22 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
         }
     }
 
-    public function setOpening(string $opening): void
+    public function setOpening(string $opening)
     {
         $this->opening = $opening;
     }
 
-    public function setOpeningSuffix(string $openingSuffix): void
+    public function setOpeningSuffix(string $openingSuffix)
     {
         $this->openingSuffix = $openingSuffix;
     }
 
-    public function setClosing(string $closing): void
+    public function setClosing(string $closing)
     {
         $this->closing = $closing;
     }
 
-    public function setClosingPrefix(string $closingPrefix): void
+    public function setClosingPrefix(string $closingPrefix)
     {
         $this->closingPrefix = $closingPrefix;
     }

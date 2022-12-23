@@ -46,19 +46,19 @@ class Fixer
     /**
      * @var array HTML Tags to bypass
      */
-    protected array $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
+    protected $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
 
     /**
      * @var string The default locale (used by some Fixer)
      */
-    protected string $locale = 'en_GB';
+    protected $locale = 'en_GB';
 
     /**
      * @var array<FixerInterface> The rules Fixer instances to apply on each DOMText
      */
-    protected array $_rules = [];
+    protected $_rules = [];
 
-    protected ?StateBag $stateBag = null;
+    protected $stateBag = null;
 
     /**
      * @param array $rules Array of Fixer
@@ -73,7 +73,7 @@ class Fixer
      *
      * @return string Fixed content
      */
-    public function fix(string $content): string
+    public function fix(string $content)
     {
         $trimmed = trim($content);
         if (empty($trimmed)) {
@@ -93,7 +93,7 @@ class Fixer
     /**
      * @param string $content Basic content to fix
      */
-    public function fixString(string $content): string
+    public function fixString(string $content)
     {
         foreach ($this->_rules as $fixer) {
             $content = $fixer->fix($content, $this->stateBag);
@@ -109,7 +109,7 @@ class Fixer
      *
      * @throws Exception\BadRuleSetException
      */
-    public function setRules(array $rules): void
+    public function setRules(array $rules)
     {
         $this->compileRules($rules);
     }
@@ -117,7 +117,7 @@ class Fixer
     /**
      * Customize the list of protected tags.
      */
-    public function setProtectedTags(array $protectedTags): void
+    public function setProtectedTags(array $protectedTags)
     {
         $this->protectedTags = $protectedTags;
     }
@@ -125,7 +125,7 @@ class Fixer
     /**
      * Get the current Locale tag.
      */
-    public function getLocale(): string
+    public function getLocale()
     {
         return $this->locale;
     }
@@ -137,7 +137,7 @@ class Fixer
      *
      * @throws \InvalidArgumentException
      */
-    public function setLocale(string $locale): void
+    public function setLocale(string $locale)
     {
         if (!$locale) {
             throw new \InvalidArgumentException('Locale must be an IETF language tag.');
@@ -156,7 +156,7 @@ class Fixer
     /**
      * Get language part of a Locale string (fr_FR => fr).
      */
-    public static function getLanguageFromLocale($locale): string
+    public static function getLanguageFromLocale($locale)
     {
         if (strpos($locale, '_')) {
             $parts = explode('_', $locale);

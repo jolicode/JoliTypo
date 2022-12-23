@@ -52,18 +52,18 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         $this->setLocale($locale);
     }
 
-    public function setLocale(string $locale): void
+    public function setLocale(string $locale)
     {
         $this->hyphenator = Hyphenator::factory(null, $this->fixLocale($locale));
         $this->setOptions();
     }
 
-    public function fix(string $content, ?StateBag $stateBag = null): string
+    public function fix(string $content, ?StateBag $stateBag = null)
     {
         return $this->hyphenator->hyphenate($content);
     }
 
-    protected function setOptions(): void
+    protected function setOptions()
     {
         $this->hyphenator->getOptions()->setHyphen(Fixer::SHY);
         $this->hyphenator->getOptions()->setLeftMin(4);
@@ -73,7 +73,7 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
     /**
      * Transform fr_FR to fr to fit the list of supported locales.
      */
-    protected function fixLocale(string $locale): string
+    protected function fixLocale(string $locale)
     {
         if (\in_array($locale, $this->supportedLocales)) {
             return $locale;

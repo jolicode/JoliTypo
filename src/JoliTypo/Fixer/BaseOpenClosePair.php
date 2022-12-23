@@ -17,7 +17,7 @@ use JoliTypo\StateNode;
  */
 abstract class BaseOpenClosePair
 {
-    protected function fixViaState(string $content, StateBag $stateBag, string $stateName, string $openRegexp, string $closeRegexp, string $openReplacement, string $closeReplacement): string
+    protected function fixViaState(string $content, StateBag $stateBag, string $stateName, string $openRegexp, string $closeRegexp, string $openReplacement, string $closeReplacement)
     {
         $storedSibling = $stateBag->getSiblingNode($stateName);
 

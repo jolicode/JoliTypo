@@ -11,24 +11,30 @@ namespace JoliTypo;
 
 class StateBag
 {
-    protected int $currentDepth = 0;
+    /**
+     * @var int
+     */
+    protected $currentDepth = 0;
 
-    protected StateNode $currentNode;
+    /**
+     * @var StateNode
+     */
+    protected $currentNode;
 
     /**
      * @var array<StateNode>
      */
-    protected array $siblingNode = [];
+    protected $siblingNode = [];
 
     /**
      * Save the current StateNode, edit MAY be done to it later.
      */
-    public function storeSiblingNode(string $key): void
+    public function storeSiblingNode(string $key)
     {
         $this->siblingNode[$key][$this->currentDepth] = $this->currentNode;
     }
 
-    public function getSiblingNode(string $key): ?StateNode
+    public function getSiblingNode(string $key)
     {
         return $this->siblingNode[$key][$this->currentDepth] ?? null;
     }
@@ -36,7 +42,7 @@ class StateBag
     /**
      * Replace and destroy the content of a stored Node.
      */
-    public function fixSiblingNode(string $key, string $new_content): void
+    public function fixSiblingNode(string $key, string $new_content)
     {
         $storedSibling = $this->getSiblingNode($key);
 
@@ -46,17 +52,17 @@ class StateBag
         }
     }
 
-    public function setCurrentNode(StateNode $currentNode): void
+    public function setCurrentNode(StateNode $currentNode)
     {
         $this->currentNode = $currentNode;
     }
 
-    public function setCurrentDepth(int $currentDepth): void
+    public function setCurrentDepth(int $currentDepth)
     {
         $this->currentDepth = $currentDepth;
     }
 
-    public function getCurrentDepth(): int
+    public function getCurrentDepth()
     {
         return $this->currentDepth;
     }
