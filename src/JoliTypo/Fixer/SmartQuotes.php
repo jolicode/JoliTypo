@@ -179,21 +179,33 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
         }
     }
 
+    /**
+     * @return void
+     */
     public function setOpening(string $opening)
     {
         $this->opening = $opening;
     }
 
+    /**
+     * @return void
+     */
     public function setOpeningSuffix(string $openingSuffix)
     {
         $this->openingSuffix = $openingSuffix;
     }
 
+    /**
+     * @return void
+     */
     public function setClosing(string $closing)
     {
         $this->closing = $closing;
     }
 
+    /**
+     * @return void
+     */
     public function setClosingPrefix(string $closingPrefix)
     {
         $this->closingPrefix = $closingPrefix;

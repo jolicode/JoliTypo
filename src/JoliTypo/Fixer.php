@@ -58,7 +58,10 @@ class Fixer
      */
     protected $_rules = [];
 
-    protected $stateBag = null;
+    /**
+     * @var StateBag
+     */
+    protected $stateBag;
 
     /**
      * @param array $rules Array of Fixer
@@ -92,6 +95,8 @@ class Fixer
 
     /**
      * @param string $content Basic content to fix
+     * 
+     * @return string
      */
     public function fixString(string $content)
     {
@@ -105,6 +110,8 @@ class Fixer
     /**
      * Change the list of rules for a given locale.
      * 
+     * @return void
+     * 
      * @throws BadRuleSetException
      */
     public function setRules(array $rules)
@@ -114,6 +121,8 @@ class Fixer
 
     /**
      * Customize the list of protected tags.
+     * 
+     * @return void
      */
     public function setProtectedTags(array $protectedTags)
     {
@@ -122,6 +131,8 @@ class Fixer
 
     /**
      * Get the current Locale tag.
+     * 
+     * @return string
      */
     public function getLocale()
     {
@@ -132,6 +143,8 @@ class Fixer
      * Change the locale of the Fixer.
      *
      * @param string $locale An IETF language tag
+     * 
+     * @return void
      *
      * @throws \InvalidArgumentException
      */
@@ -153,6 +166,8 @@ class Fixer
 
     /**
      * Get language part of a Locale string (fr_FR => fr).
+     * 
+     * @return string
      */
     public static function getLanguageFromLocale($locale)
     {

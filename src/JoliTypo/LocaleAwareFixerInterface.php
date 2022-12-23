@@ -11,5 +11,8 @@ namespace JoliTypo;
 
 interface LocaleAwareFixerInterface
 {
+    /**
+     * @return void
+     */
     public function setLocale(string $locale);
 }
