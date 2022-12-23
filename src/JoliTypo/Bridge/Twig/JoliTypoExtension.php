@@ -28,7 +28,6 @@ class JoliTypoExtension extends AbstractExtension
         ];
     }
 
-
     public function getFilters(): array
     {
         return [
