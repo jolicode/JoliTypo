@@ -36,7 +36,7 @@ class JoliTypoExtension extends AbstractExtension
     }
 
     /**
-     * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @throws InvalidConfigurationException
      */
     public function translate($text, $preset = 'default'): string
     {
