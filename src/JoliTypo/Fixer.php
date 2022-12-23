@@ -104,9 +104,7 @@ class Fixer
 
     /**
      * Change the list of rules for a given locale.
-     *
-     * @param array $rules Array of Fixer
-     *
+     * 
      * @throws Exception\BadRuleSetException
      */
     public function setRules(array $rules)
