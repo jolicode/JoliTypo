@@ -105,7 +105,7 @@ class Fixer
     /**
      * Change the list of rules for a given locale.
      * 
-     * @throws Exception\BadRuleSetException
+     * @throws BadRuleSetException
      */
     public function setRules(array $rules)
     {
@@ -168,7 +168,7 @@ class Fixer
     /**
      * Build the _rules array of Fixer.
      *
-     * @throws Exception\BadRuleSetException
+     * @throws BadRuleSetException
      */
     private function compileRules(array $rules): void
     {
