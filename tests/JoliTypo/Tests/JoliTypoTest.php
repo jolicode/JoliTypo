@@ -135,13 +135,12 @@ class JoliTypoTest extends TestCase
         $fixer = new Fixer(['Trademark']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $this->assertSame('Mentions L&eacute;gales', $fixer->fix(utf8_encode(utf8_decode('Mentions Légales'))));
+        $this->assertSame('Mentions L&eacute;gales', $fixer->fix('Mentions Légales'));
 
         // JoliTypo can handle double encoded UTF-8 strings, or ISO strings, but that's not a feature.
         $isoString = mb_convert_encoding('Mentions Légales', 'ISO-8859-1', 'UTF-8');
-        $this->assertSame('Mentions L&eacute;gales', $fixer->fix(utf8_encode($isoString)));
         $this->assertSame('Mentions L&eacute;gales', $fixer->fix($isoString));
-        $this->assertSame('Mentions L&Atilde;&copy;gales', $fixer->fix(utf8_encode(utf8_encode($isoString))));
+        $this->assertSame('Mentions L&Atilde;&copy;gales', $fixer->fix("Mentions LÃ©gales"));
     }
 
     public function testEmptyContent()
