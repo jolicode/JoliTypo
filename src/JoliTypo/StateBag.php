@@ -28,7 +28,7 @@ class StateBag
 
     /**
      * Save the current StateNode, edit MAY be done to it later.
-     * 
+     *
      * @return void
      */
     public function storeSiblingNode(string $key)
@@ -46,7 +46,7 @@ class StateBag
 
     /**
      * Replace and destroy the content of a stored Node.
-     * 
+     *
      * @return void
      */
     public function fixSiblingNode(string $key, string $new_content)
