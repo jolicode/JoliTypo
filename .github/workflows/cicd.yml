@@ -20,10 +20,10 @@ jobs:
           - '8.1'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@2.13.0
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '${{ matrix.php-versions }}'
 
@@ -47,10 +47,10 @@ jobs:
           - '8.1'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@2.13.0
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '${{ matrix.php-versions }}'
 
@@ -74,7 +74,7 @@ jobs:
         working-directory: tools/phar/build/
 
       - name: Upload PHAR
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: 'jolitypo-${{ matrix.php-versions }}'
           path: tools/phar/build/jolitypo-${{ matrix.php-versions }}.phar
