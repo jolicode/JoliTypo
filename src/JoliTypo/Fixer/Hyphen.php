@@ -82,7 +82,7 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
     /**
      * Transform fr_FR to fr to fit the list of supported locales.
      *
-     * @return void
+     * @return string
      */
     protected function fixLocale(string $locale)
     {
