@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class TrademarkTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\Trademark();
         $this->assertInstanceOf('JoliTypo\Fixer\Trademark', $fixer);
@@ -32,7 +32,7 @@ class TrademarkTest extends TestCase
     /**
      * :-( :sadface:.
      */
-    public function testImpossible()
+    public function testImpossible(): void
     {
         $this->markTestSkipped("Those tests can't pass: they are edge case JoliTypo does not cover ATM. Feel free to fix!");
 

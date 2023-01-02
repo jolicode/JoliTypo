@@ -39,7 +39,7 @@ class EnglishTest extends TestCase
         FIXED;
     private $en_fixers = ['Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen', 'Trademark'];
 
-    public function testFixFullText()
+    public function testFixFullText(): void
     {
         $fixer = new Fixer($this->en_fixers);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
@@ -47,7 +47,7 @@ class EnglishTest extends TestCase
         $this->assertSame(self::FIXED, $fixer->fix(self::TOFIX));
     }
 
-    public function testReadMeExemple()
+    public function testReadMeExemple(): void
     {
         $before = <<<'HTML'
             <p>"Tell me Mr. Anderson... what good is a phone call... if you're unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>
@@ -62,7 +62,7 @@ class EnglishTest extends TestCase
         $this->assertSame($after, $fixer->fix($before));
     }
 
-    public function testDoubleQuoteMess()
+    public function testDoubleQuoteMess(): void
     {
         $fixed = <<<'HTML'
             <p>I&rsquo;m learning &ldquo;<a href="http://composer.json.jolicode.com">composer.json</a>&rdquo; as it&rsquo;s better than a &ldquo;.docx&rdquo;</p>
@@ -77,7 +77,7 @@ class EnglishTest extends TestCase
         $this->assertSame($fixed, $fixer->fix($to_fix));
     }
 
-    public function testHtmlHeart()
+    public function testHtmlHeart(): void
     {
         $fixed = <<<'HTML'
             <p>We &lt;3&nbsp;web.</p>

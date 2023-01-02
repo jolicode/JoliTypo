@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class DimensionTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\Dimension();
         $this->assertInstanceOf('JoliTypo\Fixer\Dimension', $fixer);

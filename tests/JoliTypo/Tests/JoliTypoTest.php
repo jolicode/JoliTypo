@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class JoliTypoTest extends TestCase
 {
-    public function testSimpleInstance()
+    public function testSimpleInstance(): void
     {
         $fixer = new Fixer(['Ellipsis']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
@@ -25,7 +25,7 @@ class JoliTypoTest extends TestCase
         $this->assertSame('Coucou&hellip;', $fixer->fix('Coucou...'));
     }
 
-    public function testSimpleInstanceRulesChange()
+    public function testSimpleInstanceRulesChange(): void
     {
         $fixer = new Fixer(['Ellipsis']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
@@ -37,7 +37,7 @@ class JoliTypoTest extends TestCase
         $this->assertSame('I&rsquo;m a pony.', $fixer->fix("I'm a pony."));
     }
 
-    public function testHtmlComments()
+    public function testHtmlComments(): void
     {
         $fixer = new Fixer(['Ellipsis']);
         $this->assertSame('<p>Coucou&hellip;</p> <!-- Not Coucou... -->', $fixer->fix('<p>Coucou...</p> <!-- Not Coucou... -->'));
@@ -46,51 +46,36 @@ class JoliTypoTest extends TestCase
         // $this->assertSame("<p>Coucou&hellip;</p> <!-- abusé -->", $fixer->fix("<p>Coucou...</p> <!-- abusé -->"));
     }
 
-    public function testBadRuleSets()
-    {
-        $this->expectException(BadRuleSetException::class);
-
-        new Fixer('YOLO');
-    }
-
-    public function testBadRuleSetsArray()
+    public function testBadRuleSetsWithEmptyArray(): void
     {
         $this->expectException(BadRuleSetException::class);
 
         new Fixer([]);
     }
 
-    public function testBadRuleSetsAfterConstructor()
+    public function testBadRuleSetsWithEmptyArrayAfterConstructor(): void
     {
         $this->expectException(BadRuleSetException::class);
 
         $fixer = new Fixer(['Ellipsis']);
-        $fixer->setRules('YOLO');
+        $fixer->setRules([]);
     }
 
-    public function testInvalidProtectedTags()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $fixer = new Fixer(['Ellipsis']);
-        $fixer->setProtectedTags('YOLO');
-    }
-
-    public function testInvalidCustomFixerInstance()
+    public function testInvalidCustomFixerInstance(): void
     {
         $this->expectException(BadRuleSetException::class);
 
         new Fixer([new FakeFixer()]);
     }
 
-    public function testOkFixer()
+    public function testOkFixer(): void
     {
         $fixer = new Fixer([new OkFixer()]);
 
         $this->assertSame('<p>Nope !</p>', $fixer->fix('<p>Nope !</p>'));
     }
 
-    public function testProtectedTags()
+    public function testProtectedTags(): void
     {
         $fixer = new Fixer(['Ellipsis']);
         $fixer->setProtectedTags(['pre', 'a']);
@@ -99,14 +84,14 @@ class JoliTypoTest extends TestCase
         $this->assertSame('<p>Fixed&hellip;</p> <pre>Not fixed...</pre> <p>Fixed&hellip; <a>Not Fixed...</a>.</p>', $fixed_content);
     }
 
-    public function testBadClassName()
+    public function testBadClassName(): void
     {
         $this->expectException(BadRuleSetException::class);
 
         new Fixer(['Ellipsis', 'Acme\\Demo\\Fixer']);
     }
 
-    public function testBadLocale()
+    public function testBadLocale(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -114,14 +99,14 @@ class JoliTypoTest extends TestCase
         $fixer->setLocale(false);
     }
 
-    public function testEmptyRules()
+    public function testEmptyRules(): void
     {
         $this->expectException(BadRuleSetException::class);
 
         new Fixer([]);
     }
 
-    public function testXmlPrefixedContent()
+    public function testXmlPrefixedContent(): void
     {
         $fixer = new Fixer(['Ellipsis']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
@@ -130,7 +115,7 @@ class JoliTypoTest extends TestCase
         $this->assertSame('<p>Hey &eacute;pic dude&hellip;</p>', $fixer->fix('<?xml encoding="ISO-8859-1"><body><p>Hey épic dude...</p></body>'));
     }
 
-    public function testBadEncoding()
+    public function testBadEncoding(): void
     {
         $fixer = new Fixer(['Trademark']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
@@ -144,7 +129,7 @@ class JoliTypoTest extends TestCase
         $this->assertSame('Mentions L&Atilde;&copy;gales', $fixer->fix(utf8_encode(utf8_encode($isoString))));
     }
 
-    public function testEmptyContent()
+    public function testEmptyContent(): void
     {
         $fixer = new Fixer(['Trademark']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
@@ -154,7 +139,7 @@ class JoliTypoTest extends TestCase
         $this->assertSame('some content &reg;', $fixer->fix("\n some content (r)"));
     }
 
-    public function testNonHTMLContent()
+    public function testNonHTMLContent(): void
     {
         $fixer = new Fixer(['Trademark', 'SmartQuotes']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
@@ -176,7 +161,7 @@ class JoliTypoTest extends TestCase
     }
 
     /** @group legacy */
-    public function testDeprecatedFixer()
+    public function testDeprecatedFixer(): void
     {
         $fixer = new Fixer(['Numeric']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
@@ -191,7 +176,7 @@ class FakeFixer
 
 class OkFixer implements FixerInterface
 {
-    public function fix($content, StateBag $stateBag = null)
+    public function fix(string $content, ?StateBag $stateBag = null)
     {
         return $content;
     }

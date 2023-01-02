@@ -11,6 +11,8 @@ namespace JoliTypo\Bridge\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 class Configuration implements ConfigurationInterface
 {
@@ -43,7 +45,10 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function getRootNode(TreeBuilder $treeBuilder, $name)
+    /**
+     * @return NodeDefinition|ArrayNodeDefinition
+     */
+    private function getRootNode(TreeBuilder $treeBuilder, string $name)
     {
         // BC layer for symfony/config 4.1 and older
         if (!\method_exists($treeBuilder, 'getRootNode')) {

@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class SmartQuotesTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\SmartQuotes('de');
         $this->assertInstanceOf('JoliTypo\Fixer\SmartQuotes', $fixer);
@@ -33,7 +33,7 @@ class SmartQuotesTest extends TestCase
         $this->assertSame('<I am smart>', $fixer->fix('"I am smart"'));
     }
 
-    public function testBadConfig()
+    public function testBadConfig(): void
     {
         $this->expectException(BadFixerConfigurationException::class);
 

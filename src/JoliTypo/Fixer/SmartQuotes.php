@@ -17,17 +17,32 @@ use JoliTypo\StateBag;
 
 class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwareFixerInterface
 {
-    protected $opening;
+    /**
+     * @var string
+     */
+    protected $opening = '';
+
+    /**
+     * @var string
+     */
     protected $openingSuffix = '';
-    protected $closing;
+
+    /**
+     * @var string
+     */
+    protected $closing = '';
+
+    /**
+     * @var string
+     */
     protected $closingPrefix = '';
 
-    public function __construct($locale)
+    public function __construct(string $locale)
     {
         $this->setLocale($locale);
     }
 
-    public function fix($content, StateBag $stateBag = null)
+    public function fix(string $content, ?StateBag $stateBag = null)
     {
         if (!$this->opening || !$this->closing) {
             throw new BadFixerConfigurationException();
@@ -56,10 +71,8 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
 
     /**
      * Default configuration for supported lang.
-     *
-     * @param string $locale
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale)
     {
         // Handle from locale + country
         switch (strtolower($locale)) {
@@ -167,33 +180,33 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
     }
 
     /**
-     * @param string $opening
+     * @return void
      */
-    public function setOpening($opening)
+    public function setOpening(string $opening)
     {
         $this->opening = $opening;
     }
 
     /**
-     * @param string $openingSuffix
+     * @return void
      */
-    public function setOpeningSuffix($openingSuffix)
+    public function setOpeningSuffix(string $openingSuffix)
     {
         $this->openingSuffix = $openingSuffix;
     }
 
     /**
-     * @param string $closing
+     * @return void
      */
-    public function setClosing($closing)
+    public function setClosing(string $closing)
     {
         $this->closing = $closing;
     }
 
     /**
-     * @param string $closingPrefix
+     * @return void
      */
-    public function setClosingPrefix($closingPrefix)
+    public function setClosingPrefix(string $closingPrefix)
     {
         $this->closingPrefix = $closingPrefix;
     }

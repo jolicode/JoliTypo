@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class GermanQuotesTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\GermanQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\GermanQuotes', $fixer);
@@ -22,14 +22,14 @@ class GermanQuotesTest extends TestCase
         $this->basicStringsAsserts($fixer);
     }
 
-    public function testSmartQuoteConfig()
+    public function testSmartQuoteConfig(): void
     {
         $fixer = new Fixer\SmartQuotes('de');
 
         $this->basicStringsAsserts($fixer);
     }
 
-    public function testFalsePositives()
+    public function testFalsePositives(): void
     {
         $fixer = new Fixer\GermanQuotes();
 
@@ -37,7 +37,7 @@ class GermanQuotesTest extends TestCase
         $this->assertSame('2"44\'.', $fixer->fix('2"44\'.'));
     }
 
-    protected function basicStringsAsserts($fixer)
+    protected function basicStringsAsserts($fixer): void
     {
         $this->assertSame('„I am smart“', $fixer->fix('"I am smart"'));
         $this->assertSame('(„I am smart“)', $fixer->fix('("I am smart")'));

@@ -14,7 +14,7 @@ namespace JoliTypo\Fixer;
  */
 class FrenchQuotes extends SmartQuotes
 {
-    public function __construct($locale = null)
+    public function __construct(?string $locale = null)
     {
         parent::__construct('fr');
     }

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class HyphenTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\Hyphen('fr');
         $this->assertInstanceOf('JoliTypo\Fixer\Hyphen', $fixer);
@@ -24,7 +24,7 @@ class HyphenTest extends TestCase
         $this->assertSame('Cordia' . Fixer::SHY . 'le' . Fixer::SHY . 'ment' . Fixer::NO_BREAK_THIN_SPACE . '!', $fixer->fix('Cordialement' . Fixer::NO_BREAK_THIN_SPACE . '!'));
     }
 
-    public function testLocaleFallback()
+    public function testLocaleFallback(): void
     {
         $fixer = new Fixer\Hyphen('fr_BE');
         $this->assertInstanceOf('JoliTypo\Fixer\Hyphen', $fixer);
@@ -33,7 +33,7 @@ class HyphenTest extends TestCase
         $this->assertSame('Cordia' . Fixer::SHY . 'le' . Fixer::SHY . 'ment', $fixer->fix('Cordialement'));
     }
 
-    public function testNonExistingLocale()
+    public function testNonExistingLocale(): void
     {
         $fixer = new Fixer\Hyphen('toto');
 

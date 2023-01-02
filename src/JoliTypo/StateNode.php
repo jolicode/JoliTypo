@@ -11,20 +11,9 @@ namespace JoliTypo;
 
 class StateNode
 {
-    /**
-     * @var \DOMText
-     */
-    private $node;
-
-    /**
-     * @var \DOMNode
-     */
-    private $parent;
-
-    /**
-     * @var \DOMDocument
-     */
-    private $document;
+    private \DOMText $node;
+    private \DOMNode $parent;
+    private \DOMDocument $document;
 
     public function __construct(\DOMText $node, \DOMNode $parent, \DOMDocument $document)
     {
@@ -33,34 +22,22 @@ class StateNode
         $this->document = $document;
     }
 
-    /**
-     * @return \DOMText
-     */
-    public function getNode()
+    public function getNode(): \DOMText
     {
         return $this->node;
     }
 
-    /**
-     * @return \DOMNode
-     */
-    public function getParent()
+    public function getParent(): \DOMNode
     {
         return $this->parent;
     }
 
-    /**
-     * @return \DOMDocument
-     */
-    public function getDocument()
+    public function getDocument(): \DOMDocument
     {
         return $this->document;
     }
 
-    /**
-     * @param \DOMText $node
-     */
-    public function replaceNode($node)
+    public function replaceNode(\DOMText $node): void
     {
         $this->node = $node;
     }

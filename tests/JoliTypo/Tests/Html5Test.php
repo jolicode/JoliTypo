@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class Html5Test extends TestCase
 {
-    public function testHtml5Markup()
+    public function testHtml5Markup(): void
     {
         $fixer = new Fixer([new Fixer\Ellipsis()]);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
@@ -27,7 +27,7 @@ class Html5Test extends TestCase
         $this->assertSame($html5, $fixer->fix($html5));
     }
 
-    public function testFullPageMarkup()
+    public function testFullPageMarkup(): void
     {
         $fixer = new Fixer([new Fixer\EnglishQuotes()]);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);

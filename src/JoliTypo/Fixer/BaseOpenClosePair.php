@@ -17,12 +17,15 @@ use JoliTypo\StateNode;
  */
 abstract class BaseOpenClosePair
 {
-    protected function fixViaState($content, StateBag $stateBag, $stateName, $openRegexp, $closeRegexp, $openReplacement, $closeReplacement)
+    /**
+     * @return string
+     */
+    protected function fixViaState(string $content, StateBag $stateBag, string $stateName, string $openRegexp, string $closeRegexp, string $openReplacement, string $closeReplacement)
     {
         $storedSibling = $stateBag->getSiblingNode($stateName);
 
         // If no stored open quote node & open quote detected
-        if (false === $storedSibling && preg_match($openRegexp, $content)) {
+        if (null === $storedSibling && preg_match($openRegexp, $content)) {
             // Store the current node
             $stateBag->storeSiblingNode($stateName);
 

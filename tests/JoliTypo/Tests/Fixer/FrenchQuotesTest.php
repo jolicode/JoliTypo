@@ -10,11 +10,12 @@
 namespace JoliTypo\Tests\Fixer;
 
 use JoliTypo\Fixer;
+use JoliTypo\FixerInterface;
 use PHPUnit\Framework\TestCase;
 
 class FrenchQuotesTest extends TestCase
 {
-    public function testSimpleString()
+    public function testSimpleString(): void
     {
         $fixer = new Fixer\FrenchQuotes();
         $this->assertInstanceOf('JoliTypo\Fixer\FrenchQuotes', $fixer);
@@ -22,13 +23,13 @@ class FrenchQuotesTest extends TestCase
         $this->basicStringsAsserts($fixer);
     }
 
-    public function testSmartQuoteFrenchConfig()
+    public function testSmartQuoteFrenchConfig(): void
     {
         $fixer = new Fixer\SmartQuotes('fr_FR');
         $this->basicStringsAsserts($fixer);
     }
 
-    public function testFalsePositives()
+    public function testFalsePositives(): void
     {
         $fixer = new Fixer\FrenchQuotes();
 
@@ -38,7 +39,7 @@ class FrenchQuotesTest extends TestCase
     /**
      * :-( :sadface:.
      */
-    public function testImpossible()
+    public function testImpossible(): void
     {
         $this->markTestSkipped("Those tests can't pass: they are edge case JoliTypo does not cover ATM. Feel free to fix!");
 
@@ -47,7 +48,7 @@ class FrenchQuotesTest extends TestCase
         $this->assertSame('Oh my god, this quote is alone: " ! But those are «' . Fixer::NO_BREAK_SPACE . 'ok' . Fixer::NO_BREAK_SPACE . '».', $fixer->fix('Oh my god, this quote is alone: " ! But those are "ok".'));
     }
 
-    protected function basicStringsAsserts($fixer)
+    protected function basicStringsAsserts(FixerInterface $fixer): void
     {
         $this->assertSame('«' . Fixer::NO_BREAK_SPACE . 'Good code is like a good joke.' . Fixer::NO_BREAK_SPACE . '»', $fixer->fix('"Good code is like a good joke."'));
         $this->assertSame('«' . Fixer::NO_BREAK_SPACE . 'Good code is like a Bieber.' . Fixer::NO_BREAK_SPACE . '» - said no ever, ever.', $fixer->fix('"Good code is like a Bieber." - said no ever, ever.'));

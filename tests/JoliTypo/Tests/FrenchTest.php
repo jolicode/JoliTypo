@@ -63,7 +63,7 @@ class FrenchTest extends TestCase
         FIXED;
     private $fr_fixers = ['Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark'];
 
-    public function testFixFullText()
+    public function testFixFullText(): void
     {
         $fixer = new Fixer($this->fr_fixers);
         $fixer->setLocale('fr_FR');
@@ -72,7 +72,7 @@ class FrenchTest extends TestCase
         $this->assertSame(self::FIXED, $fixer->fix(self::TOFIX));
     }
 
-    public function testFixFullTextShort()
+    public function testFixFullTextShort(): void
     {
         $fixer = new Fixer($this->fr_fixers);
         $fixer->setLocale('fr');
@@ -81,7 +81,7 @@ class FrenchTest extends TestCase
         $this->assertSame(self::FIXED, $fixer->fix(self::TOFIX));
     }
 
-    public function testDoubleQuoteMess()
+    public function testDoubleQuoteMess(): void
     {
         $fixer = new Fixer($this->fr_fixers);
         $fixer->setLocale('fr');
@@ -100,7 +100,7 @@ class FrenchTest extends TestCase
         $this->assertSame($fixed, $fixer->fix($to_fix));
     }
 
-    public function testEncodingMess()
+    public function testEncodingMess(): void
     {
         $fixer = new Fixer($this->fr_fixers);
         $fixer->setLocale('fr');
@@ -120,7 +120,7 @@ class FrenchTest extends TestCase
     /**
      * @see https://github.com/jolicode/JoliTypo/issues/16
      */
-    public function testNoBreakingSpaceInsideGoodQuotes()
+    public function testNoBreakingSpaceInsideGoodQuotes(): void
     {
         $fixer = new Fixer($this->fr_fixers);
 
@@ -147,7 +147,7 @@ class FrenchTest extends TestCase
     /**
      * @see https://github.com/jolicode/JoliTypo/issues/15
      */
-    public function testNumericDoesNotBreakOtherFixers()
+    public function testNumericDoesNotBreakOtherFixers(): void
     {
         $fixer = new Fixer($this->fr_fixers);
 
@@ -168,7 +168,7 @@ class FrenchTest extends TestCase
     /**
      * @see https://github.com/jolicode/JoliTypo/issues/35
      */
-    public function testWeirdHyphen()
+    public function testWeirdHyphen(): void
     {
         $fixer = new Fixer($this->fr_fixers);
 
