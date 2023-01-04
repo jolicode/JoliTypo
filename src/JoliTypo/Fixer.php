@@ -61,7 +61,7 @@ class Fixer
     /**
      * @var StateBag
      */
-    protected $stateBag;
+    private $stateBag;
 
     /**
      * @param array $rules Array of Fixer
