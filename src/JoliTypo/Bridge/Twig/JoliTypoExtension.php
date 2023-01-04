@@ -46,9 +46,4 @@ class JoliTypoExtension extends AbstractExtension
 
         return $this->presets[$preset]->fix($text);
     }
-
-    public function getName(): string
-    {
-        return 'jolitypo';
-    }
 }
