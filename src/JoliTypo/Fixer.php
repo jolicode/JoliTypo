@@ -119,6 +119,11 @@ class Fixer
         $this->compileRules($rules);
     }
 
+    public function getProtectedTags(): array
+    {
+        return $this->protectedTags;
+    }
+
     /**
      * Customize the list of protected tags.
      *
