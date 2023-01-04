@@ -56,7 +56,7 @@ class Fixer
     /**
      * @var array<FixerInterface> The rules Fixer instances to apply on each DOMText
      */
-    protected $_rules = [];
+    private $_rules = [];
 
     /**
      * @var StateBag
