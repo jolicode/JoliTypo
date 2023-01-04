@@ -46,7 +46,7 @@ class Fixer
     /**
      * @var array HTML Tags to bypass
      */
-    protected $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
+    private $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
 
     /**
      * @var string The default locale (used by some Fixer)
