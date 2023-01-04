@@ -51,7 +51,7 @@ class Fixer
     /**
      * @var string The default locale (used by some Fixer)
      */
-    protected $locale = 'en_GB';
+    private $locale = 'en_GB';
 
     /**
      * @var array<FixerInterface> The rules Fixer instances to apply on each DOMText
