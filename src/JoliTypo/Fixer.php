@@ -43,25 +43,16 @@ class Fixer
         'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
     ];
 
-    /**
-     * @var array HTML Tags to bypass
-     */
-    protected $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
+    private array $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
 
-    /**
-     * @var string The default locale (used by some Fixer)
-     */
-    protected $locale = 'en_GB';
+    private string $locale = 'en_GB';
 
     /**
      * @var array<FixerInterface> The rules Fixer instances to apply on each DOMText
      */
-    protected $_rules = [];
+    private array $_rules = [];
 
-    /**
-     * @var StateBag
-     */
-    protected $stateBag;
+    private ?StateBag $stateBag = null;
 
     /**
      * @param array $rules Array of Fixer
@@ -117,6 +108,11 @@ class Fixer
     public function setRules(array $rules)
     {
         $this->compileRules($rules);
+    }
+
+    public function getProtectedTags(): array
+    {
+        return $this->protectedTags;
     }
 
     /**
@@ -178,6 +174,11 @@ class Fixer
         }
 
         return $locale;
+    }
+
+    protected function getStateBug(): StateBag
+    {
+        return $this->stateBag;
     }
 
     /**
