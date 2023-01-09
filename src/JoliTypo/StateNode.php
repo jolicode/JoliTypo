@@ -9,6 +9,9 @@
 
 namespace JoliTypo;
 
+/**
+ * @internal
+ */
 class StateNode
 {
     private \DOMText $node;
