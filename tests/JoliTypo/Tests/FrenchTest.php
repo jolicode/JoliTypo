@@ -182,4 +182,21 @@ class FrenchTest extends TestCase
         $this->assertStringNotContainsString('&shy;', $fixer->fix($to_fix));
         $this->assertStringNotContainsString(Fixer::SHY, $fixer->fix($to_fix));
     }
+
+    /**
+     * @see https://github.com/jolicode/JoliTypo/issues/93
+     */
+    public function testEncodingOfLigature(): void
+    {
+        $fixer = new Fixer($this->fr_fixers);
+
+        $fixer->setLocale('fr');
+        $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
+
+        $to_fix = <<<'HTML'
+            <p>des œuvres d'art.</p>
+            HTML;
+
+        $this->assertStringContainsString('&oelig;', $fixer->fix($to_fix));
+    }
 }

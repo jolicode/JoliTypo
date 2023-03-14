@@ -28,8 +28,6 @@ class StateBag
 
     /**
      * Save the current StateNode, edit MAY be done to it later.
-     *
-     * @return void
      */
     public function storeSiblingNode(string $key)
     {
@@ -46,8 +44,6 @@ class StateBag
 
     /**
      * Replace and destroy the content of a stored Node.
-     *
-     * @return void
      */
     public function fixSiblingNode(string $key, string $new_content)
     {
@@ -59,17 +55,11 @@ class StateBag
         }
     }
 
-    /**
-     * @return void
-     */
     public function setCurrentNode(StateNode $currentNode)
     {
         $this->currentNode = $currentNode;
     }
 
-    /**
-     * @return void
-     */
     public function setCurrentDepth(int $currentDepth)
     {
         $this->currentDepth = $currentDepth;

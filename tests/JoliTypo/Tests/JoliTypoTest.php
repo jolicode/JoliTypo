@@ -125,7 +125,7 @@ class JoliTypoTest extends TestCase
         // JoliTypo can handle double encoded UTF-8 strings, or ISO strings, but that's not a feature.
         $isoString = mb_convert_encoding('Mentions Légales', 'ISO-8859-1', 'UTF-8');
         $this->assertSame('Mentions L&eacute;gales', $fixer->fix($isoString));
-        $this->assertSame('Mentions L&Atilde;&copy;gales', $fixer->fix("Mentions LÃ©gales"));
+        $this->assertSame('Mentions L&Atilde;&copy;gales', $fixer->fix('Mentions LÃ©gales'));
     }
 
     public function testEmptyContent(): void
