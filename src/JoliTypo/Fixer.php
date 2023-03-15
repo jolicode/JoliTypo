@@ -101,8 +101,6 @@ class Fixer
     /**
      * Change the list of rules for a given locale.
      *
-     * @return void
-     *
      * @throws BadRuleSetException
      */
     public function setRules(array $rules)
@@ -117,8 +115,6 @@ class Fixer
 
     /**
      * Customize the list of protected tags.
-     *
-     * @return void
      */
     public function setProtectedTags(array $protectedTags)
     {
@@ -139,8 +135,6 @@ class Fixer
      * Change the locale of the Fixer.
      *
      * @param string $locale An IETF language tag
-     *
-     * @return void
      *
      * @throws \InvalidArgumentException
      */
