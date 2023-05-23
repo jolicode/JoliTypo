@@ -1,0 +1,36 @@
+name: Continuous Integration
+
+'on':
+  push:
+    branches:
+      - master
+  pull_request: ~
+
+jobs:
+  ci:
+    name: Run the test suite
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '${{ matrix.php-versions }}'
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run tests
+        run: composer test
