@@ -10,7 +10,7 @@ Global
 - [ ] Add more pre-configured locale in the README, with the appropriate tests;
 - [ ] Add a http://cldr.unicode.org/ Fixer for number formatting (thx @g_marty for the tip!);
 - [x] A website in which you copy some HTML and get a fixed HTML outputted;
-- [ ] Allow to apply thoses rules: http://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks#Hungarian and document them
+- [ ] Allow to apply those rules: http://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks#Hungarian and document them
 
 Locale to improve
 =================
