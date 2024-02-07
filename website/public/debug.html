@@ -1,0 +1,40 @@
+
+<iframe id="output" width="100%" height="50%" frameBorder="0"></iframe>
+<div id="monaco" style="height: 50%"></div>
+
+<script type="module">
+    import * as monaco from 'https://cdn.jsdelivr.net/npm/monaco-editor@0.39.0/+esm';
+    import phpBinary from "./build/php-web.mjs";
+
+    async function main() {
+        const output = document.getElementById('output')
+        const buffer = [];
+        const {ccall, FS} = await phpBinary({
+            print(data) {
+                buffer.push(data);
+            },
+        })
+
+        console.log(ccall("phpw_exec", "string", ["string"], ["phpversion();"]));
+
+        const run = () => {
+            ccall("phpw", 'string', ["string", "string"], ["/app/src/index.php", 'foobar']);
+            output.contentWindow.document.body.innerHTML = buffer.join('');
+            buffer.length = 0;
+        }
+
+        run();
+
+        const editor = monaco.editor.create(document.getElementById('monaco'));
+        const model = editor.getModel();
+        model.setLanguage('php');
+        model.setValue(FS.readFile('/app/src/index.php', {encoding: 'utf8'}).toString());
+        model.onDidChangeContent((v) => {
+            FS.unlink('/app/src/index.php')
+            FS.writeFile('/app/src/index.php', model.getValue());
+            run();
+        });
+    }
+
+    main();
+</script>

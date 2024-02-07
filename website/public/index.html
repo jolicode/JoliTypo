@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>JoliTypo demo - Micro-typography fixer for HTML contents</title>
+        <link rel="stylesheet" href="./css/app.css">
+    </head>
+
+    <body class="u-bgc(whitegradient)">
+        <div class="o-container u-py(double)">
+
+            <a href="https://github.com/jolicode/JoliTypo" class="github-corner" aria-label="View source on GitHub">
+                <svg width="80" height="80" viewBox="0 0 250 250"
+                    style="fill:#151513; color:#fff; position: fixed; top: 0; border: 0; right: 0;" aria-hidden="true">
+                    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+                    <path
+                        d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                        fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+                    <path
+                        d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                        fill="currentColor" class="octo-body"></path>
+                </svg>
+            </a>
+            <style>
+                .github-corner:hover .octo-arm {
+                    animation: octocat-wave 560ms ease-in-out
+                }
+                @keyframes octocat-wave {
+                    0%,
+                    100% {
+                        transform: rotate(0)
+                    }
+
+                    20%,
+                    60% {
+                        transform: rotate(-25deg)
+                    }
+
+                    40%,
+                    80% {
+                        transform: rotate(10deg)
+                    }
+                }
+
+                @media (max-width:500px) {
+                    .github-corner:hover .octo-arm {
+                        animation: none
+                    }
+
+                    .github-corner .octo-arm {
+                        animation: octocat-wave 560ms ease-in-out
+                    }
+                }
+            </style>
+
+            <header>
+                <h1 class="u-fz(h1) u-ff(courgette) u-ta(center) u-c(orange)">JoliTypo Demo</h1>
+                <div class="subtitle u-fz(h5) u-ta(center)">
+                    This is a sample page to let you try out our microtypography fixer.
+                </div>
+                <div class="subtitle u-fz(h5) u-ta(center) u-bb(orange) u-pb(base) u-w(70) u-mx(auto)">
+                    Learn more at GitHub : <a href="https://github.com/jolicode/JoliTypo"
+                        class="u-c(orange) u-tc(none) link">See repository</a>.
+                </div>
+            </header>
+
+            <div class="help u-ta(center) u-mt(double) u-fz(help)">
+                <p>You may try here the
+                    <a href="https://jolicode.com/" class="u-c(orange)
+                    u-tc(none) link">JoliCode</a>
+                    Microtypography Fixer and see how it works.
+                </p>
+                <p>
+                    Simply select a locale and some fixers, paste in the text or
+                    HTML you want to see fixed and profit !
+                </p>
+            </div>
+
+            <form name="typo_fixer" class="form js-form u-ta(center)">
+
+                <div class="form__part u-my(double)">
+                    <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">Select your locale</h3>
+
+                    <div>
+                        <select id="typo_fixer_locale" name="typo_fixer[locale]" required="required"
+                            class="u-p(half) u-bgc(orangegradient) u-br(5) u-bor(none) u-c(white) u-fz(input) u-cur(pointer)">
+                            <option value="" selected="selected">Select a locale</option>
+                            <option value="fr">French</option>
+                            <option value="en">English</option>
+                            <option value="de">German</option>
+                            <option value="es">Spanish</option>
+                            <option value="it">Italian</option>
+                            <option disabled="disabled">-------------------</option>
+                            <option value="af">Afrikaans</option>
+                            <option value="af_NA">Afrikaans (Namibia)</option>
+                            <option value="af_ZA">Afrikaans (South Africa)</option>
+                            <option value="ak">Akan</option>
+                            <option value="ak_GH">Akan (Ghana)</option>
+                            <option value="sq">Albanian</option>
+                            <option value="sq_AL">Albanian (Albania)</option>
+                            <option value="sq_MK">Albanian (North Macedonia)</option>
+                            <option value="am">Amharic</option>
+                            <option value="am_ET">Amharic (Ethiopia)</option>
+                            <option value="ar">Arabic</option>
+                            <option value="ar_DZ">Arabic (Algeria)</option>
+                            <option value="ar_BH">Arabic (Bahrain)</option>
+                            <option value="ar_TD">Arabic (Chad)</option>
+                            <option value="ar_KM">Arabic (Comoros)</option>
+                            <option value="ar_DJ">Arabic (Djibouti)</option>
+                            <option value="ar_EG">Arabic (Egypt)</option>
+                            <option value="ar_ER">Arabic (Eritrea)</option>
+                            <option value="ar_IQ">Arabic (Iraq)</option>
+                            <option value="ar_IL">Arabic (Israel)</option>
+                            <option value="ar_JO">Arabic (Jordan)</option>
+                            <option value="ar_KW">Arabic (Kuwait)</option>
+                            <option value="ar_LB">Arabic (Lebanon)</option>
+                            <option value="ar_LY">Arabic (Libya)</option>
+                            <option value="ar_MR">Arabic (Mauritania)</option>
+                            <option value="ar_MA">Arabic (Morocco)</option>
+                            <option value="ar_OM">Arabic (Oman)</option>
+                            <option value="ar_PS">Arabic (Palestinian Territories)</option>
+                            <option value="ar_QA">Arabic (Qatar)</option>
+                            <option value="ar_SA">Arabic (Saudi Arabia)</option>
+                            <option value="ar_SO">Arabic (Somalia)</option>
+                            <option value="ar_SS">Arabic (South Sudan)</option>
+                            <option value="ar_SD">Arabic (Sudan)</option>
+                            <option value="ar_SY">Arabic (Syria)</option>
+                            <option value="ar_TN">Arabic (Tunisia)</option>
+                            <option value="ar_AE">Arabic (United Arab Emirates)</option>
+                            <option value="ar_EH">Arabic (Western Sahara)</option>
+                            <option value="ar_001">Arabic (world)</option>
+                            <option value="ar_YE">Arabic (Yemen)</option>
+                            <option value="hy">Armenian</option>
+                            <option value="hy_AM">Armenian (Armenia)</option>
+                            <option value="as">Assamese</option>
+                            <option value="as_IN">Assamese (India)</option>
+                            <option value="az">Azerbaijani</option>
+                            <option value="az_AZ">Azerbaijani (Azerbaijan)</option>
+                            <option value="az_Cyrl_AZ">Azerbaijani (Cyrillic, Azerbaijan)</option>
+                            <option value="az_Cyrl">Azerbaijani (Cyrillic)</option>
+                            <option value="az_Latn_AZ">Azerbaijani (Latin, Azerbaijan)</option>
+                            <option value="az_Latn">Azerbaijani (Latin)</option>
+                            <option value="bm">Bambara</option>
+                            <option value="bm_ML">Bambara (Mali)</option>
+                            <option value="bn">Bangla</option>
+                            <option value="bn_BD">Bangla (Bangladesh)</option>
+                            <option value="bn_IN">Bangla (India)</option>
+                            <option value="eu">Basque</option>
+                            <option value="eu_ES">Basque (Spain)</option>
+                            <option value="be">Belarusian</option>
+                            <option value="be_BY">Belarusian (Belarus)</option>
+                            <option value="bs">Bosnian</option>
+                            <option value="bs_BA">Bosnian (Bosnia &amp; Herzegovina)</option>
+                            <option value="bs_Cyrl_BA">Bosnian (Cyrillic, Bosnia &amp; Herzegovina)</option>
+                            <option value="bs_Cyrl">Bosnian (Cyrillic)</option>
+                            <option value="bs_Latn_BA">Bosnian (Latin, Bosnia &amp; Herzegovina)</option>
+                            <option value="bs_Latn">Bosnian (Latin)</option>
+                            <option value="br">Breton</option>
+                            <option value="br_FR">Breton (France)</option>
+                            <option value="bg">Bulgarian</option>
+                            <option value="bg_BG">Bulgarian (Bulgaria)</option>
+                            <option value="my">Burmese</option>
+                            <option value="my_MM">Burmese (Myanmar [Burma])</option>
+                            <option value="ca">Catalan</option>
+                            <option value="ca_AD">Catalan (Andorra)</option>
+                            <option value="ca_FR">Catalan (France)</option>
+                            <option value="ca_IT">Catalan (Italy)</option>
+                            <option value="ca_ES">Catalan (Spain)</option>
+                            <option value="ce">Chechen</option>
+                            <option value="ce_RU">Chechen (Russia)</option>
+                            <option value="zh">Chinese</option>
+                            <option value="zh_CN">Chinese (China)</option>
+                            <option value="zh_HK">Chinese (Hong Kong SAR China)</option>
+                            <option value="zh_MO">Chinese (Macao SAR China)</option>
+                            <option value="zh_Hans_CN">Chinese (Simplified, China)</option>
+                            <option value="zh_Hans_HK">Chinese (Simplified, Hong Kong SAR China)</option>
+                            <option value="zh_Hans_MO">Chinese (Simplified, Macao SAR China)</option>
+                            <option value="zh_Hans_SG">Chinese (Simplified, Singapore)</option>
+                            <option value="zh_Hans">Chinese (Simplified)</option>
+                            <option value="zh_SG">Chinese (Singapore)</option>
+                            <option value="zh_TW">Chinese (Taiwan)</option>
+                            <option value="zh_Hant_HK">Chinese (Traditional, Hong Kong SAR China)</option>
+                            <option value="zh_Hant_MO">Chinese (Traditional, Macao SAR China)</option>
+                            <option value="zh_Hant_TW">Chinese (Traditional, Taiwan)</option>
+                            <option value="zh_Hant">Chinese (Traditional)</option>
+                            <option value="cv">Chuvash</option>
+                            <option value="cv_RU">Chuvash (Russia)</option>
+                            <option value="kw">Cornish</option>
+                            <option value="kw_GB">Cornish (United Kingdom)</option>
+                            <option value="hr">Croatian</option>
+                            <option value="hr_BA">Croatian (Bosnia &amp; Herzegovina)</option>
+                            <option value="hr_HR">Croatian (Croatia)</option>
+                            <option value="cs">Czech</option>
+                            <option value="cs_CZ">Czech (Czechia)</option>
+                            <option value="da">Danish</option>
+                            <option value="da_DK">Danish (Denmark)</option>
+                            <option value="da_GL">Danish (Greenland)</option>
+                            <option value="nl">Dutch</option>
+                            <option value="nl_AW">Dutch (Aruba)</option>
+                            <option value="nl_BE">Dutch (Belgium)</option>
+                            <option value="nl_BQ">Dutch (Caribbean Netherlands)</option>
+                            <option value="nl_CW">Dutch (Curaçao)</option>
+                            <option value="nl_NL">Dutch (Netherlands)</option>
+                            <option value="nl_SX">Dutch (Sint Maarten)</option>
+                            <option value="nl_SR">Dutch (Suriname)</option>
+                            <option value="dz">Dzongkha</option>
+                            <option value="dz_BT">Dzongkha (Bhutan)</option>
+                            <option value="en">English</option>
+                            <option value="en_AS">English (American Samoa)</option>
+                            <option value="en_AI">English (Anguilla)</option>
+                            <option value="en_AG">English (Antigua &amp; Barbuda)</option>
+                            <option value="en_AU">English (Australia)</option>
+                            <option value="en_AT">English (Austria)</option>
+                            <option value="en_BS">English (Bahamas)</option>
+                            <option value="en_BB">English (Barbados)</option>
+                            <option value="en_BE">English (Belgium)</option>
+                            <option value="en_BZ">English (Belize)</option>
+                            <option value="en_BM">English (Bermuda)</option>
+                            <option value="en_BW">English (Botswana)</option>
+                            <option value="en_IO">English (British Indian Ocean Territory)</option>
+                            <option value="en_VG">English (British Virgin Islands)</option>
+                            <option value="en_BI">English (Burundi)</option>
+                            <option value="en_CM">English (Cameroon)</option>
+                            <option value="en_CA">English (Canada)</option>
+                            <option value="en_KY">English (Cayman Islands)</option>
+                            <option value="en_CX">English (Christmas Island)</option>
+                            <option value="en_CC">English (Cocos [Keeling] Islands)</option>
+                            <option value="en_CK">English (Cook Islands)</option>
+                            <option value="en_CY">English (Cyprus)</option>
+                            <option value="en_DK">English (Denmark)</option>
+                            <option value="en_DM">English (Dominica)</option>
+                            <option value="en_ER">English (Eritrea)</option>
+                            <option value="en_SZ">English (Eswatini)</option>
+                            <option value="en_150">English (Europe)</option>
+                            <option value="en_FK">English (Falkland Islands)</option>
+                            <option value="en_FJ">English (Fiji)</option>
+                            <option value="en_FI">English (Finland)</option>
+                            <option value="en_GM">English (Gambia)</option>
+                            <option value="en_DE">English (Germany)</option>
+                            <option value="en_GH">English (Ghana)</option>
+                            <option value="en_GI">English (Gibraltar)</option>
+                            <option value="en_GD">English (Grenada)</option>
+                            <option value="en_GU">English (Guam)</option>
+                            <option value="en_GG">English (Guernsey)</option>
+                            <option value="en_GY">English (Guyana)</option>
+                            <option value="en_HK">English (Hong Kong SAR China)</option>
+                            <option value="en_IN">English (India)</option>
+                            <option value="en_IE">English (Ireland)</option>
+                            <option value="en_IM">English (Isle of Man)</option>
+                            <option value="en_IL">English (Israel)</option>
+                            <option value="en_JM">English (Jamaica)</option>
+                            <option value="en_JE">English (Jersey)</option>
+                            <option value="en_KE">English (Kenya)</option>
+                            <option value="en_KI">English (Kiribati)</option>
+                            <option value="en_LS">English (Lesotho)</option>
+                            <option value="en_LR">English (Liberia)</option>
+                            <option value="en_MO">English (Macao SAR China)</option>
+                            <option value="en_MG">English (Madagascar)</option>
+                            <option value="en_MW">English (Malawi)</option>
+                            <option value="en_MY">English (Malaysia)</option>
+                            <option value="en_MV">English (Maldives)</option>
+                            <option value="en_MT">English (Malta)</option>
+                            <option value="en_MH">English (Marshall Islands)</option>
+                            <option value="en_MU">English (Mauritius)</option>
+                            <option value="en_FM">English (Micronesia)</option>
+                            <option value="en_MS">English (Montserrat)</option>
+                            <option value="en_NA">English (Namibia)</option>
+                            <option value="en_NR">English (Nauru)</option>
+                            <option value="en_NL">English (Netherlands)</option>
+                            <option value="en_NZ">English (New Zealand)</option>
+                            <option value="en_NG">English (Nigeria)</option>
+                            <option value="en_NU">English (Niue)</option>
+                            <option value="en_NF">English (Norfolk Island)</option>
+                            <option value="en_MP">English (Northern Mariana Islands)</option>
+                            <option value="en_PK">English (Pakistan)</option>
+                            <option value="en_PW">English (Palau)</option>
+                            <option value="en_PG">English (Papua New Guinea)</option>
+                            <option value="en_PH">English (Philippines)</option>
+                            <option value="en_PN">English (Pitcairn Islands)</option>
+                            <option value="en_PR">English (Puerto Rico)</option>
+                            <option value="en_RW">English (Rwanda)</option>
+                            <option value="en_WS">English (Samoa)</option>
+                            <option value="en_SC">English (Seychelles)</option>
+                            <option value="en_SL">English (Sierra Leone)</option>
+                            <option value="en_SG">English (Singapore)</option>
+                            <option value="en_SX">English (Sint Maarten)</option>
+                            <option value="en_SI">English (Slovenia)</option>
+                            <option value="en_SB">English (Solomon Islands)</option>
+                            <option value="en_ZA">English (South Africa)</option>
+                            <option value="en_SS">English (South Sudan)</option>
+                            <option value="en_SH">English (St. Helena)</option>
+                            <option value="en_KN">English (St. Kitts &amp; Nevis)</option>
+                            <option value="en_LC">English (St. Lucia)</option>
+                            <option value="en_VC">English (St. Vincent &amp; Grenadines)</option>
+                            <option value="en_SD">English (Sudan)</option>
+                            <option value="en_SE">English (Sweden)</option>
+                            <option value="en_CH">English (Switzerland)</option>
+                            <option value="en_TZ">English (Tanzania)</option>
+                            <option value="en_TK">English (Tokelau)</option>
+                            <option value="en_TO">English (Tonga)</option>
+                            <option value="en_TT">English (Trinidad &amp; Tobago)</option>
+                            <option value="en_TC">English (Turks &amp; Caicos Islands)</option>
+                            <option value="en_TV">English (Tuvalu)</option>
+                            <option value="en_UM">English (U.S. Outlying Islands)</option>
+                            <option value="en_VI">English (U.S. Virgin Islands)</option>
+                            <option value="en_UG">English (Uganda)</option>
+                            <option value="en_AE">English (United Arab Emirates)</option>
+                            <option value="en_GB">English (United Kingdom)</option>
+                            <option value="en_US">English (United States)</option>
+                            <option value="en_VU">English (Vanuatu)</option>
+                            <option value="en_001">English (world)</option>
+                            <option value="en_ZM">English (Zambia)</option>
+                            <option value="en_ZW">English (Zimbabwe)</option>
+                            <option value="eo">Esperanto</option>
+                            <option value="eo_001">Esperanto (world)</option>
+                            <option value="et">Estonian</option>
+                            <option value="et_EE">Estonian (Estonia)</option>
+                            <option value="ee">Ewe</option>
+                            <option value="ee_GH">Ewe (Ghana)</option>
+                            <option value="ee_TG">Ewe (Togo)</option>
+                            <option value="fo">Faroese</option>
+                            <option value="fo_DK">Faroese (Denmark)</option>
+                            <option value="fo_FO">Faroese (Faroe Islands)</option>
+                            <option value="fi">Finnish</option>
+                            <option value="fi_FI">Finnish (Finland)</option>
+                            <option value="fr">French</option>
+                            <option value="fr_DZ">French (Algeria)</option>
+                            <option value="fr_BE">French (Belgium)</option>
+                            <option value="fr_BJ">French (Benin)</option>
+                            <option value="fr_BF">French (Burkina Faso)</option>
+                            <option value="fr_BI">French (Burundi)</option>
+                            <option value="fr_CM">French (Cameroon)</option>
+                            <option value="fr_CA">French (Canada)</option>
+                            <option value="fr_CF">French (Central African Republic)</option>
+                            <option value="fr_TD">French (Chad)</option>
+                            <option value="fr_KM">French (Comoros)</option>
+                            <option value="fr_CG">French (Congo - Brazzaville)</option>
+                            <option value="fr_CD">French (Congo - Kinshasa)</option>
+                            <option value="fr_CI">French (Côte d’Ivoire)</option>
+                            <option value="fr_DJ">French (Djibouti)</option>
+                            <option value="fr_GQ">French (Equatorial Guinea)</option>
+                            <option value="fr_FR">French (France)</option>
+                            <option value="fr_GF">French (French Guiana)</option>
+                            <option value="fr_PF">French (French Polynesia)</option>
+                            <option value="fr_GA">French (Gabon)</option>
+                            <option value="fr_GP">French (Guadeloupe)</option>
+                            <option value="fr_GN">French (Guinea)</option>
+                            <option value="fr_HT">French (Haiti)</option>
+                            <option value="fr_LU">French (Luxembourg)</option>
+                            <option value="fr_MG">French (Madagascar)</option>
+                            <option value="fr_ML">French (Mali)</option>
+                            <option value="fr_MQ">French (Martinique)</option>
+                            <option value="fr_MR">French (Mauritania)</option>
+                            <option value="fr_MU">French (Mauritius)</option>
+                            <option value="fr_YT">French (Mayotte)</option>
+                            <option value="fr_MC">French (Monaco)</option>
+                            <option value="fr_MA">French (Morocco)</option>
+                            <option value="fr_NC">French (New Caledonia)</option>
+                            <option value="fr_NE">French (Niger)</option>
+                            <option value="fr_RE">French (Réunion)</option>
+                            <option value="fr_RW">French (Rwanda)</option>
+                            <option value="fr_SN">French (Senegal)</option>
+                            <option value="fr_SC">French (Seychelles)</option>
+                            <option value="fr_BL">French (St. Barthélemy)</option>
+                            <option value="fr_MF">French (St. Martin)</option>
+                            <option value="fr_PM">French (St. Pierre &amp; Miquelon)</option>
+                            <option value="fr_CH">French (Switzerland)</option>
+                            <option value="fr_SY">French (Syria)</option>
+                            <option value="fr_TG">French (Togo)</option>
+                            <option value="fr_TN">French (Tunisia)</option>
+                            <option value="fr_VU">French (Vanuatu)</option>
+                            <option value="fr_WF">French (Wallis &amp; Futuna)</option>
+                            <option value="ff">Fula</option>
+                            <option value="ff_Adlm_BF">Fula (Adlam, Burkina Faso)</option>
+                            <option value="ff_Adlm_CM">Fula (Adlam, Cameroon)</option>
+                            <option value="ff_Adlm_GM">Fula (Adlam, Gambia)</option>
+                            <option value="ff_Adlm_GH">Fula (Adlam, Ghana)</option>
+                            <option value="ff_Adlm_GW">Fula (Adlam, Guinea-Bissau)</option>
+                            <option value="ff_Adlm_GN">Fula (Adlam, Guinea)</option>
+                            <option value="ff_Adlm_LR">Fula (Adlam, Liberia)</option>
+                            <option value="ff_Adlm_MR">Fula (Adlam, Mauritania)</option>
+                            <option value="ff_Adlm_NE">Fula (Adlam, Niger)</option>
+                            <option value="ff_Adlm_NG">Fula (Adlam, Nigeria)</option>
+                            <option value="ff_Adlm_SN">Fula (Adlam, Senegal)</option>
+                            <option value="ff_Adlm_SL">Fula (Adlam, Sierra Leone)</option>
+                            <option value="ff_Adlm">Fula (Adlam)</option>
+                            <option value="ff_CM">Fula (Cameroon)</option>
+                            <option value="ff_GN">Fula (Guinea)</option>
+                            <option value="ff_Latn_BF">Fula (Latin, Burkina Faso)</option>
+                            <option value="ff_Latn_CM">Fula (Latin, Cameroon)</option>
+                            <option value="ff_Latn_GM">Fula (Latin, Gambia)</option>
+                            <option value="ff_Latn_GH">Fula (Latin, Ghana)</option>
+                            <option value="ff_Latn_GW">Fula (Latin, Guinea-Bissau)</option>
+                            <option value="ff_Latn_GN">Fula (Latin, Guinea)</option>
+                            <option value="ff_Latn_LR">Fula (Latin, Liberia)</option>
+                            <option value="ff_Latn_MR">Fula (Latin, Mauritania)</option>
+                            <option value="ff_Latn_NE">Fula (Latin, Niger)</option>
+                            <option value="ff_Latn_NG">Fula (Latin, Nigeria)</option>
+                            <option value="ff_Latn_SN">Fula (Latin, Senegal)</option>
+                            <option value="ff_Latn_SL">Fula (Latin, Sierra Leone)</option>
+                            <option value="ff_Latn">Fula (Latin)</option>
+                            <option value="ff_MR">Fula (Mauritania)</option>
+                            <option value="ff_SN">Fula (Senegal)</option>
+                            <option value="gl">Galician</option>
+                            <option value="gl_ES">Galician (Spain)</option>
+                            <option value="lg">Ganda</option>
+                            <option value="lg_UG">Ganda (Uganda)</option>
+                            <option value="ka">Georgian</option>
+                            <option value="ka_GE">Georgian (Georgia)</option>
+                            <option value="de">German</option>
+                            <option value="de_AT">German (Austria)</option>
+                            <option value="de_BE">German (Belgium)</option>
+                            <option value="de_DE">German (Germany)</option>
+                            <option value="de_IT">German (Italy)</option>
+                            <option value="de_LI">German (Liechtenstein)</option>
+                            <option value="de_LU">German (Luxembourg)</option>
+                            <option value="de_CH">German (Switzerland)</option>
+                            <option value="el">Greek</option>
+                            <option value="el_CY">Greek (Cyprus)</option>
+                            <option value="el_GR">Greek (Greece)</option>
+                            <option value="gu">Gujarati</option>
+                            <option value="gu_IN">Gujarati (India)</option>
+                            <option value="ha">Hausa</option>
+                            <option value="ha_GH">Hausa (Ghana)</option>
+                            <option value="ha_NE">Hausa (Niger)</option>
+                            <option value="ha_NG">Hausa (Nigeria)</option>
+                            <option value="he">Hebrew</option>
+                            <option value="he_IL">Hebrew (Israel)</option>
+                            <option value="hi">Hindi</option>
+                            <option value="hi_IN">Hindi (India)</option>
+                            <option value="hi_Latn_IN">Hindi (Latin, India)</option>
+                            <option value="hi_Latn">Hindi (Latin)</option>
+                            <option value="hu">Hungarian</option>
+                            <option value="hu_HU">Hungarian (Hungary)</option>
+                            <option value="is">Icelandic</option>
+                            <option value="is_IS">Icelandic (Iceland)</option>
+                            <option value="ig">Igbo</option>
+                            <option value="ig_NG">Igbo (Nigeria)</option>
+                            <option value="id">Indonesian</option>
+                            <option value="id_ID">Indonesian (Indonesia)</option>
+                            <option value="ia">Interlingua</option>
+                            <option value="ia_001">Interlingua (world)</option>
+                            <option value="ga">Irish</option>
+                            <option value="ga_IE">Irish (Ireland)</option>
+                            <option value="ga_GB">Irish (United Kingdom)</option>
+                            <option value="it">Italian</option>
+                            <option value="it_IT">Italian (Italy)</option>
+                            <option value="it_SM">Italian (San Marino)</option>
+                            <option value="it_CH">Italian (Switzerland)</option>
+                            <option value="it_VA">Italian (Vatican City)</option>
+                            <option value="ja">Japanese</option>
+                            <option value="ja_JP">Japanese (Japan)</option>
+                            <option value="jv">Javanese</option>
+                            <option value="jv_ID">Javanese (Indonesia)</option>
+                            <option value="kl">Kalaallisut</option>
+                            <option value="kl_GL">Kalaallisut (Greenland)</option>
+                            <option value="kn">Kannada</option>
+                            <option value="kn_IN">Kannada (India)</option>
+                            <option value="ks">Kashmiri</option>
+                            <option value="ks_Arab_IN">Kashmiri (Arabic, India)</option>
+                            <option value="ks_Arab">Kashmiri (Arabic)</option>
+                            <option value="ks_Deva_IN">Kashmiri (Devanagari, India)</option>
+                            <option value="ks_Deva">Kashmiri (Devanagari)</option>
+                            <option value="ks_IN">Kashmiri (India)</option>
+                            <option value="kk">Kazakh</option>
+                            <option value="kk_KZ">Kazakh (Kazakhstan)</option>
+                            <option value="km">Khmer</option>
+                            <option value="km_KH">Khmer (Cambodia)</option>
+                            <option value="ki">Kikuyu</option>
+                            <option value="ki_KE">Kikuyu (Kenya)</option>
+                            <option value="rw">Kinyarwanda</option>
+                            <option value="rw_RW">Kinyarwanda (Rwanda)</option>
+                            <option value="ko">Korean</option>
+                            <option value="ko_KP">Korean (North Korea)</option>
+                            <option value="ko_KR">Korean (South Korea)</option>
+                            <option value="ku">Kurdish</option>
+                            <option value="ku_TR">Kurdish (Turkey)</option>
+                            <option value="ky">Kyrgyz</option>
+                            <option value="ky_KG">Kyrgyz (Kyrgyzstan)</option>
+                            <option value="lo">Lao</option>
+                            <option value="lo_LA">Lao (Laos)</option>
+                            <option value="lv">Latvian</option>
+                            <option value="lv_LV">Latvian (Latvia)</option>
+                            <option value="ln">Lingala</option>
+                            <option value="ln_AO">Lingala (Angola)</option>
+                            <option value="ln_CF">Lingala (Central African Republic)</option>
+                            <option value="ln_CG">Lingala (Congo - Brazzaville)</option>
+                            <option value="ln_CD">Lingala (Congo - Kinshasa)</option>
+                            <option value="lt">Lithuanian</option>
+                            <option value="lt_LT">Lithuanian (Lithuania)</option>
+                            <option value="lu">Luba-Katanga</option>
+                            <option value="lu_CD">Luba-Katanga (Congo - Kinshasa)</option>
+                            <option value="lb">Luxembourgish</option>
+                            <option value="lb_LU">Luxembourgish (Luxembourg)</option>
+                            <option value="mk">Macedonian</option>
+                            <option value="mk_MK">Macedonian (North Macedonia)</option>
+                            <option value="mg">Malagasy</option>
+                            <option value="mg_MG">Malagasy (Madagascar)</option>
+                            <option value="ms">Malay</option>
+                            <option value="ms_BN">Malay (Brunei)</option>
+                            <option value="ms_ID">Malay (Indonesia)</option>
+                            <option value="ms_MY">Malay (Malaysia)</option>
+                            <option value="ms_SG">Malay (Singapore)</option>
+                            <option value="ml">Malayalam</option>
+                            <option value="ml_IN">Malayalam (India)</option>
+                            <option value="mt">Maltese</option>
+                            <option value="mt_MT">Maltese (Malta)</option>
+                            <option value="gv">Manx</option>
+                            <option value="gv_IM">Manx (Isle of Man)</option>
+                            <option value="mi">Māori</option>
+                            <option value="mi_NZ">Māori (New Zealand)</option>
+                            <option value="mr">Marathi</option>
+                            <option value="mr_IN">Marathi (India)</option>
+                            <option value="mn">Mongolian</option>
+                            <option value="mn_MN">Mongolian (Mongolia)</option>
+                            <option value="ne">Nepali</option>
+                            <option value="ne_IN">Nepali (India)</option>
+                            <option value="ne_NP">Nepali (Nepal)</option>
+                            <option value="nd">North Ndebele</option>
+                            <option value="nd_ZW">North Ndebele (Zimbabwe)</option>
+                            <option value="se">Northern Sami</option>
+                            <option value="se_FI">Northern Sami (Finland)</option>
+                            <option value="se_NO">Northern Sami (Norway)</option>
+                            <option value="se_SE">Northern Sami (Sweden)</option>
+                            <option value="no">Norwegian</option>
+                            <option value="no_NO">Norwegian (Norway)</option>
+                            <option value="nb">Norwegian Bokmål</option>
+                            <option value="nb_NO">Norwegian Bokmål (Norway)</option>
+                            <option value="nb_SJ">Norwegian Bokmål (Svalbard &amp; Jan Mayen)</option>
+                            <option value="nn">Norwegian Nynorsk</option>
+                            <option value="nn_NO">Norwegian Nynorsk (Norway)</option>
+                            <option value="or">Odia</option>
+                            <option value="or_IN">Odia (India)</option>
+                            <option value="om">Oromo</option>
+                            <option value="om_ET">Oromo (Ethiopia)</option>
+                            <option value="om_KE">Oromo (Kenya)</option>
+                            <option value="os">Ossetic</option>
+                            <option value="os_GE">Ossetic (Georgia)</option>
+                            <option value="os_RU">Ossetic (Russia)</option>
+                            <option value="ps">Pashto</option>
+                            <option value="ps_AF">Pashto (Afghanistan)</option>
+                            <option value="ps_PK">Pashto (Pakistan)</option>
+                            <option value="fa">Persian</option>
+                            <option value="fa_AF">Persian (Afghanistan)</option>
+                            <option value="fa_IR">Persian (Iran)</option>
+                            <option value="pl">Polish</option>
+                            <option value="pl_PL">Polish (Poland)</option>
+                            <option value="pt">Portuguese</option>
+                            <option value="pt_AO">Portuguese (Angola)</option>
+                            <option value="pt_BR">Portuguese (Brazil)</option>
+                            <option value="pt_CV">Portuguese (Cape Verde)</option>
+                            <option value="pt_GQ">Portuguese (Equatorial Guinea)</option>
+                            <option value="pt_GW">Portuguese (Guinea-Bissau)</option>
+                            <option value="pt_LU">Portuguese (Luxembourg)</option>
+                            <option value="pt_MO">Portuguese (Macao SAR China)</option>
+                            <option value="pt_MZ">Portuguese (Mozambique)</option>
+                            <option value="pt_PT">Portuguese (Portugal)</option>
+                            <option value="pt_ST">Portuguese (São Tomé &amp; Príncipe)</option>
+                            <option value="pt_CH">Portuguese (Switzerland)</option>
+                            <option value="pt_TL">Portuguese (Timor-Leste)</option>
+                            <option value="pa">Punjabi</option>
+                            <option value="pa_Arab_PK">Punjabi (Arabic, Pakistan)</option>
+                            <option value="pa_Arab">Punjabi (Arabic)</option>
+                            <option value="pa_Guru_IN">Punjabi (Gurmukhi, India)</option>
+                            <option value="pa_Guru">Punjabi (Gurmukhi)</option>
+                            <option value="pa_IN">Punjabi (India)</option>
+                            <option value="pa_PK">Punjabi (Pakistan)</option>
+                            <option value="qu">Quechua</option>
+                            <option value="qu_BO">Quechua (Bolivia)</option>
+                            <option value="qu_EC">Quechua (Ecuador)</option>
+                            <option value="qu_PE">Quechua (Peru)</option>
+                            <option value="ro">Romanian</option>
+                            <option value="ro_MD">Romanian (Moldova)</option>
+                            <option value="ro_RO">Romanian (Romania)</option>
+                            <option value="rm">Romansh</option>
+                            <option value="rm_CH">Romansh (Switzerland)</option>
+                            <option value="rn">Rundi</option>
+                            <option value="rn_BI">Rundi (Burundi)</option>
+                            <option value="ru">Russian</option>
+                            <option value="ru_BY">Russian (Belarus)</option>
+                            <option value="ru_KZ">Russian (Kazakhstan)</option>
+                            <option value="ru_KG">Russian (Kyrgyzstan)</option>
+                            <option value="ru_MD">Russian (Moldova)</option>
+                            <option value="ru_RU">Russian (Russia)</option>
+                            <option value="ru_UA">Russian (Ukraine)</option>
+                            <option value="sg">Sango</option>
+                            <option value="sg_CF">Sango (Central African Republic)</option>
+                            <option value="sa">Sanskrit</option>
+                            <option value="sa_IN">Sanskrit (India)</option>
+                            <option value="sc">Sardinian</option>
+                            <option value="sc_IT">Sardinian (Italy)</option>
+                            <option value="gd">Scottish Gaelic</option>
+                            <option value="gd_GB">Scottish Gaelic (United Kingdom)</option>
+                            <option value="sr">Serbian</option>
+                            <option value="sr_BA">Serbian (Bosnia &amp; Herzegovina)</option>
+                            <option value="sr_Cyrl_BA">Serbian (Cyrillic, Bosnia &amp; Herzegovina)</option>
+                            <option value="sr_Cyrl_ME">Serbian (Cyrillic, Montenegro)</option>
+                            <option value="sr_Cyrl_RS">Serbian (Cyrillic, Serbia)</option>
+                            <option value="sr_Cyrl">Serbian (Cyrillic)</option>
+                            <option value="sr_Latn_BA">Serbian (Latin, Bosnia &amp; Herzegovina)</option>
+                            <option value="sr_Latn_ME">Serbian (Latin, Montenegro)</option>
+                            <option value="sr_Latn_RS">Serbian (Latin, Serbia)</option>
+                            <option value="sr_Latn">Serbian (Latin)</option>
+                            <option value="sr_ME">Serbian (Montenegro)</option>
+                            <option value="sr_RS">Serbian (Serbia)</option>
+                            <option value="sh">Serbo-Croatian</option>
+                            <option value="sh_BA">Serbo-Croatian (Bosnia &amp; Herzegovina)</option>
+                            <option value="sn">Shona</option>
+                            <option value="sn_ZW">Shona (Zimbabwe)</option>
+                            <option value="ii">Sichuan Yi</option>
+                            <option value="ii_CN">Sichuan Yi (China)</option>
+                            <option value="sd">Sindhi</option>
+                            <option value="sd_Arab_PK">Sindhi (Arabic, Pakistan)</option>
+                            <option value="sd_Arab">Sindhi (Arabic)</option>
+                            <option value="sd_Deva_IN">Sindhi (Devanagari, India)</option>
+                            <option value="sd_Deva">Sindhi (Devanagari)</option>
+                            <option value="sd_IN">Sindhi (India)</option>
+                            <option value="sd_PK">Sindhi (Pakistan)</option>
+                            <option value="si">Sinhala</option>
+                            <option value="si_LK">Sinhala (Sri Lanka)</option>
+                            <option value="sk">Slovak</option>
+                            <option value="sk_SK">Slovak (Slovakia)</option>
+                            <option value="sl">Slovenian</option>
+                            <option value="sl_SI">Slovenian (Slovenia)</option>
+                            <option value="so">Somali</option>
+                            <option value="so_DJ">Somali (Djibouti)</option>
+                            <option value="so_ET">Somali (Ethiopia)</option>
+                            <option value="so_KE">Somali (Kenya)</option>
+                            <option value="so_SO">Somali (Somalia)</option>
+                            <option value="es">Spanish</option>
+                            <option value="es_AR">Spanish (Argentina)</option>
+                            <option value="es_BZ">Spanish (Belize)</option>
+                            <option value="es_BO">Spanish (Bolivia)</option>
+                            <option value="es_BR">Spanish (Brazil)</option>
+                            <option value="es_CL">Spanish (Chile)</option>
+                            <option value="es_CO">Spanish (Colombia)</option>
+                            <option value="es_CR">Spanish (Costa Rica)</option>
+                            <option value="es_CU">Spanish (Cuba)</option>
+                            <option value="es_DO">Spanish (Dominican Republic)</option>
+                            <option value="es_EC">Spanish (Ecuador)</option>
+                            <option value="es_SV">Spanish (El Salvador)</option>
+                            <option value="es_GQ">Spanish (Equatorial Guinea)</option>
+                            <option value="es_GT">Spanish (Guatemala)</option>
+                            <option value="es_HN">Spanish (Honduras)</option>
+                            <option value="es_419">Spanish (Latin America)</option>
+                            <option value="es_MX">Spanish (Mexico)</option>
+                            <option value="es_NI">Spanish (Nicaragua)</option>
+                            <option value="es_PA">Spanish (Panama)</option>
+                            <option value="es_PY">Spanish (Paraguay)</option>
+                            <option value="es_PE">Spanish (Peru)</option>
+                            <option value="es_PH">Spanish (Philippines)</option>
+                            <option value="es_PR">Spanish (Puerto Rico)</option>
+                            <option value="es_ES">Spanish (Spain)</option>
+                            <option value="es_US">Spanish (United States)</option>
+                            <option value="es_UY">Spanish (Uruguay)</option>
+                            <option value="es_VE">Spanish (Venezuela)</option>
+                            <option value="su">Sundanese</option>
+                            <option value="su_ID">Sundanese (Indonesia)</option>
+                            <option value="su_Latn_ID">Sundanese (Latin, Indonesia)</option>
+                            <option value="su_Latn">Sundanese (Latin)</option>
+                            <option value="sw">Swahili</option>
+                            <option value="sw_CD">Swahili (Congo - Kinshasa)</option>
+                            <option value="sw_KE">Swahili (Kenya)</option>
+                            <option value="sw_TZ">Swahili (Tanzania)</option>
+                            <option value="sw_UG">Swahili (Uganda)</option>
+                            <option value="sv">Swedish</option>
+                            <option value="sv_AX">Swedish (Åland Islands)</option>
+                            <option value="sv_FI">Swedish (Finland)</option>
+                            <option value="sv_SE">Swedish (Sweden)</option>
+                            <option value="tl">Tagalog</option>
+                            <option value="tl_PH">Tagalog (Philippines)</option>
+                            <option value="tg">Tajik</option>
+                            <option value="tg_TJ">Tajik (Tajikistan)</option>
+                            <option value="ta">Tamil</option>
+                            <option value="ta_IN">Tamil (India)</option>
+                            <option value="ta_MY">Tamil (Malaysia)</option>
+                            <option value="ta_SG">Tamil (Singapore)</option>
+                            <option value="ta_LK">Tamil (Sri Lanka)</option>
+                            <option value="tt">Tatar</option>
+                            <option value="tt_RU">Tatar (Russia)</option>
+                            <option value="te">Telugu</option>
+                            <option value="te_IN">Telugu (India)</option>
+                            <option value="th">Thai</option>
+                            <option value="th_TH">Thai (Thailand)</option>
+                            <option value="bo">Tibetan</option>
+                            <option value="bo_CN">Tibetan (China)</option>
+                            <option value="bo_IN">Tibetan (India)</option>
+                            <option value="ti">Tigrinya</option>
+                            <option value="ti_ER">Tigrinya (Eritrea)</option>
+                            <option value="ti_ET">Tigrinya (Ethiopia)</option>
+                            <option value="to">Tongan</option>
+                            <option value="to_TO">Tongan (Tonga)</option>
+                            <option value="tr">Turkish</option>
+                            <option value="tr_CY">Turkish (Cyprus)</option>
+                            <option value="tr_TR">Turkish (Turkey)</option>
+                            <option value="tk">Turkmen</option>
+                            <option value="tk_TM">Turkmen (Turkmenistan)</option>
+                            <option value="uk">Ukrainian</option>
+                            <option value="uk_UA">Ukrainian (Ukraine)</option>
+                            <option value="ur">Urdu</option>
+                            <option value="ur_IN">Urdu (India)</option>
+                            <option value="ur_PK">Urdu (Pakistan)</option>
+                            <option value="ug">Uyghur</option>
+                            <option value="ug_CN">Uyghur (China)</option>
+                            <option value="uz">Uzbek</option>
+                            <option value="uz_AF">Uzbek (Afghanistan)</option>
+                            <option value="uz_Arab_AF">Uzbek (Arabic, Afghanistan)</option>
+                            <option value="uz_Arab">Uzbek (Arabic)</option>
+                            <option value="uz_Cyrl_UZ">Uzbek (Cyrillic, Uzbekistan)</option>
+                            <option value="uz_Cyrl">Uzbek (Cyrillic)</option>
+                            <option value="uz_Latn_UZ">Uzbek (Latin, Uzbekistan)</option>
+                            <option value="uz_Latn">Uzbek (Latin)</option>
+                            <option value="uz_UZ">Uzbek (Uzbekistan)</option>
+                            <option value="vi">Vietnamese</option>
+                            <option value="vi_VN">Vietnamese (Vietnam)</option>
+                            <option value="cy">Welsh</option>
+                            <option value="cy_GB">Welsh (United Kingdom)</option>
+                            <option value="fy">Western Frisian</option>
+                            <option value="fy_NL">Western Frisian (Netherlands)</option>
+                            <option value="wo">Wolof</option>
+                            <option value="wo_SN">Wolof (Senegal)</option>
+                            <option value="xh">Xhosa</option>
+                            <option value="xh_ZA">Xhosa (South Africa)</option>
+                            <option value="yi">Yiddish</option>
+                            <option value="yi_001">Yiddish (world)</option>
+                            <option value="yo">Yoruba</option>
+                            <option value="yo_BJ">Yoruba (Benin)</option>
+                            <option value="yo_NG">Yoruba (Nigeria)</option>
+                            <option value="zu">Zulu</option>
+                            <option value="zu_ZA">Zulu (South Africa)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form__part u-my(double)">
+                    <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">
+                        Choose the fixes you want to apply
+                    </h3>
+                    <div class="form__fixes-wrapper o-grid o-grid--2 o-grid--5@tablet-up u-jc(center) u-ac(stretch)">
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_0">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">Dash</div>
+                                    <div class="form__label-desc u-pt(half)">Add longer dashes instead of regular ones</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_0" value="Dash" name="typo_fixer[fixers][]" checked="checked">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_1">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">Dimension</div>
+                                    <div class="form__label-desc u-pt(half)">Real × symbol between numbers</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_1" value="Dimension" name="typo_fixer[fixers][]" checked="checked">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_2">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">Ellipsis</div>
+                                    <div class="form__label-desc u-pt(half)">Real ellipsis rather than three dots</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_2" value="Ellipsis" name="typo_fixer[fixers][]" checked="checked">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_3">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">SmartQuotes</div>
+                                    <div class="form__label-desc u-pt(half)">Language adequate quotes</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_3" value="SmartQuotes" name="typo_fixer[fixers][]" checked="checked">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_4">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">FrenchNoBreakSpace</div>
+                                    <div class="form__label-desc u-pt(half)">Set non breaking spaces before : ; ! ?</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_4" value="FrenchNoBreakSpace" name="typo_fixer[fixers][]">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_5">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">NoSpaceBeforeComma</div>
+                                    <div class="form__label-desc u-pt(half)">Remove spaces before commas</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_5" value="NoSpaceBeforeComma" name="typo_fixer[fixers][]" checked="checked">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_6">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">Hyphen</div>
+                                    <div class="form__label-desc u-pt(half)">Automatic word-hyphenation</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_6" value="Hyphen" name="typo_fixer[fixers][]" checked="checked">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_7">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">CurlyQuote</div>
+                                    <div class="form__label-desc u-pt(half)">Replace straight quotes by curly one’s</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_7" value="CurlyQuote" name="typo_fixer[fixers][]" checked="checked">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_8">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">Trademark</div>
+                                    <div class="form__label-desc u-pt(half)">Handle symbols like ™ © ®</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_8" value="Trademark" name="typo_fixer[fixers][]" checked="checked">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form__fixes-checkbox u-my(half) o-grid__col">
+                            <label for="typo_fixers_9">
+                                <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
+                                    <div class="form__label-name u-bb(white)">Unit</div>
+                                    <div class="form__label-desc u-pt(half)">Add non breaking spaces for units</div>
+                                    <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_9" value="Unit" name="typo_fixer[fixers][]" checked="checked">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="js-check-all form__check-all u-br(5) u-c(white) u-bgc(orangegradient) u-px(base) u-py(semihalf) u-bor(none) u-cur(pointer) u-fz(input)">Uncheck all</button>
+
+                <div class="form__part u-my(double)">
+                    <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">
+                        Paste in your text or HTML
+                    </h3>
+
+                    <div>
+                        <textarea id="typo_fixer_content" name="typo_fixer[content]" required="required" class="js-content u-w(100) u-vh(45) u-bor(orange) u-br(5)"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" name="submit" class="form__submit u-br(5) u-c(white) u-bgc(orangegradient) u-px(base) u-py(semihalf) u-bor(none) u-cur(pointer) u-fz(input)">
+                    Behold Typo Madness !
+                </button>
+            </form>
+
+            <div id="result" class="u-d(none) u-mt(double)">
+                <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">
+                    PHP Code
+                </h3>
+
+                <pre id="phpCode" class="u-w(100) u-vh(25) u-bor(orange) u-br(5)">
+                </pre>
+
+                <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">
+                    Result
+                </h3>
+
+                <div id="resultContent" class="u-w(100) u-vh(25) u-bor(orange) u-br(5)">
+                </div>
+            </div>
+
+            <footer class="u-ta(center) u-mt(double)">
+                <p>
+                    © <a href="https://github.com/jolicode/JoliTypo"
+                    class="u-c(orange) u-tc(none) link">JoliTypo</a> is brought
+                    to you by <a href="https://jolicode.com/" class="u-c(orange)
+                    u-tc(none) link">JoliCode.</a>
+                </p>
+                <p>
+                    This is a PHP script parsing your HTML and trying to fix
+                    commons typography issues, it's open-source and under MIT
+                    License.
+                </p>
+            </footer>
+        </div>
+
+        <script src="./js/app.js" defer></script>
+        <script src="./js/wasm.js" defer type="module"></script>
+    </body>
+</html>

@@ -1,0 +1,151 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "bd83b121bec50af7a6251777902ac045",
+    "packages": [
+        {
+            "name": "jolicode/jolitypo",
+            "version": "dev-gh-pages",
+            "dist": {
+                "type": "path",
+                "url": "..",
+                "reference": "ee29720c25dc76c7a7c899028252e4b4ea4474c3"
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "lib-libxml": "*",
+                "org_heigl/hyphenator": "^2.6 || ^3.0",
+                "php": ">=7.4"
+            },
+            "conflict": {
+                "ext-apc": "3.1.11"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.3.2",
+                "symfony/framework-bundle": "^4.4 || ^5.0 || ^6.0",
+                "symfony/phpunit-bridge": "^5.4.8 || ^6.0",
+                "symfony/twig-bundle": "^4.4 || ^5.0 || ^6.0",
+                "symfony/yaml": "^4.4 || ^5.0 || ^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JoliTypo\\": "src/JoliTypo"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "JoliTypo\\Tests\\": "tests/JoliTypo/Tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/simple-phpunit"
+                ],
+                "cs": [
+                    "vendor/bin/php-cs-fixer fix"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Damien Alexandre",
+                    "email": "dalexandre@jolicode.com",
+                    "homepage": "https://damienalexandre.fr/"
+                }
+            ],
+            "description": "Microtypography fixer for the web.",
+            "homepage": "https://github.com/jolicode/JoliTypo",
+            "keywords": [
+                "ellipsis",
+                "fixer",
+                "quote",
+                "smartquote",
+                "typography"
+            ],
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
+        },
+        {
+            "name": "org_heigl/hyphenator",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/heiglandreas/Org_Heigl_Hyphenator.git",
+                "reference": "d8bcb8cefff21c9de3a77ec4de1750f0230a6494"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Hyphenator/zipball/d8bcb8cefff21c9de3a77ec4de1750f0230a6494",
+                "reference": "d8bcb8cefff21c9de3a77ec4de1750f0230a6494",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.2||^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "phpunit/phpunit": "^8.0||^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Org\\Heigl\\Hyphenator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Heigl",
+                    "email": "andreas@heigl.org",
+                    "homepage": "http://andreas.heigl.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Word-Hyphenation for PHP based on the TeX-Hyphenation algorithm",
+            "homepage": "http://github.com/heiglandreas/Org_Heigl_Hyphenator",
+            "keywords": [
+                "hyphenate",
+                "hyphenation"
+            ],
+            "support": {
+                "issues": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/issues",
+                "source": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/tree/v3.0.0"
+            },
+            "time": "2022-05-21T08:58:29+00:00"
+        },
+        {
+            "name": "soyuka/php-wasm",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/soyuka/php-wasm.git",
+                "reference": "main"
+            },
+            "type": "library"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "jolicode/jolitypo": 20,
+        "soyuka/php-wasm": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}
