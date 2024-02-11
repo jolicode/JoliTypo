@@ -8,15 +8,19 @@ name: Continuous Integration
 
 jobs:
   ci:
-    name: Run the test suite
+    name: Test PHP ${{ matrix.php-version }} ${{ matrix.name }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions:
-          - '7.4'
-          - '8.0'
-          - '8.1'
+        php-version:
           - '8.2'
+          - '8.3'
+        composer-flags: ['']
+        name: ['']
+        include:
+          - php-version: 8.1
+            composer-flags: '--prefer-lowest'
+            name: '(prefer lowest dependencies)'
 
     steps:
       - uses: actions/checkout@v3
@@ -24,7 +28,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '${{ matrix.php-versions }}'
+          php-version: '${{ matrix.php-version }}'
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict

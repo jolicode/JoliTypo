@@ -10,8 +10,6 @@
 namespace JoliTypo\Fixer;
 
 /**
- * {@inheritdoc}
- *
  * @deprecated Numeric should not be used (reserved keyword in PHP7)
  */
 class Numeric extends Unit

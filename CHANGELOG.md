@@ -3,6 +3,12 @@ CHANGELOG
 
 ### 1.5.0 (not released yet) ###
 
+* Add support for PHP 8.3
+* Add support for Symfony 7
+* Drop support for PHP < 8.1
+* Drop support for Symfony < 5.4 and 6.1, 6.2, and 6.3
+* Drop support for Twig < 2
+
 ### 1.4.0 (2022-12-22) ###
 
 * Drop support for Symfony < 4.4
