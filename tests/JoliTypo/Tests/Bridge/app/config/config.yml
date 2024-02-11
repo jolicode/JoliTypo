@@ -21,6 +21,5 @@ joli_typo:
 
 services:
     JoliTypo\Tests\Bridge\app\AppController:
-        class: \JoliTypo\Tests\Bridge\app\AppController
         public: true
         arguments: ['@twig']

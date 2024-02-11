@@ -14,38 +14,24 @@ use Twig\Environment;
 
 class AppController
 {
-    private Environment $twig;
-
-    public function __construct(Environment $twig)
-    {
-        $this->twig = $twig;
+    public function __construct(
+        private Environment $twig,
+    ) {
     }
 
     public function fixAction(): Response
     {
-        if (1 === $this->twig::MAJOR_VERSION) {
-            $template = $this->twig->createTemplate(
-                <<<'TWIG'
-                    <p>Raw content: People's.</p>
+        $template = $this->twig->createTemplate(
+            <<<'TWIG'
+                <p>Raw content: People's.</p>
 
-                    <p>{{ "Fixed content: People's."|jolitypo('en') }}</p>
-                    TWIG
-            );
+                {% apply jolitypo('en') %}
+                    <p>Fixed content: People's.</p>
+                {% endapply %}
+                TWIG
+        );
 
-            $content = $template->render([]);
-        } else {
-            $template = $this->twig->createTemplate(
-                <<<'TWIG'
-                    <p>Raw content: People's.</p>
-
-                    {% apply jolitypo('en') %}
-                        <p>Fixed content: People's.</p>
-                    {% endapply %}
-                    TWIG
-            );
-
-            $content = $this->twig->render($template);
-        }
+        $content = $this->twig->render($template);
 
         return new Response($content);
     }

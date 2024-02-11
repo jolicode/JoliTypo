@@ -190,7 +190,7 @@ class Fixer
         foreach ($rules as $rule) {
             if (\is_object($rule)) {
                 $fixer = $rule;
-                $className = \get_class($rule);
+                $className = $rule::class;
             } else {
                 $className = class_exists($rule) ? $rule : (class_exists(
                     'JoliTypo\\Fixer\\' . $rule
@@ -275,7 +275,7 @@ class Fixer
     }
 
     /**
-     * @throws Exception\InvalidMarkupException
+     * @throws InvalidMarkupException
      */
     private function loadDOMDocument($content): \DOMDocument
     {
@@ -311,8 +311,8 @@ class Fixer
     {
         if (!empty($content)) {
             // Little hack to force UTF-8
-            if (false === strpos($content, '<?xml encoding')) {
-                $hack = false === strpos(
+            if (!str_contains($content, '<?xml encoding')) {
+                $hack = !str_contains(
                     $content,
                     '<body'
                 ) ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
