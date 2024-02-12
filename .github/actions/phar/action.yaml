@@ -24,6 +24,6 @@ runs:
       working-directory: tools/phar
 
     - name: Ensure PHAR is OK
-      run: build/castor.phar --version
+      run: build/jolitypo.phar --version
       shell: bash
       working-directory: tools/phar
