@@ -1,0 +1,48 @@
+{
+    "name": "jolicode/jolitypo-website",
+    "description": "Demo website for jolicode/jolitypo",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Damien Alexandre",
+            "email": "dalexandre@jolicode.com"
+        },
+        {
+            "name": "Grégoire Pineau",
+            "email": "lyrixx@lyrixx.info"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "soyuka/php-wasm",
+                "version": "dev-main",
+                "source": {
+                    "url": "https://github.com/soyuka/php-wasm.git",
+                    "type": "git",
+                    "reference": "main"
+                }
+            }
+        },
+        {
+            "type": "path",
+            "url": "../",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+    "require": {
+        "jolicode/jolitypo": "*@dev",
+        "soyuka/php-wasm": "dev-main@dev"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    }
+}
