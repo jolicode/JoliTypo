@@ -1,48 +1,47 @@
-
 name: Build the public website, and publish to GitHub Pages
 
 on:
-  push:
-    branches: [ "main" ]
+    push:
+        branches: ["main"]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+    contents: read
+    pages: write
+    id-token: write
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{steps.deployment.outputs.page_url}}
-    steps:
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+    deploy:
+        runs-on: ubuntu-latest
+        environment:
+            name: github-pages
+            url: ${{steps.deployment.outputs.page_url}}
+        steps:
+            - name: Setup Pages
+              uses: actions/configure-pages@v4
 
-      - name: Checkout
-        uses: actions/checkout@v4
+            - name: Checkout
+              uses: actions/checkout@v4
 
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.3"
-          tools: castor
+            - name: Install PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.3"
+                  tools: castor
 
-      - name: Build
-        run: |
-          set -x
-          castor website:install
-          castor website:wasm:export --pack --build
-        working-directory: ./website
-        env:
-          BASE_URL: "/${{ github.event.repository.name }}"
+            - name: Build
+              run: |
+                  set -x
+                  castor website:install
+                  castor website:wasm:export --pack --build
+              working-directory: ./website
+              env:
+                  BASE_URL: "/${{ github.event.repository.name }}"
 
-      - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: 'website/public'
+            - name: Upload Artifact
+              uses: actions/upload-pages-artifact@v4
+              with:
+                  path: "website/public"
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4

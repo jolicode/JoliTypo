@@ -1,40 +1,40 @@
 name: Continuous Integration
 
-'on':
-  push:
-    branches:
-      - master
-  pull_request: ~
+"on":
+    push:
+        branches:
+            - master
+    pull_request: ~
 
 jobs:
-  ci:
-    name: Test PHP ${{ matrix.php-version }} ${{ matrix.name }}
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-version:
-          - '8.2'
-          - '8.3'
-        composer-flags: ['']
-        name: ['']
-        include:
-          - php-version: 8.1
-            composer-flags: '--prefer-lowest'
-            name: '(prefer lowest dependencies)'
+    ci:
+        name: Test PHP ${{ matrix.php-version }} ${{ matrix.name }}
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php-version:
+                    - "8.2"
+                    - "8.3"
+                composer-flags: [""]
+                name: [""]
+                include:
+                    - php-version: 8.1
+                      composer-flags: "--prefer-lowest"
+                      name: "(prefer lowest dependencies)"
 
-    steps:
-      - uses: actions/checkout@v4
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '${{ matrix.php-version }}'
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "${{ matrix.php-version }}"
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate --strict
+            - name: Validate composer.json and composer.lock
+              run: composer validate --strict
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+            - name: Install dependencies
+              run: composer install --prefer-dist --no-progress
 
-      - name: Run tests
-        run: composer test
+            - name: Run tests
+              run: composer test
