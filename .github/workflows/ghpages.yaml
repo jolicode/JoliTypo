@@ -18,7 +18,7 @@ jobs:
       url: ${{steps.deployment.outputs.page_url}}
     steps:
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,10 +39,10 @@ jobs:
           BASE_URL: "/${{ github.event.repository.name }}"
 
       - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4
         with:
           path: 'website/public'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
