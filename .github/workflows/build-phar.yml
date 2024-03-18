@@ -1,26 +1,26 @@
 name: Build the PHAR
 
 on:
-  push:
-    branches: [ "main" ]
+    push:
+        branches: ["main"]
 
 permissions:
-  contents: read
+    contents: read
 
 jobs:
-  phar:
-    name: Create a PHAR and upload it as an artifact
-    runs-on: ubuntu-latest
+    phar:
+        name: Create a PHAR and upload it as an artifact
+        runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Build the PHAR
-        uses: ./.github/actions/phar
+            - name: Build the PHAR
+              uses: ./.github/actions/phar
 
-      - name: Upload the PHAR
-        uses: actions/upload-artifact@v3
-        with:
-          name: 'jolitypo'
-          path: tools/phar/build/jolitypo.phar
-          if-no-files-found: error
+            - name: Upload the PHAR
+              uses: actions/upload-artifact@v4
+              with:
+                  name: "jolitypo"
+                  path: tools/phar/build/jolitypo.phar
+                  if-no-files-found: error
