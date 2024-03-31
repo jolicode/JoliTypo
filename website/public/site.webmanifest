@@ -1,0 +1,22 @@
+{
+    "description": "This is a sample page to let you try out our microtypography fixer.",
+    "name": "JoliTypo",
+    "short_name": "JoliTypo",
+    "start_url": "/",
+    "background_color": "#2b2b2a",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen",
+        "minimal-ui",
+        "window-controls-overlay"
+    ],
+    "id": "/",
+    "orientation": "any",
+    "scope": "/",
+    "theme_color": "#2b2b2a",
+    "serviceworker": {
+        "src": "/sw.js",
+        "scope": "/",
+        "use_cache": true
+    }
+}

@@ -4,6 +4,15 @@
         <meta charset="UTF-8">
         <title>JoliTypo demo - Micro-typography fixer for HTML contents</title>
         <link rel="stylesheet" href="./css/app.css">
+        <link rel="manifest" href="./site.webmanifest">
+        <script type="module">
+            import {Workbox} from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
+            if ('serviceWorker' in navigator) {
+                const wb = new Workbox('/sw.js', {scope: '/', useCache: true});
+                wb.register();
+                window.workbox = wb;
+            }
+        </script>
     </head>
 
     <body class="u-bgc(whitegradient)">
