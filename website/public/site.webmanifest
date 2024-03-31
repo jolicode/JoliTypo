@@ -10,6 +10,29 @@
         "minimal-ui",
         "window-controls-overlay"
     ],
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "48x48 72x72 96x96 144x144 180x180 192x192",
+            "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshot1.png",
+            "sizes": "1718x1303",
+            "form_factor": "wide",
+            "label": "Main screen",
+            "type": "image/png"
+        },
+        {
+            "src": "/screenshot2.png",
+            "sizes": "678x1303",
+            "form_factor": "narrow",
+            "label": "Main screen",
+            "type": "image/png"
+        }
+    ],
     "id": "/",
     "orientation": "any",
     "scope": "/",
