@@ -34,8 +34,6 @@ jobs:
                   castor website:install
                   castor website:wasm:export --pack --build
               working-directory: ./website
-              env:
-                  BASE_URL: "/${{ github.event.repository.name }}"
 
             - name: Upload Artifact
               uses: actions/upload-pages-artifact@v3

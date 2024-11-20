@@ -25,17 +25,10 @@
                     "reference": "main"
                 }
             }
-        },
-        {
-            "type": "path",
-            "url": "../",
-            "options": {
-                "symlink": false
-            }
         }
     ],
     "require": {
-        "jolicode/jolitypo": "*@dev",
+        "jolicode/jolitypo": "dev-main@dev",
         "soyuka/php-wasm": "dev-main@dev"
     },
     "config": {

@@ -12,6 +12,7 @@ namespace website;
 use Castor\Attribute\AsTask;
 use Symfony\Component\Process\Process;
 
+use function Castor\context;
 use function Castor\fs;
 use function Castor\io;
 use function Castor\run as do_run;
@@ -19,15 +20,23 @@ use function Castor\run as do_run;
 #[AsTask(description: 'Install dependencies')]
 function install()
 {
-    io()->note('Installing dependencies');
+    io()->title('Installing dependencies');
 
     run(['composer', 'install', '--no-dev', '--optimize-autoloader']);
+}
+
+#[AsTask(description: 'Update dependencies')]
+function update()
+{
+    io()->title('Installing dependencies');
+
+    run(['composer', 'update', '--no-dev', '--optimize-autoloader']);
 }
 
 #[AsTask('wasm:build', description: 'Build the wasm-php binary')]
 function wasm_build()
 {
-    io()->note('Building wasm-php binary');
+    io()->title('Building wasm-php binary');
 
     $phpWasmDir = __DIR__ . '/vendor/soyuka/php-wasm';
     run(['docker', 'buildx', 'bake'], path: $phpWasmDir);
@@ -37,7 +46,7 @@ function wasm_build()
 #[AsTask('wasm:pack', description: 'Pack custom code')]
 function wasm_pack()
 {
-    io()->note('Packing custom code');
+    io()->title('Packing custom code');
 
     run(['docker', 'run',
          '-v', __DIR__ . ':/app',
@@ -85,7 +94,7 @@ function wasm_export(bool $pack = false, bool $build = false)
         wasm_pack();
     }
 
-    io()->note('Exporting wasm-php');
+    io()->title('Exporting wasm-php');
 
     fs()->remove(__DIR__ . '/public/build');
 
@@ -104,14 +113,18 @@ function wasm_export(bool $pack = false, bool $build = false)
 #[AsTask(description: 'Run the server')]
 function serve(string $address = 'localhost:9999')
 {
-    io()->note("Serving on http://{$address}");
+    io()->title("Serving on http://{$address}");
 
     run(['php', '-S', $address, '-t', 'public']);
 }
 
-function run(array $command, ?string $path = __DIR__): Process
+function run(array $command, string $path = __DIR__): Process
 {
-    return do_run($command, path: $path, timeout: 0, environment: [
-        'BUILDKIT_PROGRESS' => 'plain',
-    ]);
+    $context = context()
+        ->withWorkingDirectory($path)
+        ->withEnvironment([
+            'BUILDKIT_PROGRESS' => 'plain',
+        ]);
+    ;
+    return do_run($command, context: $context);
 }
