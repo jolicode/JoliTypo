@@ -38,7 +38,7 @@ jobs:
                   BASE_URL: "/${{ github.event.repository.name }}"
 
             - name: Upload Artifact
-              uses: actions/upload-pages-artifact@v4
+              uses: actions/upload-pages-artifact@v3
               with:
                   path: "website/public"
 
