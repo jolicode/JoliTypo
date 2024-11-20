@@ -49,13 +49,14 @@ const main = () => {
 main();
 
 const update = async (fixers, locale, content, resultElt, phpCodeElt, resultContentElt) => {
-    resultElt.classList.remove('u-d(none)');
-    const phpCode = buildPhpCode(fixers, locale, content);
-    phpCodeElt.textContent = phpCode
+    const phpCode = buildPhpFixerCode(fixers, locale, content);
+    const phpHighlighCode = buildPhpHighlighCode(phpCode);
+    phpCodeElt.innerHTML = await runPhpCode(phpHighlighCode);
     resultContentElt.textContent = await runPhpCode(phpCode);
+    resultElt.classList.remove('u-d(none)');
 }
 
-const buildPhpCode = (fixers, locale, content) => {
+const buildPhpFixerCode = (fixers, locale, content) => {
     return `<?php
 
 require_once '/app/vendor/autoload.php';
@@ -66,6 +67,13 @@ $fixer = new Fixer(${JSON.stringify(fixers)});
 $fixer->setLocale(${JSON.stringify(locale)});
 
 echo $fixer->fix(${JSON.stringify(content)});`;
+};
+
+const buildPhpHighlighCode = (phpCode) => {
+    return `<?php
+echo nl2br(highlight_string(<<<'PHP'
+${phpCode}
+PHP, true));`;
 };
 
 const runPhpCode = async (phpCode) => {
