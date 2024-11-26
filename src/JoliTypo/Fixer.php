@@ -34,7 +34,7 @@ class Fixer
     public const TRADE = '™'; // &trade;
     public const REG = '®'; // &reg;
     public const COPY = '©'; // &copy;
-    public const ALL_SPACES = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\s"; // All supported spaces, used in regexps. Better than \s
+    public const ALL_SPACES = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0| "; // All supported spaces, used in regexps. Better than \s
 
     public const RECOMMENDED_RULES_BY_LOCALE = [
         'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
