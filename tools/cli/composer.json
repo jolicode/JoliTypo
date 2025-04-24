@@ -13,8 +13,16 @@
             "email": "msantostefano@pm.me"
         }
     ],
-    "require-dev": {
-        "humbug/box": "^4.6.6"
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../.."
+        }
+    ],
+    "require": {
+        "jolicode/jolitypo": "*@dev",
+        "symfony/console": "^7.2",
+        "symfony/finder": "^7.2"
     },
     "config": {
         "bump-after-update": true,

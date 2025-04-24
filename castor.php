@@ -8,3 +8,5 @@
  */
 
 Castor\import(__DIR__ . '/website/castor.php');
+Castor\mount(__DIR__ . '/tools/cli/');
+Castor\mount(__DIR__ . '/tools/phar/');
