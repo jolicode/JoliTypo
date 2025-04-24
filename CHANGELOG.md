@@ -3,7 +3,7 @@ CHANGELOG
 
 ### 1.5.0 (not released yet) ###
 
-* Add support for PHP 8.3
+* Add support for PHP 8.3, 8.4
 * Add support for Symfony 7
 * Drop support for PHP < 8.1
 * Drop support for Symfony < 5.4 and 6.1, 6.2, and 6.3
