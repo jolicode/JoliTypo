@@ -2,5 +2,5 @@
   "base-path": "../cli",
   "main": "bin/jolitypo",
   "output": "../phar/build/jolitypo.phar",
-  "git-version": "package_version"
+  "compression": "GZ"
 }
