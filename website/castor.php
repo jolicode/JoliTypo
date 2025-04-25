@@ -124,7 +124,8 @@ function run(array $command, string $path = __DIR__): Process
         ->withWorkingDirectory($path)
         ->withEnvironment([
             'BUILDKIT_PROGRESS' => 'plain',
-        ]);
+        ])
     ;
+
     return do_run($command, context: $context);
 }
