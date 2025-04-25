@@ -1,7 +1,9 @@
 CHANGELOG
 =========
 
-### 1.5.0 (not released yet) ###
+### 1.6.0 (not released yet) ###
+
+### 1.5.0 (2025-04-25) ###
 
 * Add support for PHP 8.3, 8.4
 * Add support for Symfony 7
