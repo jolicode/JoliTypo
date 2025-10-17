@@ -4,9 +4,17 @@
     <a href="https://github.com/jolicode/JoliTypo"><img src="https://jolicode.com/media/original/oss/headers/jolitypo.png" alt="JoliTypo"></a>
     <br />
     JoliTypo – Web Microtypography fixer<br>
-   $${\color{gray}\small{Finally\ a\ tool\ for\ typography\ nerds.}}$$
+   $${\color{gray}\tiny{Finally\ a\ tool\ for\ typography\ nerds.}}$$
   </h1>
 </div>
+
+<div align="center">
+  
+[![Latest Stable Version](https://poser.pugx.org/jolicode/JoliTypo/version.png)](https://packagist.org/packages/jolicode/JoliTypo)
+
+</div>
+
+# Introduction
 
 JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content.
 
@@ -32,7 +40,6 @@ It's designed to be:
 
 You can try it with the [online demo](https://jolitypo.jolicode.com/)!
 
-[![Latest Stable Version](https://poser.pugx.org/jolicode/JoliTypo/version.png)](https://packagist.org/packages/jolicode/JoliTypo)
 
 Quick usage
 ===========
