@@ -1,7 +1,12 @@
-<p align="center"><a href="https://github.com/jolicode/JoliTypo"><img src="https://jolicode.com/media/original/oss/headers/jolitypo.png" alt="JoliTypo"></a></p>
-<h1 align="center">JoliTypo – Web Microtypography fixer</h1>
-<p align="center"><small>Finally a tool for typography nerds.</small></p>
 
+<div align="center">
+  <h1 align="center">
+    <a href="https://github.com/jolicode/JoliTypo"><img src="https://jolicode.com/media/original/oss/headers/jolitypo.png" alt="JoliTypo"></a>
+    <br />
+    JoliTypo – Web Microtypography fixer<br>
+   $${\color{gray}\small{Finally\ a\ tool\ for\ typography\ nerds.}}$$
+  </h1>
+</div>
 
 JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content.
 
