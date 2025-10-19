@@ -1,16 +1,14 @@
-<div align="center">
-  <h1 align="center">
-    <a href="https://github.com/jolicode/JoliTypo"><img src="https://jolicode.com/media/original/oss/headers/jolitypo.png" alt="JoliTypo"></a>
-    <br />
-    JoliTypo – Web Microtypography fixer<br>
-    <!-- 
-    this allow subtitles without the h1 border between them.
-    sub and em for small text and italic
-    h6 for smaller and gray color
-    -->
-    <sub><em><h6>Finally a tool for typography nerds.</h6></em></sub>
-  </h1>
-</div>
+<h1 align="center">
+  <a href="https://github.com/jolicode/JoliTypo"><img src="https://jolicode.com/media/original/oss/headers/jolitypo.png" alt="JoliTypo"></a>
+  <br />
+  JoliTypo – Web Microtypography fixer<br>
+  <!-- 
+  this allow subtitles without the h1 border between them.
+  sub and em for small text and italic
+  h6 for smaller and gray color
+  -->
+  <sub><em><h6>Finally a tool for typography nerds.</h6></em></sub>
+</h1>
 
 <div align="center">
   
