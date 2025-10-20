@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://github.com/jolicode/JoliTypo"><img src="https://jolicode.com/media/original/oss/headers/jolitypo.png" alt="JoliTypo"></a>
+  <a href="https://github.com/jolicode/JoliTypo"><img src="https://jolicode.com/media/original/oss/headers/jolitypo.png?v2" alt="JoliTypo"></a>
   <br />
   JoliTypo – Web Microtypography fixer<br>
   <!-- 
