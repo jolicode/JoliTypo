@@ -353,5 +353,5 @@ Thanks to theses online resources for helping a developer understand typography:
 
 
 <div align="center">
-<a href="https://jolicode.com/"><img src="https://jolicode.com/media/original/oss/footer-github.png" alt="JoliCode is sponsoring this project"></a>
+<a href="https://jolicode.com/"><img src="https://jolicode.com/media/original/oss/footer-github.png?v2" alt="JoliCode is sponsoring this project"></a>
 </div>
