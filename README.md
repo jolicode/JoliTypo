@@ -11,9 +11,8 @@
 </h1>
 
 <div align="center">
-  
-[![Latest Stable Version](https://poser.pugx.org/jolicode/JoliTypo/version.png)](https://packagist.org/packages/jolicode/JoliTypo)
-[![License](http://poser.pugx.org/jolicode/jolitypo/license)](https://packagist.org/packages/jolicode/jolitypo)
+
+[![PHP Version Require](http://poser.pugx.org/jolicode/jolitypo/require/php)](https://packagist.org/packages/jolicode/jolitypo)
 [![Monthly Downloads](http://poser.pugx.org/jolicode/jolitypo/d/monthly)](https://packagist.org/packages/jolicode/jolitypo)
 
 </div>
