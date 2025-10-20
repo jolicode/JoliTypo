@@ -20,7 +20,7 @@
 
 # Introduction
 
-JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content. When your CMS output `" "` instead of `“ ”` or `...` instead of `…`, JoliTypo can help.
+JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content. When your CMS outputs `" "` instead of `“ ”` or `...` instead of `…`, JoliTypo can help.
 
 ```php
 use JoliTypo\Fixer;
@@ -42,8 +42,8 @@ It's designed to be:
 
 - language agnostic (you can fix `fr_FR`, `fr_CA`, `en_US`... you tell JoliTypo what to fix);
 - easy to integrate into modern PHP projects (composer and autoload);
-- robust (make use of `\DOMDocument` instead of parsing HTML with dummy regexp);
-- smart enough to avoid Javascript, Code, CSS processing... (configurable protected tags list);
+- robust (makes use of `\DOMDocument` instead of parsing HTML with dummy regexp);
+- smart enough to avoid JavaScript, Code, CSS processing... (configurable protected tags list);
 - fully tested;
 - fully open and usable in any project (MIT License).
 
