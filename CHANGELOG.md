@@ -3,6 +3,9 @@ CHANGELOG
 
 ### 1.6.0 (not released yet) ###
 
+* Reduced the package size
+* Improved documentation and demo
+
 ### 1.5.0 (2025-04-25) ###
 
 * Add support for PHP 8.3, 8.4
