@@ -8,14 +8,14 @@ const {ccall, FS} = await phpBinary({
 })
 
 const main = () => {
-    let content = 'test';
     const contentElt = document.getElementById('typo_fixer_content');
+    let content = contentElt.value || 'test';
     contentElt.addEventListener('change', (e) => {
         content = e.target.value;
     });
 
-    let locale = 'fr';
     const localeElt = document.getElementById('typo_fixer_locale');
+    let locale = localeElt.value || 'en';
     localeElt.addEventListener('change', (e) => {
         locale = e.target.value;
     });
