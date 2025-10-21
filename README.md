@@ -1,15 +1,36 @@
-JoliTypo – Web Microtypography fixer
-====================================
+<h1 align="center">
+  <a href="https://github.com/jolicode/JoliTypo"><img src="https://jolicode.com/media/original/oss/headers/jolitypo.png?v3" alt="JoliTypo"></a>
+  <br />
+  JoliTypo – Web Microtypography fixer<br>
+  <!-- 
+  this allow subtitles without the h1 border between them.
+  sub and em for small text and italic
+  h6 for smaller and gray color
+  -->
+  <sub><em><h6>Finally a tool for typography nerds.</h6></em></sub>
+</h1>
 
-> Finally a tool for typography nerds.
+<div align="center">
 
-JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content.
+[![PHP Version Require](http://poser.pugx.org/jolicode/jolitypo/require/php)](https://packagist.org/packages/jolicode/jolitypo)
+[![Monthly Downloads](http://poser.pugx.org/jolicode/jolitypo/d/monthly)](https://packagist.org/packages/jolicode/jolitypo)
+
+</div>
+
+# Introduction
+
+JoliTypo is a tool fixing [Microtypography](https://en.wikipedia.org/wiki/Microtypography) glitches inside your HTML content. When your CMS outputs `" "` instead of `“ ”` or `...` instead of `…`, JoliTypo can help.
 
 ```php
 use JoliTypo\Fixer;
 
+// Create a Fixer, specify the fixes
 $fixer = new Fixer(['Ellipsis', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen']);
-$fixedContent = $fixer->fix('<p>"Tell me Mr. Anderson... what good is a phone call... if you\'re unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>');
+
+// Get HTML content with correct microtypography
+$fixedContent = $fixer->fix(
+    '<p>"Tell me Mr. Anderson... what good is a phone call... if you\'re unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>'
+);
 ```
 ```html
 <p>&ldquo;Tell me Mr. Ander&shy;son&hellip; what good is a phone call&hellip; if you&rsquo;re unable to speak?&rdquo;&mdash;Agent Smith, <em>Matrix</em>.</p>
@@ -18,16 +39,14 @@ $fixedContent = $fixer->fix('<p>"Tell me Mr. Anderson... what good is a phone ca
 
 It's designed to be:
 
-- language agnostic (you can fix `fr_FR`, `fr_CA`, `en_US`... You tell JoliTypo what to fix);
+- language agnostic (you can fix `fr_FR`, `fr_CA`, `en_US`... you tell JoliTypo what to fix);
 - easy to integrate into modern PHP projects (composer and autoload);
-- robust (make use of `\DOMDocument` instead of parsing HTML with dummy regexp);
-- smart enough to avoid Javascript, Code, CSS processing... (configurable protected tags list);
+- robust (makes use of `\DOMDocument` instead of parsing HTML with dummy regexp);
+- smart enough to avoid JavaScript, Code, CSS processing... (configurable protected tags list);
 - fully tested;
 - fully open and usable in any project (MIT License).
 
 You can try it with the [online demo](https://jolitypo.jolicode.com/)!
-
-[![Latest Stable Version](https://poser.pugx.org/jolicode/JoliTypo/version.png)](https://packagist.org/packages/jolicode/JoliTypo)
 
 Quick usage
 ===========
@@ -37,16 +56,17 @@ Just tell the Fixer class [which Fixer](#available-fixers) you want to run on yo
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer(["SmartQuotes", "FrenchNoBreakSpace"]);
+$fixer = new Fixer(['SmartQuotes', 'FrenchNoBreakSpace']);
 $fixer->setLocale('fr_FR');
+
 $fixedContent = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
 ```
 
 For your ease of use, you can find [ready to use list of Fixer for your language here](#fixer-recommendations-by-locale).
 Micro-typography is nothing like a standard or a law, what really matters is consistency, so feel free to use your own lists.
 
-Please be advised that JoliTypo works best on **HTML content**; it will also work on plain text, but will be less smart about
- smart quotes. When fixing a complete HTML document, potential `<head>`, `<html>` and `<body>` tags may be removed.
+> [!NOTE]
+> Please be advised that JoliTypo works best on **HTML content**; it will also work on plain text, but will be less smart about smart quotes. When fixing a complete HTML document, potential `<head>`, `<html>` and `<body>` tags may be removed.
 
 To fix non HTML content, use the `fixString()` method:
 
@@ -81,10 +101,11 @@ Integrations
 - (Built-in) [Symfony Bundle](src/JoliTypo/Bridge/Symfony)
 - (Built-in) [Twig extension](src/JoliTypo/Bridge/Twig)
 - (Built-in) [CLI](https://github.com/jolicode/JoliTypo/releases/latest)
-- [Wordpress plugin](http://wordpress.org/plugins/typofr/)
-- [Drupal module](https://github.com/Anaethelion/JoliTypo-for-Drupal)
+- [Drupal module](https://www.drupal.org/project/typography_filter)
 - [Joomla plugin](https://github.com/YGomiero/typographe)
 - [MODX Extra](https://github.com/jenswittmann/JoliTypo)
+
+🚨 There are no WordPress plugin anymore, feel free to build one!
 
 Available Fixers
 ================
@@ -231,11 +252,18 @@ Then just give JoliTypo their fully qualified name, or even instance:
 
 ```php
 // by FQN
-$fixer        = new Fixer(['Ellipsis', 'Acme\\YourOwn\\TypoFixer']);
+$fixer = new Fixer([
+    'Ellipsis', 
+    'Acme\\YourOwn\\TypoFixer'
+]);
 $fixedContent = $fixer->fix("<p>Content fixed by the 2 fixers.</p>");
 
 // or instances, or both
-$fixer        = new Fixer(['Ellipsis', 'Acme\\YourOwn\\TypoFixer', new Acme\\YourOwn\\PonyFixer("Some parameter")]);
+$fixer = new Fixer([
+    'Ellipsis', 
+    'Acme\\YourOwn\\TypoFixer', 
+    new Acme\\YourOwn\\PonyFixer("Some parameter")
+]);
 $fixedContent = $fixer->fix("<p>Content fixed by the 3 fixers.</p>");
 ```
 
@@ -286,7 +314,7 @@ We need to be able to use this tool everywhere, you can help by providing:
 - Dotclear plugin
 ...
 
-Also, there is a [Todo list](TODO.md) :kissing_smiling_eyes:
+Also, there is a [Todo list](TODO.md) 😘
 
 License
 =======
@@ -300,16 +328,13 @@ There is already quite a bunch of tools like this one (including good ones). Sad
 some are running regexp on the whole HTML code ([which is bad](http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454)), some
 are not tested, some are bundled inside a CMS or a Library, some are not using proper auto-loading, some do not have an open bug tracker... Have a look by yourself:
 
-- http://michelf.ca/projets/php-smartypants/
-- http://michelf.ca/projets/php-smartypants/typographer/
+- https://michelf.ca/projets/php-smartypants/
+- https://michelf.ca/projets/php-smartypants/typographer/
 - http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/
-- https://github.com/Cerdic/textwheel/blob/master/typographie/fr.php
-- https://github.com/spip/SPIP/blob/master/ecrire/typographie/fr.php
-- https://github.com/dg/texy/blob/master/Texy/modules/TexyTypographyModule.php
+- https://git.spip.net/spip/ecrire/-/blob/5.x/typographie/fr.php
+- https://github.com/dg/texy/blob/master/src/Texy/Modules/TypographyModule.php
 - https://github.com/scoates/lexentity
 - https://github.com/nofont/Typesetter.js
-- https://github.com/judbd/php-typography (fork of php-typography, you can test it here: http://www.roxane-company.com/typonerd/)
-- http://mdash.ru/
 - https://blot.im/typeset/ (Server side Javascript pre-processor)
 
 Glossary & References
@@ -317,11 +342,16 @@ Glossary & References
 
 Thanks to theses online resources for helping a developer understand typography:
 
-- [FR] http://typographisme.net/post/Les-espaces-typographiques-et-le-web
-- http://daringfireball.net/projects/smartypants/
-- [FR] http://www.uzine.net/article1802.html
-- [FR] http://dascritch.net/post/2011/05/09/Les-espacements-unicodes
-- http://www.punctuationmatters.com/ **is a must-read**
-- http://practicaltypography.com/
+- [FR] https://typographisme.net/post/Les-espaces-typographiques-et-le-web
+- https://daringfireball.net/projects/smartypants/
+- [FR] https://www.uzine.net/article1802.html
+- [FR] https://dascritch.net/post/2011/05/09/Les-espacements-unicodes
+- https://www.punctuationmatters.com/ **is a must-read**
+- https://practicaltypography.com/
 - [FR] "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667
 - https://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks
+
+
+<div align="center">
+<a href="https://jolicode.com/"><img src="https://jolicode.com/media/original/oss/footer-github.png?v2" alt="JoliCode is sponsoring this project"></a>
+</div>
