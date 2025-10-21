@@ -54,25 +54,24 @@
             </style>
 
             <header>
-                <h1 class="u-fz(h1) u-ff(courgette) u-ta(center) u-c(orange)">JoliTypo Demo</h1>
+                <h1 class="u-ta(center)"><span class="u-ff(courgette) u-c(orange) u-fz(h1)">JoliTypo</span> Demo</h1>
                 <div class="subtitle u-fz(h5) u-ta(center)">
-                    This is a sample page to let you try out our microtypography fixer.
+                    Try JoliTypo online via this official demo.
                 </div>
                 <div class="subtitle u-fz(h5) u-ta(center) u-bb(orange) u-pb(base) u-w(70) u-mx(auto)">
-                    Learn more at GitHub : <a href="https://github.com/jolicode/JoliTypo"
-                        class="u-c(orange) u-tc(none) link">See repository</a>.
+                    <a href="https://github.com/jolicode/JoliTypo"
+                        class="u-c(orange) u-tc(none) link">Project documentation</a>
                 </div>
             </header>
 
             <div class="help u-ta(center) u-mt(double) u-fz(help)">
-                <p>You may try here the
-                    <a href="https://jolicode.com/" class="u-c(orange)
-                    u-tc(none) link">JoliCode</a>
-                    Microtypography Fixer and see how it works.
+                <p>
+                    JoliType is a PHP Microtypography fixer - it fixes the typographic<br>
+                    errors in your HTML or text by applying a set of rules.
                 </p>
                 <p>
-                    Simply select a locale and some fixers, paste in the text or
-                    HTML you want to see fixed and profit !
+                    Simply select a locale and some fixers,<br> paste in the text or
+                    HTML you want to see fixed and get the result instantly.
                 </p>
             </div>
 
@@ -84,9 +83,9 @@
                     <div>
                         <select id="typo_fixer_locale" name="typo_fixer[locale]" required="required"
                             class="u-p(half) u-bgc(orangegradient) u-br(5) u-bor(none) u-c(white) u-fz(input) u-cur(pointer)">
-                            <option value="" selected="selected">Select a locale</option>
+                            <option value="">Select a locale</option>
                             <option value="fr">French</option>
-                            <option value="en">English</option>
+                            <option value="en" selected="selected">English</option>
                             <option value="de">German</option>
                             <option value="es">Spanish</option>
                             <option value="it">Italian</option>
@@ -734,13 +733,13 @@
 
                 <div class="form__part u-my(double)">
                     <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">
-                        Choose the fixes you want to apply
+                        Choose the Fixers you want to apply
                     </h3>
                     <div class="form__fixes-wrapper o-grid o-grid--2 o-grid--5@tablet-up u-jc(center) u-ac(stretch)">
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_0">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">Dash</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">Dash</div>
                                     <div class="form__label-desc u-pt(half)">Add longer dashes instead of regular ones</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_0" value="Dash" name="typo_fixer[fixers][]" checked="checked">
                                 </div>
@@ -750,7 +749,7 @@
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_1">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">Dimension</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">Dimension</div>
                                     <div class="form__label-desc u-pt(half)">Real × symbol between numbers</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_1" value="Dimension" name="typo_fixer[fixers][]" checked="checked">
                                 </div>
@@ -760,8 +759,8 @@
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_2">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">Ellipsis</div>
-                                    <div class="form__label-desc u-pt(half)">Real ellipsis rather than three dots</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">Ellipsis</div>
+                                    <div class="form__label-desc u-pt(half)">Real ellipsis… rather than three dots</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_2" value="Ellipsis" name="typo_fixer[fixers][]" checked="checked">
                                 </div>
                             </label>
@@ -770,8 +769,8 @@
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_3">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">SmartQuotes</div>
-                                    <div class="form__label-desc u-pt(half)">Language adequate quotes</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">SmartQuotes</div>
+                                    <div class="form__label-desc u-pt(half)">Language adequate «&nbsp;quotes&nbsp;»</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_3" value="SmartQuotes" name="typo_fixer[fixers][]" checked="checked">
                                 </div>
                             </label>
@@ -780,7 +779,7 @@
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_4">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">FrenchNoBreakSpace</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">FrenchNoBreakSpace</div>
                                     <div class="form__label-desc u-pt(half)">Set non breaking spaces before : ; ! ?</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_4" value="FrenchNoBreakSpace" name="typo_fixer[fixers][]">
                                 </div>
@@ -790,7 +789,7 @@
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_5">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">NoSpaceBeforeComma</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">NoSpaceBeforeComma</div>
                                     <div class="form__label-desc u-pt(half)">Remove spaces before commas</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_5" value="NoSpaceBeforeComma" name="typo_fixer[fixers][]" checked="checked">
                                 </div>
@@ -800,7 +799,7 @@
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_6">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">Hyphen</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">Hyphen</div>
                                     <div class="form__label-desc u-pt(half)">Automatic word-hyphenation</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_6" value="Hyphen" name="typo_fixer[fixers][]" checked="checked">
                                 </div>
@@ -810,7 +809,7 @@
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_7">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">CurlyQuote</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">CurlyQuote</div>
                                     <div class="form__label-desc u-pt(half)">Replace straight quotes by curly one’s</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_7" value="CurlyQuote" name="typo_fixer[fixers][]" checked="checked">
                                 </div>
@@ -820,7 +819,7 @@
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_8">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">Trademark</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">Trademark</div>
                                     <div class="form__label-desc u-pt(half)">Handle symbols like ™ © ®</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_8" value="Trademark" name="typo_fixer[fixers][]" checked="checked">
                                 </div>
@@ -830,7 +829,7 @@
                         <div class="form__fixes-checkbox u-my(half) o-grid__col">
                             <label for="typo_fixers_9">
                                 <div class="form__fixes-checkbox-inner js-box u-bgc(orangegradient) u-p(half) u-c(white) u-h(100) u-fz(input) u-br(5) u-d(flex) u-fxd(column) u-jc(space-between) u-ai(stretch) u-cur(pointer)">
-                                    <div class="form__label-name u-bb(white)">Unit</div>
+                                    <div class="form__label-name u-bb(white) u-fw(bold)">Unit</div>
                                     <div class="form__label-desc u-pt(half)">Add non breaking spaces for units</div>
                                     <input type="checkbox" class="js-checkbox u-my(half) u-as(center)" id="typo_fixers_9" value="Unit" name="typo_fixer[fixers][]" checked="checked">
                                 </div>
@@ -839,7 +838,7 @@
                     </div>
                 </div>
 
-                <button class="js-check-all form__check-all u-br(5) u-c(white) u-bgc(orangegradient) u-px(base) u-py(semihalf) u-bor(none) u-cur(pointer) u-fz(input)">Uncheck all</button>
+                <button class="js-check-all form__check-all u-br(5) u-c(white)  u-px(base) u-py(semihalf) u-bor(none) u-cur(pointer) u-fz(input)">Uncheck all</button>
 
                 <div class="form__part u-my(double)">
                     <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">
@@ -847,29 +846,41 @@
                     </h3>
 
                     <div>
-                        <textarea id="typo_fixer_content" name="typo_fixer[content]" required="required" class="js-content u-w(100) u-vh(45) u-bor(orange) u-br(5)"></textarea>
+<textarea id="typo_fixer_content" name="typo_fixer[content]" required="required" class="js-content u-w(100) u-vh(45) u-bor(orange) u-br(5)">
+&lt;p&gt;
+    "You have to let it all go - fear, doubt, disbelief" Morpheus said.
+&lt;/p&gt;
+&lt;p&gt;
+    Neo smirked. "I know kung fu."
+&lt;/p&gt;
+&lt;p&gt;
+    The city shimmered. He jumped - not to escape, but to fly.
+&lt;/p&gt;
+&lt;p&gt;
+    (c) The Matrix universe, used for illustrative purposes.
+&lt;/p&gt;</textarea>
                     </div>
                 </div>
 
                 <button type="submit" name="submit" class="form__submit u-br(5) u-c(white) u-bgc(orangegradient) u-px(base) u-py(semihalf) u-bor(none) u-cur(pointer) u-fz(input)">
-                    Behold Typo Madness !
+                    Run JoliTypo now
                 </button>
             </form>
 
             <div id="result" class="u-d(none) u-mt(double)">
-                <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">
-                    PHP Code
-                </h3>
-
-                <pre id="phpCode" class="u-w(100) u-vh(25) u-bor(orange) u-br(5) u-over(auto)">
-                </pre>
-
                 <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">
                     Result
                 </h3>
 
                 <div id="resultContent" class="u-w(100) u-vh(25) u-bor(orange) u-br(5) u-over(auto)">
                 </div>
+
+                <h3 class="u-fz(h3) u-ff(courgette) u-c(darkgrey) u-ta(center) u-my(double)">
+                    PHP Code
+                </h3>
+
+                <pre id="phpCode" class="u-w(100) u-vh(25) u-bor(orange) u-br(5) u-over(auto)">
+                </pre>
             </div>
 
             <footer class="u-ta(center) u-mt(double)">

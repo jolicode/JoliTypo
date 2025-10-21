@@ -2654,6 +2654,10 @@ body {
     font-weight: var(--font-weight-base)
 }
 
+.u-fw\(bold\) {
+    font-weight: calc(var(--font-weight-base) * 2)
+}
+
 .u-fz\(base\) {
     font-size: var(--font-size-base);
     line-height: var(--line-height-base)
