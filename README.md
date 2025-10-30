@@ -351,7 +351,7 @@ Thanks to theses online resources for helping a developer understand typography:
 - [FR] "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667
 - https://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks
 
-
+<br><br>
 <div align="center">
-<a href="https://jolicode.com/"><img src="https://jolicode.com/media/original/oss/footer-github.png?v2" alt="JoliCode is sponsoring this project"></a>
+<a href="https://jolicode.com/"><img src="https://jolicode.com/media/original/oss/footer-github.png?v3" alt="JoliCode is sponsoring this project"></a>
 </div>
