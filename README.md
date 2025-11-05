@@ -288,10 +288,10 @@ Add your own Fixer / Contribute a Fixer
 
 ### Contribution guidelines
 
-- You MUST write code in english;
-- you MUST follow PSR2 and Symfony coding standard (run `composer cs` on your branch);
-- you MUST run the tests (run `composer test`);
-- you MUST comply to the MIT license;
+- You MUST write code in English.
+- you MUST follow PSR2 and Symfony coding standard (run `composer cs` on your branch).
+- you MUST run the tests (run `composer test`).
+- you MUST comply with the MIT license.
 - you SHOULD write documentation.
 
 If you add a new Fixer, please provide sources and references about the typographic rule you want to fix.
