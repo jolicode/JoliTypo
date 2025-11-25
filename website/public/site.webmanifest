@@ -1,0 +1,45 @@
+{
+    "description": "This is a sample page to let you try out our microtypography fixer.",
+    "name": "JoliTypo",
+    "short_name": "JoliTypo",
+    "start_url": "/",
+    "background_color": "#2b2b2a",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen",
+        "minimal-ui",
+        "window-controls-overlay"
+    ],
+    "icons": [
+        {
+            "src": "/images/icon-192x192.png",
+            "sizes": "48x48 72x72 96x96 144x144 180x180 192x192",
+            "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/images/screenshot1.png",
+            "sizes": "1718x1303",
+            "form_factor": "wide",
+            "label": "Main screen",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/screenshot2.png",
+            "sizes": "678x1303",
+            "form_factor": "narrow",
+            "label": "Main screen",
+            "type": "image/png"
+        }
+    ],
+    "id": "/",
+    "orientation": "any",
+    "scope": "/",
+    "theme_color": "#2b2b2a",
+    "serviceworker": {
+        "src": "/sw.js",
+        "scope": "/",
+        "use_cache": true
+    }
+}
