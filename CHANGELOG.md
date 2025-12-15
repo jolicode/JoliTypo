@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-### 1.6.0 (not released yet) ###
+### 1.6.0 (2025-12-15) ###
 
 * Reduced the package size
 * Improved documentation and demo
