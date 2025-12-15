@@ -21,8 +21,8 @@
     ],
     "require": {
         "jolicode/jolitypo": "*@dev",
-        "symfony/console": "^7.2",
-        "symfony/finder": "^7.2"
+        "symfony/console": "^7.4.1",
+        "symfony/finder": "^7.4"
     },
     "config": {
         "bump-after-update": true,

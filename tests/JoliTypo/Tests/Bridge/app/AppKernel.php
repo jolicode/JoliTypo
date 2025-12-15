@@ -46,7 +46,6 @@ class AppKernel extends Kernel
         if (trait_exists(MailerAssertionsTrait::class)) {
             $loader->load(function (ContainerBuilder $container) {
                 $container->loadFromExtension('twig', [
-                    'exception_controller' => null,
                 ]);
             });
         }
