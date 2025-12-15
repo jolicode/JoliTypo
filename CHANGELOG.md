@@ -5,6 +5,10 @@ CHANGELOG
 
 * Reduced the package size
 * Improved documentation and demo
+* Add support for PHP 8.5
+* Drop support for PHP < 8.3
+* Add support for Symfony 8
+* Drop support for Symfony < 6.4
 
 ### 1.5.0 (2025-04-25) ###
 
