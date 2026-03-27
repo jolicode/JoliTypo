@@ -2,6 +2,7 @@
 <?php
 
 use JoliTypo\Fixer;
+use JoliTypo\LocaleConfig;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -60,11 +61,10 @@ EOTXT;
         $rules = $input->getOption('rule');
 
         if (!$rules) {
-            if (!array_key_exists($locale, Fixer::RECOMMENDED_RULES_BY_LOCALE)) {
+            $rules = LocaleConfig::getRecommendedRules($locale);
+            if (null === $rules) {
                 throw new \InvalidArgumentException(sprintf('There is no recommended rules for "%s" locale. Please specify manually the rules to apply.', $locale));
             }
-
-            $rules = Fixer::RECOMMENDED_RULES_BY_LOCALE[$locale];
         }
 
 
