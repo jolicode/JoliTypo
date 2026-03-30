@@ -35,7 +35,7 @@ function update(): void
 function compile()
 {
     with(
-        function () {
+        static function () {
             if (!is_dir(__DIR__ . '/../cli/vendor')) {
                 \cli\install();
             }

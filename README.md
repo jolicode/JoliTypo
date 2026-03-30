@@ -56,7 +56,7 @@ Just tell the Fixer class [which Fixer](#available-fixers) you want to run on yo
 ```php
 use JoliTypo\Fixer;
 
-$fixer = new Fixer(['SmartQuotes', 'FrenchNoBreakSpace']);
+$fixer = new Fixer(['SmartQuotes', 'SpaceBeforePunctuation']);
 $fixer->setLocale('fr_FR');
 
 $fixedContent = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur <a href="http://jolicode.com/">Jolicode.com</a> !</p>');
@@ -136,8 +136,22 @@ and do not forget to specify a locale on the Fixer instance.
 
 This Fixer replaces legacy `EnglishQuotes`, `FrenchQuotes` and `GermanQuotes`.
 
-FrenchNoBreakSpace
-------------------
+SpaceBeforePunctuation
+----------------------
+
+Locale-aware fixer for spacing before punctuation marks. Handles:
+- **French** (`fr`, `fr_FR`, `fr_BE`, `fr_CH`): Adds non-breaking space before `:` and thin non-breaking space before `;`, `!`, `?`
+- **Canadian French** (`fr_CA`): No space before punctuation (follows English conventions)
+- **Swiss German** (`de_CH`): Uses French-style guillemets with thin spaces
+- **All other locales**: Removes any incorrect space before punctuation
+
+This fixer requires a locale to be set on the Fixer with `$fixer->setLocale('fr_FR');`.
+
+FrenchNoBreakSpace (deprecated)
+-------------------------------
+
+> [!WARNING]
+> This fixer is deprecated. Use `SpaceBeforePunctuation` instead.
 
 Replaces some classic spaces by non-breaking spaces following the French typographic code.
 No break space are placed before `:`, thin no break space before `;`, `!` and `?`.
@@ -200,7 +214,7 @@ fr_FR
 Those rules apply for most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('fr_FR');
 ```
 
@@ -225,6 +239,26 @@ $fixer->setLocale('de_DE');
 ```
 
 More to come (contributions welcome!).
+
+Locale support for spacing and quotes
+-------------------------------------
+
+JoliTypo supports locale-specific rules for spacing before punctuation and quotation marks:
+
+| Locale | Space Before `: ; ! ?` | Quote Style |
+|--------|------------------------|-------------|
+| fr_FR, fr_BE, fr_CH | YES (nbsp/nnbsp) | « text » |
+| fr_CA | NO | « text » |
+| de_DE, de_AT | NO | „text“ |
+| de_CH | NO | «text» |
+| en_* | NO | “text” |
+| es_*, it_*, pt_* | NO | «text» |
+| pl_*, cs_*, sk_*, hu_*, ro_*, bg_* | NO | „text“ |
+| ru_*, uk_*, be_* | NO | «text» |
+| sv_*, fi_* | NO | "text" |
+| nl_*, tr_* | NO | "text" |
+
+See `LocaleConfig::QUOTE_STYLES_BY_LOCALE` for the complete list of supported languages.
 
 Documentation
 =============
@@ -350,6 +384,13 @@ Thanks to theses online resources for helping a developer understand typography:
 - https://practicaltypography.com/
 - [FR] "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667
 - https://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks
+
+Typography rules by language:
+
+- https://type.today/en/journal/spaces - Comprehensive guide on spacing in typography
+- https://type.today/en/journal/quotes - Comprehensive guide on quotation marks by language
+- https://www.mancko.com/typography-punctuation/en/ - Multi-language typography reference
+- [FR] https://fr.wikipedia.org/wiki/Ponctuation#Espaces_et_ponctuation - French punctuation spacing rules
 
 <br><br>
 <div align="center">

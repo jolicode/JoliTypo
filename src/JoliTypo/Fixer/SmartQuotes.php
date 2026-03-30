@@ -10,32 +10,32 @@
 namespace JoliTypo\Fixer;
 
 use JoliTypo\Exception\BadFixerConfigurationException;
-use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 use JoliTypo\LocaleAwareFixerInterface;
+use JoliTypo\LocaleConfig;
 use JoliTypo\StateBag;
 
+/**
+ * Replaces straight double quotes with typographic quotation marks.
+ *
+ * The style of quotation marks depends on the locale:
+ * - French: « … » (guillemets with non-breaking spaces)
+ * - German: „…" (low-high double quotes)
+ * - English: "…" (curly double quotes)
+ * - Finnish/Swedish: "…" (same closing quote on both sides)
+ * - And many more...
+ *
+ * @see LocaleConfig::QUOTE_STYLES_BY_LOCALE for the full list
+ */
 class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwareFixerInterface
 {
-    /**
-     * @var string
-     */
-    protected $opening = '';
+    protected string $opening = '';
 
-    /**
-     * @var string
-     */
-    protected $openingSuffix = '';
+    protected string $openingSuffix = '';
 
-    /**
-     * @var string
-     */
-    protected $closing = '';
+    protected string $closing = '';
 
-    /**
-     * @var string
-     */
-    protected $closingPrefix = '';
+    protected string $closingPrefix = '';
 
     public function __construct(string $locale)
     {
@@ -70,131 +70,36 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
     }
 
     /**
-     * Default configuration for supported lang.
+     * Set locale and configure quotation marks accordingly.
      */
-    public function setLocale(string $locale)
+    public function setLocale(string $locale): void
     {
-        // Handle from locale + country
-        switch (strtolower($locale)) {
-            // “…”
-            case 'pt-br':
-                $this->opening = Fixer::LDQUO;
-                $this->openingSuffix = '';
-                $this->closing = Fixer::RDQUO;
-                $this->closingPrefix = '';
+        $style = LocaleConfig::getQuotationStyle($locale);
 
-                return;
-                // «…»
-            case 'de-ch':
-                $this->opening = Fixer::LAQUO;
-                $this->openingSuffix = '';
-                $this->closing = Fixer::RAQUO;
-                $this->closingPrefix = '';
-
-                return;
-        }
-
-        // Handle from locale only
-        $short = Fixer::getLanguageFromLocale($locale);
-
-        switch ($short) {
-            // « … »
-            case 'fr':
-                $this->opening = Fixer::LAQUO;
-                $this->openingSuffix = Fixer::NO_BREAK_SPACE;
-                $this->closing = Fixer::RAQUO;
-                $this->closingPrefix = Fixer::NO_BREAK_SPACE;
-
-                break;
-                // «…»
-            case 'hy':
-            case 'az':
-            case 'hz':
-            case 'eu':
-            case 'be':
-            case 'ca':
-            case 'el':
-            case 'it':
-            case 'no':
-            case 'fa':
-            case 'lv':
-            case 'pt':
-            case 'ru':
-            case 'es':
-            case 'uk':
-                $this->opening = Fixer::LAQUO;
-                $this->openingSuffix = '';
-                $this->closing = Fixer::RAQUO;
-                $this->closingPrefix = '';
-
-                break;
-                // „…“
-            case 'de':
-            case 'ka':
-            case 'cs':
-            case 'et':
-            case 'is':
-            case 'lt':
-            case 'mk':
-            case 'ro':
-            case 'sk':
-            case 'sl':
-            case 'wen':
-                $this->opening = Fixer::BDQUO;
-                $this->openingSuffix = '';
-                $this->closing = Fixer::LDQUO;
-                $this->closingPrefix = '';
-
-                break;
-                // “…”
-            case 'en':
-            case 'us':
-            case 'gb':
-            case 'af':
-            case 'ar':
-            case 'eo':
-            case 'id':
-            case 'ga':
-            case 'ko':
-            case 'br':
-            case 'th':
-            case 'tr':
-            case 'vi':
-                $this->opening = Fixer::LDQUO;
-                $this->openingSuffix = '';
-                $this->closing = Fixer::RDQUO;
-                $this->closingPrefix = '';
-
-                break;
-                // ”…”
-            case 'fi':
-            case 'sv':
-            case 'bs':
-                $this->opening = Fixer::RDQUO;
-                $this->openingSuffix = '';
-                $this->closing = Fixer::RDQUO;
-                $this->closingPrefix = '';
-
-                break;
+        if (null !== $style) {
+            $this->opening = $style['opening'];
+            $this->openingSuffix = $style['openingSuffix'];
+            $this->closing = $style['closing'];
+            $this->closingPrefix = $style['closingPrefix'];
         }
     }
 
-    public function setOpening(string $opening)
+    public function setOpening(string $opening): void
     {
         $this->opening = $opening;
     }
 
-    public function setOpeningSuffix(string $openingSuffix)
+    public function setOpeningSuffix(string $openingSuffix): void
     {
         $this->openingSuffix = $openingSuffix;
     }
 
-    public function setClosing(string $closing)
+    public function setClosing(string $closing): void
     {
         $this->closing = $closing;
     }
 
-    public function setClosingPrefix(string $closingPrefix)
+    public function setClosingPrefix(string $closingPrefix): void
     {
         $this->closingPrefix = $closingPrefix;
     }

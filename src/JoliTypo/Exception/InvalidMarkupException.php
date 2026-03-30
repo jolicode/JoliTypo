@@ -11,5 +11,5 @@ namespace JoliTypo\Exception;
 
 class InvalidMarkupException extends \RuntimeException
 {
-    protected $message = 'An error happened when trying to read your HTML with \\DOMDocument.';
+    protected $message = 'An error happened when trying to read your HTML with \DOMDocument.';
 }

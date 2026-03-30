@@ -36,12 +36,11 @@ class Fixer
     public const COPY = '©'; // &copy;
     public const ALL_SPACES = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\s"; // All supported spaces, used in regexps. Better than \s
 
-    public const RECOMMENDED_RULES_BY_LOCALE = [
-        'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_FR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_CA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-    ];
+    /**
+     * @deprecated since 1.7.0, use LocaleConfig::RECOMMENDED_RULES_BY_LOCALE instead
+     * @see LocaleConfig::RECOMMENDED_RULES_BY_LOCALE
+     */
+    public const RECOMMENDED_RULES_BY_LOCALE = LocaleConfig::RECOMMENDED_RULES_BY_LOCALE;
 
     private array $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
 
@@ -193,17 +192,17 @@ class Fixer
                 $className = $rule::class;
             } else {
                 $className = class_exists($rule) ? $rule : (class_exists(
-                    'JoliTypo\\Fixer\\' . $rule
-                ) ? 'JoliTypo\\Fixer\\' . $rule : false);
+                    'JoliTypo\Fixer\\' . $rule
+                ) ? 'JoliTypo\Fixer\\' . $rule : false);
                 if (!$className) {
-                    throw new BadRuleSetException(sprintf('Fixer %s not found', $rule));
+                    throw new BadRuleSetException(\sprintf('Fixer %s not found', $rule));
                 }
 
                 $fixer = new $className($this->getLocale());
             }
 
             if (!$fixer instanceof FixerInterface) {
-                throw new BadRuleSetException(sprintf('%s must implement FixerInterface', $className));
+                throw new BadRuleSetException(\sprintf('%s must implement FixerInterface', $className));
             }
 
             $this->_rules[$className] = $fixer;
@@ -351,7 +350,7 @@ class Fixer
         // Remove added body & doctype
         $content = preg_replace(
             [
-                '/^\\<\\!DOCTYPE.*?<html>.*?<body>/si',
+                '/^\<\!DOCTYPE.*?<html>.*?<body>/si',
                 '!</body>\n?</html>$!si',
             ],
             '',

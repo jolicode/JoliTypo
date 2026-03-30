@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+### 1.7.0 (unreleased) ###
+
+* Add `SpaceBeforePunctuation` fixer for locale-aware punctuation spacing
+* Add `LocaleConfig` class for centralized locale configuration
+* Extend `SmartQuotes` to support 45+ languages via `LocaleConfig`
+* Deprecate `FrenchNoBreakSpace` fixer in favor of `SpaceBeforePunctuation`
+
 ### 1.6.0 (2025-12-15) ###
 
 * Reduced the package size
