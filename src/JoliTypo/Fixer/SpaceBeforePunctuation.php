@@ -91,9 +91,9 @@ class SpaceBeforePunctuation implements FixerInterface, LocaleAwareFixerInterfac
     private function removeSpacesBeforePunctuation(string $content): string
     {
         // Remove spaces before : ; ! ? (but not when it's part of URL, time, IPv6, etc.)
-        // Only remove when there's a space before the punctuation
-        $content = preg_replace('@([^\s:])[ ]+(:)(?![/\d])@mu', '$1$2', $content);
+        // Only remove when there's a (typographical) space before the punctuation
+        $content = preg_replace('@([^' . Fixer::ALL_SPACES . ':])[' . Fixer::ALL_SPACES . ']+(:)(?![/\d])@mu', '$1$2', $content);
 
-        return preg_replace('@([^\s])[ ]+([;!\?])@mu', '$1$2', $content);
+        return preg_replace('@([^' . Fixer::ALL_SPACES . '])[' . Fixer::ALL_SPACES . ']+([;!\?])@mu', '$1$2', $content);
     }
 }
