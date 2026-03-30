@@ -255,8 +255,8 @@ JoliTypo supports locale-specific rules for spacing before punctuation and quota
 | es_*, it_*, pt_* | NO | «text» |
 | pl_*, cs_*, sk_*, hu_*, ro_*, bg_* | NO | „text“ |
 | ru_*, uk_*, be_* | NO | «text» |
-| sv_*, fi_* | NO | “text” |
-| nl_*, tr_* | NO | “text” |
+| sv_*, fi_* | NO | "text" |
+| nl_*, tr_* | NO | "text" |
 
 See `LocaleConfig::QUOTE_STYLES_BY_LOCALE` for the complete list of supported languages.
 

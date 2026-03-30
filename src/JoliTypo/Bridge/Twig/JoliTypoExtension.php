@@ -41,7 +41,7 @@ class JoliTypoExtension extends AbstractExtension
     public function translate($text, $preset = 'default'): string
     {
         if (!isset($this->presets[$preset])) {
-            throw new InvalidConfigurationException(sprintf('There is no "%s" preset configured.', $preset));
+            throw new InvalidConfigurationException(\sprintf('There is no "%s" preset configured.', $preset));
         }
 
         return $this->presets[$preset]->fix($text);

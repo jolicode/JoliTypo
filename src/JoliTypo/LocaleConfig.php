@@ -185,14 +185,17 @@ final class LocaleConfig
      */
     public static function getSpacingRule(string $locale): string
     {
+        // Normalize locale (handle both fr_FR and fr-FR formats)
+        $normalizedLocale = strtolower(str_replace('-', '_', $locale));
+
         // Check exact match first for locale exceptions
-        return match ($locale) {
+        return match ($normalizedLocale) {
             // Canadian French follows English conventions (no space)
-            'fr_CA' => self::SPACING_RULE_NONE,
+            'fr_ca' => self::SPACING_RULE_NONE,
             // Swiss German uses French-style guillemets with thin spaces
-            'de_CH' => self::SPACING_RULE_SWISS_GERMAN,
+            'de_ch' => self::SPACING_RULE_SWISS_GERMAN,
             // French locales use non-breaking spaces before double punctuation
-            'fr', 'fr_FR', 'fr_BE', 'fr_CH' => self::SPACING_RULE_FRENCH,
+            'fr', 'fr_fr', 'fr_be', 'fr_ch' => self::SPACING_RULE_FRENCH,
             // All other locales: check language fallback or default to none
             default => match (Fixer::getLanguageFromLocale($locale)) {
                 'fr' => self::SPACING_RULE_FRENCH,

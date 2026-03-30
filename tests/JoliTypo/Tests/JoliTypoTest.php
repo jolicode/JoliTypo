@@ -88,7 +88,7 @@ class JoliTypoTest extends TestCase
     {
         $this->expectException(BadRuleSetException::class);
 
-        new Fixer(['Ellipsis', 'Acme\\Demo\\Fixer']);
+        new Fixer(['Ellipsis', 'Acme\Demo\Fixer']);
     }
 
     public function testBadLocale(): void

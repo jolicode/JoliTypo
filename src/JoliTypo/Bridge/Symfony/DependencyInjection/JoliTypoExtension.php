@@ -50,9 +50,9 @@ class JoliTypoExtension extends Extension
             }
 
             $definition->addArgument($fixers);
-            $container->setDefinition(sprintf('joli_typo.fixer.%s', $name), $definition);
+            $container->setDefinition(\sprintf('joli_typo.fixer.%s', $name), $definition);
 
-            $presets[$name] = new Reference(sprintf('joli_typo.fixer.%s', $name));
+            $presets[$name] = new Reference(\sprintf('joli_typo.fixer.%s', $name));
         }
 
         return $presets;

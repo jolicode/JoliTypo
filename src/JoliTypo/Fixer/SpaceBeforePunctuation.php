@@ -38,8 +38,6 @@ use JoliTypo\StateBag;
  */
 class SpaceBeforePunctuation implements FixerInterface, LocaleAwareFixerInterface
 {
-    private string $locale = 'en_GB';
-
     private string $currentRule = LocaleConfig::SPACING_RULE_NONE;
 
     public function __construct(?string $locale = null)
@@ -51,7 +49,6 @@ class SpaceBeforePunctuation implements FixerInterface, LocaleAwareFixerInterfac
 
     public function setLocale(string $locale): void
     {
-        $this->locale = $locale;
         $this->currentRule = LocaleConfig::getSpacingRule($locale);
     }
 
@@ -90,8 +87,9 @@ class SpaceBeforePunctuation implements FixerInterface, LocaleAwareFixerInterfac
 
     private function removeSpacesBeforePunctuation(string $content): string
     {
-        // Remove spaces before : ; ! ? (but not when it's part of URL, time, IPv6, etc.)
-        // Only remove when there's a (typographical) space before the punctuation
+        // Remove all types of spaces (including nbsp, thin spaces) before : ; ! ?
+        // This ensures consistent behavior regardless of input spacing
+        // Excludes URLs (://), time formats, IPv6, etc.
         $content = preg_replace('@([^' . Fixer::ALL_SPACES . ':])[' . Fixer::ALL_SPACES . ']+(:)(?![/\d])@mu', '$1$2', $content);
 
         return preg_replace('@([^' . Fixer::ALL_SPACES . '])[' . Fixer::ALL_SPACES . ']+([;!\?])@mu', '$1$2', $content);

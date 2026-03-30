@@ -34,7 +34,7 @@ class AppKernel extends Kernel
 
         // Set framework.router.utf8 to avoid deprecated error on SF 5.1
         if (version_compare(self::VERSION, '5.0', 'gt')) {
-            $loader->load(function (ContainerBuilder $container) {
+            $loader->load(static function (ContainerBuilder $container) {
                 $container->loadFromExtension('framework', [
                     'router' => [
                         'utf8' => true,
@@ -44,7 +44,7 @@ class AppKernel extends Kernel
         }
 
         if (trait_exists(MailerAssertionsTrait::class)) {
-            $loader->load(function (ContainerBuilder $container) {
+            $loader->load(static function (ContainerBuilder $container) {
                 $container->loadFromExtension('twig', [
                 ]);
             });
