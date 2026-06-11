@@ -17,6 +17,7 @@ $fileHeaderComment = <<<'EOF'
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->notPath('src/JoliTypo/Bridge/Symfony/DependencyInjection/Configuration.php')
+    ->ignoreVCSIgnored(true)
     ->append([
         __FILE__,
     ])

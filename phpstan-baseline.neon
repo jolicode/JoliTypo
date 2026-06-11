@@ -1,0 +1,283 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition\:\:fixXmlConfig\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/JoliTypo/Bridge/Symfony/DependencyInjection/Configuration.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\:\:root\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/JoliTypo/Bridge/Symfony/DependencyInjection/Configuration.php
+
+		-
+			message: '#^Call to function method_exists\(\) with Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder and ''getRootNode'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/JoliTypo/Bridge/Symfony/DependencyInjection/Configuration.php
+
+		-
+			message: '#^Method JoliTypo\\Bridge\\Symfony\\DependencyInjection\\JoliTypoExtension\:\:createPresetDefinition\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Bridge/Symfony/DependencyInjection/JoliTypoExtension.php
+
+		-
+			message: '#^Method JoliTypo\\Bridge\\Symfony\\DependencyInjection\\JoliTypoExtension\:\:createPresetDefinition\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Bridge/Symfony/DependencyInjection/JoliTypoExtension.php
+
+		-
+			message: '#^Method JoliTypo\\Bridge\\Twig\\JoliTypoExtension\:\:__construct\(\) has parameter \$presets with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Bridge/Twig/JoliTypoExtension.php
+
+		-
+			message: '#^Method JoliTypo\\Bridge\\Twig\\JoliTypoExtension\:\:translate\(\) has parameter \$preset with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/JoliTypo/Bridge/Twig/JoliTypoExtension.php
+
+		-
+			message: '#^Method JoliTypo\\Bridge\\Twig\\JoliTypoExtension\:\:translate\(\) has parameter \$text with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/JoliTypo/Bridge/Twig/JoliTypoExtension.php
+
+		-
+			message: '#^Cannot call method getCurrentDepth\(\) on JoliTypo\\StateBag\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Cannot call method setCurrentDepth\(\) on JoliTypo\\StateBag\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Cannot call method setCurrentNode\(\) on JoliTypo\\StateBag\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:__construct\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:compileRules\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:fixContentEncoding\(\) has parameter \$content with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:getLanguageFromLocale\(\) has parameter \$locale with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:getProtectedTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:getStateBug\(\) should return JoliTypo\\StateBag but returns JoliTypo\\StateBag\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:loadDOMDocument\(\) has parameter \$content with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:setProtectedTags\(\) has parameter \$protectedTags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:setRules\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Parameter \#1 \$string of function trim expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Property JoliTypo\\Fixer\:\:\$protectedTags type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\BaseOpenClosePair\:\:fixViaState\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/BaseOpenClosePair.php
+
+		-
+			message: '#^Parameter \#2 \$new_content of method JoliTypo\\StateBag\:\:fixSiblingNode\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/JoliTypo/Fixer/BaseOpenClosePair.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\CurlyQuote\:\:fix\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/CurlyQuote.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\Dash\:\:fix\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/Dash.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/JoliTypo/Fixer/Dash.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\Dimension\:\:fix\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/Dimension.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\Ellipsis\:\:fix\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/Ellipsis.php
+
+		-
+			message: '#^Constructor of class JoliTypo\\Fixer\\EnglishQuotes has an unused parameter \$locale\.$#'
+			identifier: constructor.unusedParameter
+			count: 1
+			path: src/JoliTypo/Fixer/EnglishQuotes.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\EnglishQuotes\:\:__construct\(\) has parameter \$locale with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/JoliTypo/Fixer/EnglishQuotes.php
+
+		-
+			message: '#^Constructor of class JoliTypo\\Fixer\\FrenchQuotes has an unused parameter \$locale\.$#'
+			identifier: constructor.unusedParameter
+			count: 1
+			path: src/JoliTypo/Fixer/FrenchQuotes.php
+
+		-
+			message: '#^Constructor of class JoliTypo\\Fixer\\GermanQuotes has an unused parameter \$locale\.$#'
+			identifier: constructor.unusedParameter
+			count: 1
+			path: src/JoliTypo/Fixer/GermanQuotes.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\Hyphen\:\:fix\(\) should return string but returns array\<mixed\>\|string\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/Hyphen.php
+
+		-
+			message: '#^Property JoliTypo\\Fixer\\Hyphen\:\:\$supportedLocales type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/JoliTypo/Fixer/Hyphen.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\NoSpaceBeforeComma\:\:fix\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/NoSpaceBeforeComma.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\SmartQuotes\:\:fix\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/SmartQuotes.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\SpaceBeforePunctuation\:\:applyFrenchRules\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/SpaceBeforePunctuation.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\SpaceBeforePunctuation\:\:removeSpacesBeforePunctuation\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/SpaceBeforePunctuation.php
+
+		-
+			message: '#^Parameter \#1 \$content of method JoliTypo\\Fixer\\SpaceBeforePunctuation\:\:removeSpacesBeforePunctuation\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/JoliTypo/Fixer/SpaceBeforePunctuation.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, string\|null given\.$#'
+			identifier: argument.type
+			count: 5
+			path: src/JoliTypo/Fixer/SpaceBeforePunctuation.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\Trademark\:\:fix\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/Trademark.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, string\|null given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/JoliTypo/Fixer/Trademark.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\\Unit\:\:fix\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer/Unit.php
+
+		-
+			message: '#^Method JoliTypo\\LocaleAwareFixerInterface\:\:setLocale\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/JoliTypo/LocaleAwareFixerInterface.php
+
+		-
+			message: '#^Cannot access offset int on JoliTypo\\StateNode\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: src/JoliTypo/StateBag.php

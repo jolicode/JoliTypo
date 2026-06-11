@@ -14,7 +14,7 @@
         }
     ],
     "require-dev": {
-        "humbug/box": "^4.6.6"
+        "humbug/box": "^4.7.0"
     },
     "config": {
         "bump-after-update": true,

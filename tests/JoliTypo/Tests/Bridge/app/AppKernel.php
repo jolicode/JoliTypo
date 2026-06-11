@@ -45,8 +45,7 @@ class AppKernel extends Kernel
 
         if (trait_exists(MailerAssertionsTrait::class)) {
             $loader->load(static function (ContainerBuilder $container) {
-                $container->loadFromExtension('twig', [
-                ]);
+                $container->loadFromExtension('twig', []);
             });
         }
     }

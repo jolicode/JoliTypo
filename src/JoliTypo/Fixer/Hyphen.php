@@ -52,7 +52,7 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         $this->setLocale($locale);
     }
 
-    public function setLocale(string $locale)
+    public function setLocale(string $locale): void
     {
         $this->hyphenator = Hyphenator::factory(null, $this->fixLocale($locale));
         $this->setOptions();
@@ -66,7 +66,7 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         return $this->hyphenator->hyphenate($content);
     }
 
-    protected function setOptions()
+    protected function setOptions(): void
     {
         $this->hyphenator->getOptions()->setHyphen(Fixer::SHY);
         $this->hyphenator->getOptions()->setLeftMin(4);
