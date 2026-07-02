@@ -18,7 +18,7 @@ use function Castor\io;
 use function Castor\run as do_run;
 
 #[AsTask(description: 'Install dependencies')]
-function install()
+function install(): void
 {
     io()->title('Installing dependencies');
 
@@ -26,7 +26,7 @@ function install()
 }
 
 #[AsTask(description: 'Update dependencies')]
-function update()
+function update(): void
 {
     io()->title('Installing dependencies');
 
@@ -34,7 +34,7 @@ function update()
 }
 
 #[AsTask('wasm:build', description: 'Build the wasm-php binary')]
-function wasm_build()
+function wasm_build(): void
 {
     io()->title('Building wasm-php binary');
 
@@ -44,7 +44,7 @@ function wasm_build()
 }
 
 #[AsTask('wasm:pack', description: 'Pack custom code')]
-function wasm_pack()
+function wasm_pack(): void
 {
     io()->title('Packing custom code');
 
@@ -84,7 +84,7 @@ function wasm_pack()
 }
 
 #[AsTask('wasm:export', description: 'Export the wasm-php binary to the public folder with custom code')]
-function wasm_export(bool $pack = false, bool $build = false)
+function wasm_export(bool $pack = false, bool $build = false): void
 {
     if ($build) {
         wasm_build();
@@ -111,7 +111,7 @@ function wasm_export(bool $pack = false, bool $build = false)
 }
 
 #[AsTask(description: 'Run the server')]
-function serve(string $address = 'localhost:9999')
+function serve(string $address = 'localhost:9999'): void
 {
     io()->title("Serving on http://{$address}");
 

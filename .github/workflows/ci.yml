@@ -7,6 +7,39 @@ name: Continuous Integration
     pull_request: ~
 
 jobs:
+    check-cs:
+        name: Check Coding Standards
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+              with:
+                persist-credentials: false
+
+            - name: Setup Castor
+              uses: castor-php/setup-castor@827c7ae1be0bb45e42a6082cad943a2afe0ffd40 # v1.0.0
+
+            - name: Run CS check
+              run: castor cs --dry-run
+
+    phpstan:
+        name: Static Analysis
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+              with:
+                persist-credentials: false
+
+            - name: Setup Castor
+              uses: castor-php/setup-castor@827c7ae1be0bb45e42a6082cad943a2afe0ffd40 # v1.0.0
+
+            - name: Install dependencies
+              run: castor install
+
+            - name: Run PHPStan
+              run: castor phpstan
+
     ci:
         name: Test PHP ${{ matrix.php-version }} ${{ matrix.name }}
         runs-on: ubuntu-latest

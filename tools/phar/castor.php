@@ -32,7 +32,7 @@ function update(): void
 }
 
 #[AsTask(description: 'Compile phar')]
-function compile()
+function compile(): void
 {
     with(
         static function () {

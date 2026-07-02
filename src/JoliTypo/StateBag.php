@@ -29,7 +29,7 @@ class StateBag
     /**
      * Save the current StateNode, edit MAY be done to it later.
      */
-    public function storeSiblingNode(string $key)
+    public function storeSiblingNode(string $key): void
     {
         $this->siblingNode[$key][$this->currentDepth] = $this->currentNode;
     }
@@ -45,7 +45,7 @@ class StateBag
     /**
      * Replace and destroy the content of a stored Node.
      */
-    public function fixSiblingNode(string $key, string $new_content)
+    public function fixSiblingNode(string $key, string $new_content): void
     {
         $storedSibling = $this->getSiblingNode($key);
 
@@ -55,12 +55,12 @@ class StateBag
         }
     }
 
-    public function setCurrentNode(StateNode $currentNode)
+    public function setCurrentNode(StateNode $currentNode): void
     {
         $this->currentNode = $currentNode;
     }
 
-    public function setCurrentDepth(int $currentDepth)
+    public function setCurrentDepth(int $currentDepth): void
     {
         $this->currentDepth = $currentDepth;
     }

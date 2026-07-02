@@ -102,7 +102,7 @@ class Fixer
      *
      * @throws BadRuleSetException
      */
-    public function setRules(array $rules)
+    public function setRules(array $rules): void
     {
         $this->compileRules($rules);
     }
@@ -115,7 +115,7 @@ class Fixer
     /**
      * Customize the list of protected tags.
      */
-    public function setProtectedTags(array $protectedTags)
+    public function setProtectedTags(array $protectedTags): void
     {
         $this->protectedTags = $protectedTags;
     }
@@ -137,7 +137,7 @@ class Fixer
      *
      * @throws \InvalidArgumentException
      */
-    public function setLocale(string $locale)
+    public function setLocale(string $locale): void
     {
         if (!$locale) {
             throw new \InvalidArgumentException('Locale must be an IETF language tag.');
