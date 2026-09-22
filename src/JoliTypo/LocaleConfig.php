@@ -20,9 +20,9 @@ final class LocaleConfig
     /**
      * Rule types for spacing before punctuation.
      */
-    public const SPACING_RULE_FRENCH = 'french';
-    public const SPACING_RULE_SWISS_GERMAN = 'swiss_german';
-    public const SPACING_RULE_NONE = 'none';
+    public const string SPACING_RULE_FRENCH = 'french';
+    public const string SPACING_RULE_SWISS_GERMAN = 'swiss_german';
+    public const string SPACING_RULE_NONE = 'none';
 
     /**
      * Quotation mark styles.
@@ -33,18 +33,18 @@ final class LocaleConfig
      * QUOTE_STYLE_ENGLISH: "…" (curly double quotes)
      * QUOTE_STYLE_FINNISH: "…" (same closing quote on both sides)
      */
-    public const QUOTE_STYLE_FRENCH = 'french';
-    public const QUOTE_STYLE_GUILLEMETS = 'guillemets';
-    public const QUOTE_STYLE_GERMAN = 'german';
-    public const QUOTE_STYLE_ENGLISH = 'english';
-    public const QUOTE_STYLE_FINNISH = 'finnish';
+    public const string QUOTE_STYLE_FRENCH = 'french';
+    public const string QUOTE_STYLE_GUILLEMETS = 'guillemets';
+    public const string QUOTE_STYLE_GERMAN = 'german';
+    public const string QUOTE_STYLE_ENGLISH = 'english';
+    public const string QUOTE_STYLE_FINNISH = 'finnish';
 
     /**
      * Quotation styles by locale.
      *
      * Maps locale/language codes to their quotation mark style.
      */
-    public const QUOTE_STYLES_BY_LOCALE = [
+    public const array QUOTE_STYLES_BY_LOCALE = [
         // =====================================================================
         // French style: « … » (with non-breaking spaces)
         // =====================================================================
@@ -124,7 +124,7 @@ final class LocaleConfig
      * These are the default sets of fixers recommended for each locale.
      * You can customize this list when instantiating the Fixer class.
      */
-    public const RECOMMENDED_RULES_BY_LOCALE = [
+    public const array RECOMMENDED_RULES_BY_LOCALE = [
         // English
         'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
         'en_US' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],

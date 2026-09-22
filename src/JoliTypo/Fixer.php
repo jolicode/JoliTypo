@@ -18,43 +18,46 @@ class Fixer
      * DOMDocument does not like all the HTML entities; sometimes they are double encoded.
      * So the entities here are plain utf8 and DOCDocument::saveHTML transform them to entity.
      */
-    public const NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
-    public const NO_BREAK_SPACE = "\xC2\xA0"; // &#160;
-    public const ELLIPSIS = '…';
-    public const LAQUO = '«'; // &laquo;
-    public const RAQUO = '»'; // &raquo;
-    public const RSQUO = '’'; // &rsquo;
-    public const TIMES = '×'; // &times;
-    public const NDASH = '–'; // &ndash; or &#x2013;
-    public const MDASH = '—'; // &mdash; or &#x2014;
-    public const LDQUO = '“'; // &ldquo; or &#8220;
-    public const RDQUO = '”'; // &rdquo; or &#8221;
-    public const BDQUO = '„'; // &bdquo; or &#8222;
-    public const SHY = "\xC2\xAD"; // &shy;
-    public const TRADE = '™'; // &trade;
-    public const REG = '®'; // &reg;
-    public const COPY = '©'; // &copy;
-    public const ALL_SPACES = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\h"; // All supported spaces, used in regexps. \h matches horizontal spaces (tabs, thin spaces, nbsp, ...) but never line breaks
+    public const string NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
+    public const string NO_BREAK_SPACE = "\xC2\xA0"; // &#160;
+    public const string ELLIPSIS = '…';
+    public const string LAQUO = '«'; // &laquo;
+    public const string RAQUO = '»'; // &raquo;
+    public const string RSQUO = '’'; // &rsquo;
+    public const string TIMES = '×'; // &times;
+    public const string NDASH = '–'; // &ndash; or &#x2013;
+    public const string MDASH = '—'; // &mdash; or &#x2014;
+    public const string LDQUO = '“'; // &ldquo; or &#8220;
+    public const string RDQUO = '”'; // &rdquo; or &#8221;
+    public const string BDQUO = '„'; // &bdquo; or &#8222;
+    public const string SHY = "\xC2\xAD"; // &shy;
+    public const string TRADE = '™'; // &trade;
+    public const string REG = '®'; // &reg;
+    public const string COPY = '©'; // &copy;
+    public const string ALL_SPACES = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\h"; // All supported spaces, used in regexps. \h matches horizontal spaces (tabs, thin spaces, nbsp, ...) but never line breaks
 
     /**
      * @deprecated since 1.7.0, use LocaleConfig::RECOMMENDED_RULES_BY_LOCALE instead
      * @see LocaleConfig::RECOMMENDED_RULES_BY_LOCALE
      */
-    public const RECOMMENDED_RULES_BY_LOCALE = LocaleConfig::RECOMMENDED_RULES_BY_LOCALE;
+    public const array RECOMMENDED_RULES_BY_LOCALE = LocaleConfig::RECOMMENDED_RULES_BY_LOCALE;
 
+    /**
+     * @var list<string>
+     */
     private array $protectedTags = ['head', 'link', 'pre', 'code', 'script', 'style'];
 
     private string $locale = 'en_GB';
 
     /**
-     * @var array<FixerInterface> The rules Fixer instances to apply on each DOMText
+     * @var array<string, FixerInterface> The rules Fixer instances to apply on each DOMText, indexed by class name
      */
-    private array $_rules = [];
+    private array $rules = [];
 
     private ?StateBag $stateBag = null;
 
     /**
-     * @param array $rules Array of Fixer
+     * @param array<FixerInterface|string> $rules Fixer instances, fully qualified class names or built-in fixer names
      */
     public function __construct(array $rules)
     {
@@ -66,7 +69,7 @@ class Fixer
      *
      * @return string Fixed content
      */
-    public function fix(string $content)
+    public function fix(string $content): string
     {
         $trimmed = trim($content);
         if (empty($trimmed)) {
@@ -74,23 +77,23 @@ class Fixer
         }
 
         // Get a clean new StateBag
-        $this->stateBag = new StateBag();
+        $stateBag = $this->stateBag = new StateBag();
 
         $dom = $this->loadDOMDocument($trimmed);
 
-        $this->processDOM($dom, $dom);
+        $this->processDOM($dom, $dom, $stateBag);
 
         return $this->exportDOMDocument($dom);
     }
 
     /**
-     * @param string $content Basic content to fix
+     * Run the fixers directly on a string, without any HTML parsing.
      *
-     * @return string
+     * @param string $content Basic content to fix
      */
-    public function fixString(string $content)
+    public function fixString(string $content): string
     {
-        foreach ($this->_rules as $fixer) {
+        foreach ($this->rules as $fixer) {
             $content = $fixer->fix($content, $this->stateBag);
         }
 
@@ -100,6 +103,8 @@ class Fixer
     /**
      * Change the list of rules for a given locale.
      *
+     * @param array<FixerInterface|string> $rules Fixer instances, fully qualified class names or built-in fixer names
+     *
      * @throws BadRuleSetException
      */
     public function setRules(array $rules): void
@@ -107,6 +112,9 @@ class Fixer
         $this->compileRules($rules);
     }
 
+    /**
+     * @return list<string>
+     */
     public function getProtectedTags(): array
     {
         return $this->protectedTags;
@@ -114,6 +122,8 @@ class Fixer
 
     /**
      * Customize the list of protected tags.
+     *
+     * @param list<string> $protectedTags
      */
     public function setProtectedTags(array $protectedTags): void
     {
@@ -122,10 +132,8 @@ class Fixer
 
     /**
      * Get the current Locale tag.
-     *
-     * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -144,7 +152,7 @@ class Fixer
         }
 
         // Set the Locale on Fixer that needs it
-        foreach ($this->_rules as $rule) {
+        foreach ($this->rules as $rule) {
             if ($rule instanceof LocaleAwareFixerInterface) {
                 $rule->setLocale($locale);
             }
@@ -155,10 +163,8 @@ class Fixer
 
     /**
      * Get language part of a Locale string (fr_FR => fr).
-     *
-     * @return string
      */
-    public static function getLanguageFromLocale($locale)
+    public static function getLanguageFromLocale(string $locale): string
     {
         if (strpos($locale, '_')) {
             $parts = explode('_', $locale);
@@ -169,13 +175,15 @@ class Fixer
         return $locale;
     }
 
-    protected function getStateBug(): StateBag
+    protected function getStateBug(): ?StateBag
     {
         return $this->stateBag;
     }
 
     /**
-     * Build the _rules array of Fixer.
+     * Build the rules array of Fixer.
+     *
+     * @param array<FixerInterface|string> $rules
      *
      * @throws BadRuleSetException
      */
@@ -185,18 +193,18 @@ class Fixer
             throw new BadRuleSetException('Rules must be an array of Fixer');
         }
 
-        $this->_rules = [];
+        $this->rules = [];
         foreach ($rules as $rule) {
             if (\is_object($rule)) {
                 $fixer = $rule;
                 $className = $rule::class;
             } else {
-                $className = class_exists($rule) ? $rule : (class_exists(
-                    'JoliTypo\Fixer\\' . $rule
-                ) ? 'JoliTypo\Fixer\\' . $rule : false);
-                if (!$className) {
-                    throw new BadRuleSetException(\sprintf('Fixer %s not found', $rule));
-                }
+                $builtInClassName = 'JoliTypo\Fixer\\' . $rule;
+                $className = match (true) {
+                    class_exists($rule) => $rule,
+                    class_exists($builtInClassName) => $builtInClassName,
+                    default => throw new BadRuleSetException(\sprintf('Fixer %s not found', $rule)),
+                };
 
                 $fixer = new $className($this->getLocale());
             }
@@ -205,41 +213,38 @@ class Fixer
                 throw new BadRuleSetException(\sprintf('%s must implement FixerInterface', $className));
             }
 
-            $this->_rules[$className] = $fixer;
-        }
-
-        if (empty($this->_rules)) {
-            throw new BadRuleSetException("No rules configured, can't fix the content!");
+            $this->rules[$className] = $fixer;
         }
     }
 
     /**
      * Loop over all the DOMNode recursively.
      */
-    private function processDOM(\DOMNode $node, \DOMDocument $dom): void
+    private function processDOM(\DOMNode $node, \DOMDocument $dom, StateBag $stateBag): void
     {
-        if ($node->hasChildNodes()) {
-            $nodes = [];
-            foreach ($node->childNodes as $childNode) {
-                if ($childNode instanceof \DOMElement && $childNode->tagName) {
-                    if (\in_array($childNode->tagName, $this->protectedTags)) {
-                        continue;
-                    }
-                }
+        if (!$node->hasChildNodes()) {
+            return;
+        }
 
-                $nodes[] = $childNode;
+        // Copy the list first, as fixing a node replaces it in the live child list
+        $nodes = [];
+        foreach ($node->childNodes as $childNode) {
+            if ($childNode instanceof \DOMElement && \in_array($childNode->tagName, $this->protectedTags, true)) {
+                continue;
             }
 
-            $depth = $this->stateBag->getCurrentDepth();
+            $nodes[] = $childNode;
+        }
 
-            foreach ($nodes as $childNode) {
-                if ($childNode instanceof \DOMText && !$childNode->isWhitespaceInElementContent()) {
-                    $this->stateBag->setCurrentDepth($depth);
-                    $this->doFix($childNode, $node, $dom);
-                } else {
-                    $this->stateBag->setCurrentDepth($this->stateBag->getCurrentDepth() + 1);
-                    $this->processDOM($childNode, $dom);
-                }
+        $depth = $stateBag->getCurrentDepth();
+
+        foreach ($nodes as $childNode) {
+            if ($childNode instanceof \DOMText && !$childNode->isWhitespaceInElementContent()) {
+                $stateBag->setCurrentDepth($depth);
+                $this->doFix($childNode, $node, $dom, $stateBag);
+            } else {
+                $stateBag->setCurrentDepth($stateBag->getCurrentDepth() + 1);
+                $this->processDOM($childNode, $dom, $stateBag);
             }
         }
     }
@@ -251,32 +256,32 @@ class Fixer
      * @param \DOMNode     $node      The parent node where to replace the current one
      * @param \DOMDocument $dom       The Document
      */
-    private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom): void
+    private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom, StateBag $stateBag): void
     {
         $content = $childNode->wholeText;
-        $current_node = new StateNode($childNode, $node, $dom);
+        $currentNode = new StateNode($childNode, $node, $dom);
 
-        $this->stateBag->setCurrentNode($current_node);
+        $stateBag->setCurrentNode($currentNode);
 
         // run the string on all the fixers
-        foreach ($this->_rules as $fixer) {
-            $content = $fixer->fix($content, $this->stateBag);
+        foreach ($this->rules as $fixer) {
+            $content = $fixer->fix($content, $stateBag);
         }
 
         // update the DOM only if the node has changed
         if ($childNode->wholeText !== $content) {
-            $new_node = $dom->createTextNode($content);
-            $node->replaceChild($new_node, $childNode);
+            $newNode = $dom->createTextNode($content);
+            $node->replaceChild($newNode, $childNode);
 
             // As the node is replaced, we also update it in the StateNode
-            $current_node->replaceNode($new_node);
+            $currentNode->replaceNode($newNode);
         }
     }
 
     /**
      * @throws InvalidMarkupException
      */
-    private function loadDOMDocument($content): \DOMDocument
+    private function loadDOMDocument(string $content): \DOMDocument
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->encoding = 'UTF-8';
@@ -306,40 +311,35 @@ class Fixer
      * @see http://php.net/manual/en/domdocument.loadhtml.php#91513
      * @see https://github.com/jolicode/JoliTypo/issues/7
      */
-    private function fixContentEncoding($content): string
+    private function fixContentEncoding(string $content): string
     {
-        if (!empty($content)) {
-            // Little hack to force UTF-8
-            if (!str_contains($content, '<?xml encoding')) {
-                $hack = !str_contains(
-                    $content,
-                    '<body'
-                ) ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
-                $content = $hack . $content;
+        // Little hack to force UTF-8
+        if (!str_contains($content, '<?xml encoding')) {
+            $hack = str_contains($content, '<body') ? '<?xml encoding="UTF-8">' : '<?xml encoding="UTF-8"><body>';
+            $content = $hack . $content;
+        }
+
+        $encoding = null;
+        foreach (['UTF-8', 'ASCII', 'ISO-8859-1', 'windows-1252', 'iso-8859-15'] as $testedEncoding) {
+            if (mb_detect_encoding($content, $testedEncoding, true)) {
+                $encoding = $testedEncoding;
+
+                break;
             }
+        }
 
-            $encoding = null;
-            foreach (['UTF-8', 'ASCII', 'ISO-8859-1', 'windows-1252', 'iso-8859-15'] as $testedEncoding) {
-                if (mb_detect_encoding($content, $testedEncoding, true)) {
-                    $encoding = $testedEncoding;
+        $headPos = mb_strpos($content, '<head>');
 
-                    break;
-                }
-            }
+        // Add a meta to the <head> section
+        if (false !== $headPos) {
+            $headPos += 6;
+            $content = mb_substr($content, 0, $headPos)
+                . '<meta http-equiv="Content-Type" content="text/html; charset=' . $encoding . '">'
+                . mb_substr($content, $headPos);
+        }
 
-            $headPos = mb_strpos($content, '<head>');
-
-            // Add a meta to the <head> section
-            if (false !== $headPos) {
-                $headPos += 6;
-                $content = mb_substr($content, 0, $headPos) .
-                    '<meta http-equiv="Content-Type" content="text/html; charset=' . $encoding . '">' .
-                    mb_substr($content, $headPos);
-            }
-
-            if ('UTF-8' !== $encoding) {
-                $content = mb_convert_encoding($content, 'UTF-8', $encoding);
-            }
+        if ('UTF-8' !== $encoding) {
+            $content = (string) mb_convert_encoding($content, 'UTF-8', $encoding);
         }
 
         return $content;
@@ -354,9 +354,9 @@ class Fixer
                 '!</body>\n?</html>$!si',
             ],
             '',
-            $dom->saveHTML()
+            (string) $dom->saveHTML()
         );
 
-        return trim($content);
+        return trim((string) $content);
     }
 }

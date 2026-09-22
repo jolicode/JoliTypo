@@ -18,43 +18,30 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class JoliTypoExtension extends Extension
 {
+    /**
+     * @param array<array<string, mixed>> $configs
+     */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
-        $presets = $this->createPresetDefinition($container, $config);
+        /** @var array{presets: array<string, array{locale: ?string, fixers: list<string>}>} $config */
+        $config = $this->processConfiguration(new Configuration(), $configs);
 
-        // Twig extension
-        $twigExtension = new Definition(JoliTypoTwigExtension::class);
-        $twigExtension->addTag('twig.extension');
-        $twigExtension->setArguments([$presets]);
-
-        $container->setDefinition('joli_typo.twig_extension', $twigExtension);
-    }
-
-    private function createPresetDefinition(ContainerBuilder $container, array $config): array
-    {
         $presets = [];
-
         foreach ($config['presets'] as $name => $preset) {
-            $definition = new Definition(Fixer::class);
+            $definition = new Definition(Fixer::class, [$preset['fixers']]);
 
             if ($preset['locale']) {
                 $definition->addMethodCall('setLocale', [$preset['locale']]);
             }
 
-            $fixers = [];
-            foreach ($preset['fixers'] as $fixer) {
-                // Allow to use services as fixer?
-                $fixers[] = $fixer;
-            }
-
-            $definition->addArgument($fixers);
-            $container->setDefinition(\sprintf('joli_typo.fixer.%s', $name), $definition);
-
-            $presets[$name] = new Reference(\sprintf('joli_typo.fixer.%s', $name));
+            $id = \sprintf('joli_typo.fixer.%s', $name);
+            $container->setDefinition($id, $definition);
+            $presets[$name] = new Reference($id);
         }
 
-        return $presets;
+        $twigExtension = new Definition(JoliTypoTwigExtension::class, [$presets]);
+        $twigExtension->addTag('twig.extension');
+
+        $container->setDefinition('joli_typo.twig_extension', $twigExtension);
     }
 }
