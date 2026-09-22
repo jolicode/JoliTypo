@@ -97,12 +97,6 @@ parameters:
 			path: src/JoliTypo/Fixer/NoSpaceBeforeComma.php
 
 		-
-			message: '#^Method JoliTypo\\Fixer\\SmartQuotes\:\:fix\(\) should return string but returns string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: src/JoliTypo/Fixer/SmartQuotes.php
-
-		-
 			message: '#^Method JoliTypo\\Fixer\\SpaceBeforePunctuation\:\:applyFrenchRules\(\) should return string but returns string\|null\.$#'
 			identifier: return.type
 			count: 1

@@ -55,18 +55,24 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
                 $stateBag,
                 'SmartQuotesOpenSolo',
                 '@(^|\s|\()"([^"]*)$@im',
-                '@(^|[^"]+)"@im',
+                // Same strategy as for the simple cases below, see the comment there
+                '@(?|(^|[^"]*)"(?=[^"]*(?:$|[\s(]"))|(^|(?:[^"]|(?<=\d)")*?)(?<!\d)"|(^|[^"]+)")@im',
                 $this->opening . $this->openingSuffix,
                 $this->closingPrefix . $this->closing
             );
         }
 
-        // Fix simple cases
-        return preg_replace(
-            '@(^|\s|\()"([^"]+)"@im',
-            '$1' . $this->opening . $this->openingSuffix . '$2' . $this->closingPrefix . $this->closing,
-            $content
-        );
+        $replacement = '$1' . $this->opening . $this->openingSuffix . '$2' . $this->closingPrefix . $this->closing;
+
+        // Fix simple cases. A double quote preceded by a digit may be an inch or a second mark (5'6", 27")
+        // rather than a closing quote, so the closing quote is searched in three passes:
+        // 1. the nearest double quote, when no other double quote stands between it and the next opening quote or the end;
+        // 2. the nearest double quote not preceded by a digit;
+        // 3. the nearest double quote, whatever precedes it.
+        $content = preg_replace('@(^|\s|\()"([^"]+)"(?=[^"]*(?:$|[\s(]"))@im', $replacement, $content) ?? $content;
+        $content = preg_replace('@(^|\s|\()"((?:[^"]|(?<=\d)")+?)(?<!\d)"@im', $replacement, $content) ?? $content;
+
+        return preg_replace('@(^|\s|\()"([^"]+)"@im', $replacement, $content) ?? $content;
     }
 
     /**
