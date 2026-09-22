@@ -9,6 +9,7 @@
 
 namespace JoliTypo\Bridge\Twig;
 
+use JoliTypo\Fixer;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -16,6 +17,9 @@ use Twig\TwigFunction;
 
 class JoliTypoExtension extends AbstractExtension
 {
+    /**
+     * @param array<string, Fixer> $presets The Fixer instances, indexed by preset name
+     */
     public function __construct(
         private readonly array $presets = [],
     ) {
@@ -38,7 +42,7 @@ class JoliTypoExtension extends AbstractExtension
     /**
      * @throws InvalidConfigurationException
      */
-    public function translate($text, $preset = 'default'): string
+    public function translate(string $text, string $preset = 'default'): string
     {
         if (!isset($this->presets[$preset])) {
             throw new InvalidConfigurationException(\sprintf('There is no "%s" preset configured.', $preset));

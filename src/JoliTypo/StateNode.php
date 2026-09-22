@@ -14,15 +14,11 @@ namespace JoliTypo;
  */
 class StateNode
 {
-    private \DOMText $node;
-    private \DOMNode $parent;
-    private \DOMDocument $document;
-
-    public function __construct(\DOMText $node, \DOMNode $parent, \DOMDocument $document)
-    {
-        $this->node = $node;
-        $this->parent = $parent;
-        $this->document = $document;
+    public function __construct(
+        private \DOMText $node,
+        private readonly \DOMNode $parent,
+        private readonly \DOMDocument $document,
+    ) {
     }
 
     public function getNode(): \DOMText

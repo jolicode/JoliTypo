@@ -27,6 +27,13 @@ class TrademarkTest extends TestCase
         $this->assertSame('©®™.', $fixer->fix('(c)(r)(tm).'));
         $this->assertSame('©®™.', $fixer->fix('(C)(R)(TM).'));
         $this->assertSame('©' . Fixer::NO_BREAK_SPACE . '2013 Acme Corp™', $fixer->fix('(C) 2013 Acme Corp(TM)'));
+
+        // A pipe is not a space (#133)
+        $this->assertSame('©|2013', $fixer->fix('(c)|2013'));
+
+        // Tabs are spaces, but line breaks are not (#88)
+        $this->assertSame('©' . Fixer::NO_BREAK_SPACE . '2013', $fixer->fix("(c)\t2013"));
+        $this->assertSame("©\n2013", $fixer->fix("(c)\n2013"));
     }
 
     /**
