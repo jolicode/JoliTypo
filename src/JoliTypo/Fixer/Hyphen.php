@@ -67,9 +67,21 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         $this->setOptions();
     }
 
+    /**
+     * Words already containing a soft hyphen are considered hyphenated and are left untouched:
+     * the hyphenator does not know about soft hyphens and would add new ones next to the
+     * existing ones every time already fixed content is fixed again.
+     *
+     * @see https://github.com/jolicode/JoliTypo/issues/57
+     */
     public function fix(string $content, ?StateBag $stateBag = null): string
     {
-        return $this->hyphenator->hyphenate($content);
+        // Same separators as the hyphenator's own whitespace tokenizer
+        return preg_replace_callback(
+            '/[^\s\x{00A0}\x{202F}]+/u',
+            fn (array $matches): string => str_contains($matches[0], Fixer::SHY) ? $matches[0] : $this->hyphenate($matches[0]),
+            $content
+        ) ?? $content;
     }
 
     protected function setOptions(): void
@@ -98,5 +110,13 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
 
         // If no better locale found...
         return $locale;
+    }
+
+    private function hyphenate(string $word): string
+    {
+        $hyphenated = $this->hyphenator->hyphenate($word);
+
+        // The hyphenator is documented as returning an array with some filters, but the default one always returns a string
+        return \is_string($hyphenated) ? $hyphenated : $word;
     }
 }

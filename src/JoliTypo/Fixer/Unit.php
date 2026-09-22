@@ -21,6 +21,6 @@ class Unit implements FixerInterface
     public function fix(string $content, ?StateBag $stateBag = null): string
     {
         // Support a wide range of currencies
-        return preg_replace('@([\dº])(' . Fixer::ALL_SPACES . ')+([º°%Ω฿₵¢₡$₫֏€ƒ₲₴₭£₤₺₦₨₱៛₹$₪৳₸₮₩¥\w]{1})@', '$1' . Fixer::NO_BREAK_SPACE . '$3', $content);
+        return preg_replace('@([\dº])(' . Fixer::ALL_SPACES . ')+([º°%Ω฿₵¢₡$₫֏€ƒ₲₴₭£₤₺₦₨₱៛₹$₪৳₸₮₩¥\w]{1})@u', '$1' . Fixer::NO_BREAK_SPACE . '$3', $content);
     }
 }

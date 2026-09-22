@@ -190,6 +190,8 @@ $fixer = new Fixer(['Ellipsis', new Hyphen('fr_FR', leftMin: 3, rightMin: 3, wor
 
 These options are kept when the locale is changed with `$fixer->setLocale()`.
 
+Words already containing a soft hyphen (`&shy;`) are left untouched: already fixed content can safely be fixed again, and manual hyphenation points are preserved.
+
 **Proper hyphenation is mandatory in justified text** and you should avoid word breaking in titles with this line of CSS: `hyphens:none;`.
 
 ⚠ Be aware that the current screen readers are unable to spell correctly the words containing `&shy;` tags. The Hyphen filter should therefore be used with caution or you might reduce your website's accessibility.
