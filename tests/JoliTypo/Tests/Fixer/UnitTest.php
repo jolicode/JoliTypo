@@ -34,5 +34,11 @@ class UnitTest extends TestCase
         $this->assertSame('12' . Fixer::NO_BREAK_SPACE . '%', $fixer->fix('12 %'));
         $this->assertSame('13' . Fixer::NO_BREAK_SPACE . 'Ω', $fixer->fix('13 Ω'));
         $this->assertSame('14' . Fixer::NO_BREAK_SPACE . 'Ω', $fixer->fix('14' . Fixer::NO_BREAK_THIN_SPACE . 'Ω'));
+
+        // Tabs are spaces, but line breaks are not (#88)
+        $this->assertSame('15' . Fixer::NO_BREAK_SPACE . 'kg', $fixer->fix("15\tkg"));
+        $this->assertSame("16\nkg", $fixer->fix("16\nkg"));
+        $this->assertSame("17\r\nkg", $fixer->fix("17\r\nkg"));
+        $this->assertSame("## Verrückt und Harakiri 2\nAm Tag nach dem", $fixer->fix("## Verrückt und Harakiri 2\nAm Tag nach dem"));
     }
 }

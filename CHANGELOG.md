@@ -7,6 +7,7 @@ CHANGELOG
 * Add `LocaleConfig` class for centralized locale configuration
 * Extend `SmartQuotes` to support 45+ languages via `LocaleConfig`
 * Deprecate `FrenchNoBreakSpace` fixer in favor of `SpaceBeforePunctuation`
+* Stop treating line breaks as spaces in `Fixer::ALL_SPACES`, so that `Unit`, `Dimension`, `Trademark`, `NoSpaceBeforeComma` and `SpaceBeforePunctuation` no longer join lines together (#88)
 
 ### 1.6.0 (2025-12-15) ###
 

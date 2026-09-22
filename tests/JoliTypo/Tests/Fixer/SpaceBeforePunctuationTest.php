@@ -57,6 +57,21 @@ class SpaceBeforePunctuationTest extends TestCase
         $this->assertSame('Here is a  brand name: Yahoo!', $fixer->fix('Here is a  brand name: Yahoo!'));
     }
 
+    public function testFrenchLocaleSpaceVariants(): void
+    {
+        $fixer = new Fixer\SpaceBeforePunctuation('fr_FR');
+
+        // Thin spaces and tabs are replaced like regular spaces
+        $this->assertSame('Superman' . Fixer::NO_BREAK_THIN_SPACE . '!', $fixer->fix("Superman\u{2009}!"));
+        $this->assertSame('Superman' . Fixer::NO_BREAK_THIN_SPACE . '!', $fixer->fix("Superman\t!"));
+        $this->assertSame('Superman' . Fixer::NO_BREAK_SPACE . ': the movie', $fixer->fix("Superman\u{2009}: the movie"));
+        $this->assertSame(Fixer::LAQUO . Fixer::NO_BREAK_SPACE . 'test' . Fixer::NO_BREAK_SPACE . Fixer::RAQUO, $fixer->fix("«\u{2009}test\u{2009}»"));
+
+        // Line breaks are not spaces and must be preserved (#88)
+        $this->assertSame("Superman\n!", $fixer->fix("Superman\n!"));
+        $this->assertSame("Superman\n: the movie", $fixer->fix("Superman\n: the movie"));
+    }
+
     public function testEnglishLocale(): void
     {
         $fixer = new Fixer\SpaceBeforePunctuation('en_GB');
@@ -85,6 +100,19 @@ class SpaceBeforePunctuationTest extends TestCase
 
         // IPv6 should not be modified (no space before colons)
         $this->assertSame('fdda:5cc1::1f', $fixer->fix('fdda:5cc1::1f'));
+    }
+
+    public function testEnglishLocaleSpaceVariants(): void
+    {
+        $fixer = new Fixer\SpaceBeforePunctuation('en_GB');
+
+        // Thin spaces, tabs and nbsp are removed like regular spaces
+        $this->assertSame('Hello!', $fixer->fix("Hello\u{2009}!"));
+        $this->assertSame('Hello!', $fixer->fix("Hello\t!"));
+        $this->assertSame('Hello:', $fixer->fix("Hello\u{a0}:"));
+
+        // Line breaks are not spaces and must be preserved (#88)
+        $this->assertSame("Hello\n!", $fixer->fix("Hello\n!"));
     }
 
     public function testCanadianFrenchLocale(): void

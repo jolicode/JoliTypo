@@ -20,6 +20,15 @@ class NoSpaceBeforeComma implements FixerInterface
 {
     public function fix(string $content, ?StateBag $stateBag = null)
     {
-        return preg_replace('@([^\d\s]+)[' . Fixer::ALL_SPACES . ']*(,)[' . Fixer::ALL_SPACES . ']*@mu', '$1$2 ', $content);
+        return preg_replace(
+            [
+                // Remove spaces before the comma
+                '@([^\d\s]+)[' . Fixer::ALL_SPACES . ']+(,)@mu',
+                // Ensure exactly one space after the comma, unless a line break follows it
+                '@([^\d\s])(,)[' . Fixer::ALL_SPACES . ']*+(?!\v)@mu',
+            ],
+            ['$1$2', '$1$2 '],
+            $content
+        );
     }
 }
