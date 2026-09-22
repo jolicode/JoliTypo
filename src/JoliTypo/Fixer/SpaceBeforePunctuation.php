@@ -64,22 +64,22 @@ class SpaceBeforePunctuation implements FixerInterface, LocaleAwareFixerInterfac
     private function applyFrenchRules(string $content): string
     {
         // NO_BREAK_SPACE before colon (only when there's already a space)
-        $content = preg_replace('@[' . Fixer::ALL_SPACES . ']+(:)@mu', Fixer::NO_BREAK_SPACE . '$1', $content);
+        $content = preg_replace('@[' . Fixer::ALL_SPACES_CLASS . ']+(:)@mu', Fixer::NO_BREAK_SPACE . '$1', $content);
 
         // NO_BREAK_THIN_SPACE before ; ! ?
-        $content = preg_replace('@[' . Fixer::ALL_SPACES . ']+([;!\?])@mu', Fixer::NO_BREAK_THIN_SPACE . '$1', $content);
+        $content = preg_replace('@[' . Fixer::ALL_SPACES_CLASS . ']+([;!\?])@mu', Fixer::NO_BREAK_THIN_SPACE . '$1', $content);
 
         // Handle French guillemets « »
-        $content = preg_replace('@' . Fixer::LAQUO . '[' . Fixer::ALL_SPACES . ']?@mu', Fixer::LAQUO . Fixer::NO_BREAK_SPACE, $content);
+        $content = preg_replace('@' . Fixer::LAQUO . '[' . Fixer::ALL_SPACES_CLASS . ']?@mu', Fixer::LAQUO . Fixer::NO_BREAK_SPACE, $content);
 
-        return preg_replace('@[' . Fixer::ALL_SPACES . ']?' . Fixer::RAQUO . '@mu', Fixer::NO_BREAK_SPACE . Fixer::RAQUO, $content);
+        return preg_replace('@[' . Fixer::ALL_SPACES_CLASS . ']?' . Fixer::RAQUO . '@mu', Fixer::NO_BREAK_SPACE . Fixer::RAQUO, $content);
     }
 
     private function applySwissGermanRules(string $content): string
     {
         // Swiss German uses French-style guillemets « » with thin non-breaking spaces
-        $content = preg_replace('@' . Fixer::LAQUO . '[' . Fixer::ALL_SPACES . ']?@mu', Fixer::LAQUO . Fixer::NO_BREAK_THIN_SPACE, $content);
-        $content = preg_replace('@[' . Fixer::ALL_SPACES . ']?' . Fixer::RAQUO . '@mu', Fixer::NO_BREAK_THIN_SPACE . Fixer::RAQUO, $content);
+        $content = preg_replace('@' . Fixer::LAQUO . '[' . Fixer::ALL_SPACES_CLASS . ']?@mu', Fixer::LAQUO . Fixer::NO_BREAK_THIN_SPACE, $content);
+        $content = preg_replace('@[' . Fixer::ALL_SPACES_CLASS . ']?' . Fixer::RAQUO . '@mu', Fixer::NO_BREAK_THIN_SPACE . Fixer::RAQUO, $content);
 
         // But still remove spaces before punctuation (like German)
         return $this->removeSpacesBeforePunctuation($content);
@@ -90,8 +90,8 @@ class SpaceBeforePunctuation implements FixerInterface, LocaleAwareFixerInterfac
         // Remove all types of spaces (including nbsp, thin spaces) before : ; ! ?
         // This ensures consistent behavior regardless of input spacing
         // Excludes URLs (://), time formats, IPv6, etc.
-        $content = preg_replace('@([^' . Fixer::ALL_SPACES . ':])[' . Fixer::ALL_SPACES . ']+(:)(?![/\d])@mu', '$1$2', $content);
+        $content = preg_replace('@([^' . Fixer::ALL_SPACES_CLASS . ':])[' . Fixer::ALL_SPACES_CLASS . ']+(:)(?![/\d])@mu', '$1$2', $content);
 
-        return preg_replace('@([^' . Fixer::ALL_SPACES . '])[' . Fixer::ALL_SPACES . ']+([;!\?])@mu', '$1$2', $content);
+        return preg_replace('@([^' . Fixer::ALL_SPACES_CLASS . '])[' . Fixer::ALL_SPACES_CLASS . ']+([;!\?])@mu', '$1$2', $content);
     }
 }

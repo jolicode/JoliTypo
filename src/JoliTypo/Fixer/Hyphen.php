@@ -17,9 +17,7 @@ use Org\Heigl\Hyphenator\Hyphenator;
 
 class Hyphen implements FixerInterface, LocaleAwareFixerInterface
 {
-    private Hyphenator $hyphenator;
-
-    private array $supportedLocales = [
+    private const array SUPPORTED_LOCALES = [
         'af_ZA',
         'ca',
         'da_DK',
@@ -47,6 +45,8 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         'zu_ZA',
     ];
 
+    private Hyphenator $hyphenator;
+
     /**
      * @param int $leftMin  Minimum number of characters kept before the first hyphenation point of a word
      * @param int $rightMin Minimum number of characters kept after the last hyphenation point of a word
@@ -67,10 +67,7 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         $this->setOptions();
     }
 
-    /**
-     * @return string
-     */
-    public function fix(string $content, ?StateBag $stateBag = null)
+    public function fix(string $content, ?StateBag $stateBag = null): string
     {
         return $this->hyphenator->hyphenate($content);
     }
@@ -86,17 +83,15 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
 
     /**
      * Transform fr_FR to fr to fit the list of supported locales.
-     *
-     * @return string
      */
-    protected function fixLocale(string $locale)
+    protected function fixLocale(string $locale): string
     {
-        if (\in_array($locale, $this->supportedLocales)) {
+        if (\in_array($locale, self::SUPPORTED_LOCALES)) {
             return $locale;
         }
 
         if (($short = Fixer::getLanguageFromLocale($locale)) !== $locale) {
-            if (\in_array($short, $this->supportedLocales)) {
+            if (\in_array($short, self::SUPPORTED_LOCALES)) {
                 return $short;
             }
         }

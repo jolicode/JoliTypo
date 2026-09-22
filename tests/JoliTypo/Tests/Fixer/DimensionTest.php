@@ -27,5 +27,10 @@ class DimensionTest extends TestCase
         $this->assertSame('3 ' . Fixer::TIMES . ' 1', $fixer->fix('3 x 1'));
         $this->assertSame('8.5"' . Fixer::TIMES . '10"', $fixer->fix('8.5"x10"'));
         $this->assertSame('8.5" ' . Fixer::TIMES . ' 10"', $fixer->fix('8.5" x 10"'));
+
+        // Tabs are spaces, but line breaks are not (#88)
+        $this->assertSame("3\t" . Fixer::TIMES . "\t1", $fixer->fix("3\tx\t1"));
+        $this->assertSame("3 x\n1", $fixer->fix("3 x\n1"));
+        $this->assertSame("3\nx 1", $fixer->fix("3\nx 1"));
     }
 }

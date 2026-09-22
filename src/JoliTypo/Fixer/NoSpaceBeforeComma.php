@@ -18,8 +18,17 @@ use JoliTypo\StateBag;
  */
 class NoSpaceBeforeComma implements FixerInterface
 {
-    public function fix(string $content, ?StateBag $stateBag = null)
+    public function fix(string $content, ?StateBag $stateBag = null): string
     {
-        return preg_replace('@([^\d\s]+)[' . Fixer::ALL_SPACES . ']*(,)[' . Fixer::ALL_SPACES . ']*@mu', '$1$2 ', $content);
+        return preg_replace(
+            [
+                // Remove spaces before the comma
+                '@([^\d\s]+)[' . Fixer::ALL_SPACES_CLASS . ']+(,)@mu',
+                // Ensure exactly one space after the comma, unless a line break follows it
+                '@([^\d\s])(,)[' . Fixer::ALL_SPACES_CLASS . ']*+(?!\v)@mu',
+            ],
+            ['$1$2', '$1$2 '],
+            $content
+        );
     }
 }
