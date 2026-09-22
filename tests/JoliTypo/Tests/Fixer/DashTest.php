@@ -154,23 +154,25 @@ class DashTest extends TestCase
 
     public function testQuotedIncise(): void
     {
-        // The narrow no-break space the dash leaves behind is still a space for the other fixers
+        // The narrow no-break space the dash leaves behind is still a space for the other fixers.
+        // fixString is used rather than fix, so that the assertion does not depend on how the local
+        // libxml encodes the entities.
         $rules = ['Dash', 'SmartQuotes'];
 
         $fixer = new Fixer($rules);
         $fixer->setLocale('en_GB');
 
         $this->assertSame(
-            '<p>He said ' . Fixer::NDASH . self::FINE . Fixer::LDQUO . 'no way' . Fixer::RDQUO . self::FINE . Fixer::NDASH . ' and left.</p>',
-            $fixer->fix('<p>He said ' . Fixer::NDASH . ' "no way" ' . Fixer::NDASH . ' and left.</p>')
+            'He said ' . Fixer::NDASH . self::FINE . Fixer::LDQUO . 'no way' . Fixer::RDQUO . self::FINE . Fixer::NDASH . ' and left.',
+            $fixer->fixString('He said ' . Fixer::NDASH . ' "no way" ' . Fixer::NDASH . ' and left.')
         );
 
         $fixer = new Fixer($rules);
         $fixer->setLocale('fr_FR');
 
         $this->assertSame(
-            '<p>He said ' . Fixer::NDASH . self::FINE . Fixer::LAQUO . Fixer::NO_BREAK_SPACE . 'no way' . Fixer::NO_BREAK_SPACE . Fixer::RAQUO . self::FINE . Fixer::NDASH . ' and left.</p>',
-            $fixer->fix('<p>He said ' . Fixer::NDASH . ' "no way" ' . Fixer::NDASH . ' and left.</p>')
+            'He said ' . Fixer::NDASH . self::FINE . Fixer::LAQUO . Fixer::NO_BREAK_SPACE . 'no way' . Fixer::NO_BREAK_SPACE . Fixer::RAQUO . self::FINE . Fixer::NDASH . ' and left.',
+            $fixer->fixString('He said ' . Fixer::NDASH . ' "no way" ' . Fixer::NDASH . ' and left.')
         );
     }
 }
