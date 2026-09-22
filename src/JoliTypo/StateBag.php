@@ -11,33 +11,28 @@ namespace JoliTypo;
 
 class StateBag
 {
-    /**
-     * @var int
-     */
-    protected $currentDepth = 0;
+    protected int $currentDepth = 0;
+
+    protected ?StateNode $currentNode = null;
 
     /**
-     * @var StateNode
+     * @var array<string, array<int, StateNode>> Stored nodes, indexed by state name then by depth
      */
-    protected $currentNode;
-
-    /**
-     * @var array<StateNode>
-     */
-    protected $siblingNode = [];
+    protected array $siblingNode = [];
 
     /**
      * Save the current StateNode, edit MAY be done to it later.
      */
     public function storeSiblingNode(string $key): void
     {
+        if (null === $this->currentNode) {
+            return;
+        }
+
         $this->siblingNode[$key][$this->currentDepth] = $this->currentNode;
     }
 
-    /**
-     * @return StateNode|null
-     */
-    public function getSiblingNode(string $key)
+    public function getSiblingNode(string $key): ?StateNode
     {
         return $this->siblingNode[$key][$this->currentDepth] ?? null;
     }
@@ -49,10 +44,12 @@ class StateBag
     {
         $storedSibling = $this->getSiblingNode($key);
 
-        if ($storedSibling) {
-            $storedSibling->getParent()->replaceChild($storedSibling->getDocument()->createTextNode($new_content), $storedSibling->getNode());
-            unset($this->siblingNode[$key][$this->currentDepth]);
+        if (null === $storedSibling) {
+            return;
         }
+
+        $storedSibling->getParent()->replaceChild($storedSibling->getDocument()->createTextNode($new_content), $storedSibling->getNode());
+        unset($this->siblingNode[$key][$this->currentDepth]);
     }
 
     public function setCurrentNode(StateNode $currentNode): void
@@ -65,10 +62,7 @@ class StateBag
         $this->currentDepth = $currentDepth;
     }
 
-    /**
-     * @return int
-     */
-    public function getCurrentDepth()
+    public function getCurrentDepth(): int
     {
         return $this->currentDepth;
     }

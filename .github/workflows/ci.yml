@@ -3,7 +3,7 @@ name: Continuous Integration
 "on":
     push:
         branches:
-            - master
+            - main
     pull_request: ~
 
 jobs:
@@ -69,7 +69,7 @@ jobs:
               run: composer validate --strict
 
             - name: Install dependencies
-              run: composer install --prefer-dist --no-progress
+              run: composer update --prefer-dist --no-progress ${{ matrix.composer-flags }}
 
             - name: Run tests
               run: composer test
