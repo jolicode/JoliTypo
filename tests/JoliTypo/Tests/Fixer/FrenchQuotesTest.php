@@ -36,13 +36,8 @@ class FrenchQuotesTest extends TestCase
         $this->assertSame('This is a time: 2"44\'.', $fixer->fix('This is a time: 2"44\'.'));
     }
 
-    /**
-     * :-( :sadface:.
-     */
-    public function testImpossible(): void
+    public function testLonelyQuoteBeforeAPair(): void
     {
-        $this->markTestSkipped("Those tests can't pass: they are edge case JoliTypo does not cover ATM. Feel free to fix!");
-
         $fixer = new Fixer\FrenchQuotes();
 
         $this->assertSame('Oh my god, this quote is alone: " ! But those are «' . Fixer::NO_BREAK_SPACE . 'ok' . Fixer::NO_BREAK_SPACE . '».', $fixer->fix('Oh my god, this quote is alone: " ! But those are "ok".'));

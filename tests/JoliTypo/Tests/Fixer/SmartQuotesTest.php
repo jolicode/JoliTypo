@@ -226,6 +226,52 @@ class SmartQuotesTest extends TestCase
     }
 
     // =========================================================================
+    // Inch and second marks inside quotes (#32)
+    // =========================================================================
+
+    /**
+     * @see https://github.com/jolicode/JoliTypo/issues/32
+     */
+    public function testInchAndSecondMarksInsideQuotes(): void
+    {
+        $fixer = new Fixer\SmartQuotes('en');
+
+        // A double quote preceded by a digit is not a closing quote when a better candidate follows
+        $this->assertSame('“The man was 5\'6" and 120 lbs.”', $fixer->fix('"The man was 5\'6" and 120 lbs."'));
+        $this->assertSame('She said “the man was 5\'6" and 120 lbs” and left.', $fixer->fix('She said "the man was 5\'6" and 120 lbs" and left.'));
+        $this->assertSame('He said “5\'6" is short”', $fixer->fix('He said "5\'6" is short"'));
+        $this->assertSame('He said “hi” to the 27" monitor.', $fixer->fix('He said "hi" to the 27" monitor.'));
+        $this->assertSame('The 27" monitor is “great”.', $fixer->fix('The 27" monitor is "great".'));
+
+        // ... but it still closes a quote when nothing better follows
+        $this->assertSame('She said “I am 5”.', $fixer->fix('She said "I am 5".'));
+        $this->assertSame('“I am 5” and “you are 6”', $fixer->fix('"I am 5" and "you are 6"'));
+        $this->assertSame('“I am 5” and 27" monitors', $fixer->fix('"I am 5" and 27" monitors'));
+
+        // Inch marks outside quotes are left alone
+        $this->assertSame('A 27" monitor and a 15.6" laptop.', $fixer->fix('A 27" monitor and a 15.6" laptop.'));
+    }
+
+    public function testInchAndSecondMarksInsideQuotesWithAffixes(): void
+    {
+        $fixer = new Fixer\SmartQuotes('fr');
+
+        $this->assertSame('«' . Fixer::NO_BREAK_SPACE . 'The man was 5\'6" and 120 lbs.' . Fixer::NO_BREAK_SPACE . '»', $fixer->fix('"The man was 5\'6" and 120 lbs."'));
+    }
+
+    public function testInchAndSecondMarksInsideQuotesAcrossSiblingNodes(): void
+    {
+        $fixer = new Fixer(['SmartQuotes']);
+        $fixer->setLocale('en');
+
+        $this->assertSame('<p>“The man was <em>really</em> 5\'6" and 120 lbs.”</p>', $this->fixHtml($fixer, '<p>"The man was <em>really</em> 5\'6" and 120 lbs."</p>'));
+        $this->assertSame('<p>“The man was<br>5\'6" and 120 lbs.”</p>', $this->fixHtml($fixer, '<p>"The man was<br>5\'6" and 120 lbs."</p>'));
+        $this->assertSame('<p>He said “hi”<br>to the 27" monitor.</p>', $this->fixHtml($fixer, '<p>He said "hi"<br>to the 27" monitor.</p>'));
+        $this->assertSame('<p>“I am <em>only</em> 5” and “you are 6”</p>', $this->fixHtml($fixer, '<p>"I am <em>only</em> 5" and "you are 6"</p>'));
+        $this->assertSame('<p>“I am<br>5” tall</p>', $this->fixHtml($fixer, '<p>"I am<br>5" tall</p>'));
+    }
+
+    // =========================================================================
     // Locale can be changed
     // =========================================================================
 
@@ -242,5 +288,13 @@ class SmartQuotesTest extends TestCase
             Fixer::LAQUO . Fixer::NO_BREAK_SPACE . 'Hi' . Fixer::NO_BREAK_SPACE . Fixer::RAQUO,
             $fixer->fix('"Hi"')
         );
+    }
+
+    /**
+     * Decode entities so that the assertions do not depend on the libxml version.
+     */
+    private function fixHtml(Fixer $fixer, string $html): string
+    {
+        return html_entity_decode($fixer->fix($html), \ENT_QUOTES | \ENT_HTML5, 'UTF-8');
     }
 }

@@ -7,6 +7,7 @@ CHANGELOG
 * Add `LocaleConfig` class for centralized locale configuration
 * Extend `SmartQuotes` to support 45+ languages via `LocaleConfig`
 * Deprecate `FrenchNoBreakSpace` fixer in favor of `SpaceBeforePunctuation`
+* Fix `SmartQuotes` taking inch and second marks (`5'6"`, `27"`) inside a quote for closing quotes (#32)
 
 ### 1.6.0 (2025-12-15) ###
 
