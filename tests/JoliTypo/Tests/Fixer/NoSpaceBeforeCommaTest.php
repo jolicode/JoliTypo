@@ -30,5 +30,9 @@ class NoSpaceBeforeCommaTest extends TestCase
         $this->assertSame("Superman,\nyou're my hero", $fixer->fix("Superman,\nyou're my hero"));
         $this->assertSame("Superman,\nyou're my hero", $fixer->fix("Superman ,\nyou're my hero"));
         $this->assertSame("Superman, \nyou're my hero", $fixer->fix("Superman, \nyou're my hero"));
+
+        // A pipe is not a space (#133)
+        $this->assertSame('a, |b', $fixer->fix('a,|b'));
+        $this->assertSame('a|, b', $fixer->fix('a| , b'));
     }
 }

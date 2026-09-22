@@ -23,9 +23,9 @@ class NoSpaceBeforeComma implements FixerInterface
         return preg_replace(
             [
                 // Remove spaces before the comma
-                '@([^\d\s]+)[' . Fixer::ALL_SPACES . ']+(,)@mu',
+                '@([^\d\s]+)[' . Fixer::ALL_SPACES_CLASS . ']+(,)@mu',
                 // Ensure exactly one space after the comma, unless a line break follows it
-                '@([^\d\s])(,)[' . Fixer::ALL_SPACES . ']*+(?!\v)@mu',
+                '@([^\d\s])(,)[' . Fixer::ALL_SPACES_CLASS . ']*+(?!\v)@mu',
             ],
             ['$1$2', '$1$2 '],
             $content
