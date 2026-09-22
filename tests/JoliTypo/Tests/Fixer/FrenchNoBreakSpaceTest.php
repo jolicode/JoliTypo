@@ -30,5 +30,8 @@ class FrenchNoBreakSpaceTest extends TestCase
         $this->assertSame('fdda:5cc1:23:4::1f', $fixer->fix('fdda:5cc1:23:4::1f'));
 
         $this->assertSame('Here is a  brand name: Yahoo!', $fixer->fix('Here is a  brand name: Yahoo!'));
+
+        // A pipe is not a space (#133)
+        $this->assertSame('Bonjour|!', $fixer->fix('Bonjour|!'));
     }
 }

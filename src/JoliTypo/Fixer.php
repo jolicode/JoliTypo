@@ -35,6 +35,7 @@ class Fixer
     public const REG = '®'; // &reg;
     public const COPY = '©'; // &copy;
     public const ALL_SPACES = "\xE2\x80\xAF|\xC2\xAD|\xC2\xA0|\\h"; // All supported spaces, used in regexps. \h matches horizontal spaces (tabs, thin spaces, nbsp, ...) but never line breaks
+    public const ALL_SPACES_CLASS = "\xE2\x80\xAF\xC2\xAD\xC2\xA0\\h"; // The same spaces, without the alternation, to be embedded in a character class
 
     /**
      * @deprecated since 1.7.0, use LocaleConfig::RECOMMENDED_RULES_BY_LOCALE instead

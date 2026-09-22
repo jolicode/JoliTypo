@@ -70,6 +70,11 @@ class SpaceBeforePunctuationTest extends TestCase
         // Line breaks are not spaces and must be preserved (#88)
         $this->assertSame("Superman\n!", $fixer->fix("Superman\n!"));
         $this->assertSame("Superman\n: the movie", $fixer->fix("Superman\n: the movie"));
+
+        // A pipe is not a space either (#133)
+        $this->assertSame('Superman|!', $fixer->fix('Superman|!'));
+        $this->assertSame('Superman|: the movie', $fixer->fix('Superman|: the movie'));
+        $this->assertSame(Fixer::LAQUO . Fixer::NO_BREAK_SPACE . '|test|' . Fixer::NO_BREAK_SPACE . Fixer::RAQUO, $fixer->fix('«|test|»'));
     }
 
     public function testEnglishLocale(): void
