@@ -7,6 +7,7 @@ CHANGELOG
 * Add `LocaleConfig` class for centralized locale configuration
 * Extend `SmartQuotes` to support 45+ languages via `LocaleConfig`
 * Deprecate `FrenchNoBreakSpace` fixer in favor of `SpaceBeforePunctuation`
+* Add `leftMin`, `rightMin` and `wordMin` options to the `Hyphen` fixer
 * Fix `SmartQuotes` taking inch and second marks (`5'6"`, `27"`) inside a quote for closing quotes (#32)
 * Stop treating line breaks as spaces in `Fixer::ALL_SPACES`, so that `Unit`, `Dimension`, `Trademark`, `NoSpaceBeforeComma` and `SpaceBeforePunctuation` no longer join lines together (#88)
 * Require PHP 8.3 or higher in `composer.json` (announced in 1.6.0, but the constraint still allowed PHP 8.1 and 8.2)

@@ -173,6 +173,23 @@ You can read more about this fixer on [the official github repository](https://g
 
 **This Fixer requires a Locale to be set on the Fixer with `$fixer->setLocale('fr_FR');`. Default to `en_GB`.**
 
+The hyphenation can be tuned by giving an instance of the fixer instead of its name:
+
+```php
+use JoliTypo\Fixer;
+use JoliTypo\Fixer\Hyphen;
+
+$fixer = new Fixer(['Ellipsis', new Hyphen('fr_FR', leftMin: 3, rightMin: 3, wordMin: 8)]);
+```
+
+| Option     | Default | Description                                                                    |
+|------------|---------|--------------------------------------------------------------------------------|
+| `leftMin`  | `4`     | Minimum number of characters kept before the first hyphenation point of a word |
+| `rightMin` | `3`     | Minimum number of characters kept after the last hyphenation point of a word   |
+| `wordMin`  | `6`     | Minimum length of a word (in characters) to be hyphenated                      |
+
+These options are kept when the locale is changed with `$fixer->setLocale()`.
+
 **Proper hyphenation is mandatory in justified text** and you should avoid word breaking in titles with this line of CSS: `hyphens:none;`.
 
 ⚠ Be aware that the current screen readers are unable to spell correctly the words containing `&shy;` tags. The Hyphen filter should therefore be used with caution or you might reduce your website's accessibility.
