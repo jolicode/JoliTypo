@@ -1,6 +1,30 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Cannot call method getCurrentDepth\(\) on JoliTypo\\StateBag\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Cannot call method setCurrentDepth\(\) on JoliTypo\\StateBag\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Cannot call method setCurrentNode\(\) on JoliTypo\\StateBag\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
+			message: '#^Method JoliTypo\\Fixer\:\:getStateBug\(\) should return JoliTypo\\StateBag but returns JoliTypo\\StateBag\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/JoliTypo/Fixer.php
+
+		-
 			message: '#^Method JoliTypo\\Fixer\\BaseOpenClosePair\:\:fixViaState\(\) should return string but returns string\|null\.$#'
 			identifier: return.type
 			count: 1

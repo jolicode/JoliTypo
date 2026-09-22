@@ -77,11 +77,11 @@ class Fixer
         }
 
         // Get a clean new StateBag
-        $stateBag = $this->stateBag = new StateBag();
+        $this->stateBag = new StateBag();
 
         $dom = $this->loadDOMDocument($trimmed);
 
-        $this->processDOM($dom, $dom, $stateBag);
+        $this->processDOM($dom, $dom);
 
         return $this->exportDOMDocument($dom);
     }
@@ -175,7 +175,7 @@ class Fixer
         return $locale;
     }
 
-    protected function getStateBug(): ?StateBag
+    protected function getStateBug(): StateBag
     {
         return $this->stateBag;
     }
@@ -220,7 +220,7 @@ class Fixer
     /**
      * Loop over all the DOMNode recursively.
      */
-    private function processDOM(\DOMNode $node, \DOMDocument $dom, StateBag $stateBag): void
+    private function processDOM(\DOMNode $node, \DOMDocument $dom): void
     {
         if (!$node->hasChildNodes()) {
             return;
@@ -236,15 +236,15 @@ class Fixer
             $nodes[] = $childNode;
         }
 
-        $depth = $stateBag->getCurrentDepth();
+        $depth = $this->stateBag->getCurrentDepth();
 
         foreach ($nodes as $childNode) {
             if ($childNode instanceof \DOMText && !$childNode->isWhitespaceInElementContent()) {
-                $stateBag->setCurrentDepth($depth);
-                $this->doFix($childNode, $node, $dom, $stateBag);
+                $this->stateBag->setCurrentDepth($depth);
+                $this->doFix($childNode, $node, $dom);
             } else {
-                $stateBag->setCurrentDepth($stateBag->getCurrentDepth() + 1);
-                $this->processDOM($childNode, $dom, $stateBag);
+                $this->stateBag->setCurrentDepth($this->stateBag->getCurrentDepth() + 1);
+                $this->processDOM($childNode, $dom);
             }
         }
     }
@@ -256,16 +256,16 @@ class Fixer
      * @param \DOMNode     $node      The parent node where to replace the current one
      * @param \DOMDocument $dom       The Document
      */
-    private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom, StateBag $stateBag): void
+    private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom): void
     {
         $content = $childNode->wholeText;
         $currentNode = new StateNode($childNode, $node, $dom);
 
-        $stateBag->setCurrentNode($currentNode);
+        $this->stateBag->setCurrentNode($currentNode);
 
         // run the string on all the fixers
         foreach ($this->rules as $fixer) {
-            $content = $fixer->fix($content, $stateBag);
+            $content = $fixer->fix($content, $this->stateBag);
         }
 
         // update the DOM only if the node has changed
