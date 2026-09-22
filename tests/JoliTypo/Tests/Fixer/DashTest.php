@@ -71,10 +71,32 @@ class DashTest extends TestCase
             $fixer->fix('An incise ' . Fixer::MDASH . ' like this one ' . Fixer::MDASH . ' is a pair.')
         );
 
-        // An odd dash left over is not a pair, so it keeps the default spacing
+        // A closing dash can be followed by the punctuation that ends the incise
         $this->assertSame(
-            'One ' . Fixer::NDASH . self::FINE . 'incise' . self::FINE . Fixer::NDASH . ' then a lone dash' . self::FINE . Fixer::NDASH . ' here.',
-            $fixer->fix('One ' . Fixer::NDASH . ' incise ' . Fixer::NDASH . ' then a lone dash ' . Fixer::NDASH . ' here.')
+            'Style ' . Fixer::NDASH . self::FINE . 'not sincerity' . self::FINE . Fixer::NDASH . ', is the vital thing.',
+            $fixer->fix('Style ' . Fixer::NDASH . ' not sincerity ' . Fixer::NDASH . ', is the vital thing.')
+        );
+
+        // Three dashes and more could be a list or a route, so none of them opens anything
+        $this->assertSame(
+            'Paris' . self::FINE . Fixer::NDASH . ' Lyon' . self::FINE . Fixer::NDASH . ' Marseille' . self::FINE . Fixer::NDASH . ' Nice',
+            $fixer->fix('Paris ' . Fixer::NDASH . ' Lyon ' . Fixer::NDASH . ' Marseille ' . Fixer::NDASH . ' Nice')
+        );
+
+        // A pair spans neither two sentences nor a line break
+        $this->assertSame(
+            'Style' . self::FINE . Fixer::NDASH . ' not sincerity. And another' . self::FINE . Fixer::NDASH . ' thing here.',
+            $fixer->fix('Style ' . Fixer::NDASH . ' not sincerity. And another ' . Fixer::NDASH . ' thing here.')
+        );
+        $this->assertSame(
+            'foo' . self::FINE . Fixer::NDASH . " bar\nbaz" . self::FINE . Fixer::NDASH . ' qux',
+            $fixer->fix('foo ' . Fixer::NDASH . " bar\nbaz " . Fixer::NDASH . ' qux')
+        );
+
+        // An incise next to a number is still an incise
+        $this->assertSame(
+            'the year ' . Fixer::NDASH . self::FINE . '2009' . self::FINE . Fixer::NDASH . ' was great',
+            $fixer->fix('the year ' . Fixer::NDASH . ' 2009 ' . Fixer::NDASH . ' was great')
         );
 
         // A dash without a space on both sides opens nothing
@@ -108,5 +130,47 @@ class DashTest extends TestCase
         // Running the fixer twice changes nothing more
         $once = $fixer->fix('M. Jackson: 1964 - 2009');
         $this->assertSame($once, $fixer->fix($once));
+    }
+
+    public function testKeepsTheSpaceOfTheFreeSide(): void
+    {
+        $fixer = new Fixer\Dash();
+
+        // The side the dash does not bind to is left as the author wrote it
+        $this->assertSame(
+            'text' . self::FINE . Fixer::NDASH . Fixer::NO_BREAK_SPACE . 'more',
+            $fixer->fix('text ' . Fixer::NDASH . Fixer::NO_BREAK_SPACE . 'more')
+        );
+        $this->assertSame(
+            'Style' . Fixer::NO_BREAK_SPACE . Fixer::NDASH . self::FINE . 'not sincerity' . self::FINE . Fixer::NDASH . ' is vital.',
+            $fixer->fix('Style' . Fixer::NO_BREAK_SPACE . Fixer::NDASH . ' not sincerity ' . Fixer::NDASH . ' is vital.')
+        );
+
+        // A run of spaces, a tab or a thin space bind just as well
+        $this->assertSame('text' . self::FINE . Fixer::NDASH . ' more', $fixer->fix('text  ' . Fixer::NDASH . ' more'));
+        $this->assertSame('text' . self::FINE . Fixer::NDASH . ' more', $fixer->fix("text\t" . Fixer::NDASH . ' more'));
+        $this->assertSame('text' . self::FINE . Fixer::NDASH . ' more', $fixer->fix("text\u{2009}" . Fixer::NDASH . ' more'));
+    }
+
+    public function testQuotedIncise(): void
+    {
+        // The narrow no-break space the dash leaves behind is still a space for the other fixers
+        $rules = ['Dash', 'SmartQuotes'];
+
+        $fixer = new Fixer($rules);
+        $fixer->setLocale('en_GB');
+
+        $this->assertSame(
+            '<p>He said ' . Fixer::NDASH . self::FINE . Fixer::LDQUO . 'no way' . Fixer::RDQUO . self::FINE . Fixer::NDASH . ' and left.</p>',
+            $fixer->fix('<p>He said ' . Fixer::NDASH . ' "no way" ' . Fixer::NDASH . ' and left.</p>')
+        );
+
+        $fixer = new Fixer($rules);
+        $fixer->setLocale('fr_FR');
+
+        $this->assertSame(
+            '<p>He said ' . Fixer::NDASH . self::FINE . Fixer::LAQUO . Fixer::NO_BREAK_SPACE . 'no way' . Fixer::NO_BREAK_SPACE . Fixer::RAQUO . self::FINE . Fixer::NDASH . ' and left.</p>',
+            $fixer->fix('<p>He said ' . Fixer::NDASH . ' "no way" ' . Fixer::NDASH . ' and left.</p>')
+        );
     }
 }

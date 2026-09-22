@@ -15,10 +15,34 @@ use JoliTypo\StateBag;
 
 class Dash implements FixerInterface
 {
-    /** A space that can already be there, whatever its width */
-    private const SPACE = '[ ' . Fixer::NO_BREAK_SPACE . Fixer::NO_BREAK_THIN_SPACE . ']';
+    /** A dash between two numbers, which opens and closes nothing */
+    private const RANGE = 'range';
+
+    /** The first dash of a pair, which binds to what follows */
+    private const OPENING = 'opening';
+
+    /** The second dash of a pair, which binds to what precedes */
+    private const CLOSING = 'closing';
+
+    /** A dash that cannot be told from a plain separator, which binds to what precedes */
+    private const LONE = 'lone';
+
+    /** The spaces that can already surround a dash, line breaks excluded */
+    private const SPACES = '(?:' . Fixer::ALL_SPACES . ')+';
 
     private const DASH = '(?:' . Fixer::NDASH . '|' . Fixer::MDASH . ')';
+
+    /**
+     * A dash and the spaces around it. The trailing spaces are left out when another dash follows, so
+     * that the next dash keeps a space in front of it.
+     */
+    private const PATTERN = '@(' . self::SPACES . ')(' . self::DASH . ')(' . self::SPACES . '(?!' . self::DASH . '))?@u';
+
+    /** A pair of dashes spans neither two sentences nor a line break */
+    private const SENTENCE_BOUNDARY = '@([.!?…]+(?:' . Fixer::ALL_SPACES . ')+|\R+)@u';
+
+    /** What closes an incise in place of a space */
+    private const CLOSING_PUNCTUATION = '@^[,;:)\]]@';
 
     public function fix(string $content, ?StateBag $stateBag = null): string
     {
@@ -28,58 +52,94 @@ class Dash implements FixerInterface
         // Convert double hyphens to em dash
         $content = preg_replace('@ ?-- ?([^-]|$)@s', Fixer::MDASH . '$1', $content) ?? $content;
 
-        // A dash used as a text separator binds to what precedes it, so that it never starts a line
-        $content = preg_replace(
-            '@' . self::SPACE . '(' . self::DASH . ')@u',
-            Fixer::NO_BREAK_THIN_SPACE . '$1',
-            $content
-        ) ?? $content;
+        $sentences = preg_split(self::SENTENCE_BOUNDARY, $content, -1, \PREG_SPLIT_DELIM_CAPTURE);
 
-        $content = $this->bindIncises($content);
+        if (false === $sentences) {
+            return $content;
+        }
 
-        return $this->bindRanges($content);
+        foreach ($sentences as $index => $sentence) {
+            $sentences[$index] = $this->bindSpaces($sentence);
+        }
+
+        return implode('', $sentences);
     }
 
     /**
-     * A pair of dashes marks an incise: the opening one binds to what follows, the closing one to
-     * what precedes, the way an opening and a closing quotation mark do.
-     *
-     * A dash left alone is not an incise that can be told from a plain separator, so it keeps the
-     * default spacing.
+     * Replaces the space on the side a dash binds to with a narrow no-break space, and leaves the other
+     * side as the author wrote it. A side without a space stays without one, no space is ever inserted.
      */
-    private function bindIncises(string $content): string
+    private function bindSpaces(string $sentence): string
     {
-        // Dashes between numbers are ranges, not incises
-        $pattern = '@(?<![0-9])' . self::SPACE . '(' . self::DASH . ')' . self::SPACE . '(?![0-9])@u';
+        if (!preg_match_all(self::PATTERN, $sentence, $matches, \PREG_OFFSET_CAPTURE | \PREG_SET_ORDER)) {
+            return $sentence;
+        }
 
-        $spaced = preg_match_all($pattern, $content) ?: 0;
-        $paired = intdiv($spaced, 2) * 2;
+        $kinds = $this->classify($sentence, $matches);
         $index = 0;
 
         return preg_replace_callback(
-            $pattern,
-            static function (array $matches) use (&$index, $paired): string {
-                $opening = $index < $paired && 0 === $index % 2;
-                ++$index;
+            self::PATTERN,
+            static function (array $match) use ($kinds, &$index): string {
+                $kind = $kinds[$index++];
+                $lead = $match[1];
+                $dash = $match[2];
+                $trail = $match[3] ?? '';
+                $bound = Fixer::NO_BREAK_THIN_SPACE;
 
-                return $opening
-                    ? ' ' . $matches[1] . Fixer::NO_BREAK_THIN_SPACE
-                    : Fixer::NO_BREAK_THIN_SPACE . $matches[1] . ' ';
+                if (self::OPENING === $kind) {
+                    return $lead . $dash . ('' !== $trail ? $bound : '');
+                }
+
+                if (self::RANGE === $kind) {
+                    return $bound . $dash . ('' !== $trail ? $bound : '');
+                }
+
+                return $bound . $dash . $trail;
             },
-            $content
-        ) ?? $content;
+            $sentence
+        ) ?? $sentence;
     }
 
     /**
-     * A range opens and closes nothing, so both of its spaces are the same, and neither of them
-     * may break: "1964 - 2009" is read as a single value.
+     * Tells what each dash of the sentence is. Two dashes that can open and close one mark an incise;
+     * a single one, or three and more, could be anything, so they keep the default spacing.
+     *
+     * @param array<int, array<int, array{string, int}>> $matches
+     *
+     * @return array<int, self::RANGE|self::OPENING|self::CLOSING|self::LONE>
      */
-    private function bindRanges(string $content): string
+    private function classify(string $sentence, array $matches): array
     {
-        return preg_replace(
-            '@([0-9])' . self::SPACE . '(' . self::DASH . ')' . self::SPACE . '(?=[0-9])@u',
-            '$1' . Fixer::NO_BREAK_THIN_SPACE . '$2' . Fixer::NO_BREAK_THIN_SPACE,
-            $content
-        ) ?? $content;
+        $kinds = [];
+        $pairable = [];
+
+        foreach ($matches as $index => $match) {
+            [$full, $offset] = $match[0];
+            $trail = $match[3][0] ?? '';
+            $after = substr($sentence, $offset + \strlen($full), 1);
+
+            if (1 === preg_match('@[0-9]$@', substr($sentence, 0, $offset))
+                && 1 === preg_match('@^[0-9]@', $after)
+            ) {
+                $kinds[$index] = self::RANGE;
+
+                continue;
+            }
+
+            $kinds[$index] = self::LONE;
+
+            // A closing dash is followed by a space, by the punctuation that ends the incise, or by nothing
+            if ('' !== $trail || '' === $after || 1 === preg_match(self::CLOSING_PUNCTUATION, $after)) {
+                $pairable[] = $index;
+            }
+        }
+
+        if (2 === \count($pairable)) {
+            $kinds[$pairable[0]] = self::OPENING;
+            $kinds[$pairable[1]] = self::CLOSING;
+        }
+
+        return $kinds;
     }
 }

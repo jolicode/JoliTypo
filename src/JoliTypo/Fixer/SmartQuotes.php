@@ -54,9 +54,9 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
                 $content,
                 $stateBag,
                 'SmartQuotesOpenSolo',
-                '@(^|\s|\()"([^"]*)$@im',
+                '@(^|\s|\()"([^"]*)$@imu',
                 // Same strategy as for the simple cases below, see the comment there
-                '@(?|(^|[^"]*)"(?=[^"]*(?:$|[\s(]"))|(^|(?:[^"]|(?<=\d)")*?)(?<!\d)"|(^|[^"]+)")@im',
+                '@(?|(^|[^"]*)"(?=[^"]*(?:$|[\s(]"))|(^|(?:[^"]|(?<=\d)")*?)(?<!\d)"|(^|[^"]+)")@imu',
                 $this->opening . $this->openingSuffix,
                 $this->closingPrefix . $this->closing
             );
@@ -69,10 +69,10 @@ class SmartQuotes extends BaseOpenClosePair implements FixerInterface, LocaleAwa
         // 1. the nearest double quote, when no other double quote stands between it and the next opening quote or the end;
         // 2. the nearest double quote not preceded by a digit;
         // 3. the nearest double quote, whatever precedes it.
-        $content = preg_replace('@(^|\s|\()"([^"]+)"(?=[^"]*(?:$|[\s(]"))@im', $replacement, $content) ?? $content;
-        $content = preg_replace('@(^|\s|\()"((?:[^"]|(?<=\d)")+?)(?<!\d)"@im', $replacement, $content) ?? $content;
+        $content = preg_replace('@(^|\s|\()"([^"]+)"(?=[^"]*(?:$|[\s(]"))@imu', $replacement, $content) ?? $content;
+        $content = preg_replace('@(^|\s|\()"((?:[^"]|(?<=\d)")+?)(?<!\d)"@imu', $replacement, $content) ?? $content;
 
-        return preg_replace('@(^|\s|\()"([^"]+)"@im', $replacement, $content) ?? $content;
+        return preg_replace('@(^|\s|\()"([^"]+)"@imu', $replacement, $content) ?? $content;
     }
 
     /**

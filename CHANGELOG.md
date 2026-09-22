@@ -10,6 +10,7 @@ CHANGELOG
 * Add `leftMin`, `rightMin` and `wordMin` options to the `Hyphen` fixer
 * Fix `SmartQuotes` taking inch and second marks (`5'6"`, `27"`) inside a quote for closing quotes (#32)
 * Bind the spaces around a dash in `Dash`: a no-break space towards the incise it opens or closes, and on both sides of a range (#122)
+* Match the spaces of `SmartQuotes` with the `u` modifier, so that a quote preceded by a narrow no-break space is converted, and leave a content that is not valid UTF-8 untouched instead of returning null
 * Stop treating line breaks as spaces in `Fixer::ALL_SPACES`, so that `Unit`, `Dimension`, `Trademark`, `NoSpaceBeforeComma` and `SpaceBeforePunctuation` no longer join lines together (#88)
 * Require PHP 8.3 or higher in `composer.json` (announced in 1.6.0, but the constraint still allowed PHP 8.1 and 8.2)
 * Require `org_heigl/hyphenator` ^3.2, the version whose dictionaries the test suite expects
