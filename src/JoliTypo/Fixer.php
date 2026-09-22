@@ -23,7 +23,11 @@ class Fixer
     public const string ELLIPSIS = '…';
     public const string LAQUO = '«'; // &laquo;
     public const string RAQUO = '»'; // &raquo;
+    public const string LSAQUO = '‹'; // &lsaquo; or &#8249;
+    public const string RSAQUO = '›'; // &rsaquo; or &#8250;
     public const string RSQUO = '’'; // &rsquo;
+    public const string LSQUO = '‘'; // &lsquo; or &#8216;
+    public const string SBQUO = '‚'; // &sbquo; or &#8218;
     public const string TIMES = '×'; // &times;
     public const string NDASH = '–'; // &ndash; or &#x2013;
     public const string MDASH = '—'; // &mdash; or &#x2014;

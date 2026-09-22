@@ -174,4 +174,84 @@ class LocaleConfigTest extends TestCase
             );
         }
     }
+
+    // =========================================================================
+    // Nested quotation styles
+    // =========================================================================
+
+    public function testGetNestedQuotationStyleTypeDerivedFromPrimaryStyle(): void
+    {
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('en'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('en_US'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('nl'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_GERMAN, LocaleConfig::getNestedQuotationStyleType('de'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_GERMAN, LocaleConfig::getNestedQuotationStyleType('de_DE'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_GERMAN, LocaleConfig::getNestedQuotationStyleType('cs'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_GUILLEMETS, LocaleConfig::getNestedQuotationStyleType('de_CH'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_GUILLEMETS, LocaleConfig::getNestedQuotationStyleType('de-CH'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_FINNISH, LocaleConfig::getNestedQuotationStyleType('fi'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_FINNISH, LocaleConfig::getNestedQuotationStyleType('sv_SE'));
+    }
+
+    public function testGetNestedQuotationStyleTypeExceptions(): void
+    {
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('fr'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('fr_FR'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('fr-CA'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('es'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('it_IT'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('pt_PT'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_SINGLE_ENGLISH, LocaleConfig::getNestedQuotationStyleType('pt_BR'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_GERMAN, LocaleConfig::getNestedQuotationStyleType('ru'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_GERMAN, LocaleConfig::getNestedQuotationStyleType('uk_UA'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_GUILLEMETS, LocaleConfig::getNestedQuotationStyleType('pl'));
+        $this->assertSame(LocaleConfig::QUOTE_STYLE_GUILLEMETS, LocaleConfig::getNestedQuotationStyleType('ro_RO'));
+    }
+
+    public function testGetNestedQuotationStyleTypeUnknownLocale(): void
+    {
+        $this->assertNull(LocaleConfig::getNestedQuotationStyleType('xx_XX'));
+        $this->assertNull(LocaleConfig::getNestedQuotationStyleType('unknown'));
+    }
+
+    public function testGetNestedQuotationStyle(): void
+    {
+        $this->assertSame(
+            ['opening' => Fixer::LSQUO, 'openingSuffix' => '', 'closing' => Fixer::RSQUO, 'closingPrefix' => ''],
+            LocaleConfig::getNestedQuotationStyle('en')
+        );
+        $this->assertSame(
+            ['opening' => Fixer::SBQUO, 'openingSuffix' => '', 'closing' => Fixer::LSQUO, 'closingPrefix' => ''],
+            LocaleConfig::getNestedQuotationStyle('de')
+        );
+        $this->assertSame(
+            ['opening' => Fixer::LSAQUO, 'openingSuffix' => '', 'closing' => Fixer::RSAQUO, 'closingPrefix' => ''],
+            LocaleConfig::getNestedQuotationStyle('de_CH')
+        );
+        $this->assertSame(
+            ['opening' => Fixer::LDQUO, 'openingSuffix' => '', 'closing' => Fixer::RDQUO, 'closingPrefix' => ''],
+            LocaleConfig::getNestedQuotationStyle('fr')
+        );
+        $this->assertSame(
+            ['opening' => Fixer::BDQUO, 'openingSuffix' => '', 'closing' => Fixer::LDQUO, 'closingPrefix' => ''],
+            LocaleConfig::getNestedQuotationStyle('ru')
+        );
+        $this->assertSame(
+            ['opening' => Fixer::RSQUO, 'openingSuffix' => '', 'closing' => Fixer::RSQUO, 'closingPrefix' => ''],
+            LocaleConfig::getNestedQuotationStyle('sv')
+        );
+        $this->assertNull(LocaleConfig::getNestedQuotationStyle('unknown'));
+    }
+
+    public function testRecommendedRulesIncludeSmartSingleQuotesBeforeCurlyQuote(): void
+    {
+        foreach (LocaleConfig::RECOMMENDED_RULES_BY_LOCALE as $locale => $rules) {
+            $smartSingleQuotes = array_search('SmartSingleQuotes', $rules, true);
+            $curlyQuote = array_search('CurlyQuote', $rules, true);
+
+            $this->assertNotFalse($smartSingleQuotes, "SmartSingleQuotes should be in recommended rules for {$locale}");
+            $this->assertNotFalse($curlyQuote, "CurlyQuote should be in recommended rules for {$locale}");
+            $this->assertLessThan($curlyQuote, $smartSingleQuotes, "SmartSingleQuotes must run before CurlyQuote for {$locale}");
+        }
+    }
 }

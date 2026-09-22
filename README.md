@@ -136,6 +136,45 @@ and do not forget to specify a locale on the Fixer instance.
 
 This Fixer replaces legacy `EnglishQuotes`, `FrenchQuotes` and `GermanQuotes`.
 
+SmartSingleQuotes
+-----------------
+
+Converts pairs of straight single quotes `' '` to the nested (second-level) quotation marks of the locale:
+`‘ ’` in English, `‚ ‘` in German, `“ ”` in French, Spanish or Italian, `‹ ›` in Swiss German...
+Apostrophes (`I'm`, `l'univers`) are left untouched.
+
+This Fixer must be placed **before** `CurlyQuote` in your rules, otherwise the closing quote is mistaken for an apostrophe:
+
+```php
+$fixer = new Fixer(['SmartQuotes', 'SmartSingleQuotes', 'CurlyQuote']);
+$fixer->setLocale('en_GB');
+echo $fixer->fix('<p>"This \'magic\' piece of code fixes quotes and apostrophes, doesn\'t it?"</p>');
+// <p>“This ‘magic’ piece of code fixes quotes and apostrophes, doesn’t it?”</p>
+```
+
+Both `SmartQuotes` and `SmartSingleQuotes` accept custom quotation marks with `setOpening()` and `setClosing()`.
+For instance, German books and newspapers often use reversed guillemets (`»…«` and `›…‹`) instead of `„…“` and `‚…‘`:
+
+```php
+use JoliTypo\Fixer;
+
+$doubleQuotes = new Fixer\SmartQuotes('de_DE');
+$doubleQuotes->setOpening('»');
+$doubleQuotes->setClosing('«');
+
+$singleQuotes = new Fixer\SmartSingleQuotes('de_DE');
+$singleQuotes->setOpening('›');
+$singleQuotes->setClosing('‹');
+
+$fixer = new Fixer(['Ellipsis', 'Dash', $doubleQuotes, $singleQuotes, 'CurlyQuote']);
+echo $fixer->fix('<p>And this is an "example with another \'single quote\' inside".</p>');
+// <p>And this is an »example with another ›single quote‹ inside«.</p>
+```
+
+Note that calling `setLocale()` on the `Fixer` resets the quotation marks of these Fixers to the defaults of the locale.
+
+See `LocaleConfig::NESTED_QUOTE_STYLES_BY_LOCALE` for the default nested quotation marks of each language.
+
 SpaceBeforePunctuation
 ----------------------
 
@@ -201,6 +240,8 @@ Replaces straight quotes `'` with curly ones `’`.
 There is one exception to consider: foot and inch marks (minutes and second marks). Purists use prime `′`, this fixer uses straight quotes for compatibility.
 [Read more about Curly quotes](http://practicaltypography.com/straight-and-curly-quotes.html).
 
+Pairs of single quotes (`'quoted'`) are converted to nested quotation marks by `SmartSingleQuotes`, which must run before this Fixer.
+
 Trademark
 ---------
 
@@ -221,7 +262,7 @@ en_GB
 -----
 
 ```php
-$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('en_GB');
 ```
 
@@ -231,7 +272,7 @@ fr_FR
 Those rules apply for most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('fr_FR');
 ```
 
@@ -241,7 +282,7 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('fr_CA');
 ```
 
@@ -251,7 +292,7 @@ de_DE
 Mostly the same as en_GB, according to [Typefacts](http://typefacts.com/) and [Wikipedia](http://de.wikipedia.org/wiki/Typografie_f%C3%BCr_digitale_Texte).
 
 ```php
-$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']  );
+$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']  );
 $fixer->setLocale('de_DE');
 ```
 
@@ -262,20 +303,20 @@ Locale support for spacing and quotes
 
 JoliTypo supports locale-specific rules for spacing before punctuation and quotation marks:
 
-| Locale | Space Before `: ; ! ?` | Quote Style |
-|--------|------------------------|-------------|
-| fr_FR, fr_BE, fr_CH | YES (nbsp/nnbsp) | « text » |
-| fr_CA | NO | « text » |
-| de_DE, de_AT | NO | „text“ |
-| de_CH | NO | «text» |
-| en_* | NO | “text” |
-| es_*, it_*, pt_* | NO | «text» |
-| pl_*, cs_*, sk_*, hu_*, ro_*, bg_* | NO | „text“ |
-| ru_*, uk_*, be_* | NO | «text» |
-| sv_*, fi_* | NO | "text" |
-| nl_*, tr_* | NO | "text" |
+| Locale | Space Before `: ; ! ?` | Quote Style | Nested Quote Style |
+|--------|------------------------|-------------|--------------------|
+| fr_FR, fr_BE, fr_CH | YES (nbsp/nnbsp) | « text » | “text” |
+| fr_CA | NO | « text » | “text” |
+| de_DE, de_AT | NO | „text“ | ‚text‘ |
+| de_CH | NO | «text» | ‹text› |
+| en_* | NO | “text” | ‘text’ |
+| es_*, it_*, pt_* | NO | «text» | “text” |
+| pl_*, cs_*, sk_*, hu_*, ro_*, bg_* | NO | „text“ | ‚text‘ (pl_*, ro_*: «text») |
+| ru_*, uk_*, be_* | NO | «text» | „text“ |
+| sv_*, fi_* | NO | "text" | ’text’ |
+| nl_*, tr_* | NO | "text" | ‘text’ |
 
-See `LocaleConfig::QUOTE_STYLES_BY_LOCALE` for the complete list of supported languages.
+See `LocaleConfig::QUOTE_STYLES_BY_LOCALE` and `LocaleConfig::NESTED_QUOTE_STYLES_BY_LOCALE` for the complete list of supported languages.
 
 Documentation
 =============

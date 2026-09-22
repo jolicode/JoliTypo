@@ -40,6 +40,20 @@ final class LocaleConfig
     public const string QUOTE_STYLE_FINNISH = 'finnish';
 
     /**
+     * Nested (second-level) quotation mark styles, used by the SmartSingleQuotes fixer.
+     * The primary styles above can be nested styles as well, e.g. “…” inside « … » in French.
+     *
+     * QUOTE_STYLE_SINGLE_ENGLISH: ‘…’ (curly single quotes)
+     * QUOTE_STYLE_SINGLE_GERMAN: ‚…‘ (low-high single quotes)
+     * QUOTE_STYLE_SINGLE_GUILLEMETS: ‹…› (single guillemets)
+     * QUOTE_STYLE_SINGLE_FINNISH: ’…’ (same closing single quote on both sides)
+     */
+    public const string QUOTE_STYLE_SINGLE_ENGLISH = 'single_english';
+    public const string QUOTE_STYLE_SINGLE_GERMAN = 'single_german';
+    public const string QUOTE_STYLE_SINGLE_GUILLEMETS = 'single_guillemets';
+    public const string QUOTE_STYLE_SINGLE_FINNISH = 'single_finnish';
+
+    /**
      * Quotation styles by locale.
      *
      * Maps locale/language codes to their quotation mark style.
@@ -119,6 +133,45 @@ final class LocaleConfig
     ];
 
     /**
+     * Nested quotation styles by locale, used by the SmartSingleQuotes fixer
+     * for quotations inside quotations.
+     *
+     * Only the languages whose nested quotation marks are not the single version
+     * of their primary marks are listed here. For the other languages, the nested
+     * style is derived from the primary one: ‘…’ inside “…”, ‚…‘ inside „…“,
+     * ‹…› inside «…» and ’…’ inside ”…”.
+     *
+     * @see https://en.wikipedia.org/wiki/Quotation_mark#Summary_table
+     */
+    public const array NESTED_QUOTE_STYLES_BY_LOCALE = [
+        // =====================================================================
+        // English quotes “…” inside guillemets
+        // =====================================================================
+        'fr' => self::QUOTE_STYLE_ENGLISH, // French: « Il a dit “bonjour” »
+        'ca' => self::QUOTE_STYLE_ENGLISH, // Catalan
+        'el' => self::QUOTE_STYLE_ENGLISH, // Greek
+        'it' => self::QUOTE_STYLE_ENGLISH, // Italian
+        'pt' => self::QUOTE_STYLE_ENGLISH, // Portuguese
+        'es' => self::QUOTE_STYLE_ENGLISH, // Spanish
+
+        // =====================================================================
+        // German quotes „…“ inside guillemets
+        // =====================================================================
+        'be' => self::QUOTE_STYLE_GERMAN, // Belarusian
+        'ru' => self::QUOTE_STYLE_GERMAN, // Russian
+        'uk' => self::QUOTE_STYLE_GERMAN, // Ukrainian
+
+        // =====================================================================
+        // Guillemets «…» inside German quotes
+        // =====================================================================
+        'pl' => self::QUOTE_STYLE_GUILLEMETS, // Polish
+        'ro' => self::QUOTE_STYLE_GUILLEMETS, // Romanian
+
+        // Specific locale overrides (lowercase for normalization)
+        'pt_br' => self::QUOTE_STYLE_SINGLE_ENGLISH, // Brazilian Portuguese: ‘…’ inside “…”
+    ];
+
+    /**
      * Recommended fixer rules by locale.
      *
      * These are the default sets of fixers recommended for each locale.
@@ -126,54 +179,66 @@ final class LocaleConfig
      */
     public const array RECOMMENDED_RULES_BY_LOCALE = [
         // English
-        'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'en_US' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'en_US' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // French
-        'fr_FR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_CA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_BE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_CH' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_FR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_CA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_BE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_CH' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // German
-        'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'de_AT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'de_CH' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'de_AT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'de_CH' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Other Western European
-        'es_ES' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'it_IT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'pt_PT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'pt_BR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'nl_NL' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'nl_BE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'ca_ES' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'es_ES' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'it_IT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'pt_PT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'pt_BR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'nl_NL' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'nl_BE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'ca_ES' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Nordic
-        'sv_SE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'da_DK' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'nb_NO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'nn_NO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fi_FI' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'sv_SE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'da_DK' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'nb_NO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'nn_NO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fi_FI' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Central/Eastern European
-        'pl_PL' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'cs_CZ' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'sk_SK' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'hu_HU' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'ro_RO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'pl_PL' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'cs_CZ' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'sk_SK' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'hu_HU' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'ro_RO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Slavic
-        'ru_RU' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'uk_UA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'be_BY' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'bg_BG' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'sr_RS' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'hr_HR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'ru_RU' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'uk_UA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'be_BY' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'bg_BG' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'sr_RS' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'hr_HR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Other
-        'el_GR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'tr_TR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'el_GR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'tr_TR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+    ];
+
+    /**
+     * Nested quotation style derived from the primary one, for the locales
+     * not listed in NESTED_QUOTE_STYLES_BY_LOCALE.
+     */
+    private const array NESTED_QUOTE_STYLE_FROM_PRIMARY = [
+        self::QUOTE_STYLE_FRENCH => self::QUOTE_STYLE_SINGLE_GUILLEMETS,
+        self::QUOTE_STYLE_GUILLEMETS => self::QUOTE_STYLE_SINGLE_GUILLEMETS,
+        self::QUOTE_STYLE_GERMAN => self::QUOTE_STYLE_SINGLE_GERMAN,
+        self::QUOTE_STYLE_ENGLISH => self::QUOTE_STYLE_SINGLE_ENGLISH,
+        self::QUOTE_STYLE_FINNISH => self::QUOTE_STYLE_SINGLE_FINNISH,
     ];
 
     /**
@@ -234,6 +299,84 @@ final class LocaleConfig
             return null;
         }
 
+        return self::getQuotationMarks($style);
+    }
+
+    /**
+     * Get the nested (second-level) quotation style for a given locale, for quotations inside quotations.
+     *
+     * @return array{opening: string, openingSuffix: string, closing: string, closingPrefix: string}|null
+     */
+    public static function getNestedQuotationStyle(string $locale): ?array
+    {
+        $style = self::getNestedQuotationStyleType($locale);
+
+        if (null === $style) {
+            return null;
+        }
+
+        return self::getQuotationMarks($style);
+    }
+
+    /**
+     * Get quotation style type for a given locale.
+     */
+    public static function getQuotationStyleType(string $locale): ?string
+    {
+        // Normalize locale (handle both fr_FR and fr-FR formats)
+        $normalizedLocale = strtolower(str_replace('-', '_', $locale));
+
+        // Check exact match first (e.g., pt_br, de_ch)
+        if (isset(self::QUOTE_STYLES_BY_LOCALE[$normalizedLocale])) {
+            return self::QUOTE_STYLES_BY_LOCALE[$normalizedLocale];
+        }
+
+        // Check language part (e.g., fr from fr_FR)
+        $language = Fixer::getLanguageFromLocale($locale);
+        if (isset(self::QUOTE_STYLES_BY_LOCALE[$language])) {
+            return self::QUOTE_STYLES_BY_LOCALE[$language];
+        }
+
+        // No style defined for this locale
+        return null;
+    }
+
+    /**
+     * Get the nested (second-level) quotation style type for a given locale.
+     */
+    public static function getNestedQuotationStyleType(string $locale): ?string
+    {
+        // Normalize locale (handle both fr_FR and fr-FR formats)
+        $normalizedLocale = strtolower(str_replace('-', '_', $locale));
+
+        // Check exact match first (e.g., pt_br)
+        if (isset(self::NESTED_QUOTE_STYLES_BY_LOCALE[$normalizedLocale])) {
+            return self::NESTED_QUOTE_STYLES_BY_LOCALE[$normalizedLocale];
+        }
+
+        // Check language part (e.g., fr from fr_FR)
+        $language = explode('_', $normalizedLocale, 2)[0];
+        if (isset(self::NESTED_QUOTE_STYLES_BY_LOCALE[$language])) {
+            return self::NESTED_QUOTE_STYLES_BY_LOCALE[$language];
+        }
+
+        // Otherwise, derive the nested style from the primary one
+        $primaryStyle = self::getQuotationStyleType($locale);
+
+        if (null === $primaryStyle) {
+            return null;
+        }
+
+        return self::NESTED_QUOTE_STYLE_FROM_PRIMARY[$primaryStyle] ?? null;
+    }
+
+    /**
+     * Get the quotation marks of a quotation style.
+     *
+     * @return array{opening: string, openingSuffix: string, closing: string, closingPrefix: string}|null
+     */
+    private static function getQuotationMarks(string $style): ?array
+    {
         return match ($style) {
             self::QUOTE_STYLE_FRENCH => [
                 'opening' => Fixer::LAQUO,
@@ -265,30 +408,31 @@ final class LocaleConfig
                 'closing' => Fixer::RDQUO,
                 'closingPrefix' => '',
             ],
+            self::QUOTE_STYLE_SINGLE_ENGLISH => [
+                'opening' => Fixer::LSQUO,
+                'openingSuffix' => '',
+                'closing' => Fixer::RSQUO,
+                'closingPrefix' => '',
+            ],
+            self::QUOTE_STYLE_SINGLE_GERMAN => [
+                'opening' => Fixer::SBQUO,
+                'openingSuffix' => '',
+                'closing' => Fixer::LSQUO,
+                'closingPrefix' => '',
+            ],
+            self::QUOTE_STYLE_SINGLE_GUILLEMETS => [
+                'opening' => Fixer::LSAQUO,
+                'openingSuffix' => '',
+                'closing' => Fixer::RSAQUO,
+                'closingPrefix' => '',
+            ],
+            self::QUOTE_STYLE_SINGLE_FINNISH => [
+                'opening' => Fixer::RSQUO,
+                'openingSuffix' => '',
+                'closing' => Fixer::RSQUO,
+                'closingPrefix' => '',
+            ],
             default => null,
         };
-    }
-
-    /**
-     * Get quotation style type for a given locale.
-     */
-    public static function getQuotationStyleType(string $locale): ?string
-    {
-        // Normalize locale (handle both fr_FR and fr-FR formats)
-        $normalizedLocale = strtolower(str_replace('-', '_', $locale));
-
-        // Check exact match first (e.g., pt_br, de_ch)
-        if (isset(self::QUOTE_STYLES_BY_LOCALE[$normalizedLocale])) {
-            return self::QUOTE_STYLES_BY_LOCALE[$normalizedLocale];
-        }
-
-        // Check language part (e.g., fr from fr_FR)
-        $language = Fixer::getLanguageFromLocale($locale);
-        if (isset(self::QUOTE_STYLES_BY_LOCALE[$language])) {
-            return self::QUOTE_STYLES_BY_LOCALE[$language];
-        }
-
-        // No style defined for this locale
-        return null;
     }
 }
