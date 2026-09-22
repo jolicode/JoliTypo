@@ -47,8 +47,17 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
         'zu_ZA',
     ];
 
-    public function __construct(string $locale)
-    {
+    /**
+     * @param int $leftMin  Minimum number of characters kept before the first hyphenation point of a word
+     * @param int $rightMin Minimum number of characters kept after the last hyphenation point of a word
+     * @param int $wordMin  Minimum length of a word (in characters) to be hyphenated
+     */
+    public function __construct(
+        string $locale,
+        private readonly int $leftMin = 4,
+        private readonly int $rightMin = 3,
+        private readonly int $wordMin = 6,
+    ) {
         $this->setLocale($locale);
     }
 
@@ -68,9 +77,11 @@ class Hyphen implements FixerInterface, LocaleAwareFixerInterface
 
     protected function setOptions(): void
     {
-        $this->hyphenator->getOptions()->setHyphen(Fixer::SHY);
-        $this->hyphenator->getOptions()->setLeftMin(4);
-        $this->hyphenator->getOptions()->setRightMin(3);
+        $options = $this->hyphenator->getOptions();
+        $options->setHyphen(Fixer::SHY);
+        $options->setLeftMin($this->leftMin);
+        $options->setRightMin($this->rightMin);
+        $options->setMinWordLength($this->wordMin);
     }
 
     /**

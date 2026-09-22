@@ -7,6 +7,7 @@ CHANGELOG
 * Add `LocaleConfig` class for centralized locale configuration
 * Extend `SmartQuotes` to support 45+ languages via `LocaleConfig`
 * Deprecate `FrenchNoBreakSpace` fixer in favor of `SpaceBeforePunctuation`
+* Add `leftMin`, `rightMin` and `wordMin` options to the `Hyphen` fixer
 
 ### 1.6.0 (2025-12-15) ###
 

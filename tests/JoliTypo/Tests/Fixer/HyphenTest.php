@@ -40,4 +40,48 @@ class HyphenTest extends TestCase
         $this->assertSame('Test', $fixer->fix('Test'));
         $this->assertSame('Cordialement', $fixer->fix('Cordialement'));
     }
+
+    public function testLeftMinOption(): void
+    {
+        $fixer = new Fixer\Hyphen('fr', leftMin: 8);
+
+        $this->assertSame('Cordiale' . Fixer::SHY . 'ment', $fixer->fix('Cordialement'));
+    }
+
+    public function testRightMinOption(): void
+    {
+        $fixer = new Fixer\Hyphen('fr', rightMin: 5);
+
+        $this->assertSame('Cordia' . Fixer::SHY . 'lement', $fixer->fix('Cordialement'));
+    }
+
+    public function testWordMinOption(): void
+    {
+        $fixer = new Fixer\Hyphen('fr', wordMin: 13);
+
+        $this->assertSame('Cordialement', $fixer->fix('Cordialement'));
+        $this->assertSame(self::hyphenated('Anti', 'cons', 'ti', 'tu', 'tion', 'nel', 'le', 'ment'), $fixer->fix('Anticonstitutionnellement'));
+    }
+
+    public function testOptionsAreKeptWhenLocaleChanges(): void
+    {
+        $fixer = new Fixer\Hyphen('en_GB', wordMin: 13);
+        $fixer->setLocale('fr');
+
+        $this->assertSame('Cordialement', $fixer->fix('Cordialement'));
+        $this->assertSame(self::hyphenated('Anti', 'cons', 'ti', 'tu', 'tion', 'nel', 'le', 'ment'), $fixer->fix('Anticonstitutionnellement'));
+    }
+
+    public function testOptionsAreKeptWhenLocaleChangesThroughFixer(): void
+    {
+        $fixer = new Fixer([new Fixer\Hyphen('en_GB', wordMin: 13)]);
+        $fixer->setLocale('fr_FR');
+
+        $this->assertSame('<p>Cordialement</p>', $fixer->fix('<p>Cordialement</p>'));
+    }
+
+    private static function hyphenated(string ...$syllables): string
+    {
+        return implode(Fixer::SHY, $syllables);
+    }
 }
