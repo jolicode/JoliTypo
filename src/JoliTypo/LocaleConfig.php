@@ -40,7 +40,7 @@ final class LocaleConfig
     public const string QUOTE_STYLE_FINNISH = 'finnish';
 
     /**
-     * Nested (second-level) quotation mark styles, used by the SmartSingleQuotes fixer.
+     * Nested (second-level) quotation mark styles, used by the SmartQuotes fixer.
      * The primary styles above can be nested styles as well, e.g. “…” inside « … » in French.
      *
      * QUOTE_STYLE_SINGLE_ENGLISH: ‘…’ (curly single quotes)
@@ -133,7 +133,7 @@ final class LocaleConfig
     ];
 
     /**
-     * Nested quotation styles by locale, used by the SmartSingleQuotes fixer
+     * Nested quotation styles by locale, used by the SmartQuotes fixer
      * for quotations inside quotations.
      *
      * Only the languages whose nested quotation marks are not the single version
@@ -179,54 +179,54 @@ final class LocaleConfig
      */
     public const array RECOMMENDED_RULES_BY_LOCALE = [
         // English
-        'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'en_US' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'en_GB' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'en_US' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // French
-        'fr_FR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_CA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_BE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fr_CH' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_FR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_CA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_BE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fr_CH' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // German
-        'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'de_AT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'de_CH' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'de_DE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'de_AT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'de_CH' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Other Western European
-        'es_ES' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'it_IT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'pt_PT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'pt_BR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'nl_NL' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'nl_BE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'ca_ES' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'es_ES' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'it_IT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'pt_PT' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'pt_BR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'nl_NL' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'nl_BE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'ca_ES' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Nordic
-        'sv_SE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'da_DK' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'nb_NO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'nn_NO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'fi_FI' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'sv_SE' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'da_DK' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'nb_NO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'nn_NO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'fi_FI' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Central/Eastern European
-        'pl_PL' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'cs_CZ' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'sk_SK' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'hu_HU' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'ro_RO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'pl_PL' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'cs_CZ' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'sk_SK' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'hu_HU' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'ro_RO' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Slavic
-        'ru_RU' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'uk_UA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'be_BY' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'bg_BG' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'sr_RS' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'hr_HR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'ru_RU' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'uk_UA' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'be_BY' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'bg_BG' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'sr_RS' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'hr_HR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
 
         // Other
-        'el_GR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
-        'tr_TR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SmartSingleQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'el_GR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
+        'tr_TR' => ['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark'],
     ];
 
     /**

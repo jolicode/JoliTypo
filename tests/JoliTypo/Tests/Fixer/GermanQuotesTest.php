@@ -41,6 +41,6 @@ class GermanQuotesTest extends TestCase
     {
         $this->assertSame('„I am smart“', $fixer->fix('"I am smart"'));
         $this->assertSame('(„I am smart“)', $fixer->fix('("I am smart")'));
-        $this->assertSame("Andreas fragte mich: „Hast du den Artikel 'EU-Erweiterung' gelesen?“", $fixer->fix('Andreas fragte mich: "Hast du den Artikel \'EU-Erweiterung\' gelesen?"'));
+        $this->assertSame("Andreas fragte mich: „Hast du den Artikel ‚EU-Erweiterung‘ gelesen?“", $fixer->fix('Andreas fragte mich: "Hast du den Artikel \'EU-Erweiterung\' gelesen?"'));
     }
 }

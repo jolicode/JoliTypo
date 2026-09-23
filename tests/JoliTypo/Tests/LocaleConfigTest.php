@@ -243,15 +243,16 @@ class LocaleConfigTest extends TestCase
         $this->assertNull(LocaleConfig::getNestedQuotationStyle('unknown'));
     }
 
-    public function testRecommendedRulesIncludeSmartSingleQuotesBeforeCurlyQuote(): void
+    public function testRecommendedRulesPutSmartQuotesBeforeCurlyQuote(): void
     {
+        // SmartQuotes converts the pairs of single quotes, CurlyQuote would turn their closing quote into an apostrophe
         foreach (LocaleConfig::RECOMMENDED_RULES_BY_LOCALE as $locale => $rules) {
-            $smartSingleQuotes = array_search('SmartSingleQuotes', $rules, true);
+            $smartQuotes = array_search('SmartQuotes', $rules, true);
             $curlyQuote = array_search('CurlyQuote', $rules, true);
 
-            $this->assertNotFalse($smartSingleQuotes, "SmartSingleQuotes should be in recommended rules for {$locale}");
+            $this->assertNotFalse($smartQuotes, "SmartQuotes should be in recommended rules for {$locale}");
             $this->assertNotFalse($curlyQuote, "CurlyQuote should be in recommended rules for {$locale}");
-            $this->assertLessThan($curlyQuote, $smartSingleQuotes, "SmartSingleQuotes must run before CurlyQuote for {$locale}");
+            $this->assertLessThan($curlyQuote, $smartQuotes, "SmartQuotes must run before CurlyQuote for {$locale}");
         }
     }
 }
