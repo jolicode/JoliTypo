@@ -10,6 +10,7 @@ CHANGELOG
 * Parse HTML with `\Dom\HTMLDocument`, the HTML5 parser shipped with PHP 8.4: a complete document is now fixed and returned with its doctype, `<html>`, `<head>` and `<body>` (#4)
 * The fixed HTML is always UTF-8: non-ASCII characters are no longer replaced by HTML entities (`é` instead of `&eacute;`), and the output no longer depends on the libxml version
 * `Fixer::fix()` no longer throws `InvalidMarkupException`, the HTML5 parser accepts any markup
+* Fix the PHAR: the library was missing from it (it was pulled in through a symlink, which the PHAR builder does not follow), so `--list-rules` and every fix failed with a class-not-found error
 
 ### 1.8.0 (2026-09-23) ###
 

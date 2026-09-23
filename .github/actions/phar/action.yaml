@@ -20,3 +20,12 @@ runs:
           run: build/jolitypo.phar --version
           shell: bash
           working-directory: tools/phar
+
+        - name: Ensure PHAR really fixes a file
+          run: |
+              printf '<p>"Hello" world...</p>' > "${RUNNER_TEMP}/sample.html"
+              build/jolitypo.phar en_GB "${RUNNER_TEMP}/sample.html"
+              grep -q '<p>“Hello” world…</p>' "${RUNNER_TEMP}/sample.html"
+              build/jolitypo.phar --list-rules x y | grep -q SmartQuotes
+          shell: bash
+          working-directory: tools/phar

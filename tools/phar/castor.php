@@ -39,6 +39,9 @@ function compile(): void
             if (!is_dir(__DIR__ . '/../cli/vendor')) {
                 \cli\install();
             }
+
+            // The library is mirrored, not symlinked, in the CLI vendor: refresh it so that the PHAR embeds the current sources
+            run(['composer', 'reinstall', 'jolicode/jolitypo', '--no-interaction']);
         },
         context: context()->withWorkingDirectory(__DIR__ . '/../cli')
     );
