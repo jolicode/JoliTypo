@@ -174,4 +174,16 @@ class LocaleConfigTest extends TestCase
             );
         }
     }
+
+    public function testRecommendedRulesStartWithUnicodeNormalization(): void
+    {
+        // Normalization must run before the other fixers, so that they see composed characters
+        foreach (LocaleConfig::RECOMMENDED_RULES_BY_LOCALE as $locale => $rules) {
+            $this->assertSame(
+                'UnicodeNormalization',
+                $rules[0],
+                "UnicodeNormalization should be the first recommended rule for {$locale}"
+            );
+        }
+    }
 }
