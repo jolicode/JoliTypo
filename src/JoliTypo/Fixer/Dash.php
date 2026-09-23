@@ -41,8 +41,8 @@ class Dash implements FixerInterface
     /** A pair of dashes spans neither two sentences nor a line break */
     private const SENTENCE_BOUNDARY = '@([.!?…]+(?:' . Fixer::ALL_SPACES . ')+|\R+)@u';
 
-    /** What closes an incise in place of a space */
-    private const CLOSING_PUNCTUATION = '@^[,;:)\]]@';
+    /** What closes an incise in place of a space, the end of the sentence included */
+    private const CLOSING_PUNCTUATION = '@^(?:[,;:.!?)\]]|…)@u';
 
     public function fix(string $content, ?StateBag $stateBag = null): string
     {
@@ -117,7 +117,7 @@ class Dash implements FixerInterface
         foreach ($matches as $index => $match) {
             [$full, $offset] = $match[0];
             $trail = $match[3][0] ?? '';
-            $after = substr($sentence, $offset + \strlen($full), 1);
+            $after = substr($sentence, $offset + \strlen($full));
 
             if (1 === preg_match('@[0-9]$@', substr($sentence, 0, $offset))
                 && 1 === preg_match('@^[0-9]@', $after)

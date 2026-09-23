@@ -77,6 +77,14 @@ class DashTest extends TestCase
             $fixer->fix('Style ' . Fixer::NDASH . ' not sincerity ' . Fixer::NDASH . ', is the vital thing.')
         );
 
+        // including the end of the sentence
+        foreach (['.', '!', '?', '…'] as $end) {
+            $this->assertSame(
+                'Style ' . Fixer::NDASH . self::FINE . 'not sincerity' . self::FINE . Fixer::NDASH . $end,
+                $fixer->fix('Style ' . Fixer::NDASH . ' not sincerity ' . Fixer::NDASH . $end)
+            );
+        }
+
         // Three dashes and more could be a list or a route, so none of them opens anything
         $this->assertSame(
             'Paris' . self::FINE . Fixer::NDASH . ' Lyon' . self::FINE . Fixer::NDASH . ' Marseille' . self::FINE . Fixer::NDASH . ' Nice',
