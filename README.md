@@ -115,6 +115,20 @@ Dash
 
 Replaces the simple dash `-` by a ndash `–` between numbers (dates ranges...) and the double `--` by a mdash `—`.
 
+It also binds the spaces around a dash, so that it never ends up alone at the beginning or at the end of a line.
+A narrow no-break space (`U+202F`, which [is not rendered everywhere](#compatibility--os-support-restrictions)) replaces the space on the
+side the dash belongs to, and the other side is left as it was written. A space is never inserted where there was
+none, so `1964–2009` stays untouched. Three cases are told apart, `[nnbsp]` standing for that space below:
+
+| | Input | Output |
+|---|---|---|
+| a pair of dashes marks an incise, the first binds forward and the second backward | `Style - not sincerity - is…` | `Style –[nnbsp]not sincerity[nnbsp]– is…` |
+| a range opens and closes nothing, so it holds together on both sides | `1964 - 2009` | `1964[nnbsp]–[nnbsp]2009` |
+| a dash on its own could be anything, so it binds to what precedes it | `text – more text` | `text[nnbsp]– more text` |
+
+A pair spans neither two sentences nor a line break. Three dashes or more in the same sentence could be a list or a
+route rather than an incise, so they all keep the spacing of a lone dash.
+
 Dimension
 ---------
 
