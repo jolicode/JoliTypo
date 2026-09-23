@@ -8,6 +8,8 @@ CHANGELOG
 * Extend `SmartQuotes` to support 45+ languages via `LocaleConfig`
 * Deprecate `FrenchNoBreakSpace` fixer in favor of `SpaceBeforePunctuation`
 * Add `leftMin`, `rightMin` and `wordMin` options to the `Hyphen` fixer
+* Fix `Hyphen` fixer adding new soft hyphens every time already fixed content is fixed again: words already containing a soft hyphen are now left untouched (#57)
+* Fix `Unit` fixer producing invalid UTF-8 when a no-break space is followed by a letter or a digit, which made the following fixers empty the text node (#57)
 * Fix `SmartQuotes` taking inch and second marks (`5'6"`, `27"`) inside a quote for closing quotes (#32)
 * Bind the spaces around a dash in `Dash`: a no-break space towards the incise it opens or closes, and on both sides of a range (#122)
 * Match the spaces of `SmartQuotes` with the `u` modifier, so that a quote preceded by a narrow no-break space is converted, and leave a content that is not valid UTF-8 untouched instead of returning null

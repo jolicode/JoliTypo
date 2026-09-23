@@ -41,4 +41,18 @@ class UnitTest extends TestCase
         $this->assertSame("17\r\nkg", $fixer->fix("17\r\nkg"));
         $this->assertSame("## Verrückt und Harakiri 2\nAm Tag nach dem", $fixer->fix("## Verrückt und Harakiri 2\nAm Tag nach dem"));
     }
+
+    /**
+     * @see https://github.com/jolicode/JoliTypo/issues/57
+     */
+    public function testAlreadyFixedContentIsLeftUntouched(): void
+    {
+        $fixer = new Fixer\Unit();
+
+        // Without the "u" modifier, the first byte of the no-break space was taken for "º" and its second byte for a space,
+        // which produced invalid UTF-8
+        $this->assertSame(Fixer::LAQUO . Fixer::NO_BREAK_SPACE . 'très', $fixer->fix(Fixer::LAQUO . Fixer::NO_BREAK_SPACE . 'très'));
+        $this->assertSame('n°' . Fixer::NO_BREAK_SPACE . '5', $fixer->fix('n°' . Fixer::NO_BREAK_SPACE . '5'));
+        $this->assertSame('4' . Fixer::NO_BREAK_SPACE . 'm', $fixer->fix('4' . Fixer::NO_BREAK_SPACE . 'm'));
+    }
 }

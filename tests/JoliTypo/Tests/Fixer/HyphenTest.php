@@ -80,6 +80,45 @@ class HyphenTest extends TestCase
         $this->assertSame('<p>Cordialement</p>', $fixer->fix('<p>Cordialement</p>'));
     }
 
+    /**
+     * @see https://github.com/jolicode/JoliTypo/issues/57
+     */
+    public function testAlreadyHyphenatedWordsAreLeftUntouched(): void
+    {
+        $fixer = new Fixer\Hyphen('fr');
+
+        $fixed = $fixer->fix('Cordialement');
+        $this->assertSame('Cordia' . Fixer::SHY . 'le' . Fixer::SHY . 'ment', $fixed);
+        $this->assertSame($fixed, $fixer->fix($fixed));
+        $this->assertSame($fixed, $fixer->fix($fixer->fix($fixed)));
+
+        $fixed = $fixer->fix('Personnalisation');
+        $this->assertStringContainsString(Fixer::SHY, $fixed);
+        $this->assertSame($fixed, $fixer->fix($fixed));
+
+        // Words without soft hyphen are still hyphenated, whatever the separator
+        $this->assertSame(
+            'Cordia' . Fixer::SHY . 'le' . Fixer::SHY . 'ment Cordia' . Fixer::SHY . 'le' . Fixer::SHY . 'ment' . Fixer::NO_BREAK_SPACE . 'Cordia' . Fixer::SHY . 'le' . Fixer::SHY . 'ment' . Fixer::NO_BREAK_THIN_SPACE . '!',
+            $fixer->fix('Cordia' . Fixer::SHY . 'le' . Fixer::SHY . 'ment Cordialement' . Fixer::NO_BREAK_SPACE . 'Cordialement' . Fixer::NO_BREAK_THIN_SPACE . '!')
+        );
+
+        $fixer = new Fixer\Hyphen('en_GB');
+
+        $fixed = $fixer->fix('Pronunciation');
+        $this->assertSame('Pronun' . Fixer::SHY . 'ci' . Fixer::SHY . 'ation', $fixed);
+        $this->assertSame($fixed, $fixer->fix($fixed));
+    }
+
+    /**
+     * @see https://github.com/jolicode/JoliTypo/issues/57
+     */
+    public function testManualHyphenationIsPreserved(): void
+    {
+        $fixer = new Fixer\Hyphen('fr');
+
+        $this->assertSame('anti' . Fixer::SHY . 'constitutionnellement', $fixer->fix('anti' . Fixer::SHY . 'constitutionnellement'));
+    }
+
     private static function hyphenated(string ...$syllables): string
     {
         return implode(Fixer::SHY, $syllables);

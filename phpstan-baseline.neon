@@ -61,12 +61,6 @@ parameters:
 			path: src/JoliTypo/Fixer/GermanQuotes.php
 
 		-
-			message: '#^Method JoliTypo\\Fixer\\Hyphen\:\:fix\(\) should return string but returns array\<mixed\>\|string\.$#'
-			identifier: return.type
-			count: 1
-			path: src/JoliTypo/Fixer/Hyphen.php
-
-		-
 			message: '#^Method JoliTypo\\Fixer\\NoSpaceBeforeComma\:\:fix\(\) should return string but returns string\|null\.$#'
 			identifier: return.type
 			count: 1
