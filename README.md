@@ -33,15 +33,17 @@ $fixedContent = $fixer->fix(
 );
 ```
 ```html
-<p>&ldquo;Tell me Mr. Ander&shy;son&hellip; what good is a phone call&hellip; if you&rsquo;re unable to speak?&rdquo;&mdash;Agent Smith, <em>Matrix</em>.</p>
+<p>“Tell me Mr. Ander­son… what good is a phone call… if you’re unable to speak?”—Agent Smith, <em>Matrix</em>.</p>
 ```
 > “Tell me Mr. Anderson… what good is a phone call… if you’re unable to speak?”—Agent Smith, Matrix.
+
+The output is plain UTF-8, not HTML entities. The soft hyphen inserted by the `Hyphen` fixer inside "Anderson" is an invisible character.
 
 It's designed to be:
 
 - language agnostic (you can fix `fr_FR`, `fr_CA`, `en_US`... you tell JoliTypo what to fix);
 - easy to integrate into modern PHP projects (composer and autoload);
-- robust (makes use of `\DOMDocument` instead of parsing HTML with dummy regexp);
+- robust (makes use of the HTML5 parser of PHP, `\Dom\HTMLDocument`, instead of parsing HTML with dummy regexp);
 - smart enough to avoid JavaScript, Code, CSS processing... (configurable protected tags list);
 - fully tested;
 - fully open and usable in any project (MIT License).
@@ -66,7 +68,7 @@ For your ease of use, you can find [ready to use list of Fixer for your language
 Micro-typography is nothing like a standard or a law, what really matters is consistency, so feel free to use your own lists.
 
 > [!NOTE]
-> Please be advised that JoliTypo works best on **HTML content**; it will also work on plain text, but will be less smart about smart quotes. When fixing a complete HTML document, potential `<head>`, `<html>` and `<body>` tags may be removed.
+> Please be advised that JoliTypo works best on **HTML content**; it will also work on plain text, but will be less smart about smart quotes. Both HTML fragments and complete HTML documents (with a doctype, `<html>`, `<head>` and `<body>`) are accepted, and a complete document is returned as a complete document. The output is always UTF-8, never HTML entities: make sure your page declares this charset.
 
 To fix non HTML content, use the `fixString()` method:
 
@@ -87,7 +89,7 @@ Run `jolitypo --help` to know how to configure the Fixer.
 Installation
 ============
 
-Requirements are handled by Composer (PHP 8.4 or higher, with the libxml and mbstring extensions; intl is optional but recommended).
+Requirements are handled by Composer (PHP 8.4 or higher, with the dom, libxml and mbstring extensions; intl is optional but recommended).
 
 ```
 composer require jolicode/jolitypo

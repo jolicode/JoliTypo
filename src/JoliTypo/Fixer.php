@@ -10,13 +10,12 @@
 namespace JoliTypo;
 
 use JoliTypo\Exception\BadRuleSetException;
-use JoliTypo\Exception\InvalidMarkupException;
 
 class Fixer
 {
     /**
-     * DOMDocument does not like all the HTML entities; sometimes they are double encoded.
-     * So the entities here are plain utf8 and DOCDocument::saveHTML transform them to entity.
+     * The fixers work on plain UTF-8 characters, never on HTML entities.
+     * The HTML5 serializer only escapes &, <, > and the no-break space (as &nbsp;), everything else is output as UTF-8.
      */
     public const string NO_BREAK_THIN_SPACE = "\xE2\x80\xAF"; // &#8239;
     public const string NO_BREAK_SPACE = "\xC2\xA0"; // &#160;
@@ -56,7 +55,7 @@ class Fixer
     private string $locale = 'en_GB';
 
     /**
-     * @var array<string, FixerInterface> The rules Fixer instances to apply on each DOMText, indexed by class name
+     * @var array<string, FixerInterface> The rules Fixer instances to apply on each text node, indexed by class name
      */
     private array $rules = [];
 
@@ -85,11 +84,9 @@ class Fixer
         // Get a clean new StateBag
         $this->stateBag = new StateBag();
 
-        $dom = $this->loadDOMDocument($trimmed);
+        $utf8 = $this->toUtf8($trimmed);
 
-        $this->processDOM($dom, $dom);
-
-        return $this->exportDOMDocument($dom);
+        return $this->isDocument($utf8) ? $this->fixDocument($utf8) : $this->fixFragment($utf8);
     }
 
     /**
@@ -224,9 +221,41 @@ class Fixer
     }
 
     /**
-     * Loop over all the DOMNode recursively.
+     * Fix a whole HTML document, returned with its doctype, <html>, <head> and <body>.
      */
-    private function processDOM(\DOMNode $node, \DOMDocument $dom): void
+    private function fixDocument(string $content): string
+    {
+        $document = \Dom\HTMLDocument::createFromString($content, \LIBXML_NOERROR, 'UTF-8');
+
+        $this->processDOM($document, $document);
+
+        return trim($document->saveHtml());
+    }
+
+    /**
+     * Fix a fragment of HTML.
+     *
+     * It is parsed in the context of a <body> element, like a browser does with innerHTML,
+     * so that <style>, <title> or leading text stay where they are.
+     */
+    private function fixFragment(string $content): string
+    {
+        $document = \Dom\HTMLDocument::createEmpty();
+        $html = $document->createElement('html');
+        $body = $document->createElement('body');
+        $html->append($body);
+        $document->append($html);
+        $body->innerHTML = $content;
+
+        $this->processDOM($body, $document);
+
+        return trim($body->innerHTML);
+    }
+
+    /**
+     * Loop over all the nodes recursively.
+     */
+    private function processDOM(\Dom\Node $node, \Dom\Document $document): void
     {
         if (!$node->hasChildNodes()) {
             return;
@@ -235,7 +264,7 @@ class Fixer
         // Copy the list first, as fixing a node replaces it in the live child list
         $nodes = [];
         foreach ($node->childNodes as $childNode) {
-            if ($childNode instanceof \DOMElement && \in_array($childNode->tagName, $this->protectedTags, true)) {
+            if ($childNode instanceof \Dom\Element && \in_array($childNode->localName, $this->protectedTags, true)) {
                 continue;
             }
 
@@ -245,27 +274,27 @@ class Fixer
         $depth = $this->stateBag->getCurrentDepth();
 
         foreach ($nodes as $childNode) {
-            if ($childNode instanceof \DOMText && !$childNode->isWhitespaceInElementContent()) {
+            if ($childNode instanceof \Dom\Text && '' !== trim($childNode->data)) {
                 $this->stateBag->setCurrentDepth($depth);
-                $this->doFix($childNode, $node, $dom);
+                $this->doFix($childNode, $node, $document);
             } else {
                 $this->stateBag->setCurrentDepth($this->stateBag->getCurrentDepth() + 1);
-                $this->processDOM($childNode, $dom);
+                $this->processDOM($childNode, $document);
             }
         }
     }
 
     /**
-     * Run the Fixers on a DOMText content.
+     * Run the Fixers on a text node.
      *
-     * @param \DOMText     $childNode The node to fix
-     * @param \DOMNode     $node      The parent node where to replace the current one
-     * @param \DOMDocument $dom       The Document
+     * @param \Dom\Text     $childNode The node to fix
+     * @param \Dom\Node     $node      The parent node where to replace the current one
+     * @param \Dom\Document $document  The Document
      */
-    private function doFix(\DOMText $childNode, \DOMNode $node, \DOMDocument $dom): void
+    private function doFix(\Dom\Text $childNode, \Dom\Node $node, \Dom\Document $document): void
     {
-        $content = $childNode->wholeText;
-        $currentNode = new StateNode($childNode, $node, $dom);
+        $content = $childNode->data;
+        $currentNode = new StateNode($childNode, $node, $document);
 
         $this->stateBag->setCurrentNode($currentNode);
 
@@ -275,8 +304,8 @@ class Fixer
         }
 
         // update the DOM only if the node has changed
-        if ($childNode->wholeText !== $content) {
-            $newNode = $dom->createTextNode($content);
+        if ($childNode->data !== $content) {
+            $newNode = $document->createTextNode($content);
             $node->replaceChild($newNode, $childNode);
 
             // As the node is replaced, we also update it in the StateNode
@@ -285,80 +314,32 @@ class Fixer
     }
 
     /**
-     * @throws InvalidMarkupException
+     * Guess whether the content is a whole HTML document or a fragment of one.
      */
-    private function loadDOMDocument(string $content): \DOMDocument
+    private function isDocument(string $content): bool
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->encoding = 'UTF-8';
-
-        $dom->strictErrorChecking = false;
-        $dom->substituteEntities = false;
-        $dom->formatOutput = false;
-
-        // Change libxml config
-        $libxmlCurrent = libxml_use_internal_errors(true);
-
-        $loaded = $dom->loadHTML($this->fixContentEncoding($content));
-
-        // Restore libxml config
-        libxml_use_internal_errors($libxmlCurrent);
-
-        if (!$loaded) {
-            throw new InvalidMarkupException("Can't load the given HTML via DomDocument");
-        }
-
-        return $dom;
+        return (bool) preg_match('/<(?:!doctype|html)[\s>]/i', $content);
     }
 
     /**
-     * Convert the content encoding properly and add Content-Type meta if HTML document.
+     * Convert the content to UTF-8, the only encoding the HTML parser and the fixers work with.
      *
-     * @see http://php.net/manual/en/domdocument.loadhtml.php#91513
-     * @see https://github.com/jolicode/JoliTypo/issues/7
+     * A leading XML declaration, once the way to tell libxml which encoding to read
+     * (see https://github.com/jolicode/JoliTypo/issues/7), is still accepted and removed.
      */
-    private function fixContentEncoding(string $content): string
+    private function toUtf8(string $content): string
     {
-        // Little hack to force UTF-8
-        if (!str_contains($content, '<?xml encoding')) {
-            $hack = str_contains($content, '<body') ? '<?xml encoding="UTF-8">' : '<?xml encoding="UTF-8"><body>';
-            $content = $hack . $content;
-        }
+        $content = (string) preg_replace('/^<\?xml\b[^>]*>\s*/i', '', $content, 1);
 
         $encoding = array_find(
             ['UTF-8', 'ASCII', 'ISO-8859-1', 'windows-1252', 'iso-8859-15'],
             static fn (string $testedEncoding): bool => false !== mb_detect_encoding($content, $testedEncoding, true)
-        );
-
-        $headPos = mb_strpos($content, '<head>');
-
-        // Add a meta to the <head> section
-        if (false !== $headPos) {
-            $headPos += 6;
-            $content = mb_substr($content, 0, $headPos)
-                . '<meta http-equiv="Content-Type" content="text/html; charset=' . $encoding . '">'
-                . mb_substr($content, $headPos);
-        }
+        ) ?? 'UTF-8';
 
         if ('UTF-8' !== $encoding) {
             $content = (string) mb_convert_encoding($content, 'UTF-8', $encoding);
         }
 
         return $content;
-    }
-
-    private function exportDOMDocument(\DOMDocument $dom): string
-    {
-        // Remove added body & doctype
-        $content = preg_replace(
-            [
-                '/^\<\!DOCTYPE.*?<html>.*?<body>/si',
-                '!</body>\n?</html>$!si',
-            ],
-            '',
-            (string) $dom->saveHTML()
-        );
-
-        return trim((string) $content);
     }
 }

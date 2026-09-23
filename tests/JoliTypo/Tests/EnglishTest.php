@@ -26,16 +26,20 @@ class EnglishTest extends TestCase
         <p>We also have "<span>HTML in quote</span>" to fix...</p>
         TOFIX;
 
-    public const FIXED = <<<'FIXED'
+    /**
+     * The expected outputs are UTF-8: \u{AD} is a soft hyphen (&shy;) and \u{202F} a narrow no-break space (&#8239;),
+     * both invisible. The HTML5 serializer only keeps &nbsp;, &amp;, &lt; and &gt; as entities.
+     */
+    public const FIXED = <<<FIXED
         <!-- From https://en.wikipedia.org/wiki/Gif#Pronunciation -->
-        <h3>Pronun&shy;ci&shy;ation</h3>
+        <h3>Pronun\u{AD}ci\u{AD}ation</h3>
 
-        <p>A humor&shy;ous image announ&shy;cing the launch of a White House Tumblr suggests pronoun&shy;cing GIF with a hard &ldquo;G&rdquo;.</p>
-        <p>The creat&shy;ors of the format pronounced GIF as &ldquo;Jif&rdquo; with a soft &ldquo;G&rdquo; /&#712;d&#658;&#618;f/ as in &ldquo;gin&rdquo;.</p>
-        <p>An altern&shy;at&shy;ive pronun&shy;ci&shy;ation with a hard &ldquo;G&rdquo; /&#712;&#609;&#618;f/ as in &ldquo;graph&shy;ics&rdquo;, reflect&shy;ing the expan&shy;ded acronym, is in wide&shy;spread usage.</p>
-        <p>Both pronun&shy;ci&shy;ations are acknow&shy;ledged by the [&hellip;] Merriam-Webster&rsquo;s Collegi&shy;ate Diction&shy;ary.</p>
+        <p>A humor\u{AD}ous image announ\u{AD}cing the launch of a White House Tumblr suggests pronoun\u{AD}cing GIF with a hard “G”.</p>
+        <p>The creat\u{AD}ors of the format pronounced GIF as “Jif” with a soft “G” /ˈdʒɪf/ as in “gin”.</p>
+        <p>An altern\u{AD}at\u{AD}ive pronun\u{AD}ci\u{AD}ation with a hard “G” /ˈɡɪf/ as in “graph\u{AD}ics”, reflect\u{AD}ing the expan\u{AD}ded acronym, is in wide\u{AD}spread usage.</p>
+        <p>Both pronun\u{AD}ci\u{AD}ations are acknow\u{AD}ledged by the […] Merriam-Webster’s Collegi\u{AD}ate Diction\u{AD}ary.</p>
 
-        <p>We also have &ldquo;<span>HTML in quote</span>&rdquo; to fix&hellip;</p>
+        <p>We also have “<span>HTML in quote</span>” to fix…</p>
         FIXED;
     private $en_fixers = ['Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'CurlyQuote', 'Hyphen', 'Trademark'];
 
@@ -65,8 +69,8 @@ class EnglishTest extends TestCase
             <p>"Tell me Mr. Anderson... what good is a phone call... if you're unable to speak?" -- Agent Smith, <em>Matrix</em>.</p>
             HTML;
 
-        $after = <<<'HTML'
-            <p>&ldquo;Tell me Mr. Ander&shy;son&hellip; what good is a phone call&hellip; if you&rsquo;re unable to speak?&rdquo;&mdash;Agent Smith, <em>Matrix</em>.</p>
+        $after = <<<HTML
+            <p>“Tell me Mr. Ander\u{AD}son… what good is a phone call… if you’re unable to speak?”—Agent Smith, <em>Matrix</em>.</p>
             HTML;
 
         $fixer = new Fixer($this->en_fixers);
@@ -77,7 +81,7 @@ class EnglishTest extends TestCase
     public function testDoubleQuoteMess(): void
     {
         $fixed = <<<'HTML'
-            <p>I&rsquo;m learning &ldquo;<a href="http://composer.json.jolicode.com">composer.json</a>&rdquo; as it&rsquo;s better than a &ldquo;.docx&rdquo;</p>
+            <p>I’m learning “<a href="http://composer.json.jolicode.com">composer.json</a>” as it’s better than a “.docx”</p>
             HTML;
 
         $to_fix = <<<'HTML'

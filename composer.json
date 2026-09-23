@@ -14,6 +14,7 @@
     ],
     "require": {
         "php": ">=8.4",
+        "ext-dom": "*",
         "ext-mbstring": "*",
         "lib-libxml": "*",
         "org_heigl/hyphenator": "^3.2",
