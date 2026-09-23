@@ -48,7 +48,7 @@ new SingleCommandApplication('JoliTypo')
 
         if ($input->getOption('list-rules')) {
             $list = [];
-            foreach (new Finder()->in(__DIR__ . '/../../../src/JoliTypo/Fixer')->sortByName()->files() as $file) {
+            foreach (new Finder()->in(__DIR__ . '/../vendor/jolicode/jolitypo/src/JoliTypo/Fixer')->sortByName()->files() as $file) {
                 $list[] = $file->getFilenameWithoutExtension();
             }
             $io->listing($list);

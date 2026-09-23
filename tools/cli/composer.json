@@ -16,13 +16,16 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../.."
+            "url": "../..",
+            "options": {
+                "symlink": false
+            }
         }
     ],
     "require": {
         "jolicode/jolitypo": "*@dev",
-        "symfony/console": "^7.4.14",
-        "symfony/finder": "^7.4.14"
+        "symfony/console": "^7.4.19",
+        "symfony/finder": "^7.4.19"
     },
     "config": {
         "bump-after-update": true,

@@ -1,9 +1,17 @@
+/.castor.stub.php       export-ignore
 /.gitattributes         export-ignore
 /.github                export-ignore
 /.gitignore             export-ignore
+/.php-cs-fixer.cache    export-ignore
 /.php-cs-fixer.php      export-ignore
+/.phpunit.cache         export-ignore
+/castor.php             export-ignore
+/phpstan-baseline.neon  export-ignore
+/phpstan.neon           export-ignore
 /phpunit.xml.dist       export-ignore
 /tests                  export-ignore
 /TODO.md                export-ignore
 /tools                  export-ignore
+/var                    export-ignore
+/vendor                 export-ignore
 /website                export-ignore
