@@ -8,6 +8,8 @@ CHANGELOG
 * Extend `SmartQuotes` to support 45+ languages via `LocaleConfig`
 * Deprecate `FrenchNoBreakSpace` fixer in favor of `SpaceBeforePunctuation`
 * Add `leftMin`, `rightMin` and `wordMin` options to the `Hyphen` fixer
+* Add `UnicodeNormalization` fixer, which converts decomposed characters (`e` + combining acute accent) to their composed form (`é`, Unicode NFC); it is now the first recommended rule of every locale (#27)
+* Require `symfony/polyfill-intl-normalizer`, so that `UnicodeNormalization` works without the `intl` extension
 * Fix `Hyphen` fixer adding new soft hyphens every time already fixed content is fixed again: words already containing a soft hyphen are now left untouched (#57)
 * Fix `Unit` fixer producing invalid UTF-8 when a no-break space is followed by a letter or a digit, which made the following fixers empty the text node (#57)
 * Fix `SmartQuotes` taking inch and second marks (`5'6"`, `27"`) inside a quote for closing quotes (#32)

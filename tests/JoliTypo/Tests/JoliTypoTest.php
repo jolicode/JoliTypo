@@ -115,6 +115,18 @@ class JoliTypoTest extends TestCase
         $this->assertSame('<p>Hey &eacute;pic dude&hellip;</p>', $fixer->fix('<?xml encoding="ISO-8859-1"><body><p>Hey épic dude...</p></body>'));
     }
 
+    public function testUnicodeNormalization(): void
+    {
+        $fixer = new Fixer(['UnicodeNormalization', 'Ellipsis']);
+
+        // "e" + U+0301 COMBINING ACUTE ACCENT is composed into "é" before the other fixers run
+        $fixed = $fixer->fix("<p>Hey e\u{0301}pic dude...</p>");
+        $this->assertStringNotContainsString("\u{0301}", $fixed);
+        $this->assertSame('<p>Hey épic dude…</p>', html_entity_decode($fixed, \ENT_QUOTES | \ENT_HTML5, 'UTF-8'));
+
+        $this->assertSame('Hey épic dude…', $fixer->fixString("Hey e\u{0301}pic dude..."));
+    }
+
     public function testBadEncoding(): void
     {
         $fixer = new Fixer(['Trademark']);

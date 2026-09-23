@@ -87,7 +87,7 @@ Run `jolitypo --help` to know how to configure the Fixer.
 Installation
 ============
 
-Requirements are handled by Composer (libxml and mbstring are required).
+Requirements are handled by Composer (libxml and mbstring are required, intl is optional but recommended).
 
 ```
 composer require jolicode/jolitypo
@@ -109,6 +109,22 @@ Integrations
 
 Available Fixers
 ================
+
+UnicodeNormalization
+--------------------
+
+Converts the text to Unicode Normalization Form C (NFC, canonical composition). Content pasted from PDF files, macOS or
+some editors can contain decomposed characters, a base letter followed by combining marks: `e` + U+0301 instead of `é`.
+Both render the same but are different strings, which breaks search, comparisons and hyphenation.
+
+Only the lossless canonical form is applied. The compatibility form (NFKC) is deliberately not offered, as it would turn
+the no-break spaces, ellipsis and trademark sign produced by the other fixers back into plain ASCII.
+
+Put this fixer first in your list, so that the other fixers work on composed characters: `Hyphen`, for instance, counts
+a combining mark as a letter and hyphenates decomposed words differently.
+
+This fixer relies on the `Normalizer` class of the `intl` extension, with `symfony/polyfill-intl-normalizer` as a
+fallback when the extension is not installed.
 
 Dash
 ----
@@ -272,7 +288,7 @@ en_GB
 -----
 
 ```php
-$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('en_GB');
 ```
 
@@ -282,7 +298,7 @@ fr_FR
 Those rules apply for most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('fr_FR');
 ```
 
@@ -292,7 +308,7 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('fr_CA');
 ```
 
@@ -302,7 +318,7 @@ de_DE
 Mostly the same as en_GB, according to [Typefacts](http://typefacts.com/) and [Wikipedia](http://de.wikipedia.org/wiki/Typografie_f%C3%BCr_digitale_Texte).
 
 ```php
-$fixer = new Fixer(['Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']  );
+$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']  );
 $fixer->setLocale('de_DE');
 ```
 
