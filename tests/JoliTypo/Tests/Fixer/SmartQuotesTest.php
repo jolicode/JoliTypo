@@ -290,6 +290,211 @@ class SmartQuotesTest extends TestCase
         );
     }
 
+    // =========================================================================
+    // Nested quotations: '…' inside "…" (#69, #75)
+    // =========================================================================
+
+    public function testNestedQuotesSimpleString(): void
+    {
+        $fixer = new Fixer\SmartQuotes('en');
+        $this->assertSame(Fixer::LSQUO . 'I am smart' . Fixer::RSQUO, $fixer->fix("'I am smart'"));
+
+        $fixer->setNestedOpening('<');
+        $fixer->setNestedClosing('>');
+        $this->assertSame('<I am smart>', $fixer->fix("'I am smart'"));
+    }
+
+    public function testNestedQuotesInSentences(): void
+    {
+        $fixer = new Fixer\SmartQuotes('en');
+
+        $this->assertSame('This ‘magic’ piece of code fixes quotes.', $fixer->fix("This 'magic' piece of code fixes quotes."));
+        $this->assertSame('‘Good code is like a good joke.’', $fixer->fix("'Good code is like a good joke.'"));
+        $this->assertSame('‘Good code is like a Bieber.’ - said no one, ever.', $fixer->fix("'Good code is like a Bieber.' - said no one, ever."));
+        $this->assertSame('Some people are like ‘Batman’, others like ‘Superman’.', $fixer->fix("Some people are like 'Batman', others like 'Superman'."));
+        $this->assertSame('A list of (‘words’ between ‘quotes’)!', $fixer->fix("A list of ('words' between 'quotes')!"));
+        $this->assertSame('Is it ‘magic’? Yes: ‘magic’; really ‘magic’!', $fixer->fix("Is it 'magic'? Yes: 'magic'; really 'magic'!"));
+        $this->assertSame("‘I'm here’, he said.", $fixer->fix("'I'm here', he said."));
+        $this->assertSame("Multiple\nlines with ‘a quote\nspanning them’ work.", $fixer->fix("Multiple\nlines with 'a quote\nspanning them' work."));
+    }
+
+    public function testNestedQuotesInsideDoubleQuotes(): void
+    {
+        $fixer = new Fixer\SmartQuotes('en');
+
+        $this->assertSame('“This ‘magic’ piece”', $fixer->fix("\"This 'magic' piece\""));
+        $this->assertSame('“‘Hi’ he said”', $fixer->fix("\"'Hi' he said\""));
+        $this->assertSame('“He said ‘hi’”', $fixer->fix("\"He said 'hi'\""));
+        $this->assertSame('“‘Hi’”', $fixer->fix("\"'Hi'\""));
+
+        // Double quotes which are already smart
+        $this->assertSame('“This ‘magic’ piece”', $fixer->fix("“This 'magic' piece”"));
+
+        $fixer->setLocale('de');
+        $this->assertSame('„Er sagte ‚Hallo‘“', $fixer->fix("\"Er sagte 'Hallo'\""));
+        $this->assertSame('„‚Hallo‘, sagte er“', $fixer->fix("\"'Hallo', sagte er\""));
+
+        $fixer->setLocale('fr');
+        $this->assertSame('«' . Fixer::NO_BREAK_SPACE . 'Il a dit “bonjour”' . Fixer::NO_BREAK_SPACE . '»', $fixer->fix("\"Il a dit 'bonjour'\""));
+    }
+
+    public function testApostrophesAreLeftUntouched(): void
+    {
+        $fixer = new Fixer\SmartQuotes('en');
+
+        $this->assertSame("I'm SUPERMAN.", $fixer->fix("I'm SUPERMAN."));
+        $this->assertSame("Qu'est ce que l'univers ?", $fixer->fix("Qu'est ce que l'univers ?"));
+        $this->assertSame("Swag' me.", $fixer->fix("Swag' me."));
+        $this->assertSame("She's 6' 10\".", $fixer->fix("She's 6' 10\"."));
+        $this->assertSame("Back in the '90s.", $fixer->fix("Back in the '90s."));
+        $this->assertSame("Here is a crying smiley: :'(", $fixer->fix("Here is a crying smiley: :'("));
+        $this->assertSame("'An unclosed quote is left alone", $fixer->fix("'An unclosed quote is left alone"));
+        $this->assertSame("The '90s were ‘great’.", $fixer->fix("The '90s were 'great'."));
+    }
+
+    public function testNestedQuoteStylesByLocale(): void
+    {
+        $fixer = new Fixer\SmartQuotes('en');
+        $this->assertSame(Fixer::LSQUO . 'Hello' . Fixer::RSQUO, $fixer->fix("'Hello'"));
+
+        $fixer->setLocale('en_US');
+        $this->assertSame(Fixer::LSQUO . 'Hello' . Fixer::RSQUO, $fixer->fix("'Hello'"));
+
+        $fixer->setLocale('pt_BR');
+        $this->assertSame(Fixer::LSQUO . 'Olá' . Fixer::RSQUO, $fixer->fix("'Olá'"));
+
+        $fixer->setLocale('de');
+        $this->assertSame(Fixer::SBQUO . 'Hallo' . Fixer::LSQUO, $fixer->fix("'Hallo'"));
+
+        $fixer->setLocale('de_DE');
+        $this->assertSame(Fixer::SBQUO . 'Hallo' . Fixer::LSQUO, $fixer->fix("'Hallo'"));
+
+        $fixer->setLocale('cs');
+        $this->assertSame(Fixer::SBQUO . 'Ahoj' . Fixer::LSQUO, $fixer->fix("'Ahoj'"));
+
+        $fixer->setLocale('de_CH');
+        $this->assertSame(Fixer::LSAQUO . 'Hallo' . Fixer::RSAQUO, $fixer->fix("'Hallo'"));
+
+        $fixer->setLocale('de-CH');
+        $this->assertSame(Fixer::LSAQUO . 'Hallo' . Fixer::RSAQUO, $fixer->fix("'Hallo'"));
+
+        $fixer->setLocale('fr');
+        $this->assertSame(Fixer::LDQUO . 'Bonjour' . Fixer::RDQUO, $fixer->fix("'Bonjour'"));
+
+        $fixer->setLocale('fr_FR');
+        $this->assertSame(Fixer::LDQUO . 'Bonjour' . Fixer::RDQUO, $fixer->fix("'Bonjour'"));
+
+        $fixer->setLocale('es');
+        $this->assertSame(Fixer::LDQUO . 'Hola' . Fixer::RDQUO, $fixer->fix("'Hola'"));
+
+        $fixer->setLocale('it');
+        $this->assertSame(Fixer::LDQUO . 'Ciao' . Fixer::RDQUO, $fixer->fix("'Ciao'"));
+
+        $fixer->setLocale('ru');
+        $this->assertSame(Fixer::BDQUO . 'Привет' . Fixer::LDQUO, $fixer->fix("'Привет'"));
+
+        $fixer->setLocale('pl');
+        $this->assertSame(Fixer::LAQUO . 'Cześć' . Fixer::RAQUO, $fixer->fix("'Cześć'"));
+
+        $fixer->setLocale('fi');
+        $this->assertSame(Fixer::RSQUO . 'Hei' . Fixer::RSQUO, $fixer->fix("'Hei'"));
+
+        $fixer->setLocale('sv');
+        $this->assertSame(Fixer::RSQUO . 'Hej' . Fixer::RSQUO, $fixer->fix("'Hej'"));
+    }
+
+    public function testNestedQuotesWithCustomMarksOnUnknownLocale(): void
+    {
+        // Without nested quotation marks, the single quotes are left as they are
+        $fixer = new Fixer\SmartQuotes('unknown');
+        $fixer->setOpening('«');
+        $fixer->setClosing('»');
+
+        $this->assertSame("«He said 'hi'»", $fixer->fix("\"He said 'hi'\""));
+
+        $fixer->setNestedOpening('‹');
+        $fixer->setNestedClosing('›');
+
+        $this->assertSame('«He said ‹hi›»', $fixer->fix("\"He said 'hi'\""));
+    }
+
+    public function testGermanReversedGuillemets(): void
+    {
+        // German books and newspapers often use »…« and ›…‹ (see issue #75)
+        $fixer = new Fixer\SmartQuotes('de_DE');
+        $fixer->setOpening('»');
+        $fixer->setClosing('«');
+        $fixer->setNestedOpening('›');
+        $fixer->setNestedClosing('‹');
+
+        $this->assertSame(
+            'This is an »example«. And this is an »example with another ›single quote‹ inside«.',
+            $fixer->fix("This is an \"example\". And this is an \"example with another 'single quote' inside\".")
+        );
+    }
+
+    public function testFullFixerNestedQuotes(): void
+    {
+        // See issue #69
+        $fixer = new Fixer(['SmartQuotes', 'CurlyQuote']);
+        $fixer->setLocale('en_GB');
+
+        $this->assertSame(
+            '<p>“This ‘magic’ piece of code fixes dumb quotes and apostrophes, doesn’t it?”</p>',
+            $this->fixHtml($fixer, "<p>\"This 'magic' piece of code fixes dumb quotes and apostrophes, doesn't it?\"</p>")
+        );
+    }
+
+    public function testFullFixerGermanReversedGuillemets(): void
+    {
+        // See issue #75
+        $smartQuotes = new Fixer\SmartQuotes('de_DE');
+        $smartQuotes->setOpening('»');
+        $smartQuotes->setClosing('«');
+        $smartQuotes->setNestedOpening('›');
+        $smartQuotes->setNestedClosing('‹');
+
+        $fixer = new Fixer(['Ellipsis', 'Dash', $smartQuotes, 'CurlyQuote']);
+
+        $this->assertSame(
+            '<p>This is an »example«. And this is an »example with another ›single quote‹ inside«.</p>',
+            $this->fixHtml($fixer, "<p>This is an \"example\". And this is an \"example with another 'single quote' inside\".</p>")
+        );
+    }
+
+    public function testFullFixerGermanDefaults(): void
+    {
+        $fixer = new Fixer(['SmartQuotes', 'CurlyQuote']);
+        $fixer->setLocale('de_DE');
+
+        $this->assertSame(
+            '<p>Er sagte: „Das ist ‚toll‘, oder?“</p>',
+            $this->fixHtml($fixer, "<p>Er sagte: \"Das ist 'toll', oder?\"</p>")
+        );
+    }
+
+    public function testFullFixerFrenchNestedQuotes(): void
+    {
+        $fixer = new Fixer(['SmartQuotes', 'SpaceBeforePunctuation', 'CurlyQuote']);
+        $fixer->setLocale('fr_FR');
+
+        $this->assertSame(
+            '<p>Il a dit «' . Fixer::NO_BREAK_SPACE . 'c’est “super”' . Fixer::NO_BREAK_THIN_SPACE . '!' . Fixer::NO_BREAK_SPACE . '»</p>',
+            $this->fixHtml($fixer, "<p>Il a dit \"c'est 'super' !\"</p>")
+        );
+    }
+
+    public function testFullFixerNestedQuotesAcrossSiblingNodes(): void
+    {
+        $fixer = new Fixer(['SmartQuotes', 'CurlyQuote']);
+        $fixer->setLocale('en_GB');
+
+        $this->assertSame(
+            '<p>He said ‘hello <b>world</b>’ and left. It’s “<em>done</em>”.</p>',
+            $this->fixHtml($fixer, "<p>He said 'hello <b>world</b>' and left. It's \"<em>done</em>\".</p>")
+        );
+    }
+
     /**
      * Decode entities so that the assertions do not depend on the libxml version.
      */

@@ -14,6 +14,7 @@ CHANGELOG
 * Require `org_heigl/hyphenator` ^3.2, the version whose dictionaries the test suite expects
 * CI: run the push workflow on `main` and really install the lowest dependencies in the "prefer lowest" job
 * Add native return types to `Fixer`, `StateBag` and the built-in fixers, and type the class constants
+* `SmartQuotes` now converts pairs of single quotes (`'quoted'`) to the nested quotation marks of the locale (‘…’, ‚…‘, “…”...), which can be customized with `setNestedOpening()` and `setNestedClosing()` (#69, #75)
 
 ### 1.6.0 (2025-12-15) ###
 

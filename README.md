@@ -131,8 +131,41 @@ SmartQuotes
 Converts dumb quotes `" "` to all kinds of smart style quotation marks (`“ ”`, `« »`, `„ “`...). Handles a good variety of locales,
 like English, Arabic, French, Italian, Spanish, Irish, German...
 
-See [the code](https://github.com/jolicode/JoliTypo/blob/master/src/JoliTypo/Fixer/SmartQuotes.php) for more details,
-and do not forget to specify a locale on the Fixer instance.
+Pairs of straight single quotes `' '` are converted to the nested (second-level) quotation marks of the locale:
+`‘ ’` in English, `‚ ‘` in German, `“ ”` in French, Spanish or Italian, `‹ ›` in Swiss German...
+Apostrophes (`I'm`, `l'univers`) are left untouched, `CurlyQuote` takes care of them.
+
+This Fixer must be placed **before** `CurlyQuote` in your rules, otherwise the closing single quote is mistaken for an apostrophe:
+
+```php
+$fixer = new Fixer(['SmartQuotes', 'CurlyQuote']);
+$fixer->setLocale('en_GB');
+echo $fixer->fix('<p>"This \'magic\' piece of code fixes quotes and apostrophes, doesn\'t it?"</p>');
+// <p>“This ‘magic’ piece of code fixes quotes and apostrophes, doesn’t it?”</p>
+```
+
+Custom quotation marks can be set with `setOpening()`, `setClosing()`, `setNestedOpening()` and `setNestedClosing()`.
+For instance, German books and newspapers often use reversed guillemets (`»…«` and `›…‹`) instead of `„…“` and `‚…‘`:
+
+```php
+use JoliTypo\Fixer;
+
+$smartQuotes = new Fixer\SmartQuotes('de_DE');
+$smartQuotes->setOpening('»');
+$smartQuotes->setClosing('«');
+$smartQuotes->setNestedOpening('›');
+$smartQuotes->setNestedClosing('‹');
+
+$fixer = new Fixer(['Ellipsis', 'Dash', $smartQuotes, 'CurlyQuote']);
+echo $fixer->fix('<p>And this is an "example with another \'single quote\' inside".</p>');
+// <p>And this is an »example with another ›single quote‹ inside«.</p>
+```
+
+Note that calling `setLocale()` on the `Fixer` resets the quotation marks to the defaults of the locale.
+
+See `LocaleConfig::QUOTE_STYLES_BY_LOCALE` and `LocaleConfig::NESTED_QUOTE_STYLES_BY_LOCALE` for the default quotation marks of each language,
+and [the code](https://github.com/jolicode/JoliTypo/blob/master/src/JoliTypo/Fixer/SmartQuotes.php) for more details.
+Do not forget to specify a locale on the Fixer instance.
 
 This Fixer replaces legacy `EnglishQuotes`, `FrenchQuotes` and `GermanQuotes`.
 
@@ -201,6 +234,8 @@ Replaces straight quotes `'` with curly ones `’`.
 There is one exception to consider: foot and inch marks (minutes and second marks). Purists use prime `′`, this fixer uses straight quotes for compatibility.
 [Read more about Curly quotes](http://practicaltypography.com/straight-and-curly-quotes.html).
 
+Pairs of single quotes (`'quoted'`) are converted to nested quotation marks by `SmartQuotes`, which must run before this Fixer.
+
 Trademark
 ---------
 
@@ -262,20 +297,20 @@ Locale support for spacing and quotes
 
 JoliTypo supports locale-specific rules for spacing before punctuation and quotation marks:
 
-| Locale | Space Before `: ; ! ?` | Quote Style |
-|--------|------------------------|-------------|
-| fr_FR, fr_BE, fr_CH | YES (nbsp/nnbsp) | « text » |
-| fr_CA | NO | « text » |
-| de_DE, de_AT | NO | „text“ |
-| de_CH | NO | «text» |
-| en_* | NO | “text” |
-| es_*, it_*, pt_* | NO | «text» |
-| pl_*, cs_*, sk_*, hu_*, ro_*, bg_* | NO | „text“ |
-| ru_*, uk_*, be_* | NO | «text» |
-| sv_*, fi_* | NO | "text" |
-| nl_*, tr_* | NO | "text" |
+| Locale | Space Before `: ; ! ?` | Quote Style | Nested Quote Style |
+|--------|------------------------|-------------|--------------------|
+| fr_FR, fr_BE, fr_CH | YES (nbsp/nnbsp) | « text » | “text” |
+| fr_CA | NO | « text » | “text” |
+| de_DE, de_AT | NO | „text“ | ‚text‘ |
+| de_CH | NO | «text» | ‹text› |
+| en_* | NO | “text” | ‘text’ |
+| es_*, it_*, pt_* | NO | «text» | “text” |
+| pl_*, cs_*, sk_*, hu_*, ro_*, bg_* | NO | „text“ | ‚text‘ (pl_*, ro_*: «text») |
+| ru_*, uk_*, be_* | NO | «text» | „text“ |
+| sv_*, fi_* | NO | "text" | ’text’ |
+| nl_*, tr_* | NO | "text" | ‘text’ |
 
-See `LocaleConfig::QUOTE_STYLES_BY_LOCALE` for the complete list of supported languages.
+See `LocaleConfig::QUOTE_STYLES_BY_LOCALE` and `LocaleConfig::NESTED_QUOTE_STYLES_BY_LOCALE` for the complete list of supported languages.
 
 Documentation
 =============
