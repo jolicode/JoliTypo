@@ -25,34 +25,10 @@ parameters:
 			path: src/JoliTypo/Fixer.php
 
 		-
-			message: '#^Method JoliTypo\\Fixer\\BaseOpenClosePair\:\:fixViaState\(\) should return string but returns string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: src/JoliTypo/Fixer/BaseOpenClosePair.php
-
-		-
-			message: '#^Parameter \#2 \$new_content of method JoliTypo\\StateBag\:\:fixSiblingNode\(\) expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/JoliTypo/Fixer/BaseOpenClosePair.php
-
-		-
 			message: '#^Method JoliTypo\\Fixer\\CurlyQuote\:\:fix\(\) should return string but returns string\|null\.$#'
 			identifier: return.type
 			count: 1
 			path: src/JoliTypo/Fixer/CurlyQuote.php
-
-		-
-			message: '#^Method JoliTypo\\Fixer\\Dash\:\:fix\(\) should return string but returns string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: src/JoliTypo/Fixer/Dash.php
-
-		-
-			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/JoliTypo/Fixer/Dash.php
 
 		-
 			message: '#^Method JoliTypo\\Fixer\\Dimension\:\:fix\(\) should return string but returns string\|null\.$#'
@@ -83,12 +59,6 @@ parameters:
 			identifier: constructor.unusedParameter
 			count: 1
 			path: src/JoliTypo/Fixer/GermanQuotes.php
-
-		-
-			message: '#^Method JoliTypo\\Fixer\\Hyphen\:\:fix\(\) should return string but returns array\<mixed\>\|string\.$#'
-			identifier: return.type
-			count: 1
-			path: src/JoliTypo/Fixer/Hyphen.php
 
 		-
 			message: '#^Method JoliTypo\\Fixer\\NoSpaceBeforeComma\:\:fix\(\) should return string but returns string\|null\.$#'

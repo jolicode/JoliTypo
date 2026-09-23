@@ -47,6 +47,18 @@ class EnglishTest extends TestCase
         $this->assertSame(self::FIXED, $fixer->fix(self::TOFIX));
     }
 
+    /**
+     * @see https://github.com/jolicode/JoliTypo/issues/57
+     */
+    public function testFixIsIdempotent(): void
+    {
+        $fixer = new Fixer($this->en_fixers);
+
+        $fixed = $fixer->fix(self::TOFIX);
+
+        $this->assertSame($fixed, $fixer->fix($fixed));
+    }
+
     public function testReadMeExemple(): void
     {
         $before = <<<'HTML'
