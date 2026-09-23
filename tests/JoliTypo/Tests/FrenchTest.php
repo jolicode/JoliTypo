@@ -38,28 +38,32 @@ class FrenchTest extends TestCase
         <p>Une autre exemple : "<strong>Citation forte !</strong>".</p>
         TOFIX;
 
-    public const FIXED = <<<'FIXED'
-        <p>Ceci est &agrave; rempla&shy;cer par une f&acirc;ble&nbsp;:p</p>
+    /**
+     * The expected outputs are UTF-8: \u{AD} is a soft hyphen (&shy;) and \u{202F} a narrow no-break space (&#8239;),
+     * both invisible. The HTML5 serializer only keeps &nbsp;, &amp;, &lt; and &gt; as entities.
+     */
+    public const FIXED = <<<FIXED
+        <p>Ceci est à rempla\u{AD}cer par une fâble&nbsp;:p</p>
 
-        <pre>Oh, du "code" encod&eacute;, mais pas double encod&eacute;: &amp;!</pre>
+        <pre>Oh, du "code" encodé, mais pas double encodé: &amp;!</pre>
 
-        <p>Le mec a fini sa course en 2'33" contre 2'44" pour le second&#8239;!</p>
+        <p>Le mec a fini sa course en 2'33" contre 2'44" pour le second\u{202F}!</p>
 
-        <p>Je suis &laquo;&nbsp;tr&egrave;s
-        content&nbsp;&raquo; de t&rsquo;avoir <a href="http://coucou">invit&eacute;</a>&#8239;!</p>
+        <p>Je suis «&nbsp;très
+        content&nbsp;» de t’avoir <a href="http://coucou">invité</a>\u{202F}!</p>
 
         <pre><code>
           &lt;a href=""&gt;
           pre
         </code></pre>
 
-        <p>Ceci &eacute;t&eacute; un &laquo;&nbsp;CHOQUE&nbsp;&raquo;&#8239;! Son salon fait 4&times;4&nbsp;m, ce qui est plut&ocirc;t petit.</p>
+        <p>Ceci été un «&nbsp;CHOQUE&nbsp;»\u{202F}! Son salon fait 4×4&nbsp;m, ce qui est plutôt petit.</p>
 
-        <p>Les tr&eacute;s long mots sont tron&shy;qu&eacute;s, comme &laquo;&nbsp;rensei&shy;gne&shy;ments&nbsp;&raquo; par exemple.</p>
+        <p>Les trés long mots sont tron\u{AD}qués, comme «&nbsp;rensei\u{AD}gne\u{AD}ments&nbsp;» par exemple.</p>
 
-        <p>Du HTML dans une cita&shy;tion&nbsp;: &laquo;&nbsp;Je suis <strong>fan</strong> de Joli&shy;Typo&nbsp;&raquo; pose probl&egrave;me.</p>
+        <p>Du HTML dans une cita\u{AD}tion&nbsp;: «&nbsp;Je suis <strong>fan</strong> de Joli\u{AD}Typo&nbsp;» pose problème.</p>
 
-        <p>Une autre exemple&nbsp;: &laquo;&nbsp;<strong>Cita&shy;tion forte&#8239;!</strong>&nbsp;&raquo;.</p>
+        <p>Une autre exemple&nbsp;: «&nbsp;<strong>Cita\u{AD}tion forte\u{202F}!</strong>&nbsp;».</p>
         FIXED;
     private $fr_fixers = ['Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark'];
 
@@ -100,9 +104,9 @@ class FrenchTest extends TestCase
         $fixer->setLocale('fr');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $fixed = <<<'HTML'
-            <p>A la sauce &laquo;&nbsp;<a href="http://composer.json.jolicode.com">compo&shy;ser.json</a>&nbsp;&raquo;
-             atti&shy;rera forc&eacute;&shy;ment plus notre atten&shy;tion qu&rsquo;une lettre de moti&shy;va&shy;tion de 4&nbsp;pages en &laquo;&nbsp;.docx&nbsp;&raquo;</p>
+        $fixed = <<<HTML
+            <p>A la sauce «&nbsp;<a href="http://composer.json.jolicode.com">compo\u{AD}ser.json</a>&nbsp;»
+             atti\u{AD}rera forcé\u{AD}ment plus notre atten\u{AD}tion qu’une lettre de moti\u{AD}va\u{AD}tion de 4&nbsp;pages en «&nbsp;.docx&nbsp;»</p>
             HTML;
 
         $to_fix = <<<'HTML'
@@ -119,8 +123,8 @@ class FrenchTest extends TestCase
         $fixer->setLocale('fr');
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
-        $fixed = <<<'HTML'
-            &Ccedil;a s&rsquo;ar&shy;r&ecirc;te l&agrave;&#8239;!
+        $fixed = <<<HTML
+            Ça s’ar\u{AD}rête là\u{202F}!
             HTML;
 
         $to_fix = <<<'HTML'
@@ -141,7 +145,7 @@ class FrenchTest extends TestCase
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $fixed = <<<'HTML'
-            &laquo;&nbsp;test&nbsp;&raquo; et &laquo;&nbsp;test&nbsp;&raquo; sont dans un bateau.
+            «&nbsp;test&nbsp;» et «&nbsp;test&nbsp;» sont dans un bateau.
             HTML;
 
         $to_fix = <<<'HTML'
@@ -168,7 +172,7 @@ class FrenchTest extends TestCase
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 
         $fixed = <<<'HTML'
-            2&nbsp;&times;&nbsp;5&nbsp;doit &ecirc;tre corrig&eacute;, et 2&nbsp;h aussi.
+            2&nbsp;×&nbsp;5&nbsp;doit être corrigé, et 2&nbsp;h aussi.
             HTML;
 
         $to_fix = <<<'HTML'
@@ -210,6 +214,6 @@ class FrenchTest extends TestCase
             <p>des œuvres d'art.</p>
             HTML;
 
-        $this->assertStringContainsString('&oelig;', $fixer->fix($to_fix));
+        $this->assertSame('<p>des œuvres d’art.</p>', $fixer->fix($to_fix));
     }
 }

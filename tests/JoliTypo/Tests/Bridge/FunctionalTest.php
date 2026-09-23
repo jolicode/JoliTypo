@@ -27,7 +27,7 @@ class FunctionalTest extends TestCase
         $expected = <<<'HTML'
             <p>Raw content: People's.</p>
 
-            <p>Fixed content: People&rsquo;s.</p>
+            <p>Fixed content: People’s.</p>
             HTML;
 
         self::assertSame($expected, $response->getContent());

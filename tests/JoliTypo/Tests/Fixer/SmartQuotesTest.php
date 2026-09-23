@@ -264,11 +264,11 @@ class SmartQuotesTest extends TestCase
         $fixer = new Fixer(['SmartQuotes']);
         $fixer->setLocale('en');
 
-        $this->assertSame('<p>“The man was <em>really</em> 5\'6" and 120 lbs.”</p>', $this->fixHtml($fixer, '<p>"The man was <em>really</em> 5\'6" and 120 lbs."</p>'));
-        $this->assertSame('<p>“The man was<br>5\'6" and 120 lbs.”</p>', $this->fixHtml($fixer, '<p>"The man was<br>5\'6" and 120 lbs."</p>'));
-        $this->assertSame('<p>He said “hi”<br>to the 27" monitor.</p>', $this->fixHtml($fixer, '<p>He said "hi"<br>to the 27" monitor.</p>'));
-        $this->assertSame('<p>“I am <em>only</em> 5” and “you are 6”</p>', $this->fixHtml($fixer, '<p>"I am <em>only</em> 5" and "you are 6"</p>'));
-        $this->assertSame('<p>“I am<br>5” tall</p>', $this->fixHtml($fixer, '<p>"I am<br>5" tall</p>'));
+        $this->assertSame('<p>“The man was <em>really</em> 5\'6" and 120 lbs.”</p>', $fixer->fix('<p>"The man was <em>really</em> 5\'6" and 120 lbs."</p>'));
+        $this->assertSame('<p>“The man was<br>5\'6" and 120 lbs.”</p>', $fixer->fix('<p>"The man was<br>5\'6" and 120 lbs."</p>'));
+        $this->assertSame('<p>He said “hi”<br>to the 27" monitor.</p>', $fixer->fix('<p>He said "hi"<br>to the 27" monitor.</p>'));
+        $this->assertSame('<p>“I am <em>only</em> 5” and “you are 6”</p>', $fixer->fix('<p>"I am <em>only</em> 5" and "you are 6"</p>'));
+        $this->assertSame('<p>“I am<br>5” tall</p>', $fixer->fix('<p>"I am<br>5" tall</p>'));
     }
 
     // =========================================================================
@@ -441,7 +441,7 @@ class SmartQuotesTest extends TestCase
 
         $this->assertSame(
             '<p>“This ‘magic’ piece of code fixes dumb quotes and apostrophes, doesn’t it?”</p>',
-            $this->fixHtml($fixer, "<p>\"This 'magic' piece of code fixes dumb quotes and apostrophes, doesn't it?\"</p>")
+            $fixer->fix("<p>\"This 'magic' piece of code fixes dumb quotes and apostrophes, doesn't it?\"</p>")
         );
     }
 
@@ -458,7 +458,7 @@ class SmartQuotesTest extends TestCase
 
         $this->assertSame(
             '<p>This is an »example«. And this is an »example with another ›single quote‹ inside«.</p>',
-            $this->fixHtml($fixer, "<p>This is an \"example\". And this is an \"example with another 'single quote' inside\".</p>")
+            $fixer->fix("<p>This is an \"example\". And this is an \"example with another 'single quote' inside\".</p>")
         );
     }
 
@@ -469,7 +469,7 @@ class SmartQuotesTest extends TestCase
 
         $this->assertSame(
             '<p>Er sagte: „Das ist ‚toll‘, oder?“</p>',
-            $this->fixHtml($fixer, "<p>Er sagte: \"Das ist 'toll', oder?\"</p>")
+            $fixer->fix("<p>Er sagte: \"Das ist 'toll', oder?\"</p>")
         );
     }
 
@@ -479,8 +479,8 @@ class SmartQuotesTest extends TestCase
         $fixer->setLocale('fr_FR');
 
         $this->assertSame(
-            '<p>Il a dit «' . Fixer::NO_BREAK_SPACE . 'c’est “super”' . Fixer::NO_BREAK_THIN_SPACE . '!' . Fixer::NO_BREAK_SPACE . '»</p>',
-            $this->fixHtml($fixer, "<p>Il a dit \"c'est 'super' !\"</p>")
+            '<p>Il a dit «&nbsp;c’est “super”' . Fixer::NO_BREAK_THIN_SPACE . '!&nbsp;»</p>',
+            $fixer->fix("<p>Il a dit \"c'est 'super' !\"</p>")
         );
     }
 
@@ -491,15 +491,7 @@ class SmartQuotesTest extends TestCase
 
         $this->assertSame(
             '<p>He said ‘hello <b>world</b>’ and left. It’s “<em>done</em>”.</p>',
-            $this->fixHtml($fixer, "<p>He said 'hello <b>world</b>' and left. It's \"<em>done</em>\".</p>")
+            $fixer->fix("<p>He said 'hello <b>world</b>' and left. It's \"<em>done</em>\".</p>")
         );
-    }
-
-    /**
-     * Decode entities so that the assertions do not depend on the libxml version.
-     */
-    private function fixHtml(Fixer $fixer, string $html): string
-    {
-        return html_entity_decode($fixer->fix($html), \ENT_QUOTES | \ENT_HTML5, 'UTF-8');
     }
 }

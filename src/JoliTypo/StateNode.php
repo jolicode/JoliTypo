@@ -15,13 +15,13 @@ namespace JoliTypo;
 class StateNode
 {
     public function __construct(
-        public private(set) \DOMText $node,
-        public readonly \DOMNode $parent,
-        public readonly \DOMDocument $document,
+        public private(set) \Dom\Text $node,
+        public readonly \Dom\Node $parent,
+        public readonly \Dom\Document $document,
     ) {
     }
 
-    public function replaceNode(\DOMText $node): void
+    public function replaceNode(\Dom\Text $node): void
     {
         $this->node = $node;
     }
