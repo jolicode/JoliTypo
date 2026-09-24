@@ -7,7 +7,7 @@ CHANGELOG
 * Convert pairs of single quotes to nested quotation marks in SmartQuotes
 * Add `UnicodeNormalization` fixer, which converts decomposed characters (`e` + combining acute accent) to their composed form (`é`, Unicode NFC); it is now the first recommended rule of every locale (#27)
 * Require `symfony/polyfill-intl-normalizer`, so that `UnicodeNormalization` works without the `intl` extension
-* Add the `UnicodeNormalization` fixer to the demo website, which now runs the current JoliTypo instead of a March 2024 snapshot (#143)
+* Add the `UnicodeNormalization` fixer to the demo website, replace the deprecated `FrenchNoBreakSpace` by `SpaceBeforePunctuation` there, and run the current JoliTypo instead of a March 2024 snapshot (#143)
 * Stop treating line breaks as spaces in `Fixer::ALL_SPACES`, so that `Unit`, `Dimension`, `Trademark`, `NoSpaceBeforeComma` and `SpaceBeforePunctuation` no longer join lines together (#88)
 * Fix `SmartQuotes` mistaking inch and second marks (`5'6"`, `27"`) for closing quotes (#32)
 * Expose `Hyphen` fixer options (`leftMin`, `rightMin`, `wordMin`)
