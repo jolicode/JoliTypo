@@ -1,14 +1,14 @@
 CHANGELOG
 =======
 
-### 2.0.0 (unreleased) ###
+### 2.0.0 (2026-09-24) ###
 
+* BC Break: **Parse HTML with `\Dom\HTMLDocument`, the HTML5 parser shipped with PHP 8.4: a complete document is now fixed and returned with its doctype, `<html>`, `<head>` and `<body>` (#4)**
+* Output change: **The fixed HTML is always UTF-8: non-ASCII characters are no longer replaced by HTML entities (`é` instead of `&eacute;`), and the output no longer depends on the libxml version**
 * Require PHP 8.4 or higher
 * Mark `Fixer::RECOMMENDED_RULES_BY_LOCALE` and the `Numeric` fixer with the `#[\Deprecated]` attribute of PHP 8.4, so that PHP itself reports their use
 * `StateNode` (internal) exposes its node, parent and document as read-only properties instead of getters
 * Run the test suite on PHPUnit 13 directly, `symfony/phpunit-bridge` is no longer used
-* Parse HTML with `\Dom\HTMLDocument`, the HTML5 parser shipped with PHP 8.4: a complete document is now fixed and returned with its doctype, `<html>`, `<head>` and `<body>` (#4)
-* The fixed HTML is always UTF-8: non-ASCII characters are no longer replaced by HTML entities (`é` instead of `&eacute;`), and the output no longer depends on the libxml version
 * `Fixer::fix()` no longer throws `InvalidMarkupException`, the HTML5 parser accepts any markup
 * Fix the PHAR: the library was missing from it (it was pulled in through a symlink, which the PHAR builder does not follow), so `--list-rules` and every fix failed with a class-not-found error
 
