@@ -85,13 +85,3 @@ function toggleResults (e) {
     }
   }
 }
-
-// If the "fr" language is selected, check the "FrenchNoBreakSpace" filter
-const frenchNoBreakSpaceCheckbox = document.querySelector("input[value='FrenchNoBreakSpace']");
-const languageSelect = document.getElementById('typo_fixer_locale');
-
-languageSelect.addEventListener('change', toggleFrench);
-
-function toggleFrench(e) {
-  frenchNoBreakSpaceCheckbox.checked = e.target.value === 'fr';
-}

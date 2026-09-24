@@ -10,7 +10,7 @@ CHANGELOG
 * Add `leftMin`, `rightMin` and `wordMin` options to the `Hyphen` fixer
 * Add `UnicodeNormalization` fixer, which converts decomposed characters (`e` + combining acute accent) to their composed form (`é`, Unicode NFC); it is now the first recommended rule of every locale (#27)
 * Require `symfony/polyfill-intl-normalizer`, so that `UnicodeNormalization` works without the `intl` extension
-* Add the `UnicodeNormalization` fixer to the demo website, which now runs the current JoliTypo instead of a March 2024 snapshot (#143)
+* Add the `UnicodeNormalization` fixer to the demo website, replace the deprecated `FrenchNoBreakSpace` by `SpaceBeforePunctuation` there, and run the current JoliTypo instead of a March 2024 snapshot (#143)
 * Fix `Hyphen` fixer adding new soft hyphens every time already fixed content is fixed again: words already containing a soft hyphen are now left untouched (#57)
 * Fix `Unit` fixer producing invalid UTF-8 when a no-break space is followed by a letter or a digit, which made the following fixers empty the text node (#57)
 * Fix `SmartQuotes` taking inch and second marks (`5'6"`, `27"`) inside a quote for closing quotes (#32)
