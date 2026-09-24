@@ -1,27 +1,35 @@
 CHANGELOG
-=========
+=======
 
-### 1.7.0 (unreleased) ###
+### 1.8.0 (2026-09-23) ###
+
+* Require PHP 8.3, modernize the code base and fix the CI matrix
+* Convert pairs of single quotes to nested quotation marks in SmartQuotes
+* Add `UnicodeNormalization` fixer, which converts decomposed characters (`e` + combining acute accent) to their composed form (`é`, Unicode NFC); it is now the first recommended rule of every locale (#27)
+* Require `symfony/polyfill-intl-normalizer`, so that `UnicodeNormalization` works without the `intl` extension
+* Add the `UnicodeNormalization` fixer to the demo website, replace the deprecated `FrenchNoBreakSpace` by `SpaceBeforePunctuation` there, and run the current JoliTypo instead of a March 2024 snapshot (#143)
+* Stop treating line breaks as spaces in `Fixer::ALL_SPACES`, so that `Unit`, `Dimension`, `Trademark`, `NoSpaceBeforeComma` and `SpaceBeforePunctuation` no longer join lines together (#88)
+* Fix `SmartQuotes` mistaking inch and second marks (`5'6"`, `27"`) for closing quotes (#32)
+* Expose `Hyphen` fixer options (`leftMin`, `rightMin`, `wordMin`)
+* Bind the spaces around a dash in `Dash`: a no-break space towards the incise it opens or closes, and on both sides of a range (#122)
+* Fix `Hyphen` fixer adding new soft hyphens every time already fixed content is fixed again: words already containing a soft hyphen are now left untouched (#57)
+* Fix `Unit` fixer producing invalid UTF-8 when a no-break space is followed by a letter or a digit, which made the following fixers empty the text node (#57)
+* Match the spaces of `SmartQuotes` with the `u` modifier, so that a quote preceded by a narrow no-break space is converted, and leave a content that is not valid UTF-8 untouched instead of returning null
+* Require PHP 8.3 or higher in `composer.json` (announced in 1.6.0, but the constraint still allowed PHP 8.1 and 8.2)
+* Require `org_heigl/hyphenator` ^3.2, the version whose dictionaries the test suite expects
+* CI: run the push workflow on `main` and really install the lowest dependencies in the "prefer lowest" job
+* Add native return types to `Fixer`, `StateBag` and the built-in fixers, and type the class constants
+* Update French fixture for org_heigl/hyphenator 3.2.0
+* Update GitHub Actions, harden security
+* Update toolings, add php-cs-fixer and phpstan, run them in CI
+
+### 1.7.0 (2026-03-30) ###
 
 * Add `SpaceBeforePunctuation` fixer for locale-aware punctuation spacing
 * Add `LocaleConfig` class for centralized locale configuration
 * Extend `SmartQuotes` to support 45+ languages via `LocaleConfig`
 * Deprecate `FrenchNoBreakSpace` fixer in favor of `SpaceBeforePunctuation`
-* Add `leftMin`, `rightMin` and `wordMin` options to the `Hyphen` fixer
-* Add `UnicodeNormalization` fixer, which converts decomposed characters (`e` + combining acute accent) to their composed form (`é`, Unicode NFC); it is now the first recommended rule of every locale (#27)
-* Require `symfony/polyfill-intl-normalizer`, so that `UnicodeNormalization` works without the `intl` extension
-* Add the `UnicodeNormalization` fixer to the demo website, replace the deprecated `FrenchNoBreakSpace` by `SpaceBeforePunctuation` there, and run the current JoliTypo instead of a March 2024 snapshot (#143)
-* Fix `Hyphen` fixer adding new soft hyphens every time already fixed content is fixed again: words already containing a soft hyphen are now left untouched (#57)
-* Fix `Unit` fixer producing invalid UTF-8 when a no-break space is followed by a letter or a digit, which made the following fixers empty the text node (#57)
-* Fix `SmartQuotes` taking inch and second marks (`5'6"`, `27"`) inside a quote for closing quotes (#32)
-* Bind the spaces around a dash in `Dash`: a no-break space towards the incise it opens or closes, and on both sides of a range (#122)
-* Match the spaces of `SmartQuotes` with the `u` modifier, so that a quote preceded by a narrow no-break space is converted, and leave a content that is not valid UTF-8 untouched instead of returning null
-* Stop treating line breaks as spaces in `Fixer::ALL_SPACES`, so that `Unit`, `Dimension`, `Trademark`, `NoSpaceBeforeComma` and `SpaceBeforePunctuation` no longer join lines together (#88)
-* Require PHP 8.3 or higher in `composer.json` (announced in 1.6.0, but the constraint still allowed PHP 8.1 and 8.2)
-* Require `org_heigl/hyphenator` ^3.2, the version whose dictionaries the test suite expects
-* CI: run the push workflow on `main` and really install the lowest dependencies in the "prefer lowest" job
-* Add native return types to `Fixer`, `StateBag` and the built-in fixers, and type the class constants
-* `SmartQuotes` now converts pairs of single quotes (`'quoted'`) to the nested quotation marks of the locale (‘…’, ‚…‘, “…”...), which can be customized with `setNestedOpening()` and `setNestedClosing()` (#69, #75)
+* `SmartQuotes` now converts pairs of single quotes (`'quoted'`) to the nested quotation marks of the locale ('…', ‚…‘, "..."...), which can be customized with `setNestedOpening()` and `setNestedClosing()` (#69, #75)
 
 ### 1.6.0 (2025-12-15) ###
 
