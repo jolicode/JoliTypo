@@ -118,6 +118,14 @@ function serve(string $address = 'localhost:9999'): void
     run(['php', '-S', $address, '-t', 'public']);
 }
 
+#[AsTask(description: 'Run the headless browser smoke test of the demo (needs Node 22+, Chrome and an exported wasm build)')]
+function smoke(): void
+{
+    io()->title('Running the demo smoke test');
+
+    run(['node', 'tests/smoke.mjs']);
+}
+
 function run(array $command, string $path = __DIR__): Process
 {
     $context = context()
