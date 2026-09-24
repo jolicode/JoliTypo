@@ -12,19 +12,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jolicode/JoliTypo.git",
-                "reference": "19a2e72d1fd37e9052ec0aa62dd9c61b78cc54e7"
+                "reference": "9b410db328327b81b77d44be497af56e3e704422"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jolicode/JoliTypo/zipball/19a2e72d1fd37e9052ec0aa62dd9c61b78cc54e7",
-                "reference": "19a2e72d1fd37e9052ec0aa62dd9c61b78cc54e7",
+                "url": "https://api.github.com/repos/jolicode/JoliTypo/zipball/9b410db328327b81b77d44be497af56e3e704422",
+                "reference": "9b410db328327b81b77d44be497af56e3e704422",
                 "shasum": ""
             },
             "require": {
+                "ext-dom": "*",
                 "ext-mbstring": "*",
                 "lib-libxml": "*",
                 "org_heigl/hyphenator": "^3.2",
-                "php": ">=8.3",
+                "php": ">=8.4",
                 "symfony/polyfill-intl-normalizer": "^1.32"
             },
             "conflict": {
@@ -32,8 +33,8 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^v3.92.0",
+                "phpunit/phpunit": "^13.3",
                 "symfony/framework-bundle": "^6.4 || ^7.3 || ^8.0",
-                "symfony/phpunit-bridge": "^7.3 || ^8.0",
                 "symfony/twig-bundle": "^6.4 || ^7.3 || ^8.0",
                 "symfony/yaml": "^6.4 || ^7.3 || ^8.0"
             },
@@ -68,7 +69,7 @@
                 "issues": "https://github.com/jolicode/JoliTypo/issues",
                 "source": "https://github.com/jolicode/JoliTypo/tree/main"
             },
-            "time": "2026-09-23T19:53:51+00:00"
+            "time": "2026-09-24T19:03:38+00:00"
         },
         {
             "name": "org_heigl/hyphenator",
