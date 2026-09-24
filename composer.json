@@ -21,7 +21,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^v3.92.0",
-        "symfony/phpunit-bridge": "^7.3 || ^8.0",
+        "phpunit/phpunit": "^13.3",
         "symfony/framework-bundle": "^6.4 || ^7.3 || ^8.0",
         "symfony/twig-bundle": "^6.4 || ^7.3 || ^8.0",
         "symfony/yaml": "^6.4 || ^7.3 || ^8.0"
@@ -36,7 +36,7 @@
         "psr-4": { "JoliTypo\\Tests\\": "tests/JoliTypo/Tests" }
     },
     "scripts": {
-        "test": "vendor/bin/simple-phpunit",
+        "test": "vendor/bin/phpunit",
         "cs": "vendor/bin/php-cs-fixer fix"
     }
 }

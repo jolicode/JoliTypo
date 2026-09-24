@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <php>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0"/>
-  </php>
-  <testsuites>
-    <testsuite name="JoliTypo Test Suite">
-      <directory>tests/JoliTypo/</directory>
-    </testsuite>
-  </testsuites>
-  <coverage>
-    <include>
-      <directory suffix=".php">src/JoliTypo/</directory>
-    </include>
-  </coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/13.3/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         cacheDirectory=".phpunit.cache"
+         colors="true"
+         failOnDeprecation="true"
+         failOnNotice="true"
+         failOnWarning="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true">
+    <testsuites>
+        <testsuite name="JoliTypo Test Suite">
+            <directory>tests/JoliTypo/</directory>
+        </testsuite>
+    </testsuites>
+    <source ignoreDirectDeprecations="true" ignoreIndirectDeprecations="true">
+        <include>
+            <directory suffix=".php">src/JoliTypo/</directory>
+        </include>
+    </source>
 </phpunit>
