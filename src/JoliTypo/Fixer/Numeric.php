@@ -14,8 +14,8 @@ namespace JoliTypo\Fixer;
  */
 class Numeric extends Unit
 {
+    #[\Deprecated(message: 'use Unit instead, it will be removed in 2.0', since: '1.0.2')]
     public function __construct()
     {
-        @trigger_error('Numeric fixer is deprecated, use Unit instead. To be removed in 2.0.', \E_USER_DEPRECATED);
     }
 }

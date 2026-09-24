@@ -14,9 +14,12 @@ use JoliTypo\Fixer;
 use JoliTypo\FixerInterface;
 use JoliTypo\StateBag;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 class JoliTypoTest extends TestCase
 {
+    use ExpectDeprecationTrait;
+
     public function testSimpleInstance(): void
     {
         $fixer = new Fixer(['Ellipsis']);
@@ -174,6 +177,8 @@ class JoliTypoTest extends TestCase
     /** @group legacy */
     public function testDeprecatedFixer(): void
     {
+        $this->expectDeprecation('Unsilenced deprecation: Method JoliTypo\Fixer\Numeric::__construct() is deprecated since 1.0.2, use Unit instead, it will be removed in 2.0');
+
         $fixer = new Fixer(['Numeric']);
         $this->assertInstanceOf('JoliTypo\Fixer', $fixer);
 

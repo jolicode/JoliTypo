@@ -48,7 +48,7 @@ class StateBag
             return;
         }
 
-        $storedSibling->getParent()->replaceChild($storedSibling->getDocument()->createTextNode($new_content), $storedSibling->getNode());
+        $storedSibling->parent->replaceChild($storedSibling->document->createTextNode($new_content), $storedSibling->node);
         unset($this->siblingNode[$key][$this->currentDepth]);
     }
 

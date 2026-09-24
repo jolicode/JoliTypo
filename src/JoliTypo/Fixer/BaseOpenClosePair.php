@@ -32,7 +32,7 @@ abstract class BaseOpenClosePair
             $content = preg_replace($closeRegexp, '$1' . $closeReplacement . '$2', $content, 1) ?? $content;
 
             // Replace the opening tag
-            $openText = $storedSibling->getNode()->wholeText;
+            $openText = $storedSibling->node->wholeText;
             $open_content = preg_replace($openRegexp, '$1' . $openReplacement . '$2', $openText, 1) ?? $openText;
 
             $stateBag->fixSiblingNode($stateName, $open_content);

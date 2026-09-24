@@ -45,6 +45,7 @@ class Fixer
      * @deprecated since 1.7.0, use LocaleConfig::RECOMMENDED_RULES_BY_LOCALE instead
      * @see LocaleConfig::RECOMMENDED_RULES_BY_LOCALE
      */
+    #[\Deprecated(message: 'use LocaleConfig::RECOMMENDED_RULES_BY_LOCALE instead', since: '1.7.0')]
     public const array RECOMMENDED_RULES_BY_LOCALE = LocaleConfig::RECOMMENDED_RULES_BY_LOCALE;
 
     /**
@@ -324,14 +325,10 @@ class Fixer
             $content = $hack . $content;
         }
 
-        $encoding = null;
-        foreach (['UTF-8', 'ASCII', 'ISO-8859-1', 'windows-1252', 'iso-8859-15'] as $testedEncoding) {
-            if (mb_detect_encoding($content, $testedEncoding, true)) {
-                $encoding = $testedEncoding;
-
-                break;
-            }
-        }
+        $encoding = array_find(
+            ['UTF-8', 'ASCII', 'ISO-8859-1', 'windows-1252', 'iso-8859-15'],
+            static fn (string $testedEncoding): bool => false !== mb_detect_encoding($content, $testedEncoding, true)
+        );
 
         $headPos = mb_strpos($content, '<head>');
 
