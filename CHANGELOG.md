@@ -1,6 +1,10 @@
 CHANGELOG
 =======
 
+### 2.0.0 (unreleased) ###
+
+* Require PHP 8.4 or higher
+
 ### 1.8.0 (2026-09-23) ###
 
 * Require PHP 8.3, modernize the code base and fix the CI matrix

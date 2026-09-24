@@ -20,7 +20,7 @@
         "bump-after-update": true,
         "optimize-autoloader": true,
         "platform": {
-            "php": "8.3.20"
+            "php": "8.4.0"
         },
         "sort-packages": true
     }

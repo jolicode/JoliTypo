@@ -33,13 +33,16 @@ function update(): void
     run(['composer', 'update', '--no-dev', '--optimize-autoloader']);
 }
 
+// soyuka/php-wasm builds PHP 8.3 by default, JoliTypo needs PHP 8.4 (a php-src tag)
+const PHP_WASM_BRANCH = 'php-8.4.26';
+
 #[AsTask('wasm:build', description: 'Build the wasm-php binary')]
 function wasm_build(): void
 {
-    io()->title('Building wasm-php binary');
+    io()->title('Building wasm-php binary (' . PHP_WASM_BRANCH . ')');
 
     $phpWasmDir = __DIR__ . '/vendor/soyuka/php-wasm';
-    run(['docker', 'buildx', 'bake'], path: $phpWasmDir);
+    run(['docker', 'buildx', 'bake', '--set', 'default.args.PHP_BRANCH=' . PHP_WASM_BRANCH], path: $phpWasmDir);
     fs()->mirror("{$phpWasmDir}/build", __DIR__ . '/build');
 }
 

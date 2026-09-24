@@ -87,7 +87,7 @@ Run `jolitypo --help` to know how to configure the Fixer.
 Installation
 ============
 
-Requirements are handled by Composer (libxml and mbstring are required, intl is optional but recommended).
+Requirements are handled by Composer (PHP 8.4 or higher, with the libxml and mbstring extensions; intl is optional but recommended).
 
 ```
 composer require jolicode/jolitypo
