@@ -20,17 +20,9 @@ const main = () => {
         locale = e.target.value;
     });
 
-    let fixers = ['Dash', 'Dimension', 'Ellipsis', 'SmartQuotes', 'NoSpaceBeforeComma', 'Hyphen', 'CurlyQuote', 'Trademark', 'Unit'];
+    // The fixers run in the order of the page, so UnicodeNormalization comes first
     const fixerElts = document.querySelectorAll('input[name="typo_fixer[fixers][]"]');
-    for (const fixerElt of fixerElts) {
-        fixerElt.addEventListener('change', (e) => {
-            if (e.target.checked) {
-                fixers.push(e.target.value);
-            } else {
-                fixers = fixers.filter(f => f !== e.target.value);
-            }
-        });
-    }
+    const getFixers = () => Array.from(fixerElts).filter(elt => elt.checked).map(elt => elt.value);
 
     const resultElt = document.getElementById('result');
     const phpCodeElt = document.getElementById('phpCode');
@@ -42,7 +34,7 @@ const main = () => {
     });
     formElt.addEventListener('submit', (e) => {
         e.preventDefault();
-        update(fixers, locale, content, resultElt, phpCodeElt, resultContentElt);
+        update(getFixers(), locale, content, resultElt, phpCodeElt, resultContentElt);
     });
 }
 
