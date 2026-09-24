@@ -37,7 +37,7 @@ JoliTypo is a tool fixing Microtypography glitches inside your HTML content.
 
 EOTXT;
 
-(new SingleCommandApplication('JoliTypo'))
+new SingleCommandApplication('JoliTypo')
     ->addArgument('locale', InputArgument::REQUIRED, 'Locale of the content to fix.')
     ->addArgument('path', InputArgument::REQUIRED, 'Path of file(s) to fix.')
     ->addOption('rule', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'Rules used to fix the content')
@@ -48,7 +48,7 @@ EOTXT;
 
         if ($input->getOption('list-rules')) {
             $list = [];
-            foreach ((new Finder())->in(__DIR__ . '/../../../src/JoliTypo/Fixer')->sortByName()->files() as $file) {
+            foreach (new Finder()->in(__DIR__ . '/../../../src/JoliTypo/Fixer')->sortByName()->files() as $file) {
                 $list[] = $file->getFilenameWithoutExtension();
             }
             $io->listing($list);
@@ -72,7 +72,7 @@ EOTXT;
         $fixer->setLocale($locale);
 
         if (is_dir($path)) {
-            foreach ((new Finder())->in($path)->files() as $file) {
+            foreach (new Finder()->in($path)->files() as $file) {
                 if ($output->isVerbose()) {
                     $io->comment(sprintf('Fixing <comment>%s</comment>', $file->getRealPath()));
                 }

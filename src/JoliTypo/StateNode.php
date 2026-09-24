@@ -15,25 +15,10 @@ namespace JoliTypo;
 class StateNode
 {
     public function __construct(
-        private \DOMText $node,
-        private readonly \DOMNode $parent,
-        private readonly \DOMDocument $document,
+        public private(set) \DOMText $node,
+        public readonly \DOMNode $parent,
+        public readonly \DOMDocument $document,
     ) {
-    }
-
-    public function getNode(): \DOMText
-    {
-        return $this->node;
-    }
-
-    public function getParent(): \DOMNode
-    {
-        return $this->parent;
-    }
-
-    public function getDocument(): \DOMDocument
-    {
-        return $this->document;
     }
 
     public function replaceNode(\DOMText $node): void

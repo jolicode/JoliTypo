@@ -4,6 +4,8 @@ CHANGELOG
 ### 2.0.0 (unreleased) ###
 
 * Require PHP 8.4 or higher
+* Mark `Fixer::RECOMMENDED_RULES_BY_LOCALE` and the `Numeric` fixer with the `#[\Deprecated]` attribute of PHP 8.4, so that PHP itself reports their use
+* `StateNode` (internal) exposes its node, parent and document as read-only properties instead of getters
 
 ### 1.8.0 (2026-09-23) ###
 

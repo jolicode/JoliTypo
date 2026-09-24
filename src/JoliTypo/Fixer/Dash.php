@@ -16,33 +16,33 @@ use JoliTypo\StateBag;
 class Dash implements FixerInterface
 {
     /** A dash between two numbers, which opens and closes nothing */
-    private const RANGE = 'range';
+    private const string RANGE = 'range';
 
     /** The first dash of a pair, which binds to what follows */
-    private const OPENING = 'opening';
+    private const string OPENING = 'opening';
 
     /** The second dash of a pair, which binds to what precedes */
-    private const CLOSING = 'closing';
+    private const string CLOSING = 'closing';
 
     /** A dash that cannot be told from a plain separator, which binds to what precedes */
-    private const LONE = 'lone';
+    private const string LONE = 'lone';
 
     /** The spaces that can already surround a dash, line breaks excluded */
-    private const SPACES = '(?:' . Fixer::ALL_SPACES . ')+';
+    private const string SPACES = '(?:' . Fixer::ALL_SPACES . ')+';
 
-    private const DASH = '(?:' . Fixer::NDASH . '|' . Fixer::MDASH . ')';
+    private const string DASH = '(?:' . Fixer::NDASH . '|' . Fixer::MDASH . ')';
 
     /**
      * A dash and the spaces around it. The trailing spaces are left out when another dash follows, so
      * that the next dash keeps a space in front of it.
      */
-    private const PATTERN = '@(' . self::SPACES . ')(' . self::DASH . ')(' . self::SPACES . '(?!' . self::DASH . '))?@u';
+    private const string PATTERN = '@(' . self::SPACES . ')(' . self::DASH . ')(' . self::SPACES . '(?!' . self::DASH . '))?@u';
 
     /** A pair of dashes spans neither two sentences nor a line break */
-    private const SENTENCE_BOUNDARY = '@([.!?…]+(?:' . Fixer::ALL_SPACES . ')+|\R+)@u';
+    private const string SENTENCE_BOUNDARY = '@([.!?…]+(?:' . Fixer::ALL_SPACES . ')+|\R+)@u';
 
     /** What closes an incise in place of a space, the end of the sentence included */
-    private const CLOSING_PUNCTUATION = '@^(?:[,;:.!?)\]]|…)@u';
+    private const string CLOSING_PUNCTUATION = '@^(?:[,;:.!?)\]]|…)@u';
 
     public function fix(string $content, ?StateBag $stateBag = null): string
     {
