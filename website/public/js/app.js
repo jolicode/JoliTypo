@@ -1,87 +1,80 @@
-const allBoxes = document.getElementsByClassName('js-box');
-for (const box of allBoxes) {
-  box.addEventListener('click', checkIfAllOrNoneChecked);
-}
-const checkButton = document.getElementsByClassName('js-check-all')[0];
-const allCheckboxes = document.getElementsByClassName('js-checkbox');
-checkButton.addEventListener('click', checkAction);
+// UI of the demo: tabs, fixer selection and copy buttons. Running PHP lives in wasm.js.
 
-// If any checkbox is checked, set the button to uncheck all
-// If no checkbox is checked, set the button to check all
-function checkIfAllOrNoneChecked () {
-  for (const checkbox of allCheckboxes) {
-    if (checkbox.checked) {
-      return setCheckButtonTrue();
+const form = document.querySelector('form[name="typo_fixer"]');
+
+// Tabs (WAI-ARIA tabs pattern, with arrow keys navigation)
+
+const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+
+const selectTab = (tab, focus = false) => {
+    for (const other of tabs) {
+        const selected = other === tab;
+        other.setAttribute('aria-selected', String(selected));
+        other.tabIndex = selected ? 0 : -1;
+        document.getElementById(other.getAttribute('aria-controls')).hidden = !selected;
     }
-  }
-
-  return setCheckButtonFalse();
-}
-
-// Checks or unchecks all checkboxes
-function checkAction (e) {
-  e.preventDefault();
-
-  if (this.dataset.allchecked === 'false') {
-    setCheckButtonTrue();
-
-    for (const checkbox of allCheckboxes) {
-      checkbox.checked = true;
+    if (focus) {
+        tab.focus();
     }
+};
 
-    return;
-  }
-
-  setCheckButtonFalse()
-
-  for (const checkbox of allCheckboxes) {
-    checkbox.checked = false;
-  }
+for (const tab of tabs) {
+    tab.addEventListener('click', () => selectTab(tab));
+    tab.addEventListener('keydown', (e) => {
+        const index = tabs.indexOf(tab);
+        const next = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: tabs.length - 1 }[e.key];
+        if (next !== undefined) {
+            e.preventDefault();
+            selectTab(tabs[(next + tabs.length) % tabs.length], true);
+        }
+    });
 }
 
-function setCheckButtonTrue () {
-  checkButton.dataset.allchecked = 'true';
-  checkButton.textContent = 'Uncheck all';
-}
+// Fixers: counter and select all / none
 
-function setCheckButtonFalse () {
-  checkButton.dataset.allchecked = 'false';
-  checkButton.textContent = 'Check all';
-}
+const checkboxes = Array.from(document.querySelectorAll('input[name="typo_fixer[fixers][]"]'));
+const count = document.querySelector('.js-fixers-count');
+const checkAll = document.querySelector('.js-check-all');
+const uncheckAll = document.querySelector('.js-uncheck-all');
 
-// Click behavior for switching between Client and HTML version
+const updateCount = () => {
+    const checked = checkboxes.filter((checkbox) => checkbox.checked).length;
+    count.textContent = `${checked} / ${checkboxes.length}`;
+    checkAll.disabled = checked === checkboxes.length;
+    uncheckAll.disabled = checked === 0;
+};
 
-const clientButton = document.getElementsByClassName('form__result-button-client')[0];
-const htmlButton = document.getElementsByClassName('form__result-button-html')[0];
-const configButton = document.getElementsByClassName('form__result-button-config')[0];
-const clientResult = document.getElementsByClassName('form__result-client')[0];
-const htmlResult = document.getElementsByClassName('form__result-html')[0];
-const configResult = document.getElementsByClassName('form__result-config')[0];
-
-if (undefined !== clientResult && undefined !== htmlResult && undefined !== configResult) {
-  clientButton.addEventListener('click', toggleResults);
-  htmlButton.addEventListener('click', toggleResults);
-  configButton.addEventListener('click', toggleResults);
-}
-
-function toggleResults (e) {
-  if (!e.target.classList.contains('u-c(darkgrey)')) {
-    const allButtons = [clientButton, htmlButton, configButton];
-    allButtons.forEach(button => button.classList.remove('u-c(darkgrey)'));
-    e.target.classList.add('u-c(darkgrey)');
-
-    const allResults = [clientResult, htmlResult, configResult];
-    allResults.forEach(result => result.classList.remove('visible-result'));
-    switch (e.target) {
-      case clientButton:
-        clientResult.classList.add('visible-result');
-        break;
-      case htmlButton:
-        htmlResult.classList.add('visible-result');
-        break;
-      case configButton:
-        configResult.classList.add('visible-result');
-        break;
+const checkEvery = (checked) => {
+    for (const checkbox of checkboxes) {
+        checkbox.checked = checked;
     }
-  }
+    // Changing "checked" from JS fires no event: tell the form, so the result is refreshed
+    form.dispatchEvent(new Event('change', { bubbles: true }));
+};
+
+checkAll.addEventListener('click', () => checkEvery(true));
+uncheckAll.addEventListener('click', () => checkEvery(false));
+form.addEventListener('change', updateCount);
+updateCount();
+
+// Copy button: copies the PHP code on its tab, the fixed HTML otherwise
+
+const copy = document.querySelector('.js-copy');
+const phpTab = document.getElementById('tab-php');
+const copyLabel = () => phpTab.getAttribute('aria-selected') === 'true' ? 'Copy PHP' : 'Copy HTML';
+
+for (const tab of tabs) {
+    tab.addEventListener('click', () => { copy.textContent = copyLabel(); });
+    tab.addEventListener('keyup', () => { copy.textContent = copyLabel(); });
 }
+
+copy.addEventListener('click', async () => {
+    const target = phpTab.getAttribute('aria-selected') === 'true' ? 'phpCode' : 'resultContent';
+    try {
+        await navigator.clipboard.writeText(document.getElementById(target).textContent);
+        copy.textContent = 'Copied!';
+    } catch {
+        copy.textContent = 'Copy failed';
+    }
+    setTimeout(() => { copy.textContent = copyLabel(); }, 1500);
+});
