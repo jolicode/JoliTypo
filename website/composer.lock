@@ -12,29 +12,30 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jolicode/JoliTypo.git",
-                "reference": "39ae0e3742371f33abce9601967b4f45818cbae0"
+                "reference": "19a2e72d1fd37e9052ec0aa62dd9c61b78cc54e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jolicode/JoliTypo/zipball/39ae0e3742371f33abce9601967b4f45818cbae0",
-                "reference": "39ae0e3742371f33abce9601967b4f45818cbae0",
+                "url": "https://api.github.com/repos/jolicode/JoliTypo/zipball/19a2e72d1fd37e9052ec0aa62dd9c61b78cc54e7",
+                "reference": "19a2e72d1fd37e9052ec0aa62dd9c61b78cc54e7",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "lib-libxml": "*",
-                "org_heigl/hyphenator": "^2.6 || ^3.0",
-                "php": ">=8.1"
+                "org_heigl/hyphenator": "^3.2",
+                "php": ">=8.3",
+                "symfony/polyfill-intl-normalizer": "^1.32"
             },
             "conflict": {
                 "ext-apc": "3.1.11"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.49.0",
-                "symfony/framework-bundle": "^5.4 || ^6.4 || 7.0",
-                "symfony/phpunit-bridge": "^6.4.3",
-                "symfony/twig-bundle": "^5.4 || ^6.4 || 7.0",
-                "symfony/yaml": "^5.4 || ^6.4 || 7.0"
+                "friendsofphp/php-cs-fixer": "^v3.92.0",
+                "symfony/framework-bundle": "^6.4 || ^7.3 || ^8.0",
+                "symfony/phpunit-bridge": "^7.3 || ^8.0",
+                "symfony/twig-bundle": "^6.4 || ^7.3 || ^8.0",
+                "symfony/yaml": "^6.4 || ^7.3 || ^8.0"
             },
             "default-branch": true,
             "type": "library",
@@ -67,20 +68,20 @@
                 "issues": "https://github.com/jolicode/JoliTypo/issues",
                 "source": "https://github.com/jolicode/JoliTypo/tree/main"
             },
-            "time": "2024-03-18T09:34:00+00:00"
+            "time": "2026-09-23T19:53:51+00:00"
         },
         {
             "name": "org_heigl/hyphenator",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heiglandreas/Org_Heigl_Hyphenator.git",
-                "reference": "a9b8d2524cbed19d507ef8bc780b8122689c02bc"
+                "reference": "87ad38d81845c1ba5028e4efe9682d55747d9104"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Hyphenator/zipball/a9b8d2524cbed19d507ef8bc780b8122689c02bc",
-                "reference": "a9b8d2524cbed19d507ef8bc780b8122689c02bc",
+                "url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Hyphenator/zipball/87ad38d81845c1ba5028e4efe9682d55747d9104",
+                "reference": "87ad38d81845c1ba5028e4efe9682d55747d9104",
                 "shasum": ""
             },
             "require": {
@@ -88,8 +89,8 @@
                 "php": "^7.2||^8.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.2",
-                "phpunit/phpunit": "^8.0||^9.0"
+                "phpstan/phpstan": "^1.0||^2.0",
+                "phpunit/phpunit": "^8.0||^9.0 ||^10.0 || ^11.0 || ^12.0 || ^13.0 "
             },
             "type": "library",
             "autoload": {
@@ -117,9 +118,9 @@
             ],
             "support": {
                 "issues": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/issues",
-                "source": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/tree/v3.1.0"
+                "source": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/tree/v3.2.0"
             },
-            "time": "2024-02-12T14:32:13+00:00"
+            "time": "2026-09-09T06:41:34+00:00"
         },
         {
             "name": "soyuka/php-wasm",
@@ -130,6 +131,91 @@
                 "reference": "main"
             },
             "type": "library"
+        },
+        {
+            "name": "symfony/polyfill-intl-normalizer",
+            "version": "v1.42.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
+                "reference": "aa20edea75bd9c48cfecc8360922e5a6e5c44502"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/aa20edea75bd9c48cfecc8360922e5a6e5c44502",
+                "reference": "aa20edea75bd9c48cfecc8360922e5a6e5c44502",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "suggest": {
+                "ext-intl": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
+                },
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for intl's Normalizer class and related functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "intl",
+                "normalizer",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.42.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-08-07T06:33:24+00:00"
         }
     ],
     "packages-dev": [],
@@ -143,5 +229,5 @@
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
