@@ -152,7 +152,7 @@ try {
                     raw,
                     result: ${DECODE}(raw),
                     code: document.getElementById('phpCode').innerText,
-                    visible: !document.getElementById('result').classList.contains('u-d(none)'),
+                    visible: !document.getElementById('result').hidden && document.getElementById('preview').srcdoc !== '',
                     checked: Array.from(document.querySelectorAll('input[name="typo_fixer[fixers][]"]')).filter(i => i.checked).map(i => i.value),
                 };
             })()`);
@@ -161,15 +161,15 @@ try {
         }
         throw new Error('no result after submit');
     };
-    const fixersInCode = (code) => JSON.parse(code.match(/new Fixer\((\[.*?\])\)/)?.[1] ?? 'null');
+    const fixersInCode = (code) => Array.from(code.match(/new Fixer\(\[([^\]]*)\]\)/)?.[1].matchAll(/'(\w+)'/g) ?? [], (m) => m[1]);
 
     // The sample content of the page, as a visitor would submit it
     const sample = await submit({});
     check('submit stays on the page', sample.url === page, sample.url);
     check('result panel shown', sample.visible);
     check('no PHP error in the result', !/(Fatal error|Warning|Deprecated|Exception)/.test(sample.result), JSON.stringify(sample.result.slice(0, 200)));
-    check('PHP code lists the checked fixers, in page order', JSON.stringify(fixersInCode(sample.code)) === JSON.stringify(sample.checked), sample.code.split('\n').find((line) => line.includes('new Fixer')));
-    check('PHP code carries the locale', sample.code.includes(`setLocale(${JSON.stringify(await evaluate(`document.getElementById('typo_fixer_locale').value`))})`));
+    check('PHP code lists the checked fixers, in page order', JSON.stringify(fixersInCode(sample.code)) === JSON.stringify(sample.checked), JSON.stringify(fixersInCode(sample.code)));
+    check('PHP code carries the locale', sample.code.includes(`setLocale('${await evaluate(`document.getElementById('typo_fixer_locale').value`)}')`));
 
     // A few stable effects, on "café" and "élève" written with combining accents (NFD)
     const content = '<p>Le café de l\'élève est prêt ! Vraiment...</p>';
@@ -186,6 +186,9 @@ try {
     const without = await submit({ content, locale: 'fr', uncheck: ['UnicodeNormalization'] });
     check('unchecked fixer left out of the PHP code', !fixersInCode(without.code).includes('UnicodeNormalization') && fixersInCode(without.code).length === fr.checked.length - 1);
     check('unchecked fixer not applied (combining accents kept)', /é/.test(without.result), JSON.stringify(without.raw));
+
+    const none = await submit({ content, locale: 'fr', uncheck: fr.checked });
+    check('no fixer: no PHP error, content unchanged', none.raw === content && fixersInCode(none.code).length === 0, JSON.stringify(none.raw));
 
     ws.close();
 } catch (error) {
