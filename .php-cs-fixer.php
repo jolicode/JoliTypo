@@ -23,10 +23,10 @@ $finder = PhpCsFixer\Finder::create()
     ])
 ;
 
-return (new PhpCsFixer\Config())
+return new PhpCsFixer\Config()
     ->setRiskyAllowed(true)
     ->setRules([
-        '@PHP83Migration' => true,
+        '@PHP8x4Migration' => true,
         '@PhpCsFixer' => true,
         '@Symfony' => true,
         '@Symfony:risky' => true,

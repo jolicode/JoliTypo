@@ -16,6 +16,11 @@ jobs:
               with:
                 persist-credentials: false
 
+            - name: Setup PHP
+              uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+              with:
+                  php-version: "8.4"
+
             - name: Setup Castor
               uses: castor-php/setup-castor@2a495b8c91f00be6768ad8a040ba8634c797d386 # v1.1.0
 
@@ -30,6 +35,11 @@ jobs:
               uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
                 persist-credentials: false
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+              with:
+                  php-version: "8.4"
 
             - name: Setup Castor
               uses: castor-php/setup-castor@2a495b8c91f00be6768ad8a040ba8634c797d386 # v1.1.0
@@ -51,7 +61,7 @@ jobs:
                 composer-flags: [""]
                 name: [""]
                 include:
-                    - php-version: 8.3
+                    - php-version: "8.4"
                       composer-flags: "--prefer-lowest"
                       name: "(prefer lowest dependencies)"
 

@@ -4,21 +4,22 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a9d564a3aebe63fef53e096205241e9",
+    "content-hash": "d77bfd5ee782bcf2f872821eb093485c",
     "packages": [
         {
             "name": "jolicode/jolitypo",
-            "version": "dev-up",
+            "version": "dev-php8-4",
             "dist": {
                 "type": "path",
                 "url": "../..",
-                "reference": "82b4cf258128d98ccd791b850c2a255b6aaa32eb"
+                "reference": "19a2e72d1fd37e9052ec0aa62dd9c61b78cc54e7"
             },
             "require": {
                 "ext-mbstring": "*",
                 "lib-libxml": "*",
-                "org_heigl/hyphenator": "^2.6 || ^3.0",
-                "php": ">=8.1"
+                "org_heigl/hyphenator": "^3.2",
+                "php": ">=8.4",
+                "symfony/polyfill-intl-normalizer": "^1.32"
             },
             "conflict": {
                 "ext-apc": "3.1.11"
@@ -74,16 +75,16 @@
         },
         {
             "name": "org_heigl/hyphenator",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heiglandreas/Org_Heigl_Hyphenator.git",
-                "reference": "a9b8d2524cbed19d507ef8bc780b8122689c02bc"
+                "reference": "87ad38d81845c1ba5028e4efe9682d55747d9104"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Hyphenator/zipball/a9b8d2524cbed19d507ef8bc780b8122689c02bc",
-                "reference": "a9b8d2524cbed19d507ef8bc780b8122689c02bc",
+                "url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Hyphenator/zipball/87ad38d81845c1ba5028e4efe9682d55747d9104",
+                "reference": "87ad38d81845c1ba5028e4efe9682d55747d9104",
                 "shasum": ""
             },
             "require": {
@@ -91,8 +92,8 @@
                 "php": "^7.2||^8.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.2",
-                "phpunit/phpunit": "^8.0||^9.0"
+                "phpstan/phpstan": "^1.0||^2.0",
+                "phpunit/phpunit": "^8.0||^9.0 ||^10.0 || ^11.0 || ^12.0 || ^13.0 "
             },
             "type": "library",
             "autoload": {
@@ -120,9 +121,9 @@
             ],
             "support": {
                 "issues": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/issues",
-                "source": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/tree/v3.1.0"
+                "source": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/tree/v3.2.0"
             },
-            "time": "2024-02-12T14:32:13+00:00"
+            "time": "2026-09-09T06:41:34+00:00"
         },
         {
             "name": "psr/container",
@@ -581,16 +582,16 @@
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
-            "version": "v1.38.0",
+            "version": "v1.42.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
-                "reference": "2d446c214bdbe5b71bde5011b060a05fece3ae6b"
+                "reference": "aa20edea75bd9c48cfecc8360922e5a6e5c44502"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/2d446c214bdbe5b71bde5011b060a05fece3ae6b",
-                "reference": "2d446c214bdbe5b71bde5011b060a05fece3ae6b",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/aa20edea75bd9c48cfecc8360922e5a6e5c44502",
+                "reference": "aa20edea75bd9c48cfecc8360922e5a6e5c44502",
                 "shasum": ""
             },
             "require": {
@@ -642,7 +643,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.38.0"
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.42.0"
             },
             "funding": [
                 {
@@ -662,7 +663,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-25T13:48:31+00:00"
+            "time": "2026-08-07T06:33:24+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -939,7 +940,7 @@
     "platform": {},
     "platform-dev": {},
     "platform-overrides": {
-        "php": "8.3.20"
+        "php": "8.4.0"
     },
     "plugin-api-version": "2.9.0"
 }

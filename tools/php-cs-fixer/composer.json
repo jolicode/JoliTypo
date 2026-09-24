@@ -5,7 +5,7 @@
     "config": {
         "bump-after-update": true,
         "platform": {
-            "php": "8.3"
+            "php": "8.4"
         }
     }
 }
