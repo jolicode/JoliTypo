@@ -167,6 +167,7 @@ try {
     const sample = await submit({});
     check('submit stays on the page', sample.url === page, sample.url);
     check('result panel shown', sample.visible);
+    check('line feeds of the content kept', /<p>\n/.test(sample.raw), JSON.stringify(sample.raw.slice(0, 40)));
     check('no PHP error in the result', !/(Fatal error|Warning|Deprecated|Exception)/.test(sample.result), JSON.stringify(sample.result.slice(0, 200)));
     check('PHP code lists the checked fixers, in page order', JSON.stringify(fixersInCode(sample.code)) === JSON.stringify(sample.checked), JSON.stringify(fixersInCode(sample.code)));
     check('PHP code carries the locale', sample.code.includes(`setLocale('${await evaluate(`document.getElementById('typo_fixer_locale').value`)}')`));

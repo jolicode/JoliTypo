@@ -59,7 +59,8 @@ const runPhpCode = (phpCode) => {
     FS.writeFile('/app/src/index.php', phpCode);
 
     ccall("phpw", null, ["string"], ["/app/src/index.php"]);
-    const output = buffer.join('');
+    // Emscripten calls print() once per line, without the line feed
+    const output = buffer.join('\n');
     buffer.length = 0;
 
     return output;
