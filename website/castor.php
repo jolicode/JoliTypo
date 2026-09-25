@@ -14,6 +14,7 @@ use Symfony\Component\Process\Process;
 
 use function Castor\context;
 use function Castor\fs;
+use function Castor\http_request;
 use function Castor\io;
 use function Castor\run as do_run;
 
@@ -86,6 +87,22 @@ function wasm_pack(): void
     ]);
 }
 
+const JOLI_FOOTER_URL = 'https://raw.githubusercontent.com/jolicode/oss-theme/refs/heads/main/snippet-joli-footer.html';
+
+#[AsTask(description: 'Download the JoliCode open-source footer (jolicode/oss-theme) to the public folder')]
+function footer(): void
+{
+    io()->title('Downloading the JoliCode footer');
+
+    $footer = http_request('GET', JOLI_FOOTER_URL)->getContent();
+    $footer = strtr($footer, [
+        '#GITHUB_REPO' => 'jolicode/JoliTypo',
+        '<!-- #SUBTITLE -->' => 'JoliTypo is licensed under <a href="https://github.com/jolicode/JoliTypo/blob/main/LICENSE" target="_blank" rel="noreferrer noopener" class="jf-link">MIT license</a>',
+    ]);
+
+    fs()->dumpFile(__DIR__ . '/public/joli-footer.html', $footer);
+}
+
 #[AsTask('wasm:export', description: 'Export the wasm-php binary to the public folder with custom code')]
 function wasm_export(bool $pack = false, bool $build = false): void
 {
@@ -96,6 +113,8 @@ function wasm_export(bool $pack = false, bool $build = false): void
     if ($pack) {
         wasm_pack();
     }
+
+    footer();
 
     io()->title('Exporting wasm-php');
 
