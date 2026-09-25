@@ -516,6 +516,16 @@ kbd {
     color: var(--text);
 }
 
+@media (max-width: 480px) {
+    .tabs__tab {
+        padding: 10px;
+    }
+
+    .tabs__copy-what {
+        display: none;
+    }
+}
+
 .tabs__tab[aria-selected="true"] {
     color: var(--brand-ink);
 }
@@ -575,8 +585,10 @@ kbd {
 }
 
 .tabs__copy {
+    flex-shrink: 0;
     align-self: center;
     margin-left: auto;
+    white-space: nowrap;
     padding: 5px 12px;
     border: 1px solid var(--border-strong);
     border-radius: 999px;

@@ -60,23 +60,29 @@ updateCount();
 // Copy button: copies the PHP code on its tab, the fixed HTML otherwise
 
 const copy = document.querySelector('.js-copy');
+const copyLabel = copy.querySelector('.js-copy-label');
+const copyWhat = copy.querySelector('.js-copy-what');
 const phpTab = document.getElementById('tab-php');
-const copyLabel = () => phpTab.getAttribute('aria-selected') === 'true' ? 'Copy PHP' : 'Copy HTML';
+const isPhpTab = () => phpTab.getAttribute('aria-selected') === 'true';
 
 for (const tab of tabs) {
-    tab.addEventListener('click', () => { copy.textContent = copyLabel(); });
-    tab.addEventListener('keyup', () => { copy.textContent = copyLabel(); });
+    tab.addEventListener('click', () => { copyWhat.textContent = isPhpTab() ? ' PHP' : ' HTML'; });
+    tab.addEventListener('keyup', () => { copyWhat.textContent = isPhpTab() ? ' PHP' : ' HTML'; });
 }
 
 copy.addEventListener('click', async () => {
-    const target = phpTab.getAttribute('aria-selected') === 'true' ? 'phpCode' : 'resultContent';
+    const target = isPhpTab() ? 'phpCode' : 'resultContent';
+    copyWhat.hidden = true;
     try {
         await navigator.clipboard.writeText(document.getElementById(target).textContent);
-        copy.textContent = 'Copied!';
+        copyLabel.textContent = 'Copied!';
     } catch {
-        copy.textContent = 'Copy failed';
+        copyLabel.textContent = 'Copy failed';
     }
-    setTimeout(() => { copy.textContent = copyLabel(); }, 1500);
+    setTimeout(() => {
+        copyLabel.textContent = 'Copy';
+        copyWhat.hidden = false;
+    }, 1500);
 });
 
 // JoliCode footer: a build artifact, the page stays usable without it
