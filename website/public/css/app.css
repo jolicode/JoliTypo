@@ -37,6 +37,7 @@
     --ws-nnbsp: #c7ddfb;
     --ws-shy: #d04a8a;
 
+    --space-section: 24px;
     --radius: 12px;
     --radius-sm: 8px;
     --shadow: 0 1px 2px rgb(60 40 10 / 6%), 0 8px 24px rgb(60 40 10 / 6%);
@@ -122,6 +123,10 @@ a:hover {
 }
 
 @media (min-width: 720px) {
+    :root {
+        --space-section: 32px;
+    }
+
     .container {
         padding: 0 32px;
     }
@@ -225,13 +230,14 @@ a:hover {
 
 /* Panels */
 
-main {
-    padding-top: 32px;
+/* More specific than .container, which sets both the margin and the padding of main */
+main.container {
+    padding-top: var(--space-section);
 }
 
 .demo {
     display: grid;
-    gap: 24px;
+    gap: var(--space-section);
 }
 
 .panel {
@@ -425,7 +431,7 @@ main {
 
 .workspace {
     display: grid;
-    gap: 24px;
+    gap: var(--space-section);
 }
 
 @media (min-width: 1000px) {
@@ -656,7 +662,7 @@ kbd {
 /* Footer */
 
 .joli-footer {
-    margin-top: 48px;
+    margin-top: var(--space-section);
 }
 
 @media (prefers-reduced-motion: reduce) {
