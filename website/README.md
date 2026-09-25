@@ -7,6 +7,9 @@ castor website:install
 castor website:wasm:export --build --pack
 ```
 
+`website:wasm:export` also downloads the JoliCode footer from [jolicode/oss-theme](https://github.com/jolicode/oss-theme)
+to `public/joli-footer.html` (not committed); run `castor website:footer` alone to refresh it.
+
 Then you can test it with
 
 ```bash

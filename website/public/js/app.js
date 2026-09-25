@@ -78,3 +78,11 @@ copy.addEventListener('click', async () => {
     }
     setTimeout(() => { copy.textContent = copyLabel(); }, 1500);
 });
+
+// JoliCode footer: a build artifact, the page stays usable without it
+
+const footer = document.querySelector('.js-joli-footer');
+fetch('./joli-footer.html')
+    .then((response) => response.ok ? response.text() : '')
+    .then((html) => { footer.innerHTML = html; })
+    .catch(() => {});
