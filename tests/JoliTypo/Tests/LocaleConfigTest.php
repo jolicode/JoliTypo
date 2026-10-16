@@ -187,6 +187,18 @@ class LocaleConfigTest extends TestCase
         }
     }
 
+    public function testRecommendedRulesRunEmojiAfterNoSpaceBeforeComma(): void
+    {
+        // NoSpaceBeforeComma turns the no-break space put after a comma by Emoji back into a space
+        foreach (LocaleConfig::RECOMMENDED_RULES_BY_LOCALE as $locale => $rules) {
+            $this->assertGreaterThan(
+                array_search('NoSpaceBeforeComma', $rules, true),
+                array_search('Emoji', $rules, true),
+                "Emoji should run after NoSpaceBeforeComma for {$locale}"
+            );
+        }
+    }
+
     // =========================================================================
     // Nested quotation styles
     // =========================================================================

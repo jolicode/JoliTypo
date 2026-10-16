@@ -34,6 +34,7 @@ class Fixer
     public const string RDQUO = '”'; // &rdquo; or &#8221;
     public const string BDQUO = '„'; // &bdquo; or &#8222;
     public const string SHY = "\xC2\xAD"; // &shy;
+    public const string WORD_JOINER = "\xE2\x81\xA0"; // &#8288;, an invisible character no line can break around
     public const string TRADE = '™'; // &trade;
     public const string REG = '®'; // &reg;
     public const string COPY = '©'; // &copy;

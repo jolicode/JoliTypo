@@ -1,6 +1,11 @@
 CHANGELOG
 =======
 
+### 2.1.0 (unreleased) ###
+
+* Add `Emoji` fixer, which binds an emoji closing a sentence to the word before it (a non-breaking space, or a word joiner where there is no space) so that it never ends up alone at the beginning of a line; it is now a recommended rule of every locale, after `NoSpaceBeforeComma` (#151)
+* `Unit` also adds a non-breaking space between a number and a symbol or an emoji (`3 🍕`) (#151)
+
 ### 2.0.0 (2026-09-24) ###
 
 * BC Break: **Parse HTML with `\Dom\HTMLDocument`, the HTML5 parser shipped with PHP 8.4: a complete document is now fixed and returned with its doctype, `<html>`, `<head>` and `<body>` (#4)**

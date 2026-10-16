@@ -20,7 +20,8 @@ class Unit implements FixerInterface
 {
     public function fix(string $content, ?StateBag $stateBag = null): string
     {
-        // Support a wide range of currencies
-        return preg_replace('@([\dº])(' . Fixer::ALL_SPACES . ')+([º°%Ω฿₵¢₡$₫֏€ƒ₲₴₭£₤₺₦₨₱៛₹$₪৳₸₮₩¥\w]{1})@u', '$1' . Fixer::NO_BREAK_SPACE . '$3', $content);
+        // Support a wide range of currencies, and the symbols (\p{So}), emoji included: "3 🍕" like "3 pizzas".
+        // Not the emoji properties of the Emoji fixer, which would require PCRE2 10.40 from this fixer too.
+        return preg_replace('@([\dº])(' . Fixer::ALL_SPACES . ')+([º°%Ω฿₵¢₡$₫֏€ƒ₲₴₭£₤₺₦₨₱៛₹$₪৳₸₮₩¥\w\p{So}]{1})@u', '$1' . Fixer::NO_BREAK_SPACE . '$3', $content);
     }
 }
