@@ -66,6 +66,7 @@ const INVISIBLES = [
     { type: 'nbsp', chars: '\u00a0', entities: /^&(?:nbsp|#160|#x0*a0);$/i },
     { type: 'nnbsp', chars: '\u202f', entities: /^&(?:#8239|#x0*202f);$/i },
     { type: 'shy', chars: '\u00ad', entities: /^&(?:shy|#173|#x0*ad);$/i },
+    { type: 'wj', chars: '\u2060', entities: /^&(?:NoBreak|#8288|#x0*2060);$/i },
 ];
 
 const invisibleOf = (text) => INVISIBLES.find(({ chars, entities }) => text === chars || entities.test(text));
@@ -103,7 +104,7 @@ export const highlightHtml = (code) => {
 const markText = (text) => {
     let html = '';
     let last = 0;
-    for (const match of text.matchAll(/[\u00a0\u202f\u00ad]|&(?:#x?[0-9a-f]+|[a-z]+\d*);/gi)) {
+    for (const match of text.matchAll(/[\u00a0\u202f\u00ad\u2060]|&(?:#x?[0-9a-f]+|[a-z]+\d*);/gi)) {
         html += escapeHtml(text.slice(last, match.index));
         last = match.index + match[0].length;
 
@@ -116,4 +117,4 @@ const markText = (text) => {
     return html + escapeHtml(text.slice(last));
 };
 
-const TITLES = { nbsp: 'No-break space', nnbsp: 'Narrow no-break space', shy: 'Soft hyphen' };
+const TITLES = { nbsp: 'No-break space', nnbsp: 'Narrow no-break space', shy: 'Soft hyphen', wj: 'Word joiner' };

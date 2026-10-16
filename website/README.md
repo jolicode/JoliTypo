@@ -1,5 +1,9 @@
 # JoliTypo demo
 
+The demo runs the JoliTypo code of this repository, not a released version: `composer.json` declares the parent
+directory as a path repository, copied into `vendor/` at each `composer install`. So the website deployed from `main`
+always ships the fixers of `main`. A new fixer still needs its card in `public/index.html`.
+
 ## Installation
 
 ```bash

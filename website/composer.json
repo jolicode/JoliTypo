@@ -15,6 +15,16 @@
     ],
     "repositories": [
         {
+            "type": "path",
+            "url": "..",
+            "options": {
+                "symlink": false,
+                "versions": {
+                    "jolicode/jolitypo": "dev-main"
+                }
+            }
+        },
+        {
             "type": "package",
             "package": {
                 "name": "soyuka/php-wasm",

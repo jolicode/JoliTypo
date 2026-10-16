@@ -184,6 +184,10 @@ try {
     const en = await submit({ content, locale: 'en' });
     check('en: space before ! removed (SpaceBeforePunctuation)', /prêt!/.test(en.result), JSON.stringify(en.result));
 
+    const emoji = await submit({ content: '<p>Merci 🙏. Bravo🎉</p>', locale: 'fr' });
+    check('fr: no-break space before a closing emoji (Emoji)', /Merci\u00a0🙏\./.test(emoji.result), JSON.stringify(emoji.raw));
+    check('fr: word joiner before a glued closing emoji (Emoji)', /Bravo\u2060🎉/.test(emoji.result), JSON.stringify(emoji.raw));
+
     const without = await submit({ content, locale: 'fr', uncheck: ['UnicodeNormalization'] });
     check('unchecked fixer left out of the PHP code', !fixersInCode(without.code).includes('UnicodeNormalization') && fixersInCode(without.code).length === fr.checked.length - 1);
     check('unchecked fixer not applied (combining accents kept)', /é/.test(without.result), JSON.stringify(without.raw));
