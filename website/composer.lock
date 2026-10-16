@@ -4,21 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad472d050332e71b0836150ce6eea275",
+    "content-hash": "5f4b1e7832eaf0565135677aa8addd1d",
     "packages": [
         {
             "name": "jolicode/jolitypo",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jolicode/JoliTypo.git",
-                "reference": "9b410db328327b81b77d44be497af56e3e704422"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jolicode/JoliTypo/zipball/9b410db328327b81b77d44be497af56e3e704422",
-                "reference": "9b410db328327b81b77d44be497af56e3e704422",
-                "shasum": ""
+                "type": "path",
+                "url": "..",
+                "reference": "a2f38edca61a5ea08ee854aa30ae0b1983024c2f"
             },
             "require": {
                 "ext-dom": "*",
@@ -38,14 +32,25 @@
                 "symfony/twig-bundle": "^6.4 || ^7.3 || ^8.0",
                 "symfony/yaml": "^6.4 || ^7.3 || ^8.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "JoliTypo\\": "src/JoliTypo"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "JoliTypo\\Tests\\": "tests/JoliTypo/Tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "cs": [
+                    "vendor/bin/php-cs-fixer fix"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -65,11 +70,10 @@
                 "smartquote",
                 "typography"
             ],
-            "support": {
-                "issues": "https://github.com/jolicode/JoliTypo/issues",
-                "source": "https://github.com/jolicode/JoliTypo/tree/main"
-            },
-            "time": "2026-09-24T19:03:38+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "org_heigl/hyphenator",

@@ -36,6 +36,7 @@
     --ws-nbsp: #fbd7a3;
     --ws-nnbsp: #c7ddfb;
     --ws-shy: #d04a8a;
+    --ws-wj: #2e7d4f;
 
     --space-section: 24px;
     --radius: 12px;
@@ -76,6 +77,7 @@
         --ws-nbsp: #6b4815;
         --ws-nnbsp: #23456f;
         --ws-shy: #ff7fbf;
+        --ws-wj: #6fd39b;
 
         --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 8px 24px rgb(0 0 0 / 25%);
     }
@@ -637,6 +639,12 @@ kbd {
 .ws--shy::before {
     content: "-";
     color: var(--ws-shy);
+    font-weight: 700;
+}
+
+.ws--wj::before {
+    content: "|";
+    color: var(--ws-wj);
     font-weight: 700;
 }
 
