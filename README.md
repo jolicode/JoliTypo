@@ -226,6 +226,29 @@ NoSpaceBeforeComma
 
 Removes space before `,` and makes sure there is only one space after.
 
+Emoji
+-----
+
+Binds an emoji closing a sentence to the word before it, so that it never ends up alone at the beginning of the next
+line: `See you in 2027 🎉` becomes `See you in 2027&nbsp;🎉`, and `Merci 🙏. La suite` becomes `Merci&nbsp;🙏. La suite`.
+
+Only the emoji followed by punctuation or by the end of the text node are bound, with the emoji following them
+(`Merci 🙏 🎉`). An emoji followed by a word (`On a gagné 🎉 Rendez-vous`) is left alone. The space before each emoji
+is replaced by a non-breaking space, and an invisible word joiner (U+2060) is inserted where there is no space at all
+(`Bravo🎉`): a line can break before most emoji even without a space, as before a Chinese or Japanese ideograph.
+
+An emoji is what is displayed as one, the whole sequence: `🎉`, `✅`, `🇫🇷`, `👍🏽`, `❤️`, `👩‍💻` or `1️⃣`, but not `©`,
+`™`, `↔` or a bare `❤`, which are displayed as text. Line breaks, the spaces starting a text node
+(`<strong>Bravo</strong> 🎉`) and the no-break spaces already there are left untouched.
+
+Emoji replaced by images (Twemoji, WordPress emoji) cannot be fixed this way: browsers allow a line break next to an
+image, even after a non-breaking space.
+
+This Fixer must be placed **after** `NoSpaceBeforeComma`, which puts a plain space after a comma.
+
+It relies on the Unicode emoji properties of PCRE2 10.40 or higher. The PCRE2 bundled with PHP 8.4 is recent enough; a
+PHP built against an older system library raises a warning and leaves the text untouched.
+
 Hyphen (automatic hyphenation)
 ------------------------------
 
@@ -279,7 +302,7 @@ commonly used approximations: `(r)`, `(c)` and `(TM)`. A non-breaking space is p
 Unit (formerly Numeric)
 ---------
 
-Adds a non-breaking space between a numeral and its unit. Like this: `12_h`, `42_฿` or `88_%`. It was named `Numeric` before release 1.0.2, but BC is kept for now.
+Adds a non-breaking space between a numeral and its unit. Like this: `12_h`, `42_฿` or `88_%`, and also before a symbol or an emoji: `3_🍕`. It was named `Numeric` before release 1.0.2, but BC is kept for now.
 
 **It is really easy to make your own Fixers, feel free to extend the provided ones if they do not fit your typographic rules.**
 
@@ -290,7 +313,7 @@ en_GB
 -----
 
 ```php
-$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'Emoji', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('en_GB');
 ```
 
@@ -300,7 +323,7 @@ fr_FR
 Those rules apply for most of the recommendations of "Abrégé du code typographique à l'usage de la presse", ISBN: 9782351130667.
 
 ```php
-$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'Emoji', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('fr_FR');
 ```
 
@@ -310,7 +333,7 @@ fr_CA
 Mostly the same as fr_FR, but the space before punctuation points is not mandatory.
 
 ```php
-$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']);
+$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'Emoji', 'CurlyQuote', 'Hyphen', 'Trademark']);
 $fixer->setLocale('fr_CA');
 ```
 
@@ -320,7 +343,7 @@ de_DE
 Mostly the same as en_GB, according to [Typefacts](http://typefacts.com/) and [Wikipedia](http://de.wikipedia.org/wiki/Typografie_f%C3%BCr_digitale_Texte).
 
 ```php
-$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'CurlyQuote', 'Hyphen', 'Trademark']  );
+$fixer = new Fixer(['UnicodeNormalization', 'Ellipsis', 'Dimension', 'Unit', 'Dash', 'SmartQuotes', 'NoSpaceBeforeComma', 'Emoji', 'CurlyQuote', 'Hyphen', 'Trademark']  );
 $fixer->setLocale('de_DE');
 ```
 

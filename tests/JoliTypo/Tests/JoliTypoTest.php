@@ -126,6 +126,29 @@ class JoliTypoTest extends TestCase
         $this->assertSame('Hey épic dude…', $fixer->fixString("Hey e\u{0301}pic dude..."));
     }
 
+    public function testEmoji(): void
+    {
+        $fixer = new Fixer(['NoSpaceBeforeComma', 'Emoji']);
+
+        $this->assertSame('<p>Rendez-vous en 2027&nbsp;🎉</p>', $fixer->fix('<p>Rendez-vous en 2027 🎉</p>'));
+
+        // NoSpaceBeforeComma puts a plain space after a comma, Emoji must run after it
+        $this->assertSame('<p>Merci,&nbsp;🙏</p>', $fixer->fix('<p>Merci, 🙏</p>'));
+        $this->assertSame('<p>Merci,&nbsp;🙏</p>', $fixer->fix('<p>Merci,&nbsp;🙏</p>'));
+
+        // The space starts the text node of the emoji, the word before it is in another one
+        $this->assertSame('<p>Merci <strong>à tous</strong> 🙏</p>', $fixer->fix('<p>Merci <strong>à tous</strong> 🙏</p>'));
+
+        // An emoji followed by a word is left alone, a word joiner is inserted where there is no space
+        $this->assertSame('<p>On a gagné 🎉 Rendez-vous</p>', $fixer->fix('<p>On a gagné 🎉 Rendez-vous</p>'));
+        $this->assertSame('<p>Bravo' . Fixer::WORD_JOINER . '🎉</p>', $fixer->fix('<p>Bravo🎉</p>'));
+
+        // The narrow no-break space put before "!" by SpaceBeforePunctuation does not hide the end of the sentence
+        $fixer = new Fixer(['SpaceBeforePunctuation', 'NoSpaceBeforeComma', 'Emoji']);
+        $fixer->setLocale('fr_FR');
+        $this->assertSame('<p>Merci&nbsp;🙏' . Fixer::NO_BREAK_THIN_SPACE . '! La suite</p>', $fixer->fix('<p>Merci 🙏 ! La suite</p>'));
+    }
+
     public function testBadEncoding(): void
     {
         $fixer = new Fixer(['Trademark']);

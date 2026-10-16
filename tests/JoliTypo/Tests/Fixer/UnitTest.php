@@ -35,6 +35,13 @@ class UnitTest extends TestCase
         $this->assertSame('13' . Fixer::NO_BREAK_SPACE . 'Ω', $fixer->fix('13 Ω'));
         $this->assertSame('14' . Fixer::NO_BREAK_SPACE . 'Ω', $fixer->fix('14' . Fixer::NO_BREAK_THIN_SPACE . 'Ω'));
 
+        // Symbols and emoji, like words (#151)
+        $this->assertSame('3' . Fixer::NO_BREAK_SPACE . '🍕', $fixer->fix('3 🍕'));
+        $this->assertSame('2' . Fixer::NO_BREAK_SPACE . "\u{2764}\u{FE0F}", $fixer->fix("2 \u{2764}\u{FE0F}"));
+        $this->assertSame('4' . Fixer::NO_BREAK_SPACE . "\u{1F469}\u{200D}\u{1F4BB}", $fixer->fix("4 \u{1F469}\u{200D}\u{1F4BB}"));
+        $this->assertSame('5' . Fixer::NO_BREAK_SPACE . '★', $fixer->fix('5 ★'));
+        $this->assertSame('1 → 2', $fixer->fix('1 → 2'));
+
         // Tabs are spaces, but line breaks are not (#88)
         $this->assertSame('15' . Fixer::NO_BREAK_SPACE . 'kg', $fixer->fix("15\tkg"));
         $this->assertSame("16\nkg", $fixer->fix("16\nkg"));
