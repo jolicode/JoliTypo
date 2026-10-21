@@ -28,7 +28,7 @@ castor website:serve
 
 Once PHP is built, node can check that it boots with its PHP version and its extensions, then run
 `tests/page.test.mjs`: the tests of `public/js/php.js`, the module of the page that runs JoliTypo, loaded as the page
-does. No browser is needed, and GitHub Actions runs it before deploying the website:
+does. No browser is needed: GitHub Actions runs it on the pull requests, and before deploying the website:
 
 ```bash
 castor website:wasm:check
