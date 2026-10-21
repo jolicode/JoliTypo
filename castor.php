@@ -11,6 +11,8 @@ use Castor\Attribute\AsTask;
 
 use function Castor\run;
 
+defined('CASTOR_USE_CHDIR') || define('CASTOR_USE_CHDIR', true);
+
 Castor\import(__DIR__ . '/tools/php-cs-fixer/');
 Castor\import(__DIR__ . '/tools/phpstan/');
 Castor\import(__DIR__ . '/website/castor.php');

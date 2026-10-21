@@ -16,6 +16,8 @@ use function Castor\io;
 use function Castor\run;
 use function Castor\with;
 
+\defined('CASTOR_USE_CHDIR') || \define('CASTOR_USE_CHDIR', true);
+
 #[AsTask(description: 'install dependencies')]
 function install(): void
 {

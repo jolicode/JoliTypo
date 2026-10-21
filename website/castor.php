@@ -25,6 +25,8 @@ use function PhpWasm\build;
 use function PhpWasm\check_stack;
 use function PhpWasm\test_page;
 
+\defined('CASTOR_USE_CHDIR') || \define('CASTOR_USE_CHDIR', true);
+
 #[AsTask(description: 'Install dependencies')]
 function install(): void
 {

@@ -15,6 +15,8 @@ use function Castor\context;
 use function Castor\exit_code;
 use function Castor\run;
 
+\defined('CASTOR_USE_CHDIR') || \define('CASTOR_USE_CHDIR', true);
+
 #[AsTask(description: 'Fix CS', aliases: ['cs'])]
 function cs(bool $dryRun = false): int
 {
