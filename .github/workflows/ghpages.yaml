@@ -32,11 +32,20 @@ jobs:
             - name: Set up Castor
               uses: castor-php/setup-castor@2a495b8c91f00be6768ad8a040ba8634c797d386 # v1.1.0
 
+            # The cache of the PHP build needs the docker-container driver of buildx
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+            # And the runtime token and URLs of GitHub Actions, that only actions get
+            - name: Expose the GitHub runtime
+              uses: crazy-max/ghaction-github-runtime@04d248b84655b509d8c44dc1d6f990c879747487 # v4.0.0
+
             - name: Build
               run: |
                   set -x
                   castor website:install
-                  castor website:wasm:export --pack --build
+                  castor website:wasm:build --set '*.cache-from=type=gha' --set '*.cache-to=type=gha,mode=max,ignore-error=true'
+                  castor website:wasm:check
               working-directory: ./website
 
             - name: Upload Artifact
