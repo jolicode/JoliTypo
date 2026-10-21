@@ -27,6 +27,12 @@ use function PhpWasm\test_page;
 
 \defined('CASTOR_USE_CHDIR') || \define('CASTOR_USE_CHDIR', true);
 
+// Mounted from the castor.php of the repository, Castor installs the packages of castor.composer.json but does not load
+// them: remove once https://github.com/jolicode/castor/pull/920 is released
+if (is_file($autoload = __DIR__ . '/.castor/vendor/autoload.php')) {
+    require_once $autoload;
+}
+
 #[AsTask(description: 'Install dependencies')]
 function install(): void
 {
@@ -48,6 +54,9 @@ function wasm_build(
     #[AsOption(description: 'An override given to "docker buildx bake --set", a cache for example', mode: InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY)]
     array $set = [],
 ): void {
+    // What is embedded comes from vendor/
+    install();
+
     io()->title('Building PHP as WebAssembly');
 
     wasm_app();

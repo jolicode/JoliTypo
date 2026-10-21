@@ -1,6 +1,7 @@
 /.castor.stub.php
 /.php-cs-fixer.cache
 /.phpunit.cache/
+/build/
 /composer.lock
 /var/phpstan/tmp/
 /vendor/

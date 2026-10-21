@@ -43,7 +43,6 @@ jobs:
             - name: Build
               run: |
                   set -x
-                  castor website:install
                   castor website:wasm:build --set '*.cache-from=type=gha' --set '*.cache-to=type=gha,mode=max,ignore-error=true'
                   castor website:wasm:check
               working-directory: ./website

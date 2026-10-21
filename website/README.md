@@ -7,15 +7,13 @@ always ships the fixers of `main`. A new fixer still needs its card in `public/i
 ## Installation
 
 ```bash
-castor website:install
 castor website:wasm:build
 ```
 
-`website:wasm:build` builds PHP as WebAssembly with [lyrixx/php-wasm-builder](https://github.com/lyrixx/php-wasm-builder)
-(Docker is needed), with `src/` and `vendor/` embedded as `/app`, in `public/build/`. Run it from this
-directory: Castor installs the builder from `castor.composer.json`, next to the `castor.php` it starts from. Run
-`website:install` and `website:wasm:build` again after a change in the library: only the last step of the build runs
-again.
+`website:wasm:build` installs the dependencies, then builds PHP as WebAssembly with
+[lyrixx/php-wasm-builder](https://github.com/lyrixx/php-wasm-builder) (Docker is needed), with `src/` and `vendor/`
+embedded as `/app`, in `public/build/`. Run it again after a change in the library: only the last step of the build
+runs again.
 
 `website:wasm:build` also downloads the JoliCode footer from [jolicode/oss-theme](https://github.com/jolicode/oss-theme)
 to `public/joli-footer.html` (not committed); run `castor website:footer` alone to refresh it.
