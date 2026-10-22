@@ -121,12 +121,9 @@ try {
 
     // A second module instance, with its own copy of the embedded /app, to look at the PHP itself
     const phpInfo = await evaluate(`import(${JSON.stringify(`${page}build/php-web.mjs`)}).then(async (module) => {
-        const buffer = [];
-        const { ccall, FS } = await module.default({ print(data) { buffer.push(data); } });
-        FS.unlink('/app/src/index.php');
-        FS.writeFile('/app/src/index.php', '<?php require "/app/vendor/autoload.php"; echo json_encode(["php" => PHP_VERSION, "intl" => extension_loaded("intl"), "normalizer" => class_exists("Normalizer"), "jolitypo" => class_exists("JoliTypo\\\\Fixer")]);');
-        ccall('phpw', null, ['string'], ['/app/src/index.php']);
-        return JSON.parse(buffer.join(''));
+        const php = await module.default();
+        const { stdout } = await php.runCode('require "/app/vendor/autoload.php"; echo json_encode(["php" => PHP_VERSION, "intl" => extension_loaded("intl"), "normalizer" => class_exists("Normalizer"), "jolitypo" => class_exists("JoliTypo\\\\Fixer")]);');
+        return JSON.parse(stdout);
     })`, true);
     check('JoliTypo and a Normalizer (intl or polyfill) are embedded', phpInfo.jolitypo && phpInfo.normalizer, `PHP ${phpInfo.php}, intl: ${phpInfo.intl}`);
 

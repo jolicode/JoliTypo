@@ -84,7 +84,7 @@ function wasm_stack(): Stack
         // What JoliTypo requires
         ->extensions('dom', 'mbstring')
         // Filled by wasm_app(), js/wasm.js runs the PHP files of /app
-        ->embed(__DIR__ . '/build/app', 'app')
+        ->embed(__DIR__ . '/build/app', at: '/app')
         ->targets('web')
         ->outputDir(__DIR__ . '/public/build')
     ;

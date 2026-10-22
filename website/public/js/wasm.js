@@ -28,7 +28,7 @@ const previewDocument = (html, locale) => `<!DOCTYPE html>
 <body>${html}</body>
 </html>`;
 
-const update = () => {
+const update = async () => {
     const fixers = getFixers();
     const locale = localeElt.value || 'en';
     const content = contentElt.value;
@@ -45,12 +45,12 @@ const update = () => {
     }
 
     const started = performance.now();
-    const result = fix(fixers, locale, content);
+    const result = await fix(fixers, locale, content);
     const elapsed = Math.round(performance.now() - started);
 
     previewElt.srcdoc = previewDocument(result, locale);
     resultContentElt.innerHTML = highlightHtml(result);
-    phpCodeElt.innerHTML = highlightPhp(buildPhpFixerCode(fixers, locale, content, 'vendor/autoload.php'));
+    phpCodeElt.innerHTML = highlightPhp(buildPhpFixerCode(fixers, locale, content));
 
     const failed = /(Fatal error|Uncaught|Warning|Deprecated):/.test(result);
     statusElt.classList.toggle('output__status--error', failed);
