@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f4b1e7832eaf0565135677aa8addd1d",
+    "content-hash": "4e68495c80a24537f292196522dd0a8a",
     "packages": [
         {
             "name": "jolicode/jolitypo",
@@ -128,16 +128,6 @@
             "time": "2026-09-09T06:41:34+00:00"
         },
         {
-            "name": "soyuka/php-wasm",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/soyuka/php-wasm.git",
-                "reference": "main"
-            },
-            "type": "library"
-        },
-        {
             "name": "symfony/polyfill-intl-normalizer",
             "version": "v1.42.0",
             "source": {
@@ -227,8 +217,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "jolicode/jolitypo": 20,
-        "soyuka/php-wasm": 20
+        "jolicode/jolitypo": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

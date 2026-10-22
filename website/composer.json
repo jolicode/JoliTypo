@@ -23,23 +23,10 @@
                     "jolicode/jolitypo": "dev-main"
                 }
             }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "soyuka/php-wasm",
-                "version": "dev-main",
-                "source": {
-                    "url": "https://github.com/soyuka/php-wasm.git",
-                    "type": "git",
-                    "reference": "main"
-                }
-            }
         }
     ],
     "require": {
-        "jolicode/jolitypo": "dev-main@dev",
-        "soyuka/php-wasm": "dev-main@dev"
+        "jolicode/jolitypo": "dev-main@dev"
     },
     "config": {
         "optimize-autoloader": true,

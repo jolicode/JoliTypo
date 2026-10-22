@@ -1,12 +1,5 @@
-import phpBinary from "../build/php-web.mjs";
+import { buildPhpFixerCode, fix } from "./php.js";
 import { highlightHtml, highlightPhp } from "./highlight.js";
-
-const buffer = [];
-const {ccall, FS} = await phpBinary({
-    print(data) {
-        buffer.push(data);
-    }
-})
 
 const formElt = document.querySelector('form[name="typo_fixer"]');
 const contentElt = document.getElementById('typo_fixer_content');
@@ -20,51 +13,6 @@ const resultContentElt = document.getElementById('resultContent');
 const phpCodeElt = document.getElementById('phpCode');
 
 const getFixers = () => Array.from(fixerElts).filter(elt => elt.checked).map(elt => elt.value);
-
-const phpString = (value) => `'${value.replace(/[\\']/g, '\\$&')}'`;
-
-// The content goes in a nowdoc, so nothing in it is interpreted: pick a closing label it does not contain
-const nowdocLabel = (content) => {
-    let label = 'HTML';
-    for (let i = 2; new RegExp(`^[ \\t]*${label}\\b`, 'm').test(content); i++) {
-        label = `HTML${i}`;
-    }
-
-    return label;
-};
-
-const buildPhpFixerCode = (fixers, locale, content, autoload) => {
-    const label = nowdocLabel(content);
-    const rules = `[\n${fixers.map(fixer => `    ${phpString(fixer)},\n`).join('')}]`;
-
-    return `<?php
-
-require ${phpString(autoload)};
-
-use JoliTypo\\Fixer;
-
-$fixer = new Fixer(${rules});
-$fixer->setLocale(${phpString(locale)});
-
-$html = <<<'${label}'
-${content}
-${label};
-
-echo $fixer->fix($html);
-`;
-};
-
-const runPhpCode = (phpCode) => {
-    FS.unlink('/app/src/index.php')
-    FS.writeFile('/app/src/index.php', phpCode);
-
-    ccall("phpw", null, ["string"], ["/app/src/index.php"]);
-    // Emscripten calls print() once per line, without the line feed
-    const output = buffer.join('\n');
-    buffer.length = 0;
-
-    return output;
-}
 
 const previewDocument = (html, locale) => `<!DOCTYPE html>
 <html lang="${locale.replace(/_/g, '-').replace(/[^\w-]/g, '')}">
@@ -97,7 +45,7 @@ const update = () => {
     }
 
     const started = performance.now();
-    const result = runPhpCode(buildPhpFixerCode(fixers, locale, content, '/app/vendor/autoload.php'));
+    const result = fix(fixers, locale, content);
     const elapsed = Math.round(performance.now() - started);
 
     previewElt.srcdoc = previewDocument(result, locale);

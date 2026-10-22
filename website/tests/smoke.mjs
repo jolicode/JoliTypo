@@ -4,8 +4,8 @@
 // submits the form and checks the result. No dependency: Node 22+ (built-in fetch and
 // WebSocket) and Chrome or Chromium in the PATH (or the CHROME environment variable).
 //
-// Run `castor website:wasm:export --pack` first (with `--build` the first time), then
-// `castor website:smoke` or `node website/tests/smoke.mjs`.
+// Run `castor website:wasm:build` first, then `castor website:smoke` or
+// `node website/tests/smoke.mjs`.
 
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
@@ -49,7 +49,7 @@ const check = (label, ok, detail = '') => {
 };
 
 if (!existsSync(join(WEB_ROOT, 'build/php-web.mjs'))) {
-    console.error(`${WEB_ROOT}/build is missing: run "castor website:wasm:export --pack" first (add --build the first time)`);
+    console.error(`${WEB_ROOT}/build is missing: run "castor website:wasm:build" first`);
     process.exit(2);
 }
 
@@ -119,7 +119,7 @@ try {
     await evaluate(`import(${JSON.stringify(`${page}js/wasm.js`)}).then(() => true)`, true);
     check('wasm PHP ready', true, `${Math.round((Date.now() - started) / 1000)}s`);
 
-    // A second module instance, with its own copy of the packed /app, to look at the PHP itself
+    // A second module instance, with its own copy of the embedded /app, to look at the PHP itself
     const phpInfo = await evaluate(`import(${JSON.stringify(`${page}build/php-web.mjs`)}).then(async (module) => {
         const buffer = [];
         const { ccall, FS } = await module.default({ print(data) { buffer.push(data); } });
@@ -128,7 +128,7 @@ try {
         ccall('phpw', null, ['string'], ['/app/src/index.php']);
         return JSON.parse(buffer.join(''));
     })`, true);
-    check('JoliTypo and a Normalizer (intl or polyfill) are packed', phpInfo.jolitypo && phpInfo.normalizer, `PHP ${phpInfo.php}, intl: ${phpInfo.intl}`);
+    check('JoliTypo and a Normalizer (intl or polyfill) are embedded', phpInfo.jolitypo && phpInfo.normalizer, `PHP ${phpInfo.php}, intl: ${phpInfo.intl}`);
 
     const submit = async ({ content, locale, uncheck = [] }) => {
         await evaluate(`(() => {

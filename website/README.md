@@ -7,11 +7,15 @@ always ships the fixers of `main`. A new fixer still needs its card in `public/i
 ## Installation
 
 ```bash
-castor website:install
-castor website:wasm:export --build --pack
+castor website:wasm:build
 ```
 
-`website:wasm:export` also downloads the JoliCode footer from [jolicode/oss-theme](https://github.com/jolicode/oss-theme)
+`website:wasm:build` installs the dependencies, then builds PHP as WebAssembly with
+[lyrixx/php-wasm-builder](https://github.com/lyrixx/php-wasm-builder) (Docker is needed), with `src/` and `vendor/`
+embedded as `/app`, in `public/build/`. Run it again after a change in the library: only the last step of the build
+runs again.
+
+`website:wasm:build` also downloads the JoliCode footer from [jolicode/oss-theme](https://github.com/jolicode/oss-theme)
 to `public/joli-footer.html` (not committed); run `castor website:footer` alone to refresh it.
 
 Then you can test it with
@@ -20,10 +24,18 @@ Then you can test it with
 castor website:serve
 ```
 
-## Smoke test
+## Checks
 
-Once the wasm build is exported, a headless Chrome can load the demo, submit the form and check the result
-(Node 22+ and Chrome or Chromium are needed, set `CHROME` to point at another binary):
+Once PHP is built, node can check that it boots with its PHP version and its extensions, then run
+`tests/page.test.mjs`: the tests of `public/js/php.js`, the module of the page that runs JoliTypo, loaded as the page
+does. No browser is needed: GitHub Actions runs it on the pull requests, and before deploying the website:
+
+```bash
+castor website:wasm:check
+```
+
+A headless Chrome can also load the demo, submit the form and check the result (Node 22+ and Chrome or Chromium are
+needed, set `CHROME` to point at another binary):
 
 ```bash
 castor website:smoke
