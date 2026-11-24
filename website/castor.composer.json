@@ -1,5 +1,5 @@
 {
     "require": {
-        "lyrixx/php-wasm-builder": "^0.8"
+        "lyrixx/php-wasm-builder": "^1.0"
     }
 }

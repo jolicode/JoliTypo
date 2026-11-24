@@ -12,6 +12,7 @@ namespace website;
 use Castor\Attribute\AsOption;
 use Castor\Attribute\AsTask;
 use PhpWasm\Stack;
+use PhpWasm\Target;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 
@@ -85,7 +86,7 @@ function wasm_stack(): Stack
         ->extensions('dom', 'mbstring')
         // Filled by wasm_app(), js/wasm.js runs the PHP files of /app
         ->embed(__DIR__ . '/build/app', at: '/app')
-        ->targets('web')
+        ->targets(Target::Web)
         ->outputDir(__DIR__ . '/public/build')
     ;
 }
