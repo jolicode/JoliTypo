@@ -81,7 +81,7 @@ function wasm_check(): void
 function wasm_stack(): Stack
 {
     return Stack::named('jolitypo-demo')
-        ->php('8.5.12')
+        ->php('8.6.0')
         // What JoliTypo requires
         ->extensions('dom', 'mbstring')
         // Filled by wasm_app(), js/wasm.js runs the PHP files of /app
