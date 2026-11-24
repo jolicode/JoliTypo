@@ -12,6 +12,7 @@ namespace website;
 use Castor\Attribute\AsOption;
 use Castor\Attribute\AsTask;
 use PhpWasm\Stack;
+use PhpWasm\Target;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 
@@ -26,12 +27,6 @@ use function PhpWasm\check_stack;
 use function PhpWasm\test_page;
 
 \defined('CASTOR_USE_CHDIR') || \define('CASTOR_USE_CHDIR', true);
-
-// Mounted from the castor.php of the repository, Castor installs the packages of castor.composer.json but does not load
-// them: remove once https://github.com/jolicode/castor/pull/920 is released
-if (is_file($autoload = __DIR__ . '/.castor/vendor/autoload.php')) {
-    require_once $autoload;
-}
 
 #[AsTask(description: 'Install dependencies')]
 function install(): void
@@ -80,12 +75,12 @@ function wasm_check(): void
 function wasm_stack(): Stack
 {
     return Stack::named('jolitypo-demo')
-        ->php('8.5.12')
+        ->php('8.6.0')
         // What JoliTypo requires
         ->extensions('dom', 'mbstring')
         // Filled by wasm_app(), js/wasm.js runs the PHP files of /app
         ->embed(__DIR__ . '/build/app', at: '/app')
-        ->targets('web')
+        ->targets(Target::Web)
         ->outputDir(__DIR__ . '/public/build')
     ;
 }
