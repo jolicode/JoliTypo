@@ -13,6 +13,9 @@ use function Castor\run;
 
 defined('CASTOR_USE_CHDIR') || define('CASTOR_USE_CHDIR', true);
 
+// It loads the packages of the castor.composer.json of a directory it mounts, website/ needs them
+Castor\guard_min_version('1.9.1');
+
 Castor\import(__DIR__ . '/tools/php-cs-fixer/');
 Castor\import(__DIR__ . '/tools/phpstan/');
 Castor\mount(__DIR__ . '/tools/cli/');
